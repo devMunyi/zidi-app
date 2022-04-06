@@ -64,26 +64,18 @@ include_once("configs/conn.inc");
                         </h3>
                     </div>
                     <h4 class="text-center pt-2 pb-2">Reset Password</h4>
-                    <p class="text-center pt-2 pb-2">please provide email you registered with</p>
                     <form class="pl-5 pr-5" method="POST" onsubmit="return false;">
-                        <div class="form-group row d-flex justify-content-center">
-                            <label for="email_input" class="col-sm-2 col-form-label">Email: </label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="email_input" placeholder="Email">
-                            </div>
+                        <div class="form-group">
+                            <label for="email_input">Please provide email you registered with: </label>
+                            <input type="email" class="form-control" id="email_input" placeholder="Email">
                         </div>
 
-                        <div class="form-group row d-flex justify-content-between">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-10">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <button type="submit" title="Click to Sign in" onclick="alert('Oops')" class="btn btn-primary">Submit</button>
-                                    </div>
-                                    <div class="col-md-8" style="text-align: start;">
-                                        <p>Remember password?&nbsp;<a href="login">Login</a></p>
-                                    </div>
-                                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <button type="submit" title="Click to Sign in" onclick="alert('Oops')" class="btn btn-primary">Submit</button>
+                            </div>
+                            <div class="form-group col-md-6" style="text-align: start;">
+                                <p>Remember password?&nbsp;<a href="login">Login</a></p>
                             </div>
                         </div>
                     </form>

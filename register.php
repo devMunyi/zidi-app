@@ -120,10 +120,10 @@ include_once("configs/conn.inc");
                             <div class="col-sm-2"></div>
                             <div class="col-sm-10">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button>
                                     </div>
-                                    <div class="col-md-8" style="text-align: start;">
+                                    <div class="col-md-6" style="text-align: start;">
                                         <p>Already have account?&nbsp;<a href="login">Log in</a></p>
                                         <p>Forgot password?&nbsp;<a href="reset-password">Reset</a></p>
                                     </div>
