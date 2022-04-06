@@ -1,0 +1,126 @@
+// Options
+$enable-rounded: true;
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-transitions: true;
+$enable-hover-media-query: false;
+$enable-grid-classes: true;
+$enable-print-styles: true;
+
+// Fonts
+$font-family-opensans:      'Open Sans', sans-serif;
+$font-family-montserrat: 	'Montserrat', sans-serif;
+$font-family-roboto: 		'Robot', sans-serif;
+$font-size: 15px;
+
+
+$lightgray:             #E6E9ED;
+$mediumgray:            #AAB2BD;
+$darkgray:              #434A54;
+
+// color
+$body-color:            #F8FAFB;
+$font-color:            $darkgray;
+$card-color:            $white;
+$link-color:            #6290d0;
+$link-hover:            #0E9BE2;
+$body-bg:               #f5f7fb;
+
+$headings-margin-bottom: .66em;
+$headings-font-family: inherit;
+$headings-font-weight: 600;
+$headings-line-height: 1.1;
+$headings-color: inherit;
+
+// Code
+$code-font-size: 85%;
+$code-color: inherit;
+
+$kbd-color: $white;
+$kbd-bg: $gray-800;
+
+$pre-color: $gray-900;
+
+// Yiq
+$yiq-contrasted-threshold: 190;
+$yiq-text-dark: $body-color;
+$yiq-text-light: $white;
+
+// Borders
+$border-width: 1px;
+$border-color: rgba(0, 40, 100, .12);
+$border-color-dark: rgba(0, 40, 100, .24);
+
+// Border Radius
+$border-radius-extra-small:     0.125rem    !default;
+$border-radius-small:           0.1875rem   !default;
+$border-radius-large:           0.550rem     !default;
+$border-radius-extreme:         0.875rem    !default;
+
+
+$sidebar-width: 			330px;
+$sidebar-icon: 			    70px;
+
+// Breakpoints
+$break-xsmall: 			640px;
+$break-small: 			768px;
+$break-medium: 			992px;
+$break-1024: 			1024px;
+$break-large: 			1200px;
+$break-1280: 			1280px;
+$break-xlarge: 			1440px;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+	0: 0,
+	1: $spacer * .25,
+	2: $spacer * .5,
+	3: $spacer * .75,
+	4: $spacer * 1,
+	5: $spacer * 1.5,
+	6: $spacer * 2,
+	7: $spacer * 3,
+	8: $spacer * 4,
+	9: $spacer * 6
+);
+
+$sizes: (
+	0: 0,
+	1: $spacer * .25,
+	2: $spacer * .5,
+	3: $spacer * .75,
+	4: $spacer * 1,
+	5: $spacer * 1.5,
+	6: $spacer * 2,
+	7: $spacer * 3,
+	8: $spacer * 4,
+	9: $spacer * 6,
+	25: 25%,
+	50: 50%,
+	75: 75%,
+	100: 100%,
+	auto: auto
+);
+
+// Footer
+$footer-bg: $white;
+
+// Z-index
+$zindex-overlay: 900;
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-modal: 1050;
+$zindex-popover: 1060;
+$zindex-tooltip: 1070;
+
+// Hr
+$hr-border-color: $border-color;
+
+// Icons flags
+$flag-icons: ('ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb', 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bl', 'bm', 'bn', 'bo', 'bq', 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr', 'cu', 'cv', 'cw', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm', 'do', 'dz', 'ec', 'ee', 'eg', 'eh', 'er', 'es', 'et', 'eu', 'fi', 'fj', 'fk', 'fm', 'fo', 'fr', 'ga', 'gb-eng', 'gb-nir', 'gb-sct', 'gb-wls', 'gb', 'gd', 'ge', 'gf', 'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp', 'gq', 'gr', 'gs', 'gt', 'gu', 'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu', 'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it', 'je', 'jm', 'jo', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn', 'kp', 'kr', 'kw', 'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk', 'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md', 'me', 'mf', 'mg', 'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms', 'mt', 'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne', 'nf', 'ng', 'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om', 'pa', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr', 'ps', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'rs', 'ru', 'rw', 'sa', 'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl', 'sm', 'sn', 'so', 'sr', 'ss', 'st', 'sv', 'sx', 'sy', 'sz', 'tc', 'td', 'tf', 'tg', 'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tr', 'tt', 'tv', 'tw', 'tz', 'ua', 'ug', 'um', 'un', 'us', 'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf', 'ws', 'ye', 'yt', 'za', 'zm', 'zw');
+
+// Thumbnails
+$thumbnail-bg: $white;

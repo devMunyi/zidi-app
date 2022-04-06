@@ -1,0 +1,101 @@
+// Colors
+$white:             #FFFFFF;
+$gray-50:           #f8f9fa;
+$gray-100:          #E8E9E9;
+$gray-200:          #D1D3D4;
+$gray-300:          #BABDBF;
+$gray-400:          #808488;
+$gray-500:          #666A6D;
+$gray-600:          #4D5052;
+$gray-700:          #333537;
+$gray-800: 			#292b30;
+$gray-900:          #1C1D1E;
+
+$black: 			#292b30;
+$blue: 			    #2185d0;
+$azure: 			#45aaf2;
+$indigo: 			#6435c9;
+$purple: 			#a333c8;
+$pink: 			    #e03997;
+$red: 			    #db2828;
+$orange: 			#f2711c;
+$yellow: 			#fbbd08;
+$lime: 			    #b5cc18;
+$green: 			#21ba45;
+$teal: 			    #00b5ad;
+$cyan: 			    #17a2b8;
+$blush:			    #de5d83;
+
+$black2: 			#2b3035;
+$blue2:			    #6fc3ff;
+$azure2: 			#9179f3;
+$indigo2: 			#8b84ed;
+$purple2: 			#29d7d3;
+$pink2:			    #dc429d;
+$red2: 			    #f66d70;
+$orange2: 			#ffd545;
+$yellow2: 			#fce44e;
+$lime2:			    #bfff00;
+$green2: 			#59e798;
+$teal2:			    #50e4d4;
+$cyan2:			    #75d5cd;
+$blush2:		    #ff7eb3;
+
+$white: 			#FFFFFF;
+
+$text-muted: 		#9aa0ac;
+$text-muted-dark: 	#6e7687;
+
+$primary: 			$blue;
+$secondary: 		$gray-600;
+$success: 			$green;
+$info: 			    $cyan;
+$warning: 			$yellow;
+$danger: 			$red;
+$light: 			$gray-100;
+$dark: 			    $gray-800;
+
+$colors: (
+	"blue":         $blue,
+	"azure":        $azure,
+	"indigo":       $indigo,
+	"purple":       $purple,
+	"pink":         $pink,
+	"red":          $red,
+	"orange":       $orange,
+	"yellow":       $yellow,
+	"lime":         $lime,
+	"green":        $green,
+	"teal":         $teal,
+	"cyan":         $cyan,
+	"white":        $white,
+	"gray":         $gray-600,
+	"gray-dark":    $gray-800
+);
+
+$theme-colors: (
+	"primary":      $primary,
+	"secondary":    $secondary,
+	"success":      $success,
+	"info":         $info,
+	"warning":      $warning,
+	"danger":       $danger,
+	"light":        $light,
+	"dark":         $dark
+);
+
+$social-colors: (
+	"facebook": #3b5998,
+	"twitter": #1da1f2,
+	"google": #dc4e41,
+	"youtube": #f00,
+	"vimeo": #1ab7ea,
+	"dribbble": #ea4c89,
+	"github": #181717,
+	"instagram": #e4405f,
+	"pinterest": #bd081c,
+	"vk": #6383a8,
+	"rss": #ffa500,
+	"flickr": #0063dc,
+	"bitbucket": #0052cc,
+);

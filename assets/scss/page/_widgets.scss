@@ -1,0 +1,346 @@
+.page-loader-wrapper{
+    text-align: center;    
+    z-index: 99999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;    
+    overflow: hidden;
+    background: $gray-100;
+    display: flex;
+    .loader {
+        position: relative;
+        top: calc(40% - 30px);
+        justify-content: center;
+        width: 100%;
+    }
+    img{
+        width: 38px;
+        height: 38px;
+    }
+}
+
+.dropify-wrapper{
+    border-width: 1px;
+    border-color: $gray-100;
+}
+.new_timeline {
+    @extend .margin-0;
+    padding: 0 0 0 5px;    
+    list-style: none;
+    position: relative;
+    
+    &::before {
+        background-color: $gray-200;
+        content: ' ';
+        height: 100%;
+        width: 1px;        
+        position: absolute;
+        top: 0;
+        left: 10px;
+        z-index: 1;
+    }
+
+    > li{
+        @extend .pb-25;
+        @extend .pl-20;
+
+        &:last-child{
+            @extend .pb-0;
+        }
+    }
+
+    .bullet {
+        @include border-radius(10px);
+        @extend .mt-5;
+        background: $white;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        z-index: 2;        
+        position: absolute;
+        border: 2px solid;
+        
+        &.pink {
+            border-color: $blush;
+        }
+        
+        &.green {
+            border-color: $green;
+        }
+        
+        &.orange {
+            border-color: $orange;
+        }
+    }
+
+    .time {
+        @extend .font-12;
+    }
+
+    h3 {
+        @extend .font-15;
+        @extend .margin-0;
+        font-weight: $font-weight-600;
+    }
+
+    h4 {
+        @extend .pb-10;
+        @extend .font-13;
+        font-weight: $font-weight-400;
+        color: $gray-600;
+    }
+}
+.team-info{
+    @extend .mt-5;
+    li{        
+        @include transition(all .3s ease-in-out);
+        display: inline-block;
+
+        & + li{
+            margin-left: -10px;
+        }
+        img{
+            width:32px;
+            @include border-radius(50%);
+            border: 2px solid $white;
+            box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.2);
+        }
+        &:hover{
+            -webkit-transform: translateY(-4px) scale(1.02);
+            -moz-transform: translateY(-4px) scale(1.02);
+            -ms-transform: translateY(-4px) scale(1.02);
+            -o-transform: translateY(-4px) scale(1.02);
+            transform: translateY(-4px) scale(1.02);            
+            z-index: 999;
+            img{
+                -webkit-box-shadow: 0 14px 24px rgba(62,57,107,.2);
+                box-shadow: 0 14px 24px rgba(62,57,107,.2);
+            }
+        }
+    }
+}
+.taskboard{
+    .dd-handle{
+        @include transition(all .4s ease-in-out);
+        @include border-radius(3px);
+        color: $gray-600;
+        padding: 20px;
+        position: relative;
+
+        &::after{
+            @extend .font-15;
+            content: "\f02e";
+            font-family: "FontAwesome";
+            position: absolute;
+            top: -5px;
+            right: 20px;
+        }
+        &:hover{
+            color: $gray-800;
+        }
+        h6{
+            @extend .mb-0;
+            font-weight: $font-weight-600;
+        }
+        .time{
+            @include display-block;            
+        }
+        p{
+            @extend .font-15;            
+            @extend .mt-10;
+        }
+
+    }
+    .planned_task{
+        .dd-handle{
+            &::after{
+                color: $info;
+            }
+            &:hover{
+                border-color: $info;
+            }
+        }
+    }
+    .progress_task{
+        .dd-handle{
+            &::after{
+                color: $warning;
+            }
+            &:hover{
+                border-color: $warning;
+            }
+        }
+    }
+    .completed_task{
+        .dd-handle{
+            &::after{
+                color: $success;
+            }
+            &:hover{
+                border-color: $success;
+            }
+        }
+    }
+
+    .dd-item{
+        &:hover{
+            cursor: move;
+        }
+        > button{
+            margin: 19px 0 9px 9px;
+            &:before{
+                z-index: 1;
+            }
+        }
+    }
+}
+.table_e2{
+    img{
+        width: 35px;
+    }
+    .c_name{
+        @extend .ml-15;
+        font-weight: $font-weight-700;
+    }
+}
+.w_color{
+    div{
+        height: 25px;
+        width: 25px;
+    }
+}
+.modal{
+    .modal-header{
+        .close:before{
+            display: none;
+        }
+    }
+}
+.my_sort_cut{
+    padding-top: 15px;
+    min-height: 80px;
+    display: block;
+    text-align: center;    
+    &:hover{
+        i{
+            font-size: $font-size + 25px;    
+        }
+    }
+
+    i{
+        font-size: $font-size + 10px;
+        @include transition( font-size 0.2s );
+    }
+    span{
+        display: block;
+    }
+}
+.ribbon{
+    position: relative;
+    .ribbon-box{
+        color: $white;
+        right: auto;
+        left: 0;
+        top: 15px;
+        position: absolute;
+        height: 32px;
+        min-width: 30px;
+        padding: 0 5px;
+        text-align: center;
+        line-height: 32px;        
+
+        &::before{
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            content: '';
+            top: 0;
+            right: -8px;
+            height: 32px;
+            border: 16px solid;
+            border-left-width: 0;
+            border-right-width: 8px;
+
+        }
+        &.green{
+            background: $green;
+            &::before{
+                border-color: $green;
+                border-right-color: transparent;
+            }
+        }
+        &.cyan{
+            background: $cyan;
+            &::before{
+                border-color: $cyan;
+                border-right-color: transparent;
+            }
+        }
+        &.pink{
+            background: $pink;
+            &::before{
+                border-color: $pink;
+                border-right-color: transparent;
+            }
+        }
+        &.orange{
+            background: $orange;
+            &::before{
+                border-color: $orange;
+                border-right-color: transparent;
+            }
+        }
+        &.info{
+            background: $info;
+            &::before{
+                border-color: $info;
+                border-right-color: transparent;
+            }
+        }
+        &.indigo{
+            background: $indigo;
+            &::before{
+                border-color: $indigo;
+                border-right-color: transparent;
+            }
+        }
+    }
+}
+.box-icon{
+    &.sm{
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+    }
+    &.md{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+    }
+    &.lg{
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+    }
+    i{
+        color: $white;
+        font-size: $font-size + 3px;
+    }
+}
+.note-editor{
+    .btn.btn-default{
+        border: 0 !important;
+        background-color: transparent !important;
+        padding: 5px 10px !important;
+        box-shadow: none !important;
+        font-size: $font-size - 3px; 
+    }
+}

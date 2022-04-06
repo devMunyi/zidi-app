@@ -1,0 +1,265 @@
+.chat_page{
+    #left-sidebar{
+        z-index: 99;
+    }
+    .page {
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+    @include max-screen($break-large){
+        .chat_app{
+            .chat_room{
+                margin-left: 290px;
+                width: calc( 100% - 270px);
+            }
+            .chat_list{
+                width: 300px;
+            }
+        }
+    }
+    @include max-screen($break-small) {
+        .page {
+            left: 70px;
+            width: calc( 100% - 70px);
+        }
+        .chat_app{
+            .chat_room{
+                margin-left: 0;
+                width: 100%;
+                padding: 0 20px;
+            }
+            .chat_list{
+                width: 300px;
+            }
+        }
+    }
+    @include max-screen($break-small - 1px) {
+        .page {
+            left: 0;
+            width: 100%;
+        }
+    }
+}
+.chat_app{
+    height: 100vh;
+
+    @include max-screen($break-small - 1px) {
+        height: auto;
+    }
+
+    .chat_windows{
+                
+        ul {
+            padding: 20px 0;
+            height: calc(100vh - 210px);
+            
+            overflow-y: scroll;
+            scrollbar-width: none; // Firefox /
+            -ms-overflow-style: none;  // IE 10+ /
+
+            &::-webkit-scrollbar { // WebKit /
+                width: 0px;
+            }
+            
+            @include max-screen($break-small - 1px) {
+                height: calc(100vh - 240px);
+            }
+
+            li {
+                @extend .mb-30;
+                list-style: none;
+
+                &:last-child{
+                    @extend .mb-0;
+                }
+            }
+        }
+        
+        .message {
+            @include inline-block();
+            position: relative;
+            
+            p{
+                @extend .mb-5;
+                @include border-radius(60px 60px 60px 0);
+                width: max-content;
+                padding: 8px 15px; 
+
+                @include max-screen($break-medium) {
+                    width: fit-content;
+                }               
+            }
+
+            .time {           
+                @include display-block();
+                @extend .font-12;
+            }
+        }
+
+        .my-message {
+            @extend .align-right;
+            @extend .ml-50;
+            justify-content: flex-end;
+            p{
+                @include border-radius(60px 60px 0 60px);
+            }
+            .message{
+                @include max-screen($break-small - 1px) {
+                    width: calc(100% - 0);
+                }
+            }
+        }
+
+        .other-message {
+            @extend .align-left;
+            .message{
+                @include max-screen($break-small - 1px) {
+                    width: calc(100% - 70px);
+                }
+            }
+        }
+
+        .chat-message {
+            @include border-radius(3px);
+            padding: 20px 10px;
+            border: 1px solid $gray-100;
+            
+            > a{
+                padding: 10px 15px;
+            }
+            .form-control{
+                border: 0;
+                margin-top: 15px;
+                background: transparent;
+                &:focus{
+                    box-shadow: none;
+                }
+            }
+        }
+        .file_folder{
+            margin: 0;
+        
+            .file-name {
+                text-align: left;
+                float: left;
+                p{
+                    margin: 0;
+                    width: 100% !important;
+                    padding: 0;
+                }
+            }
+        }
+    }
+    .chat_room{
+        margin-left: 380px;
+        width: calc( 100% - 380px);
+        padding: 0 30px;
+    }
+    .chat_list{
+        @include transition(all .5s ease-in-out);
+        //@include box-shadow(0 2px 5px 0 rgba($dark,0.1));
+        border-right: 1px solid $lightgray;
+        width: 380px;
+        height: 100vh;
+        position: fixed;
+        left: 70px;
+        top: 0;
+        padding: 10px 20px;
+        z-index: 7;
+
+        &.open{
+            left: 0;
+            display: block;
+            background: $white;
+            z-index: 9999;
+        }
+        @include max-screen($break-1024 - 1px) {
+            left: -320px;
+        }
+
+        @include max-screen($break-small - 1px) {
+            display: none;
+        }
+
+        .right_chat{
+            height: calc(100vh - 160px);
+            overflow-y: auto;
+            overflow-y: scroll;
+            scrollbar-width: none; // Firefox /
+            -ms-overflow-style: none;  // IE 10+ /
+
+            &::-webkit-scrollbar { // WebKit /
+                width: 0px;
+            }
+        }
+    }
+    .chat_list_btn{
+        display: none;
+
+        @include max-screen($break-medium) {
+            display: block;
+        }
+    }
+}
+.right_chat{
+    @extend .pt-10;
+    @extend .pb-10;
+    @extend .mb-0;
+
+    li {
+        @include border-radius(3px);
+        padding: 10px;
+        margin-bottom: 5px;
+        position: relative;
+
+        &:hover{
+            background: $gray-100;
+        }
+        &.offline {
+            .status {
+                background: $warning;
+            }
+        }
+        &.online {
+            .status {
+                background: $success;
+            }
+        }
+        &.me {
+            .status {
+                background: $info;
+            }
+        }
+    }
+    .media {
+        .media-object {
+            @include transition(all .3s ease-in-out);
+            @include border-radius(40px);
+            @extend .mr-10;
+            width: 40px;
+            height: 40px;            
+            border: 2px solid transparent;            
+        }
+        .name {
+            display: block;
+            color: $gray-800;
+            line-height: normal;
+        }
+        .message {
+            @extend .font-13;
+            color: $gray-400;            
+        }
+        .status {
+            @include border-radius(40px);
+            @include inline-block();
+            @extend .padding-0;
+            position: absolute;
+            left: 40px;
+            top: 38px;
+            width: 11px;
+            height: 11px;                        
+            min-width: inherit;
+            border: 3px solid $white;
+        }
+    }
+}

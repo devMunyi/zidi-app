@@ -1,0 +1,97 @@
+.tag {
+    @include border-radius(3px);
+	font-size: px2rem(12px);
+    color: $text-muted-dark;
+    font-weight: $font-weight-400;
+	background-color: $gray-200;
+	padding: 0 .5rem;
+	line-height: 2em;
+	display: inline-flex;
+	cursor: default;	
+	user-select: none;
+
+	@at-root a#{&} {
+        @include transition(all .3s ease-in-out);
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgba($text-muted-dark, .20);
+			color: inherit;
+		}
+	}
+}
+
+.tag-addon {
+    @extend .align-center;
+	display: inline-block;
+	padding: 0 .5rem;
+	color: inherit;
+	text-decoration: none;
+	background: rgba(#000, .06);
+	margin: 0 -.5rem 0 .5rem;	
+	min-width: 1.5rem;
+
+	&:last-child {
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+
+	i {
+		vertical-align: middle;
+		margin: 0 -.25rem;
+	}
+
+	@at-root a#{&} {
+        @include transition(all .3s ease-in-out);
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover {
+			background: rgba(#000, .16);
+			color: inherit;
+		}
+	}
+}
+
+.tag-avatar {
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 3px 0 0 3px;
+	margin: 0 .5rem 0 -.5rem;
+}
+
+@each $vendor, $color in $colors {
+	.tag-#{$vendor} {
+		background-color: $color;
+		color: $white;
+	}
+}
+
+@each $vendor, $color in $theme-colors {
+	.tag-#{$vendor} {
+		background-color: $color;
+		color: $white;
+	}
+}
+
+.tag-rounded {
+    @include border-radius(50px);
+
+	.tag-avatar {
+        @include border-radius(50px);
+	}
+}
+
+.tags {
+	margin-bottom: -.5rem;
+	font-size: 0;
+
+	>.tag {
+		margin-bottom: .5rem;
+
+		&:not(:last-child) {
+			margin-right: .5rem;
+		}
+	}
+}

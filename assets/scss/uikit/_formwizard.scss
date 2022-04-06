@@ -1,0 +1,189 @@
+﻿.wizard {
+
+    .content {
+        @include border-radius(0px);
+        @extend .margin-0;
+        min-height: 245px;        
+        overflow-y: auto; 
+
+        .body {
+            padding: 15px;
+
+            label.error{
+                @extend .margin-0;
+                @extend .font-12;
+                color: $danger;
+            }
+
+            input[type="checkbox"]{
+                display: none;
+            }
+        }
+    }
+
+    .actions {        
+        @include display-block;
+        @extend .align-right;
+        position: relative;
+        width: 100%;            
+        margin-top: 10px !important;      
+
+        ul{
+            @include inline-block;
+            > li{
+                float: left;
+                margin: 0 !important;
+            }
+        }
+
+        a {
+            @include display-block;
+            @extend .ml-5;
+            color: $white;            
+            text-decoration: none;            
+
+            &:hover, &:active {
+                @include display-block;
+                color: $white;                
+                text-decoration: none;
+            }
+        }
+
+        .disabled a {
+
+            &:hover, &:active {
+                background: $gray-100;
+                color: $gray-500;
+            }
+        }
+    }
+
+    .steps {
+        @include display-block;
+        position: relative;        
+        width: 100%;
+        margin-bottom: 2px;
+
+        a {
+            @include display-block;
+            @include border-radius(0px);
+            width: auto;
+            margin: 0 2px 0 0;
+            padding: 10px;
+            text-decoration: none;
+
+            &:hover, &:active {
+                @include display-block;
+                @include border-radius(0px);
+                width: auto;
+                margin: 0 2px 0 0;
+                padding: 10px;
+                text-decoration: none;
+            }
+        }
+
+        .number{
+            @extend .font-15;
+        }
+
+        .disabled a {
+            cursor: default;
+
+            &:hover, &:active {
+                background: $gray-200;
+                color: $gray-400;
+                cursor: default;
+            }
+        }
+
+        .current a {
+            color: $white;
+            cursor: default;
+
+            &:hover, &:active {
+                color: $white;
+                cursor: default;
+            }
+        }
+
+        .done a {
+            color: $white;
+            opacity: 0.7;
+
+            &:hover, &:active {
+                color: $white;
+                opacity: 0.7;
+            }
+        }
+
+        > ul > li {
+            width: 25%;
+            float: left;
+            &:last-child{
+                a{
+                    margin: 0;
+                }
+            }
+        }
+        
+    }
+
+    &.vertical {
+        > .steps {
+            float: left;
+            width: 30%;
+            @extend .pr-5;
+
+            > ul > li {
+                float: none;
+                width: 100%;
+
+                a{
+                    margin: 0 0 2px 0;
+                }
+            }
+        }
+
+        > .content {
+            float: left;            
+            width: 70%;
+            margin: 0;
+        }
+
+        > .actions {
+            float: right;
+            width: 100%;
+            margin: 0;
+        }        
+    }
+}
+
+.wizard_validation{
+    .wizard .steps>ul>li{
+        width: auto !important;
+    }
+}
+
+@include max-screen($break-small - 1px){
+    .wizard {
+        > .steps{
+            > ul > li{
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            a{
+                margin: 0;
+            }
+        }
+        &.wizard.vertical{
+            >.content, >.steps{
+                width: 100%;
+                padding: 0;
+                
+            }
+        }
+    } 
+    .wizard_validation .wizard .steps>ul>li{
+        width: 100% !important;
+    }  
+}

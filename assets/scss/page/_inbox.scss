@@ -1,0 +1,186 @@
+.email_page{
+    #left-sidebar{
+        width: 250px;
+    }
+    .page{
+        left: 250px;
+        width: calc(100% - 250px);
+        @include max-screen($break-large){
+            left: 70px;
+            width: calc(100% - 70px);
+        }
+        @include max-screen($break-small){
+            left: 0;
+            width: 100%;
+        }
+    }
+    .inbox_body{
+
+        .inbox_list{
+            width: 380px;
+            padding: 10px 15px;
+            float: left;
+            @include max-screen($break-medium){
+                width: 100%;
+            }
+        }
+        .inbox_content{
+            @include transition(all .3s ease-in-out);
+            float: left;
+            width: calc(100% - 380px);
+            background: $white;
+            height: 100vh;
+            overflow-y: auto;
+
+            > .card{
+                border: 0;
+            }
+            @include max-screen($break-medium){
+                position: fixed;
+                right: -1000px;
+                width: calc(100% - 180px);
+                z-index: 999;
+                &.open{
+                    right: 0;
+                }
+            }
+            @include max-screen($break-small){
+                width: calc(100% - 70px);
+            }
+        }
+        .right_chat{
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            li{
+                border-bottom: 1px solid $gray-100;
+                &.active{
+                    background: $gray-100;
+                }
+            }
+        }
+    }
+    &.offcanvas-active{
+        .page{
+            left: 70px;
+            width: calc(100% - 70px);
+        }
+    }
+}
+
+.inbox{
+    .action_bar{
+        padding: 10px 20px;
+    }
+
+    .first{
+        width: 70px;
+    }
+    .custom-control{
+        @include inline-block();
+        @extend .mb-0;        
+        .custom-control-label::before,
+        .custom-control-label::after{
+            top: 2px;
+        }
+    }
+    .from{
+        a{
+            @extend .font-17;
+            color: $gray-700;
+        }
+    }
+    .msg{
+        @extend .text_ellipsis;
+        width: 800px;
+
+        @include max-screen ($break-xlarge){
+            width: 600px;
+        }
+        @include max-screen ($break-1024){
+            width: 510px;
+        }
+        @include max-screen ($break-medium){
+            width: 350px;
+        }
+        @include max-screen ($break-small - 1px){
+            width: 220px;
+        }
+    }
+    .detail{
+        background: $lightgray;
+        .detail-header{
+            padding: 15px;
+            background: $gray-50;
+            .float-left{
+                img{
+                    border-radius: $border-radius-small;
+                    max-width: 63px;                    
+                }
+            }
+            @include max-screen($break-xsmall){
+                small,
+                span{
+                    display: none;
+                }
+            }
+        }
+        .media-body{
+            p{
+                a{
+                    color: $font-color;
+                }
+            }
+        }
+        .mail-cnt{
+            padding: 20px 15px;
+            @include max-screen($break-xsmall){
+                padding: 20px 0;
+            }
+        }
+    }
+}
+
+.mail-star{
+    color: $gray-500;
+    &.active{
+        color: $warning;
+    }
+    &.love{
+        color: $blush;
+    }
+}
+.file_folder{
+    @extend .mb-25;
+    a{
+        @include inline-block();
+        @extend .mb-5;
+        border-radius: $border-radius-small;
+        border: 1px solid $gray-200;
+        position: relative;
+        overflow: hidden;
+        width: 220px;
+
+        @include max-screen($break-small - 100px){
+            width: 100%;
+            display: block;
+        }
+    }
+    .icon {
+        @extend .align-center;
+        float: left;
+        width: 60px;
+
+        i {
+            @extend .font-30;            
+            vertical-align: middle;
+            line-height: 65px;
+        }
+    }
+
+    .file-name {
+        padding: 10px;
+        .date {
+            float: right;
+        }
+    }
+}

@@ -1,0 +1,85 @@
+// Buttons
+$input-line-height: (24/15);
+$btn-line-height: (24/13);
+
+$input-line-height-sm: (16/14);
+$btn-line-height-sm: (16/12);
+
+$input-line-height-lg: (26/18);
+$btn-line-height-lg: (26/16);
+
+$input-btn-focus-width: 2px;
+
+$input-disabled-bg: $gray-100;
+
+$input-focus-border-color: #1991eb;
+$custom-select-focus-border-color: #1991eb;
+
+// Inputs
+$input-bg: #fff;
+$input-height: 2.375rem;
+
+$input-color: $gray-700;
+$input-border-color: $border-color;
+$input-border-width: 1px;
+$input-box-shadow: inset 0 1px 1px rgba(#000, .075);
+
+$input-group-addon-border-color: $input-border-color;
+$input-group-addon-bg: #fbfbfc;
+
+$input-placeholder-color: $gray-500;
+
+// Grid
+$grid-columns: 12;
+$grid-gutter-width: 1.5rem;
+
+// Header
+$header-bg: #0667d0;
+$header-color: #fff;
+$header-height: 4.5rem;
+
+// Cards
+$card-border-color: $border-color;
+$card-spacer-y: 20px;
+$card-spacer-x: 20px;
+
+// Alerts
+$alert-link-font-weight: 600;
+
+// Dropdowns
+$dropdown-border-color: $border-color;
+$dropdown-box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.25);
+
+// Tables
+$table-accent-bg: rgba(0, 0, 0, .04);
+$table-hover-bg: rgba(0, 0, 0, .06);
+
+$custom-select-padding-y: .5rem;
+$custom-select-padding-x: .75rem;
+
+$custom-select-indicator-color: #999;
+$custom-select-indicator: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='#{$custom-select-indicator-color}' d='M0 0L10 0L5 5L0 0'/%3E%3C/svg%3E");
+
+// Aside
+$aside-width: 22rem;
+
+// List group
+$list-group-border-color: $border-color;
+$list-group-active-color: $primary;
+$list-group-active-bg: mix($primary, #fff, 4%);
+$list-group-active-border-color: $list-group-border-color;
+
+// Popovers
+$popover-body-padding-y: .75rem;
+$popover-body-padding-x: 1rem;
+$popover-border-color: #dee3eb;
+$popover-body-color: $text-muted-dark;
+$popover-arrow-width: .5rem;
+$popover-arrow-height: .5rem;
+
+// Pagination
+$pagination-color: $body-color;
+$pagination-disabled-color: $gray-400;
+
+// Navs
+$nav-tabs-link-active-bg: transparent;

@@ -1,0 +1,105 @@
+.nav-link,
+.nav-item {
+	padding: 0 .75rem;
+	min-width: 2rem;
+	transition: .3s color;
+	user-select: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+
+	.badge {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: .2rem .25rem;
+		min-width: 1rem
+	}
+}
+
+.nav-tabs {
+    @include transition(all .3s ease-in-out);
+    color: $text-muted;
+	user-select: none;	
+	margin: 0 -.75rem;
+
+	.nav-link {
+        @extend .font-15;
+        transition: .3s border-color;
+        font-weight: $font-weight-400;
+		border: 0;
+		color: inherit;
+		border-bottom: 3px solid transparent;
+		margin-bottom: -1px;		
+		padding: 1rem 0;
+
+		&:hover:not(.disabled) {
+			border-color: $text-muted-dark;
+			color: $text-muted-dark;
+		}
+
+		&.active {            
+			border-color: $blue;
+			color: $blue;
+            background: transparent;            
+		}
+
+		&.disabled {
+			opacity: .4;
+			cursor: default;
+			pointer-events: none;
+		}
+	}
+
+	.nav-item {
+        @extend .mb-0;
+		position: relative;
+
+		i {
+            @include inline-block();
+            @extend .font-12;
+            @extend .mr-5;
+			line-height: 1;
+			width: px2rem(14px);
+			vertical-align: baseline;			
+		}
+
+		&:hover {
+			.nav-submenu {
+				display: block;
+			}
+		}
+	}
+
+	.nav-submenu {
+        background: $white;
+        border-radius: 0 0 3px 3px;
+		display: none;
+		position: absolute;		
+		border: 1px solid $border-color;
+		border-top: none;
+		z-index: 10;
+		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+		min-width: 10rem;		
+
+		.nav-item {
+			@include display-block();
+			padding: .5rem 1rem;
+			color: $text-muted;
+            margin: 0 !important;
+            
+			cursor: pointer;
+			transition: .3s background;
+
+			&.active {
+				color: $link-color;
+			}
+
+			&:hover {
+				color: $text-muted-dark;
+				text-decoration: none;
+				background: rgba(0, 0, 0, .024);
+			}
+		}
+	}
+}

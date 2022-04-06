@@ -1,0 +1,32 @@
+// Vertical carousel
+.carousel{
+	&.vert{
+		.carousel-item-next.carousel-item-left,
+		.carousel-item-prev.carousel-item-right{
+			-webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .carousel-item-next,
+        .active.carousel-item-right {
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100% 0);
+        }
+
+        .carousel-item-prev,
+        .active.carousel-item-left {
+            -webkit-transform: translate3d(0,-100%, 0);
+            transform: translate3d(0,-100%, 0);
+        }
+	}
+}
+
+.carousel-item-background {
+	content: '';
+	background: rgba(0, 0, 0, .5);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}

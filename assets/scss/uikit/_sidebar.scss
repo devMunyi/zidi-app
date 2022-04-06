@@ -1,0 +1,389 @@
+*[dir="rtl"] .metismenu .arrow {
+    float: left;
+}
+*[dir="rtl"] .metismenu .plus-times {
+    float: left;
+}
+*[dir="rtl"] .metismenu .plus-minus {
+    float: left;
+}
+
+.metismenu{
+    display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+	.arrow {
+        float: right;
+        line-height: 1.42857;
+    }
+    .collapse {
+        display: none;
+        &.in{
+            display: block;
+        }
+    }
+    .collapsing {
+        position: relative;
+        height: 0;
+        overflow: hidden;
+        transition-timing-function: ease;
+        transition-duration: .35s;
+        transition-property: height, visibility;
+    }
+    .has-arrow {
+		position: relative;
+		
+        &:after {
+            @include transition(all .5s ease-in-out);
+            font-family: 'FontAwesome';
+            position: absolute;
+            color: $gray-300;
+            content: "\f10c";
+            right: 1.8em;
+            font-size: $font-size - 6px;
+            top: 0; 
+        }
+        &[aria-expanded="true"]::after {
+            content: "\f192";
+            color: $gray-700;
+        }
+        &.arrow-b{
+            &:after {
+                content: "\f105";
+                font-size: $font-size - 1px;
+                top: 0;
+                right: 15px;
+            }
+            &[aria-expanded="true"]::after{
+                content: "\f107";
+            }
+        }
+        &.arrow-c{
+            &:after {
+                content: "\f067";
+            }
+            &[aria-expanded="true"]::after{
+                content: "\f068";
+            }
+        }
+	}
+	.g_heading{
+        @extend .mt-20;
+        font-size: $font-size - 4px;
+        text-transform: uppercase;
+		color: $gray-500;
+		padding-left: 0;
+	}
+	> li {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 0%;
+		flex: 1 1 0%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		position: relative;
+
+		i {
+            font-size: $font-size;
+			width: 40px;
+			display: inline-block;
+			position: relative;
+            top: 1px;
+		}
+	}
+	a {
+		@include transition(all .3s ease-out);
+        @include display-block;
+        @include border-radius(0);
+        border-right: 2px solid transparent; 
+		color: $dark;
+		position: relative;
+		margin: 7px 0;
+        outline-width: 0;
+        font-size: $font-size - 1px;
+    }
+    .active{
+        > a{
+            font-weight: 700;
+            color: $dark;
+            border-color: $dark;
+        }
+        ul{
+            .active{
+                a{
+                    color: $dark;
+                    background: transparent;
+                }
+            }
+        }
+    }
+
+	ul{
+        padding: 0;
+        list-style: none;
+        > li:last-child{
+            padding-bottom: 20px;
+        }
+        a {
+            color: $gray-600;
+            font-size: $font-size - 1px;
+            padding: 0 15px 0 40px;
+            position: relative;            
+            height: 26px;
+            &::before{
+                font-size: $font-size - 1px;
+                font-family: 'feather' !important;
+                content: "\e999";
+                position: absolute;
+                left: 1px;
+            }
+            &.list-b{
+                &::before{
+                    content: "\e945";
+                }
+            }
+            &.list-c{
+                &::before{
+                    content: "\e911";
+                }
+            }
+        }
+        ul{
+            a {
+                padding: 10px 15px 10px 70px;
+            }
+        }
+
+        &.collapse a {
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+}
+#left-sidebar {
+    @include transition(all .3s ease-in-out);
+	width: $sidebar-width;
+    background-color: $white;
+    border-right: 1px solid $lightgray;
+    padding: 15px 15px 20px $sidebar-icon + 15px;
+    height: 100vh;
+    left: 0;	
+    overflow-y: auto;
+	position: fixed;
+    top: 0;
+	
+	@include max-screen($break-large) {
+		left: -$sidebar-width;
+    }
+    @include max-screen($break-small - 1px) {
+		padding-top: 65px;
+        padding-left: 20px;
+    }
+    >.container{
+        padding: 0;
+    }
+    .sidebar-nav{
+        height: calc(100vh - 180px);
+        overflow-y: auto;
+        margin-right: -15px;
+        @include max-screen($break-small - 1px){
+            padding-bottom: 40px;
+            height: calc(100vh - 200px);
+        }
+    }
+    .menu_option{
+        @include transition(all .3s ease-in-out);
+        opacity: 0.3;
+        &.active,
+        &:hover{
+            opacity: 1;
+        }
+    }
+    .nav-link,
+    .nav-item{
+        min-width: auto;
+    }
+    .search{
+        margin-top: 20px;
+    }
+    > .brand_name{
+        margin-bottom: 20px;
+        align-items: center;
+        .brand-name{
+            margin: 0;
+        }
+    }
+}
+.header_top{
+    > .container{
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 100vh;
+        @include max-screen($break-small - 1px) {
+            flex-direction: row;
+            height: 55px;
+            align-items: center;
+        }
+    }
+    &.dark{
+        background-color: $black2 !important;
+        .nav-link{
+            color: $gray-400 !important;
+        }
+    }
+}
+.user_div{
+    @include transition(all .5s ease-in-out);
+   // @include box-shadow( 0 10px 15px rgba($dark,0.2));
+    width: $sidebar-width - 71px;
+    background-color: $white;
+    position: fixed;
+    top: 0;
+    left: -350px;
+    padding: 20px 15px;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 9999;    
+
+    &.open{
+        left: $sidebar-icon;
+        @include max-screen($break-small - 1px){
+            left: 0;
+        }
+    }
+
+    .user_btn{
+        float: right;
+    }
+    .card{
+        background: transparent;
+    }
+    .user_avatar{
+        @include box-shadow(0 5px 10px 0 rgba($dark,0.4));
+        margin-top: 15px;
+        margin-bottom: 20px;
+        border: 5px solid $white;
+        height: 120px;
+        height: 120px;
+    }
+    @include max-screen($break-small - 1px){
+        width: $sidebar-width;
+    }
+}
+.setting_switch{
+    .custom-switch{
+        display: flex;
+        justify-content: space-between;
+        .custom-switch-description{
+            margin: 0;
+        }
+    }
+}
+.sidebar_dark{
+
+    .sidebar{
+        background-color: $black2 !important;
+        color: $white;
+        .metismenu{
+            a{
+                color: $gray-300;
+            }
+            .has-arrow[aria-expanded="true"]::after{
+                color: $gray-100;
+            }
+            &.grid>li.active>a,
+            &.grid>li>a:hover{
+                background: $gray-100;
+            }
+            .active{
+                > a {
+                    color: $blue;
+                }
+                ul .active a{
+                    color: $blue;
+                }
+            }
+        }
+    }    
+    #header_top{
+        border: 0;
+        .nav-link{
+            color: $gray-300;
+        }
+    }
+    &.offcanvas-active{
+        #header_top{
+            background-color: $black2 !important;
+        }
+    }
+}
+.top_dark{
+    background-color: $black2 !important;
+    color: $white;
+    
+    .form-control,
+    .custom-select{
+        background-color: rgba($white, 0.1);
+        border: 0;
+        color: $gray-400 !important;
+    }
+    .page-header{
+        border-color: $black2;
+        .right .nav-pills .nav-link{
+            color: $gray-300;
+        }
+    }
+}
+.theme_btn{
+    a{
+        height: 15px;
+        width: 15px;
+        display: inline-block;
+        border-radius: 15px;
+        border: 1px solid $lightgray;
+    }
+}
+/* Effect 5: same word slide in */
+.ci-effect-1{
+    a {
+        overflow: hidden;
+        span {
+            position: relative;
+            display: inline-block;
+            -webkit-transition: -webkit-transform 0.3s;
+            -moz-transition: -moz-transform 0.3s;
+            transition: transform 0.3s;
+            &:before {
+                position: absolute;
+                top: 100%;
+                content: attr(data-hover);
+                font-weight: 700;
+                -webkit-transform: translate3d(0,0,0);
+                -moz-transform: translate3d(0,0,0);
+                transform: translate3d(0,0,0);
+            }
+        }
+        &:hover span,
+        &:focus span {
+            -webkit-transform: translateY(-100%);
+            -moz-transform: translateY(-100%);
+            transform: translateY(-100%);
+        }
+    }
+}

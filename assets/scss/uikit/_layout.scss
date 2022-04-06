@@ -1,0 +1,296 @@
+.page {
+    @include transition(all .5s ease-in-out);
+    left: $sidebar-width;    
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;	
+    width: calc(100% - 330px);
+    position: relative;    
+
+    @include max-screen($break-large){
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+    @include max-screen($break-small - 1px){
+        padding: 56px 0 0 0;
+        width: 100%;
+        left: 0;        
+    }
+    .section-light,
+    .section-dark,
+    .section-white,
+    .section-gray,
+    .section-body{
+        padding: 0 20px;
+        @include max-screen($break-small - 1px){
+            padding: 0;
+        }
+    }
+
+    .section-body{
+        background: $body-color;
+    }
+    .section-light{
+        background: $gray-50;
+    }
+    .section-dark{
+        background: $gray-800;
+    }
+    .section-white{
+        background: $white;
+    }
+    .section-gray{
+        background: $gray-100;
+    }
+
+    #page_top{
+        margin-bottom: 15px;
+    }
+}
+.page-content {
+    margin: .75rem 0;
+
+    @include max-screen($break-small){
+        margin: 1.5rem 0;
+    }
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    align-items: center;
+    border-bottom: 1px solid $gray-100;
+
+    .left{
+        display: flex;
+        align-items: center;
+
+        .custom-select{
+            width: 120px;
+            margin-right: 5px;
+        }
+    }
+    .right{
+        display: flex;
+        align-items: center;
+        .nav-pills {
+            .nav-item{
+                padding: 0;
+                .dropdown-item{
+                    font-size: $font-size - 1px; 
+                }
+            }
+            .nav-link{
+                color: $gray-500;
+            }
+            .show>.nav-link{
+                background: transparent;
+            }
+        }
+        .nav-link{
+            background: transparent;
+            border: 0;
+            padding: 6px 10px;
+        }
+        .notification{
+            position: relative;            
+            .nav-unread{
+                position: absolute;
+                top: 0;
+                right: 5px;
+                min-height: 8px;
+                display: inline-block;
+                min-width: 5px;
+                box-shadow: 0 0 0 rgba($darkgray, 0.9);
+                animation: pulse 2s infinite;
+            }
+        }
+    }
+    @include max-screen($break-medium){
+        display: block;
+        .right{
+            margin-top: 15px;
+            justify-content: space-between;
+            .nav-pills .nav-link{
+                padding-left: 0;
+                padding-right: 15px;
+            }
+        }
+    }
+    @include max-screen($break-small - 1px){
+        .left{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .right{
+            display: none;
+        }
+    }
+}
+.header-nav{
+    .breadcrumb{
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        font-size: $font-size - 2px; 
+    }    
+}
+.page-header-tab{
+    border: 0;
+    margin-top: -2px !important;
+    .nav-link{
+        border-bottom: 0 !important;
+        &.dropdown-toggle{
+            border-top: 3px solid transparent;
+            &:hover,
+            &:focus{
+                background: transparent;
+            }
+        }
+    }
+    .nav-link.active,
+    .nav-link:hover{
+        border-bottom: 0 !important;
+        border-top: 3px solid !important;
+        border-radius: 0 !important;
+    }
+    .dropdown-menu{
+        border-radius: $border-radius-large;
+    }
+}
+.page-title {
+    font-size: $font-size + 6px;
+    margin-bottom: 0;
+    margin-right: 20px;
+    white-space: nowrap;
+}
+.page-title-icon {
+    color: $text-muted;
+    font-size: 1.25rem;
+}
+.page-subtitle {
+    color: $text-muted-dark;
+    font-size: px2rem(13px);	
+    margin-left: 2rem;
+
+    a {
+        color: inherit;
+    }
+}
+.page-options {
+    margin-left: auto;
+}
+.page-breadcrumb {
+    flex-basis: 100%;
+}
+.page-description {
+    color: $text-muted-dark;
+    margin: .25rem 0 0;	
+
+    a {
+        color: inherit;
+    }
+}
+.page-single {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    height: 100vh;
+}
+.content-heading {
+    font-weight: 400;
+    margin: 2rem 0 1.5rem;
+    font-size: px2rem(20px);
+    line-height: 1.25;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.layout-fullwidth #main_content {
+    #left-sidebar {
+        left: -$sidebar-width;
+    }
+
+    .page {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.offcanvas-active {
+    #header_top{
+        background: $white;
+        border-right: 1px solid $border-color;
+        @include max-screen($break-small - 1px) {
+            border-right: 0;
+        }
+    }
+    #left-sidebar {
+        left: -$sidebar-width;
+
+        @include max-screen($break-large){
+            left: 0;
+            position: fixed;
+            z-index: 99;
+        }
+        @include max-screen($break-small - 1px){                        
+            left: 0;
+            position: fixed;
+        }
+    }
+    .page{
+        left: 60px;
+        width: calc(100% - 60px);
+
+        @include max-screen($break-small - 1px){            
+            left: 0;
+            width: 100%;
+        }
+    }    
+}
+
+.auth{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    .header-brand{
+        font-size: $font-size + 15px; 
+    }
+    > .card{
+        width: 400px;
+        background: transparent;
+        border: 0;
+        margin: 0 auto;
+    }
+}
+
+@-webkit-keyframes pulse {
+    0% {
+    -webkit-box-shadow: 0 0 0 0 rgba($darkgray, 0.9);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba($darkgray, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba($darkgray, 0);
+    }
+}
+@keyframes pulse {
+    0% {
+    -moz-box-shadow: 0 0 0 0 rgba($darkgray, 0.9);
+    box-shadow: 0 0 0 0 rgba($darkgray, 0.7);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba($darkgray, 0);
+        box-shadow: 0 0 0 10px rgba($darkgray, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba($darkgray, 0);
+        box-shadow: 0 0 0 0 rgba($darkgray, 0);
+    }
+}

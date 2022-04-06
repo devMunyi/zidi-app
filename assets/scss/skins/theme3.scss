@@ -1,0 +1,489 @@
+﻿@import '../base/colors';
+
+$t1-color1:     #0078A7;
+$t1-color2:     #07DAB3;
+$t1-color3:     #1B2139;
+$t1-color4:     #18BADD;
+$t1-color5:     #202121;
+$t1-dark:       #2A2C35;
+$t1-lightdark:  #747879;
+$t1-xlightdark: #417082;
+$t1-card:       #ffffff;
+$t1-xlight:     #ffffff;
+
+
+::selection {
+    color: $white; 
+    background: $t1-color2;
+}
+a,
+.btn-link{
+    color: $t1-color1;
+}
+.text-info,
+.text-danger,
+.text-primary,
+.mail-star.active,
+.page-title{ color: $t1-color2 !important;}
+
+.badge-default{
+    background: $t1-lightdark;
+    color: $t1-xlight;
+}
+.loader{
+    color: $t1-color3;
+}
+.badge-primary{
+    background-color: $t1-color3;
+}
+.btn-primary{
+    background: $t1-color3;
+    color: $white;
+    border-color: $t1-color3;
+}
+.btn-info{
+    background-color: $t1-color1;
+    border-color: $t1-color1;
+}
+.nav-tabs .nav-link.active{
+    border-color: $t1-color2;
+    color: $t1-color2;
+}
+.form-control{
+    &:focus{
+        box-shadow: 0 0 0 0.2rem rgba($t1-color3,.25);
+    }
+}
+.dropify-wrapper,
+.btn-primary{
+    border: 0;
+}
+.bg-primary,
+.bg-info,
+.bg-warning,
+.btn-success{
+    background-color: $t1-color3 !important;
+    border: transparent;
+}
+.bg-success,
+.bg-danger,
+.badge-success,
+.progress-bar,
+.btn-danger,
+.btn-warning{
+    background-color: $t1-color1;
+    border: transparent;
+}
+
+.btn-outline-primary{
+    color: $t1-color3;
+    border-color: $t1-color3;
+    &:hover{
+        background-color: $t1-color3;
+        border-color: $t1-color3;
+    }
+}
+.custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:disabled:checked~.custom-control-label::before,
+.custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::before{
+    border-color: $t1-color3;
+    background-color: $t1-color3;
+}
+.custom-switch-input:checked ~ .custom-switch-indicator{
+    background: $t1-color3;
+}
+.selectgroup-input:checked+.selectgroup-button{
+    border-color: $t1-color3;
+    color: $t1-color3;
+    background: rgba($t1-color3, 0.2);
+}
+
+.imagecheck-figure:before{
+    color: $t1-color1 !important;
+}
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active,
+.wizard > .actions a,
+.wizard > .actions a:hover{
+    background: $t1-color3;
+}
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover{
+    background: rgba($t1-color3, 0.2);
+    color: $t1-color3;
+}
+.list-group-item,
+.modal-content{
+    background-color: $t1-card;
+}
+.table{
+    th{
+        color: $t1-lightdark;
+    }
+    &.table-custom{
+        td, th{
+            background: $t1-card;
+        }
+    }
+    &.table_custom {
+        tr{
+            background: $t1-card;
+        }
+    }
+}
+.right_chat li.online .status{
+    background: $t1-color3;
+}
+
+.bg-light-blue,
+.bg-light-azure,
+.bg-light-indigo,
+.bg-light-lime,
+.bg-light-green,
+.bg-light-teal    { background-color: rgba($t1-color3, 0.1); color: $t1-color3; }
+
+.bg-light-pink,
+.bg-light-red,
+.bg-light-orange,
+.bg-light-yellow,
+.bg-light-cyan    { background-color: rgba($t1-color1, 0.1); color: $t1-color1; }
+
+.bg-light-purple  { background-color: rgba($t1-color4, 0.1); color: $t1-color4; }
+.bg-light-gray    { background-color: rgba($gray-500, 0.1); color: $gray-500; }
+
+
+
+body{
+    background-color: $t1-xlight;
+    color: $t1-color5;
+    &::before{
+        background: $t1-color1;
+    }
+}
+
+.page-header {
+    border-color: $t1-card; 
+    .right .nav-pills .nav-link{
+        color: $t1-color5;
+    }
+}
+#header_top{
+    .brand-logo{
+        background: $t1-color4;
+        width: 35px;
+    }
+}
+.header{
+    background: $t1-color3;
+    .nav-tabs{
+        .nav-link{
+            color: $white;
+            &.active{
+                border-color: $white; 
+            }
+        }            
+    }
+    .dropdown-menu .dropdown-item:hover,
+    .dropdown-menu .dropdown-item.active{
+        color: $t1-color3;
+    }
+}
+.page{
+    .section-white,
+    .section-body{
+        background: $t1-xlight;    
+    }
+}
+#header_top .nav-link{
+    color: $t1-color5;
+}
+.header_top{
+    &.dark{
+        background-color: $t1-dark !important;
+        .nav-link{
+            color: $t1-xlight !important;
+        }
+    }
+}
+.card{
+    background-color: $t1-card;
+    .card-options{
+        a{
+            color: $t1-color3;
+            &.btn{
+                color: $white;
+            }
+        }
+    }
+    &.card-fullscreen{
+        background-color: $t1-card !important;
+    }
+}
+
+.theme_btn{
+    a.theme3{
+        background: $t1-color1;
+        border-color: $t1-color1;
+    }
+}
+
+.metismenu {    
+    a{
+        color: $t1-color5;
+        &:hover{
+            color: $t1-color3;
+            border-color: $t1-color3;
+        }
+    }
+    .active{
+        > a{
+            color: $t1-color3;
+            border-color: $t1-color3;
+        }
+        ul{
+            .active{
+                a{
+                    color: $t1-color3;
+                    background: transparent;
+                }
+            }
+        }
+    }
+    &.grid{
+        >li{
+            &.active > a,
+            >a:hover{
+                background: rgba($t1-color3, 0.1);
+                color: $t1-color3;
+            }
+        }
+    }
+}
+.inbox .detail{
+    background: $white;
+}
+.file_folder a{
+    background: $white;
+    border-color: $t1-xlight;
+}
+.auth{
+    background: $t1-color3;
+    color: $white;
+    .form-group.style2{
+        .form-label{
+            color: $t1-color3;
+        }
+    }
+    .btn-primary{
+        background: $t1-color1;
+        border: 0;
+    }
+    .btn-icon{
+        color: $white;
+    }
+    .custom-control-label{
+        color: $t1-lightdark;
+    }
+}
+.gender_overview{
+    background: $t1-xlight;
+}
+.table-calendar-link{
+    background: $t1-color3;
+    &:hover{
+        background: $t1-dark;
+    }
+    &::before{
+        background: $t1-dark;
+    }
+}
+.theme_div{
+    background: $t1-card;
+}
+.ribbon {
+    .ribbon-box.green{
+        background: $t1-color2;
+        &::before{
+            border-color: $t1-color2;
+            border-right-color: transparent;
+        }
+    }
+    .ribbon-box.orange{
+        background: $t1-color3;
+        &::before{
+            border-color: $t1-color3;
+            border-right-color: transparent;
+        }
+    }
+    .ribbon-box.pink{
+        background: $t1-color1;
+        &::before{
+            border-color: $t1-color1;
+            border-right-color: transparent;
+        }
+    }
+    .ribbon-box.indigo{
+        background: $t1-color4;
+        &::before{
+            border-color: $t1-color4;
+            border-right-color: transparent;
+        }
+    }
+}
+.text-orange{
+    color: $t1-color4 !important;
+}
+.tag-info{
+    background: $t1-color3;
+}
+.tag-success,
+.tag-green{
+    background: $t1-color2;
+}
+.tag-orange{
+    background: $t1-color1;
+}
+.tag-danger{
+    background: $t1-color1;
+}
+.bg-success{
+    background: $t1-color2 !important;
+}
+.bg-danger{
+    background-color: $t1-color1 !important;
+}
+.auth{
+    .auth_left{
+        background: $t1-dark;
+        .card{
+            padding: 20px;
+            right: -150px;
+            z-index: 99999;
+           
+            @media only screen and (max-width: 1024px) {
+                right: -50px;
+            }
+            @media only screen and (max-width: 992px) {
+                right: auto;
+            }
+        }
+    }    
+}
+.page-item{    
+    .page-link{
+        color: $t1-color1;
+    }
+    &.active .page-link{
+        background-color: $t1-color1;
+        border-color: $t1-color1;
+    }
+}
+#left-sidebar{
+    background-color: $t1-card;    
+}
+
+// 
+.dark-mode{
+    .btn{
+        color: $t1-xlightdark;
+    }
+    .metismenu.grid>li>a{
+        border-color: rgba($white, 0.2);
+    }
+    &.sidebar_dark{                
+        .sidebar{
+            .metismenu{
+                .active{
+                    > a{
+                        color: $t1-color3;
+                    }
+                    ul .active a{
+                        color: $t1-color3;
+                    }
+                }
+                a{
+                    color: $white;
+                }
+            }
+        }        
+    }
+    .nav-tabs .nav-link.active{
+        color: $t1-color4;
+    }
+}
+.top_dark {
+    background-color: $t1-dark !important;
+}
+.sidebar_dark{
+    #left-sidebar{
+        background-color: $t1-dark !important;
+    }
+    #header_top .nav-link{
+        color: $t1-xlight !important;
+    }
+    .sidebar{
+        .nav-tabs{
+            border-color: rgba($white, 0.1);
+            .nav-link.active{
+                border-color: $white;
+                color: $white;
+            }
+        }
+        .metismenu {
+            .active {
+                > a{
+                    color: $t1-color4;
+                }
+                ul .active a{
+                    color: $t1-color4;
+                }
+            }
+        }
+    }
+}
+.iconcolor{
+    #header_top{
+        .nav-link{
+            color: $t1-color4 !important;
+        }
+    }
+}
+.gradient{
+    .custom-switch-input:checked ~ .custom-switch-indicator{
+        background: linear-gradient(45deg, $t1-color3, $t1-color1) !important;
+    }
+    .metismenu.grid>li.active>a,
+    .metismenu.grid>li>a:hover{
+        background: linear-gradient(45deg, $t1-color3, $t1-color3) !important;
+        color: $white;
+        border: 0;
+    }        
+    .btn-primary{
+        background: linear-gradient(45deg, $t1-color3, $t1-color1) !important;
+        border: 0;
+    }
+    .btn-dark{
+        background: linear-gradient(45deg, $gray-400, $gray-700) !important;
+    }
+    .bg-success,
+    .bg-danger,
+    .badge-success,
+    .progress-bar,
+    .btn-danger{
+        background: linear-gradient(45deg, $t1-color3, $t1-color1) !important;
+    }    
+    &.sidebar_dark #left-sidebar{
+        background: linear-gradient(45deg, $t1-color3, $t1-color1) !important;
+    }
+}
+
+
+@media only screen and (min-width: 1200px) {
+    .header_top>.container{
+        border-right: 1px solid rgba($white, 0.07);
+    }
+}
+@media only screen and (max-width: 1200px) {
+    
+}

@@ -1,0 +1,176 @@
+﻿.right_sidebar{
+    //@include box-shadow(-2px 2px 5px rgba($dark, 0.1));
+    @include transition(all 0.4s ease-in-out);
+    background: $white;
+    width: $sidebar-width - 71px;
+    height: 100vh;
+    position: fixed;
+    left: -400px;
+    top: 0px;    
+    z-index: 9999 !important;
+
+    overflow-y: scroll;
+    scrollbar-width: none; // Firefox /
+    -ms-overflow-style: none;  // IE 10+ /
+
+    &::-webkit-scrollbar { // WebKit /
+        width: 0px;
+    }
+
+    @include max-screen($break-small - 1px){
+        padding-bottom: 40px;
+    }
+
+    &.open {
+        left: $sidebar-icon;
+        @include max-screen($break-small - 1px){
+            left: 0;
+            width: $sidebar-width;
+        }
+    }
+    .settingbar{
+        position: absolute;
+        right: 0;
+    }
+    .nav-tabs{
+        margin: 0;
+        + .tab-content {
+            padding: 20px;
+        }
+    }
+    .card{
+        .card-header{
+            @extend .pb-0;
+        }
+        ul{
+            @extend .mb-0;
+        }
+    }
+}
+
+.setting-list{
+    li{
+        @extend .mb-10;
+        &:last-child{
+            @extend .mb-0;
+        }
+    }
+}
+
+.choose-skin,
+.sidebar-skin {
+    li {
+        @include transition(all .3s ease-in-out);
+        @include inline-block();
+        position: relative;
+        cursor: pointer;
+        font-size: 0;
+        
+        &.active,
+        &:hover{
+            &:after {
+                @extend .font-10;
+                color: $white;
+                font-family: 'FontAwesome';
+                position: absolute;
+                top: 3px;
+                left: 5px;
+                content: '\f00c';
+            }
+        }
+
+        div {
+            @include border-radius(2px);
+            @include inline-block();
+            border: 1px solid $gray-100;
+            width: 20px;
+            height: 20px;
+
+            &.black{
+				background: $black;
+			}
+			&.azure{
+				background: $azure;
+			}
+			&.indigo{
+				background: $indigo;
+			}
+			&.purple{
+				background: $purple;
+			}
+			&.orange{
+				background: $orange;
+            }
+            &.green{
+				background: $green;
+            }
+            &.cyan{
+				background: $cyan;
+            }
+            &.blush{
+				background: $blush;
+			}
+        }
+    }
+}
+
+.contact-list{
+    li{
+        @extend .mb-25;
+
+        .contact-img{
+            @extend .mr-15;
+            img{
+                width: 30px;
+            }
+        }
+        .contact-name{
+            @extend .font-15;
+            @extend .mb-0;
+
+            span{
+                @extend .font-12;
+                font-weight: $font-weight-400;
+            }
+        }
+        .action{
+            margin-left: auto; 
+        }
+    }
+}
+
+.theme_div{
+
+    @include box-shadow(-2px 2px 5px rgba($dark, 0.1));
+    @include transition(all 0.3s ease-in-out);
+    background: $white;
+    width: 278px;
+    height: 100vh;
+    position: fixed;
+    right: -280px;    
+    top: 0px;    
+    z-index: 9999 !important;
+
+    overflow-x: auto;
+    scrollbar-width: none; // Firefox /
+    -ms-overflow-style: none;  // IE 10+ /
+
+    &::-webkit-scrollbar { // WebKit /
+        width: 0px;
+    }
+
+    &.open {
+        right: 0;
+    }
+    .card{
+        border: 0;
+        .list-group{
+            a{
+                display: block;
+                img{
+                    border: 1px solid $gray-100; 
+                }
+            }
+        }
+    }
+}

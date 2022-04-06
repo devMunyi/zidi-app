@@ -1,0 +1,20 @@
+
+.btn {
+    font-size: $font-size - 1px; 
+	&.btn-default{
+		color: $gray-600;
+        background-color: $white;
+        border-color: $gray-100;
+        padding: 6px 18px;
+    }
+    &.btn-secondary {
+        @include box-shadow(0 1px 1px 0 rgba($dark, 0.06));
+    }    
+    
+    &.btn-square {
+        @include border-radius(0);
+    }
+    &.box_shadow{
+        @include box-shadow(0 7px 10px rgba($dark,0.3));
+    }
+}

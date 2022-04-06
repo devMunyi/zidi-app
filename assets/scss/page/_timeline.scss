@@ -1,0 +1,91 @@
+.timeline {
+	position: relative;
+	margin: 0 0 2rem;
+	padding: 0;
+	list-style: none;
+
+	&:before {
+        @include display-block;
+		background-color: $gray-200;
+		position: absolute;
+		content: '';
+		width: 1px;
+		height: 100%;
+		top: 0;
+		bottom: 0;
+		left: 4px;
+	}
+}
+
+.timeline-item {
+	position: relative;
+	display: flex;
+	padding-left: 2rem;
+	margin: .5rem 0;
+
+	&:first-child:before,
+	&:last-child:before {
+        background: $white;
+		content: '';
+		position: absolute;		
+		width: 1px;
+		left: .25rem;
+	}
+
+	&:first-child {
+		margin-top: 0;
+
+		&:before {
+			top: 0;
+			height: .5rem;
+		}
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+
+		&:before {
+			top: .5rem;
+			bottom: 0;
+		}
+	}
+}
+
+.timeline-badge {
+    @include display-block;
+    border: 1px solid $white;
+	background: $gray-500;
+	position: absolute;
+	width: px2rem(7px);
+	height: px2rem(7px);
+	left: 1px;
+	top: .5rem;
+	border-radius: 100%;	
+}
+
+.timeline-time {
+    color: $text-muted;
+	font-size: $small-font-size;
+	white-space: nowrap;
+	margin-left: auto;	
+}
+
+.timeline_item {
+    @extend .ml-10;
+    border-left: 1px solid $gray-200;
+	padding: 20px 30px;
+	position: relative;	
+
+	.tl_avatar{
+        @include border-radius(30px);
+        position: absolute;
+        left: -15px;
+        width: 30px;
+        border: 2px solid $white;
+        top: 20px;
+        padding: 2px;
+    }
+    .msg{
+        margin: 15px 0;
+    }
+}

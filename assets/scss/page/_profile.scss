@@ -1,0 +1,28 @@
+﻿// Profile page CSS
+.profile_page{
+    .nav-item{
+        padding: 0;
+    }
+    .nav-link{
+        padding: .5rem 1rem;
+    }
+}
+.blog_single_post{
+    overflow: hidden;
+    .img-post{
+        overflow: hidden;
+        max-height: 400px;
+    }
+    .footer{
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .stats{
+        li{
+            @include inline-block;
+            @extend .font-15;
+            padding: 0 20px;
+        }
+    }
+}

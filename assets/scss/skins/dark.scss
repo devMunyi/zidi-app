@@ -1,0 +1,365 @@
+﻿@import '../base/colors';
+
+$dark-1: #272c31 !default;
+$dark-2: #2b3035 !default;
+$dark-3: #a27ce6 !default;
+$dark-line: #343a40;
+$dark-font-color: #7d8490;
+$dark-font-color-dark: #80868e;
+$dark-font-color-light: #c8cfd6;
+
+.dark-mode{
+    background: $dark-1;
+    color: $dark-font-color;
+    ::selection {
+        background: $white; 
+        color: $dark-1;
+    }
+    .loader{
+        color: $dark-1;
+    }
+    .page{
+        .section-gray{
+            background: $dark-1;
+        }
+        .section-white{
+            background: $dark-2;
+        }
+        .section-light{
+            background: $dark-2;
+        }
+        .section-body{
+            background: $dark-1;
+        }
+        .section-dark{
+            background: $dark-1;
+        }
+    }
+    #left-sidebar,    
+    .user_div{
+        background: $dark-1;
+        border-color: $dark-line;
+        .brand-name{
+            color: $white;
+        }
+        .card{
+            background: transparent;
+        }
+    }
+    .theme_div{
+        .card{
+            background: $white;
+        }
+    }
+    #header_top{
+        background: $dark-1;
+        border: 0;
+        .brand-logo{
+            background: $dark-line;
+        }
+        .nav-link{
+            color: $dark-font-color;
+        }
+    }
+    .metismenu{
+        .active{
+            >a{
+                color: $dark-font-color-light;
+            }
+            ul .active a{
+                color: $dark-font-color-light;
+            }
+        }
+        a, ul a{
+            color: $dark-font-color-dark;
+        }
+        .has-arrow:after{
+            color: rgba($white, 0.2);
+        }
+        &.grid{
+            >li>a{
+                border-color: $dark-line;
+            }
+        }
+    }
+    .header{
+        background: $dark-1;
+        .nav-tabs{
+            .nav-link{
+                color: $white;
+                &.active{
+                    border-color: $white; 
+                }
+            }            
+        }
+        .dropdown-menu .dropdown-item:hover,
+        .dropdown-menu .dropdown-item.active{
+            color: $dark-1;
+        }
+    }
+    .card{
+        background: $dark-2;
+        border-color: $dark-line;
+        color: $dark-font-color;    
+    }
+    .card-header{
+        border-color: $dark-line;
+        &.bline{
+            border-color: $dark-line;
+        }
+    }
+    .page-title,
+    .form-control-plaintext{
+        color: $dark-font-color-light;
+    }
+    .table{
+        thead th{
+            border-color: #585858;
+        }
+        td, th{
+            border-color: $dark-line;
+        }
+        &.table_custom{
+            thead tr{
+                background: transparent;
+                th{                    
+                    color:  $dark-font-color-dark;
+                }
+            }
+            tr{
+                background: $dark-2;
+            }
+            &.border-style{                
+                tr{
+                    td{
+                        border-color: $dark-line;
+                    }
+                    &:hover{
+                        td{                         
+                            border-top-color: $blue;
+                            border-bottom-color: $blue;
+                            &:first-child{
+                                border-left-color: $blue;
+                            }
+                            &:last-child{
+                                border-right-color: $blue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.table-custom{
+            td, th{
+                background: $dark-2;
+            }
+        }
+    }
+    .form-control:disabled,
+    .form-control[readonly]{
+        background: $dark-1;
+    }
+    .custom-control-label{
+        &:before{
+            background-color: #2b3035;
+            border: #414950 solid 1px;
+        }
+    }
+    .gender_overview{
+        background: $dark-line;
+    }
+    .selectize-input{
+        background: transparent;
+        border-color: $dark-line;
+        &.full{
+            background: transparent;
+            border-color: $dark-line;
+        }
+    }
+    .multiselect_div>.btn-group{
+        .btn{
+            background: transparent;
+            border-color: $dark-line;
+            color: $dark-font-color-dark;
+            &.btn-success{
+                background: $green;
+                color: $white;
+            }
+            &.btn-primary{
+                background: $info;
+                color: $white;
+            }
+        }
+    }
+
+    .form-control,
+    .input-group-append>.btn,
+    .custom-select{
+        background: transparent;
+        border-color: $dark-line;
+    }
+    .custom-checkbox .custom-control-label:before{
+        background-color: $dark-line;
+    }
+    .input-group-text,
+    .page-header,
+    .timeline_item,
+    .timeline_item .tl_avatar,
+    .recent_comments li,
+    .feeds_widget li,
+    .list-group-item,
+    .progress,
+    .file_folder a,
+    .chat_app .chat_list,
+    .selectgroup-button,
+    .card-footer{
+        border-color: $dark-line;
+    }
+    .btn.btn-default,
+    .dataTables_wrapper .dataTables_paginate .btn-default.paginate_button{
+        border-color: $dark-line;
+        background: transparent;
+    }
+    .todo_list li,
+    .nav-tabs,
+    .chat_app .chat_windows .chat-message{
+        border-color: $dark-line;
+    }
+    .right_chat{
+        li{
+            background: $dark-line;
+        }
+        .media .name{
+            color: $dark-font-color-light;
+        }
+    }
+    .offcanvas-active{
+        #header_top{
+            background: $dark-2;
+        }
+    }
+    .list-widget{
+        a{
+            border-color: $dark-line;    
+            color: $dark-font-color-light;
+        }
+    }
+    .dropify-wrapper{
+        background-color: $dark-1;
+        border-color: $dark-line;
+        &:hover{
+            background-image: linear-gradient(-45deg, $dark-2 25%,transparent 25%,transparent 50%, $dark-2 50%, $dark-2 75%,transparent 75%,transparent);
+        }
+    }
+    .list-group-item{
+        background: $dark-2;
+    }
+    .new_timeline{
+        &:before{
+            background-color: $dark-line;
+        }
+        h4{
+            color: $dark-font-color;
+        }
+    }
+    .right_chat li:hover{ background: $dark-1;}
+    #calendar.fc{
+        .fc-toolbar h2{
+            color: $dark-font-color-light;
+        }
+        .fc-view-container {
+            .fc-view.fc-basic-view>table tbody tr td.fc-widget-content,
+            .fc-view.fc-agenda>table tbody tr td.fc-widget-content,
+            .fc-view.fc-basic-view .fc-body .fc-row .fc-bg,
+            .fc-view.fc-agenda .fc-body .fc-row .fc-bg {
+                border-color: $dark-line !important;
+            }
+            .fc-other-month{
+                background: $dark-1;
+            }
+        }
+    }
+    .inbox {
+        .detail{
+            background: $dark-2;
+            .detail-header{
+                background: $dark-1;
+            }
+        }
+    }
+    .note-editor.note-frame{
+        background: $dark-1;
+        border-color: $dark-line;
+        .note-editing-area .note-editable{
+            background: $dark-1;
+            color: $dark-font-color;
+        }
+    }
+    .wizard >{
+        .steps{
+            .disabled a,
+            .disabled a:hover,
+            .disabled a:active{
+                background: $dark-1;
+            }
+        }
+        .content{
+            background: $dark-1;
+        }
+    }
+    .progress {
+        background: $dark-line;
+    }
+    #page_top{
+        .right_chat {
+            li{
+                background: inherit;
+            }
+            .media .name{
+                color: $gray-700;
+            }
+        }
+        .feeds_widget li{
+            border-color: $gray-100;
+        }
+    }
+    .apexcharts-canvas{
+        .apexcharts-yaxis,
+        .apexcharts-xaxis{
+            .apexcharts-yaxis-label,
+            .apexcharts-xaxis-label {
+                fill: $dark-font-color-dark !important;
+            }
+        }
+        .apexcharts-legend{
+            .apexcharts-legend-text{
+                color: $dark-font-color-dark !important;
+            }
+        }
+        .apexcharts-gridline{
+            stroke: $dark-line !important;
+        }
+        .apexcharts-pie-series{
+            path{
+                stroke: $dark-2 !important;
+            }
+        }
+        .apexcharts-radialbar-track{
+            path{
+                stroke: $dark-line !important;
+            }
+        }
+        .apexcharts-radar-series{
+            polygon{
+                fill: $dark-2 !important;
+                stroke: $dark-line !important;
+            }
+            line{
+                stroke: $dark-line !important;
+            }
+        }
+    }
+    .page-header .right .nav-pills .nav-link{
+        color: $dark-font-color-dark;
+    }
+}

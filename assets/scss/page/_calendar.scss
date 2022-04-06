@@ -1,0 +1,307 @@
+.fc-overlay {
+    display: none;
+    position: absolute;
+    min-width: 260px;
+    padding: 15px 0;
+    top: auto;
+    left: 50%;
+    margin-left: -150px;
+    z-index: 1000;
+    color: $gray-800 !important;
+
+    &.left {
+        @extend .margin-0;
+        left: 100%;
+        top: -15px;
+        padding: 0 10px;        
+    }
+    &.right {
+        @extend .margin-0;
+        left: auto;
+        right: 100%;
+        top: -15px;
+        padding: 0 10px;        
+    }
+    .panel {
+        padding: 10px;
+    }
+}
+
+#calendar.fc {
+    .fc-toolbar {
+        @include border-radius(0);
+        @extend .pt-10;
+        @extend .pb-15;
+        @extend .margin-0;
+        color: $gray-800;
+        background: transparent; 
+
+        h2 {
+            @extend .pt-5;
+            @extend .margin-0;
+            @extend .font-20;
+            text-transform: uppercase;
+        }
+        .fc-today-button, .fc-state-default{
+            @extend .font-14;
+            background: transparent;
+            color: $gray-400;          
+            padding: 4px 10px;
+            height: auto;                
+            border: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+        @include max-screen ($break-xsmall){
+            padding-top: 0;
+            .fc-right{
+                width: 100%;
+                text-align: center;
+            }
+            .fc-left{
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+    .fc-view-container {
+
+        .fc-event {            
+            padding: 5px;
+            font-size: $font-size - 2px; 
+            border-radius: $border-radius-small;            
+            border: 0;
+            color: $gray-50;
+
+            &.fc-event-end:not(.fc-event-start) {
+                border: 0!important;
+            }
+
+            &:focus,
+            &:hover,
+            &:active {
+                z-index: 1000;
+                color: $white;
+                .fc-overlay {
+                    @include display-block();
+                }
+            }
+        }
+
+        .fc-view {
+            &.fc-basic-view,
+            &.fc-agenda {
+                >table {
+                    >thead {
+                        tr {
+                            th,
+                            td {
+                                &.fc-widget-header {                                    
+                                    color: $gray-700;
+                                    background: $gray-100;
+                                    border: 1px solid $gray-50;
+                                    padding: 5px;
+                                    @include max-screen ($break-xsmall){
+                                        font-size: 10px;
+                                    }
+                                }
+                                &.fc-agenda-gutter {
+                                    @include display-block();
+                                }
+                            }
+                            td {
+                                &.fc-widget-header {
+                                    @extend .padding-0;
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                &.fc-widget-content {
+                                    border: 0;
+                                    border-bottom: 1px solid $gray-50;
+                                    border-right: 1px solid $gray-50;
+
+                                    &.fc-state-highlight {
+                                        background: $white;
+                                    }
+                                }
+                                &.fc-day-number {
+                                    @extend .font-15;
+                                    color: $gray-800;
+                                    padding: 5px 10px;
+                                    margin: 5px;                                    
+
+                                    &.fc-state-highlight {
+                                        @include border-radius(50%);
+                                        background-color: $red;
+                                        color: $white;
+                                        padding: 4px 6px;
+                                        float: right;
+                                    }
+                                }
+                                &:first-child {
+                                    &.fc-widget-content {
+                                        border-left: 1px solid $gray-50;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .fc-body {
+                    .fc-row .fc-bg {
+                        border-bottom: 1px solid $gray-50;
+                    }
+                    .fc-row:last-of-type .fc-bg {                        
+                        border-bottom: 0;
+                    }
+                }
+                .fc-agenda-allday {
+                    .fc-agenda-axis,
+                    .fc-agenda-gutter {
+                        @extend .font-12;
+                        background-color: $gray-200;
+                        color: $gray-800;
+                        border-left: 1px solid $gray-50;
+                        border-right: 1px solid $gray-50;                        
+                        font-weight: 100;
+                        padding: 10px 5px;
+                    }
+                }
+                >table {
+                    >tbody {
+                        >tr {
+                            >td {
+                                &.fc-state-highlight {
+                                    background: $gray-200;
+                                }
+                                &.fc-sat {
+                                    border-right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+                .fc-agenda-slots {
+                    tr {
+                        line-height: 35px;
+                        th {
+                            @extend .font-12;
+                            background-color: $gray-200;
+                            color: $gray-800;
+                            border: 0;
+                            border-left: 1px solid $gray-50;
+                            border-right: 1px solid $gray-50;                            
+                            font-weight: 100;
+                            padding-top: 10px;
+                        }
+                        td.fc-widget-content {
+                            border-bottom: 1px solid $gray-50;
+                            line-height: 50px;
+                            &:last-child {
+                                border-right: 0;
+                            }
+                        }
+                        &.fc-minor {
+                            td.fc-widget-content {
+                                border-bottom: 1px solid $gray-50;
+                            }
+                        }
+                    }
+                }
+                .fc-agenda-divider {
+                    border: 1px solid $gray-50;
+                    .fc-agenda-divider-inner {
+                        background-color: $gray-200;
+                        height: 3px;
+                    }
+                }
+            }
+        }
+
+        .fc-list-view{
+            .fc-list-item{
+                color: $gray-200;
+            }
+        }
+
+        .fc-other-month{
+            background: #f3f9ff;
+        }
+
+        .fc-basic-view .fc-day-number, .fc-basic-view .fc-week-number{
+            float: left;
+            padding: 10px 0 5px 10px;
+        }
+    }
+    .fc-popover{
+        border-radius: $border-radius-large;
+        box-shadow: 0px 10px 50px 0px rgba($dark,0.2);
+        border: none;
+        padding: 10px;
+
+        .fc-event-container{
+            @extend .padding-0;
+        }
+        .fc-event{
+            padding: 4px 8px;
+            margin: 2px 0px;
+        }
+    
+    }
+
+    .fc-agendaWeek-view,
+    .fc-agendaDay-view,
+    .fc-listWeek-view{
+        .fc-head{
+            .fc-widget-header{
+                span{
+                    @include inline-block();
+                    padding: 10px;
+                }
+            }
+        }        
+    }    
+    .fc-unthemed{
+        td{
+            border-color: $gray-50;
+        }
+    }
+}
+.fc-unthemed{    
+    .fc-row,
+    thead,
+    td,
+    th,
+    .fc-divider{
+        border-color: $lightgray;
+    }
+}
+
+.fc-agendaWeek-view{
+    tr.fc-minor{
+        display: none;
+    }
+    .fc-axis{
+        padding: 5px;
+    }
+    .fc-head .fc-widget-header{
+        background: $lightgray;
+        span{
+            font-weight: $font-weight-600;
+        }
+    }
+}
+
+.fc{
+    &.event_list{
+        .fc-event{
+            @extend .mb-5;
+            border: 0;
+            padding: 5px 15px;
+        }
+    }
+}

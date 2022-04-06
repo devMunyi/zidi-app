@@ -1,0 +1,256 @@
+.page #page_top {
+    border-bottom: 4px solid #d9dbde;
+    /* box-shadow: 0px 4px 2px #3333331c; */
+}
+.bg-primary {
+    background-color: #ffffff !important;
+    box-shadow: 2px 2px 2px #d8d8d8;
+}
+.prominent {
+    font-size: 17px;
+    line-height: 2;
+    font-weight: bold;
+    color: #333333;
+}
+select.fancy-select {
+    padding: 5px 10px;
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid #272c31;
+    margin-left: 10px;
+    width: 150px;
+}
+#left-sidebar{
+    top: 0;
+    background-color: #edeff3;
+    border-right: 2px solid #dfdfdf;
+}
+#header_top{
+    top: 60px;
+}
+.masthead {
+    margin-bottom: 15px;
+    padding: 8px 10px 10px 10px;
+}
+.card.transcard {
+    background: transparent;
+    border-right: 2px solid #dfdfdf;
+}
+
+
+#lang{
+    cursor: pointer;
+}
+
+
+/*Beginning of code editor csss*/
+/*Variables  */
+:root {
+    --editor-bg: #eee;
+    --editor-border: #3f87a6;
+}
+
+.editor {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.editor_wrapper{
+    width: 100%;
+    height: 99%;
+    display: flex;
+    flex-direction: column;
+    background: var(--editor-bg);
+    /*padding: 2em;*/
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+}
+
+.editor_body{
+    flex: 1;
+}
+
+.editor_footer{
+    display: flex;
+}
+
+.editor_footer-left{
+    display: flex;
+    /*flex-direction: column;*/
+}
+
+.editor_footer-right{
+    flex:1;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.editor_btn{
+    border: 0;
+    padding: .5em;
+    background-color: #fff;
+    border: 2px solid #333;
+    margin-top: 1em;
+    width: 100px;
+    cursor: pointer;
+}
+
+.editor_console{
+    background-color: #fff;
+    width: 100%;
+    height: 130px;
+    margin-top: .9em;
+    border: 1px solid var(--editor-border);
+    overflow: auto;
+}
+
+.editor_code{
+    overflow-y: scroll;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid var(--editor-border);
+}
+.logo_ {
+    display: block;
+    margin-bottom: 15px;
+}
+div#editor {
+    min-height: 500px;
+    max-height: 1000px;
+    overflow-y: auto;
+}
+.dark-screen{
+    background-color: #0d0d0f;
+    color: #edeff3;
+}
+.light-screen{
+    color: #0d0d0f;
+    background-color: #edeff3;
+}
+
+/* Editor console*/
+
+.editor_console.logs{
+    padding: 10px;
+    list-style: none;
+}
+
+.editor_console-logs li pre{
+    font-size: .9em;
+    font-family: Inconsolata, sans-serif;
+}
+
+
+.ace_gutter{
+    border-left:  5px solid var(--editor-border);
+}
+
+.log--default{
+    color: #000;
+}
+
+
+.log--string{
+    color: #48bf0a;
+}
+
+.log--number{
+    color: blueviolet;
+}
+
+.log--boolean{
+    color: blue;
+}
+
+.log--undefined{
+    color: #b9b9b9;
+}
+
+.log--object{
+    color: darkcyan;
+}
+
+.log--array{
+    color: darkblue;
+}
+/*End of code editor csss*/
+
+/*Beginining of Environment Module*/
+
+.env {
+    margin: 5px 0px 5px 0px;
+    list-style: none;
+    border-bottom: 2px solid rgba(181, 181, 181, 0.5);
+    padding: 10px;
+    /* background: #f3f5f7; */
+    border-radius: 4px;
+}
+.metismenu ul>li:last-child {
+     padding-bottom: 5px;
+}
+
+.hover-env:hover{
+    cursor: pointer;
+     background: rgba(181, 181, 181, 0.24);
+}
+
+/*End of Environment Module*/
+
+/*Beginining of Languages Module*/
+
+.hover-lang:hover{
+    color: brown; 
+}
+
+ 
+/*End of Languages Module*/
+
+
+/*Beginining of Environment Module*/
+
+.subfun{
+    list-style: none;
+}
+
+.hover-subfun:hover{
+    cursor: pointer;
+    color: brown; 
+}
+.icon{
+    width: 18px;
+    margin-right: 15px;
+}
+input#search_box {
+    background: #f0f2f5 !important;
+    border: 1px solid transparent;
+    padding: 8px 10px;
+    color: #000000;
+    border-radius: 34px;
+}
+#search_functionality{
+    box-shadow: 0px 1px 0px #343a4036;
+    border-radius: 30px;
+}
+.scrollk, .scrolli {
+    display: block;
+    width: 100%;
+    overflow-y: scroll;
+    height: 550px;
+}
+.emp{
+    font-weight: bold;
+    color: #3a3939;
+    border-bottom: 2px solid;
+}
+
+/*End of Environment Module*/

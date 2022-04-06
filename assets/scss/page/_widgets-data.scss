@@ -1,0 +1,107 @@
+.feeds_widget{
+    @extend .mb-0;
+    
+    li{
+        padding: 12px 0;
+        border-bottom: 1px solid $gray-100;
+        display: flex;
+        justify-content: flex-start;
+
+        &:last-child{
+            border: none;
+        }
+
+        .feeds-left{
+            font-size:  $font-size + 3px;
+            width: 40px;
+        }
+    
+        .feeds-body{            
+            width: 100%;
+
+            .title{
+                font-size:  $font-size + 1px;
+                @extend .margin-0;
+            }
+
+            > small{
+                @include display-block;
+                font-size:  $font-size - 2px;
+                color: $gray-600;
+            }
+        }
+    }   
+}
+.list-widget{
+    a{
+        padding: 15px;
+        border-left: 0;
+        border-right: 0;
+        border-color: $gray-100;
+
+        &:first-child{
+            border-top: 0; 
+        } 
+        &:last-child{
+            border-bottom: 0; 
+        }
+        i{
+            width: 35px;
+        }
+        .badge{
+            float: right;
+        }
+    }
+}
+.recent_comments{
+    li{
+        @extend .mb-15;
+        @extend .pb-15;
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 1px solid $gray-100;
+
+        &:last-child{
+            border-bottom: 0;
+            @extend .mb-0;
+            @extend .pb-0;
+        }
+
+        .avatar_img{
+            @extend .mr-15;
+            width: 50px;
+        }
+        .comment_body{
+            width: 100%;
+            h6{
+                margin: 0;
+            }
+            a{
+                @extend .mr-15;
+            }
+            .badge{
+                float: right;
+            }
+        }
+    }
+}
+.todo_list{
+    li{
+        @extend .mb-15;
+        @extend .pb-15;
+        border-bottom: 1px solid $gray-100;
+
+        &:last-child{
+            @extend .mb-0;
+            @extend .pb-0;
+            border-bottom: 0;            
+        }
+    }
+    .custom-checkbox{
+        input[type="checkbox"]{
+            &:checked + span{
+                text-decoration: line-through;
+            }
+        }
+    }
+}
