@@ -110,8 +110,14 @@ include_once("configs/conn.inc");
 
                         </div>
                     </div>
-                    <div class="form-group">
-                        <hr>
+                    <div class="form-row">
+                        <div class="form-group col-sm-3">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <hr>
+                        </div>
+                        <div class="form-group col-sm-3">
+                        </div>
                     </div>
                     <div class="form-group">
                         <p class="text-center"><a href="index">Go Home Page</a></p>
