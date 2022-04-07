@@ -26,7 +26,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="background-color: white;">
+<body class="font-opensans" style="">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -96,13 +96,13 @@ include_once("configs/conn.inc");
             </div>
             </form>
         </div>
-    </div>
 
+        <div class="fixed-bottom">
+            <?php
+                include_once 'footer.php';
+            ?>
+        </div>
     </div>
-
-    <?php
-    include_once 'footer.php';
-    ?>
 
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -111,7 +111,7 @@ include_once("configs/conn.inc");
     <script>
         $('document').ready(function() {
             //call submitBtn() and parse login() as a parameter and on hover hint title
-            submitBtn('#loginBtn','login()', "Click to login");
+            submitBtn('#loginBtn', 'login()', "Click to login");
         });
     </script>
 </body>

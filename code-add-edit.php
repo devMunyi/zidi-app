@@ -22,7 +22,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="background-color: white;">
+<body class="font-opensans" style="">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -127,14 +127,14 @@ include_once("configs/conn.inc");
                         <textarea class="form-control" rows="5" id="code_input" name="code_input"></textarea>
                     </div>
                     <div class="form-group">
-                            <label for="file_extension">Code File Extension:</label>
-                            <input type="text" class="form-control" id="file_extension" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on">
+                        <label for="file_extension">Code File Extension:</label>
+                        <input type="text" class="form-control" id="file_extension" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on">
                     </div>
                     <div class="form-group">
                         <label for="instructions_input">Instructions/description of Code Use (if any):</label>
                         <textarea class="form-control" rows="3" id="instructions_input" name="instructions_input"></textarea>
                     </div>
-                    
+
                     <div class="form-row pt-2 pb-2">
                         <div class="for-group col-md-6" id="addEditCodeBtn">
                             <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
@@ -147,13 +147,12 @@ include_once("configs/conn.inc");
             </div>
         </div>
 
+        <div class="fixed-bottom">
+            <?php
+            include_once 'footer.php';
+            ?>
+        </div>
     </div>
-
-    <?php
-    include_once 'footer.php';
-    ?>
-
-
     <!-- jQuery and bootstrtap js -->
     <?php
     include_once('scripts.php');

@@ -41,7 +41,7 @@
 
 function crudaction(jsonbody, url, method = "POST", callback) {
   let server_ = $("#server_").val();
-  console.log("SERVER => ", server_);
+  //console.log("SERVER => ", server_);
   let cleanJson = JSON.stringify(jsonbody);
   $.ajax({
     url: server_ + url,
@@ -134,12 +134,12 @@ function persistence(k, val) {
   if (localStorage.getItem("persist")) {
     let current_loc = JSON.parse(localStorage.getItem("persist"));
     current_loc[k] = val;
-    console.log(JSON.stringify(current_loc));
+    //console.log(JSON.stringify(current_loc));
     localStorage.setItem("persist", JSON.stringify(current_loc));
   } else {
     let current_loc = {};
     current_loc[k] = val;
-    console.log(val);
+    //console.log(val);
     localStorage.setItem("persist", JSON.stringify(current_loc));
   }
 }

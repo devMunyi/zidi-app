@@ -3,6 +3,14 @@ session_start();
 include_once("php_functions/functions.php");
 include_once("configs/conn.inc");
 ?>
+<script>
+    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    let token = current_loc.token;
+    console.log("TOKEN =>", token);
+
+    let user_details = current_loc.user;
+    console.log("CURRENT USER DETAILS =>", user_details); 
+</script>
 
 <!doctype html>
 <html lang="en">

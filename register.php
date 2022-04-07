@@ -26,7 +26,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="background-color: white;">
+<body class="font-opensans" style="">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -118,12 +118,13 @@ include_once("configs/conn.inc");
                     </div>
                 </form>
             </div>
+
         </div>
-
-
-        <?php
-        include_once 'footer.php';
-        ?>
+        <div class="fixed-bottom">
+            <?php
+                include_once 'footer.php';
+            ?>
+        </div>
     </div>
 
 

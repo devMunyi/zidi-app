@@ -216,7 +216,7 @@ function load_frameworks(language_id_ = 0) {
 
   let jso = {};
 
-  console.log(query);
+  //console.log(query);
 
   crudaction(jso, "/frameworks" + query, "GET", function (result) {
     let server = $("#server_").val();
