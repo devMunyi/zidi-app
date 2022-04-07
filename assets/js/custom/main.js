@@ -338,8 +338,6 @@ function saveCodeSnippet() {
     added_by,
   };
 
-  // return console.log("JSON BODY =>", jso);
-
   if (codesnippet_id > 0) {
     method = "PUT";
     url = "/edit-codesnippet";
@@ -399,7 +397,7 @@ function saveCodeSnippet() {
 }
 
 function load_codeSnippet() {
-  codeLoading("#codeimp-title");
+  //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   /* console.log("persist values from load codesnippet function =>", current_loc);
@@ -506,7 +504,7 @@ function load_codeSnippet() {
 
         let total_ = feed.all_totals;
 
-        let codeImpTitle = "<h4 class='text-center'>&nbsp;</h4>"; //intial default value
+        let codeImpTitle = ""; //intial default value
         let imptypeAndContributor = ""; //initial default value
         let codeVersions = "<option value = '0'>Default</option>"; //initial default value
 
@@ -515,7 +513,7 @@ function load_codeSnippet() {
           //update code implementation title
           codeImpTitle = data.title;
           $("#codeimp-title").html(
-            "<h4 class='text-center'>" + codeImpTitle + "</h4>"
+            "<h5 class='text-center'>" + codeImpTitle + "</h5>"
           );
 
           //update implementation type and contributor name

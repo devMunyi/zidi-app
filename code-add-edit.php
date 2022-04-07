@@ -15,20 +15,7 @@ include_once("configs/conn.inc");
 
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
-    <title> Zidi : Register</title>
-    <style type="text/css">
-        ::-webkit-scrollbar {
-            -webkit-appearance: none;
-            width: 7px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border-radius: 4px;
-            background-color: rgba(0, 0, 0, .5);
-            -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-        }
-    </style>
-
+    <title> Zidi : add-edit-code</title>
     <!-- Bootstrap Core and vendor -->
     <?php
     include_once 'styles.php';

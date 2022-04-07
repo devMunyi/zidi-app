@@ -58,7 +58,6 @@ include_once("configs/conn.inc");
             <div class="logo_">
                 <h3 class="masthead-heading text-uppercase mb-0">
                     <img src="assets/images/logo.png" height="40px" />
-
                 </h3>
             </div>
             <div class="input-icon">
@@ -72,12 +71,10 @@ include_once("configs/conn.inc");
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="all-tab">
                         <nav class="sidebar-nav">
-                            <div class="card-body scrolli" style="padding: 10px 20px;">
+                            <div class="card-body scrolli" style="padding: 10px 10px;">
                                 <ul class="metismenu" id="functions_">
                                     Loading ...
-
                                 </ul>
-
                             </div>
                         </nav>
                     </div>
@@ -118,41 +115,48 @@ include_once("configs/conn.inc");
                     <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
                         <tr class="col-lg-12 col-md-12 d-flex justify-content-end">
                             <div class="row">
-                                    <div class="col-lg-12 col-md-12 bd-highlight" id="codeimp-title">
-                                        <!-- <h4 class="">Copy file from one directory to another in Web server</h4> -->
-                                        <!-- <p><span id="codeimp-title">&nbsp;</span></p> -->
-                                    </div>
-                               
-                                    <div class="col-lg-9 col-md-9">
-                                        <table style="margin-bottom: 15px;">
-                                            <tr>
-                                                <td style="width: 200px;">
-                                                    <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                                    <span class="font-italic"> <span id="imptype-and-contributor">&nbsp;</span> </span>
-                                                </td>
-                                                <td class="text-center">
-                                                    <label class="text-center" for="framework"><small>Select Code Version:</small></label>
-                                                    <select class="fancy-select" id="code-version" onchange="load_codeSnippet()">
-                                                        <option value="0">Code Versions</option>
-                                                    </select>
-                                                </td>
-                                                <td class="text-center">
-                                                    <label class="text-center" for="framework"><small>Select Framework:</small></label>
-                                                    <select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
-                                                        <option value="0"> --Select Framework</option>
-                                                    </select>
-                                                </td>
-                                                <td class="text-center">
-                                                    <label class="text-center" for="framework"><small>Select Implementation:</small></label>
-                                                    <select class="fancy-select" id="sel_implementation" onchange="load_codeSnippet()">
-                                                        <option value="0"> --Select Implementation</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                <div class="col-lg-12 col-md-12 bd-highlight">
+                                    <!-- <h4 class="">Copy file from one directory to another in Web server</h4> -->
+                                    <!-- <p><span id="codeimp-title">&nbsp;</span></p> -->
+                                    <div class="row">
+                                        <div class="col-md-10" id="codeimp-title">
 
+                                        </div>
                                     </div>
-                                
+                                </div>
+
+                                <div class="col-lg-9 col-md-9">
+                                    <table style="margin-bottom: 15px;">
+                                        <tr>
+                                            <td style="width: 200px;">
+                                                <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
+                                                <span class="font-italic"> <span id="imptype-and-contributor">&nbsp;</span> </span>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <label class="text-center" for="framework"><small>Select Framework:</small></label>
+                                                <select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
+                                                    <option value="0"> --Select Framework</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="text-center" for="framework"><small>Select Implementation:</small></label>
+                                                <select class="fancy-select" id="sel_implementation" onchange="load_codeSnippet()">
+                                                    <option value="0"> --Select Implementation</option>
+                                                </select>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <label class="text-center" for="framework"><small>Select Code Version:</small></label>
+                                                <select class="fancy-select" id="code-version" onchange="load_codeSnippet()">
+                                                    <option value="0">Code Versions</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+
                                 <div class="col-lg-3 col-md-3 d-flex justify-content-end pt-2 pl-0">
                                     <a href="code-add-edit" class="text-blue font-weight-bold"> <i class="fe fe-edit"></i> Contribute New Code </a>
                                 </div>
