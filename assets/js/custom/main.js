@@ -1,5 +1,8 @@
 ///////////-------Begin Functionalities
 function functions_load() {
+  //display a loader
+  codeLoading("#functions_");
+
   ////-----
   let status = 1;
   let orderby = "name";
@@ -112,6 +115,9 @@ function apiSubfunLoad(callback) {
 
 //////------Begin Languages
 function load_languages() {
+  //display a loader
+  codeLoading("#language_");
+
   let where_ = "status = 1";
   let dir = "ASC";
   let orderby = "name";
