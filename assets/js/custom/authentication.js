@@ -1,7 +1,7 @@
 ///////-------------------Begin authentication
 function register() {
   //show disabled/processing button
-  disabledBtn();
+  disabledBtn("#regBtn");
 
   let user_id = 0;
   let username = $("#username_input").val();
@@ -78,7 +78,7 @@ function register() {
 
 function login() {
   //show disabled/processing button
-  disabledBtn();
+  disabledBtn("#loginBtn");
 
   let emailOrUsername = $("#emailOrUsername_input").val().trim();
   let password = $("#password_input").val().trim();

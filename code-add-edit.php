@@ -173,7 +173,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
-        submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to code snippet");
+        submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to submit");
     </script>
 </body>
 

@@ -107,8 +107,8 @@ function submitBtn2() {
   );
 }
 
-function disabledBtn() {
-  $(".submitbtn").html(
+function disabledBtn(htmlId) {
+  $(htmlId).html(
     '<button class="btn btn-success" type="button" disabled>' +
       '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
       "submitting..." +

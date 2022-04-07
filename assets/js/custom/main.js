@@ -302,7 +302,7 @@ function load_implementations() {
 //////------Begin codeSnippet
 function saveCodeSnippet() {
   //show disabled/processing button
-  disabledBtn();
+  disabledBtn("#addEditCodeBtn");
 
   let codesnippet_id = 0;
   let func_id = $("#func_sel").val();
@@ -356,7 +356,7 @@ function saveCodeSnippet() {
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn("#regBtn", "register()", "Click to register");
+      submitBtn("#addEditCodeBtn", "saveCodeSnippet()", "Click to submit");
     }
 
     if (feed["success"] === false) {
