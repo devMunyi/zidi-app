@@ -70,7 +70,7 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-group pt-0">
-                        <div class="text-center"><a href="index">Go Home Page</a></div>
+                        <div class="text-center"><a href="index">Go Home Page &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></div>
                     </div>
                 </form>
             </div>

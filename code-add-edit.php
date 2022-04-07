@@ -136,11 +136,12 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-row pt-2 pb-2">
-                        <div class="for-group col-md-6" id="addEditCodeBtn">
-                            <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
+                      
+                        <div class="for-group col-md-4 offset-md-2" style="">
+                            <p><a href="index"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Return Home Page<i class="fa-solid fa-angles-right"></i></a></p>
                         </div>
-                        <div class="for-group col-md-6" style="text-align: end;">
-                            <p><a href="index">Return Home Page</a></p>
+                        <div class="for-group col-md-4 d-flex justify-content-end" id="addEditCodeBtn">
+                            <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                         </div>
                     </div>
                 </form>
