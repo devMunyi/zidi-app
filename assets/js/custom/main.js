@@ -152,7 +152,7 @@ function load_languages() {
         var icon = data[i].icon;
 
         lang +=
-          '<li class="hover-lang"><a href="#" onclick="load_frameworks(' +
+          '<li class="hover-lang"><a href="javascript:void(0)" onclick="load_frameworks(' +
           uid +
           "); persistence_remove('framework') ; persistence('language','" +
           uid +
