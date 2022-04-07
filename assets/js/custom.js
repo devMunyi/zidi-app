@@ -1,455 +1,4 @@
-////////--------------- footer date
-function footer_date() {
-  const d = new Date();
-  let year = d.getFullYear();
-  $("#footer-date").html(year);
-}
-
-///////--------------End footer date
-
-////////-------------Begin Helper/Reusable functions
-
-function crudaction(jsonbody, url, method = "POST", callback) {
-  ////////------Reusable
-  let server = $("#server_").val();
-  let auth = $("#auth").val();
-
-  //////Clean the JSON string
-
-  let cleanJson = JSON.stringify(jsonbody);
-
-  $.ajax({
-    url: server + url,
-    method: method,
-    dataType: "json",
-    timeout: 0,
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json",
-    },
-    data: cleanJson,
-
-    success: function (result) {
-      callback(result);
-    },
-    beforeSend: function () {
-      // Handle the beforeSend event
-      $("#loader").fadeIn();
-    },
-    error: function (err) {
-      console.log("An Error" + err);
-      // feedback("ERROR", "TOAST", ".feedback_", err, 10);
-      callback(JSON.stringify(err));
-    },
-    complete: function () {
-      // Handle the complete event
-      $("#loader").fadeOut();
-    },
-  });
-}
-
-//Search term white space trimming function
-function trimString(str) {
-  var i = 0;
-  strlen = str.length - 1;
-  while (i < str.length && str[i] == " ") i++;
-  while (strlen > i && str[strlen] == " ") strlen -= 1;
-  var strResult = str.substring(i, strlen + 1);
-  return strResult.toLowerCase();
-}
-
-function compareObjects(obj1, obj2) {
-  var k;
-  for (k in obj1) if (obj1[k] != obj2[k]) return false;
-  for (k in obj2) if (obj1[k] != obj2[k]) return false;
-  return true;
-}
-
-function itemExists(haystack, needle) {
-  for (var i = 0; i < haystack.length; i++)
-    if (compareObjects(haystack[i], needle)) return true;
-  return false;
-}
-
-function searchFor(objects, searchTerm) {
-  searchTerm = searchTerm.toLowerCase();
-  var results = [];
-  for (var i = 0; i < objects.length; i++) {
-    for (var key in objects[i]) {
-      if (objects[i][key].toString().indexOf(searchTerm) != -1) {
-        if (!itemExists(results, objects[i])) results.push(objects[i]);
-      }
-    }
-  }
-  return results;
-}
-
-//////----------------End of Helper/Reusable functions
-
-///////////-------Begin Environments/platforms
-function load_environments(offset, rpp) {
-  let status = 1;
-  let orderby = "name";
-  let dir = "ASC";
-
-  let jso = {};
-
-  let query =
-    "?status=" +
-    status +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp;
-
-  crudaction(jso, "/platforms" + query, "GET", function (result) {
-    ////////--------Result should look something like this
-    //////   {\"result_\":$result_,\"details_\":$details_,\"total_\":$totalcount}
-    //////---------$details is a a JSON representation of multiple MYSQL Rows
-    let server = $("#server_").val();
-    console.log("Environments" + result);
-    //let json_ = JSON.parse(result).details_;
-    //let total_ = JSON.parse(result).length;
-    let data = result["data"];
-    let total = data.length;
-    let fun = "";
-
-    if (total > 0) {
-      for (var i = 0; i < data.length; i++) {
-        var uid = data[i].uid;
-        var title = data[i].name;
-        let icon = data[i].icon;
-        fun +=
-          '<li class="env hover-env"><a onclick="envIdParser(' +
-          uid +
-          ')"><img src="' +
-          server +
-          "/" +
-          icon +
-          '" width="24px" height="24px"><br>' +
-          "</a></li>";
-      }
-      $("#environments_").html(fun);
-    } else {
-      //////-------No Languages found
-      $("#environments_").html("<li>No Environments Loaded.</li>");
-    }
-  });
-}
-
-function envIdParser(env_id_) {
-  let env_id = parseInt(env_id_);
-  if (env_id > 0) {
-  } else {
-    env_id = 0;
-  }
-  $("#sel_env").val(env_id);
-  load_codeSnippet();
-}
-/////------End Environments
-
 ///////////-------Begin Functionalities
-function apiFunLoad(offset = 0, rpp = 100) {
-  let status = 1;
-  let orderby = "name";
-  let dir = "ASC";
-
-  let jso = {};
-  //let fun = "";
-  let search_ = "";
-
-  let query =
-    "?status=" +
-    status +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp +
-    "&search=" +
-    search_;
-
-  crudaction(jso, "/functionalities" + query, "GET", function (result) {
-    let data = result["data"];
-    let data_length = data.length;
-    let fun = "";
-
-    if (data_length > 0) {
-      for (let i = 0; i < data_length; i++) {
-        let function_id = data[i].uid;
-        let function_name = data[i].name;
-        let function_icon = data[i].icon;
-
-        fun +=
-          "<li>\n" +
-          '       <a href="javascript:void(0)" class="has-arrow arrow-b"><i><img src="assets/images/functionalities/' +
-          function_icon +
-          '" width="15" height="18"></i><span data-hover="' +
-          function_name +
-          '">' +
-          function_name +
-          "</span><a>\n" +
-          '       <ul id="subfun' +
-          function_id +
-          '">\n' +
-          "       </ul>\n" +
-          "</li>";
-      }
-      $("#functionalities_").html(fun);
-      apiSubfunLoad();
-    } else {
-      //////-------No functionalities found
-      $("#functionalities_").html("<li>No functionalities Loaded.</li>");
-    }
-
-    //Storing in hidden fields
-    let data_ = JSON.stringify(data);
-    $("#funcs_").val(data_);
-
-    //creating a local storage
-    if (typeof Storage !== "undefined") {
-      localStorage.setItem("funcs", JSON.stringify(data));
-      console.log(localStorage);
-    } else {
-      console.log("Browser not supported");
-    }
-  });
-}
-
-function localFunLoad() {
-  let funobjs = JSON.parse(localStorage.getItem("funcs")); //getting functionality objects from browser localStorage
-  //let funobjs = JSON.parse($("#funcs_").val()); //getting functionality objects from hidden field
-  //console.log("Hidden Field Testing : " + funobjs);
-  let search_term = $("#search_functionality").val();
-  let trimmed_search = trimString(search_term); // trim it
-  let searched_data = searchFor(funobjs, trimmed_search);
-  let fun = "";
-
-  if (trimmed_search.length > 0) {
-    let funcs_len = searched_data.length;
-    if (funcs_len > 0) {
-      for (let i = 0; i < searched_data.length; i++) {
-        let function_id = searched_data[i].uid;
-        let function_name = searched_data[i].name;
-        let function_icon = searched_data[i].icon;
-
-        fun +=
-          "<li>\n" +
-          '       <a href="javascript:void(0)" class="has-arrow arrow-b"><i><img src="assets/images/functionalities/' +
-          function_icon +
-          '" width="15" height="18"></i><span data-hover="' +
-          function_name +
-          '">' +
-          function_name +
-          "</span><a>\n" +
-          '       <ul id="subfun' +
-          function_id +
-          '">\n' +
-          "       </ul>\n" +
-          "</li>";
-      }
-      $("#functionalities_").html(fun);
-      localSubfunLoad();
-    } else {
-      //////-------No functionalities found
-      $("#functionalities_").html("<li>No functionalities Loaded.</li>");
-    }
-  } else {
-    let objsCount = funobjs.length;
-    let fun = "";
-
-    if (objsCount > 0) {
-      for (let i = 0; i < objsCount; i++) {
-        let function_id = funobjs[i].uid;
-        let function_name = funobjs[i].name;
-        let function_icon = funobjs[i].icon;
-
-        fun +=
-          "<li>\n" +
-          '       <a href="javascript:void(0)" class="has-arrow arrow-b"><i><img src="assets/images/functionalities/' +
-          function_icon +
-          '" width="15" height="18"></i><span data-hover="' +
-          function_name +
-          '">' +
-          function_name +
-          "</span><a>\n" +
-          '       <ul id="subfun' +
-          function_id +
-          '">\n' +
-          "       </ul>\n" +
-          "</li>";
-      }
-      $("#functionalities_").html(fun);
-      localSubfunLoad();
-    } else {
-      //////-------No functionalities found
-      $("#functionalities_").html("<li>No functionalities Loaded.</li>");
-    }
-  }
-}
-
-function persistence(k, val) {
-  if (localStorage.getItem("persist")) {
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
-    current_loc[k] = val;
-    console.log(JSON.stringify(current_loc));
-    localStorage.setItem("persist", JSON.stringify(current_loc));
-  } else {
-    let current_loc = {};
-    current_loc[k] = val;
-    console.log(val);
-    localStorage.setItem("persist", JSON.stringify(current_loc));
-  }
-}
-
-function persistence_remove(k) {
-  if (localStorage.getItem("persist")) {
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
-    delete current_loc[k];
-    localStorage.setItem("persist", JSON.stringify(current_loc));
-  }
-}
-/*
-function checkLocalField(){
-  if(($("#funcs_").val() != "0") && ($("#subfuncs_").val() != "0")){
-    localFunLoad();
-  }else{
-    apiFunLoad();
-  }
-}
-*/
-
-function checkLocalStorage() {
-  if (
-    JSON.parse(localStorage.getItem("funcs")) &&
-    JSON.parse(localStorage.getItem("subfuncs"))
-  ) {
-    localFunLoad();
-  } else {
-    apiFunLoad();
-  }
-}
-
-/////------End Functionalities
-
-/////------Begin subFunctionalities
-function apiSubfunLoad(callback) {
-  let jso = {};
-  let status = 1;
-  let orderby = "name";
-  let dir = "ASC";
-  let query = "?status=" + status + "&orderby=" + orderby + "&dir=" + dir;
-
-  crudaction(jso, "/subFunctionalities" + query, "GET", function (result) {
-    callback(result);
-    //console.log(result);
-  });
-}
-
-function localSubfunLoad() {
-  let subfunobjs = JSON.parse(localStorage.getItem("subfuncs")); //getting subfunction objects from browser localStorage
-  //let subfunobjs = JSON.parse($("#subfuncs_").val()); //getting subfunction objects from hidden field
-  let subfun = "";
-
-  let data_length = subfunobjs.length;
-  if (data_length > 0) {
-    for (let i = 0; i < data_length; i++) {
-      let subfunction_id = subfunobjs[i].uid;
-      let subfunction_name = subfunobjs[i].name;
-      let function_id = subfunobjs[i].func_id;
-      (subfun +=
-        "<li>\n" +
-        '       <a href="#" onclick="load_implementations(' +
-        function_id),
-        subfunction_id +
-          ')"><span data-hover="' +
-          subfunction_id +
-          '">' +
-          subfunction_name +
-          "</span></a>\n" +
-          "</li>";
-
-      $("#subfun" + function_id + "").append(subfun);
-    }
-  } else {
-    //$("#subfun").html("<li>No subfunctions Loaded.</li>");
-  }
-}
-
-/////------End subFunctionalities
-
-//////------Begin Languages
-function load_languages() {
-  let where_ = "status = 1";
-  let dir = "ASC";
-  let orderby = "name";
-  let offset = 0;
-  let rpp = 40;
-
-  let jso = {};
-
-  let query =
-    "?where_=" +
-    where_ +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp;
-
-  crudaction(jso, "/languages" + query, "GET", function (result) {
-    let server = $("#server_").val();
-    ////////--------Result should look something like this
-    //////   {\"result_\":$result_,\"details_\":$details_,\"total_\":$totalcount}
-    //////---------$details is a a JSON representation of multiple MYSQL Rows
-
-    //let json_ = JSON.parse(result).details_;
-    let data = result["data"];
-    let total_ = data.length;
-    //console.log(total_);
-    let lang = "";
-
-    if (total_ > 0) {
-      for (var i = 0; i < data.length; i++) {
-        var uid = data[i].uid;
-        var title = data[i].name;
-        var icon = data[i].icon;
-
-        lang +=
-          '<li class="hover-lang"><a href="#" onclick="load_frameworks(' +
-          uid +
-          "); persistence_remove('framework') ; persistence('language','" +
-          uid +
-          '\')"><img src="' +
-          server +
-          "/" +
-          icon +
-          '" height="20px">   ' +
-          title +
-          "</a></li>";
-      }
-      $("#language_").html(lang);
-    } else {
-      //////-------No Languages found
-      $("#language_").html("<li>No Languages</li>");
-    }
-  });
-}
-
-function submenu(id) {
-  $(id).toggle();
-}
-
 function functions_load() {
   ////-----
   let status = 1;
@@ -541,7 +90,79 @@ function functions_load() {
   });
 }
 
-function subfun() {}
+/////------End Functionalities
+
+/////------Begin subFunctionalities
+function apiSubfunLoad(callback) {
+  let jso = {};
+  let status = 1;
+  let orderby = "name";
+  let dir = "ASC";
+  let query = "?status=" + status + "&orderby=" + orderby + "&dir=" + dir;
+
+  crudaction(jso, "/subFunctionalities" + query, "GET", function (result) {
+    callback(result);
+    //console.log(result);
+  });
+}
+
+/////------End subFunctionalities
+
+//////------Begin Languages
+function load_languages() {
+  let where_ = "status = 1";
+  let dir = "ASC";
+  let orderby = "name";
+  let offset = 0;
+  let rpp = 40;
+
+  let jso = {};
+
+  let query =
+    "?where_=" +
+    where_ +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
+
+  crudaction(jso, "/languages" + query, "GET", function (result) {
+    let server = $("#server_").val();
+    let data = result["data"];
+    let total_ = data.length;
+    //console.log(total_);
+    let lang = "";
+
+    if (total_ > 0) {
+      for (var i = 0; i < data.length; i++) {
+        var uid = data[i].uid;
+        var title = data[i].name;
+        var icon = data[i].icon;
+
+        lang +=
+          '<li class="hover-lang"><a href="#" onclick="load_frameworks(' +
+          uid +
+          "); persistence_remove('framework') ; persistence('language','" +
+          uid +
+          '\')"><img src="' +
+          server +
+          "/" +
+          icon +
+          '" height="20px">   ' +
+          title +
+          "</a></li>";
+      }
+      $("#language_").html(lang);
+    } else {
+      //////-------No Languages found
+      $("#language_").html("<li>No Languages</li>");
+    }
+  });
+}
 
 //////---------------------End Languages
 
@@ -590,7 +211,6 @@ function load_frameworks(language_id_ = 0) {
   console.log(query);
 
   crudaction(jso, "/frameworks" + query, "GET", function (result) {
-    //let json_ = JSON.parse(result).details_;
     let server = $("#server_").val();
     let data = result["data"];
     let total_ = data.length;
@@ -663,17 +283,12 @@ function load_implementations() {
   //console.log(query);
 
   crudaction(jso, "/implementations" + query, "GET", function (result) {
-    ////////--------Result should look something like this
-    //////   {\"result_\":$result_,\"details_\":$details_,\"total_\":$totalcount}
-    //////---------$details is a a JSON representation of multiple MYSQL Rows
-
-    //let json_ = JSON.parse(result).details_;
-    let data = result["data"];
-    let total_ = data.length;
+    let total_ = result["all_totals"];
     //console.log(total_);
     let impl = "";
 
     if (total_ > 0) {
+      let data = result["data"];
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].title;
@@ -693,6 +308,8 @@ function load_implementations() {
 
 //////------Begin codeSnippet
 function load_codeSnippet() {
+  codeLoading("#codeimp-title");
+  codeLoading("#imptype-and-contributor");
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   /* console.log("persist values from load codesnippet function =>", current_loc);
   console.log("func =>", current_loc.func);
@@ -711,7 +328,7 @@ function load_codeSnippet() {
   let rpp = 1;
 
   if (!sel_func) {
-    sel_func = 1;
+    sel_func = 4;
   } else {
     persistence("func", sel_func);
   }
@@ -729,13 +346,13 @@ function load_codeSnippet() {
   }
 
   if (!sel_framework) {
-    sel_framework = 0;
+    sel_framework = 51;
   } else {
     persistence("framework", sel_framework);
   }
 
   if (!sel_implementation) {
-    sel_implementation = 0;
+    sel_implementation = 1;
   } else {
     persistence("implementation", sel_implementation);
   }
@@ -790,9 +407,12 @@ function load_codeSnippet() {
         rpp;
 
       crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+        //reset code editor to empty
+        codeEditor.setValue("");
+
         let total_ = feed.all_totals;
         //console.log("ALL TOTALS =>", total_);
-        let codeImpTitle = "&nbsp;"; //intial default value
+        let codeImpTitle = "<h4>&nbsp;</h4>"; //intial default value
         let imptypeAndContributor = ""; //initial default value
         let codeVersions = ""; //initial default value
 
@@ -800,7 +420,7 @@ function load_codeSnippet() {
           let data = feed["data"];
           //update code implementation title
           codeImpTitle = data.title;
-          $("#codeimp-title").html(codeImpTitle);
+          $("#codeimp-title").html("<h4>" + codeImpTitle + "</h4>");
 
           //update implementation type and contributor name
           imptypeAndContributor =
@@ -841,60 +461,3 @@ function load_codeSnippet() {
 }
 
 //////---------------------End codeSnippet
-
-//////------Begin dbms
-/* function load_dbms(offset, rpp) {
-  let status = 1;
-  let orderby = "name";
-  let dir = "ASC";
-
-  let jso = {};
-
-  let query =
-    "?status=" +
-    status +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp;
-
-  crudaction(jso, "/dbms" + query, "GET", function (result) {
-    ////////--------Result should look something like this
-    //////   {\"result_\":$result_,\"details_\":$details_,\"total_\":$totalcount}
-    //////---------$details is a a JSON representation of multiple MYSQL Rows
-
-    //let json_ = JSON.parse(result).details_;
-    let data = result["data"];
-    let total_ = data.length;
-    //console.log(total_);
-    let dbms = "";
-
-    if (total_ > 0) {
-      for (var i = 0; i < data.length; i++) {
-        var uid = data[i].uid;
-        var title = data[i].name;
-        var icon = data[i].icon;
-        dbms +=
-          '<option value="' +
-          uid +
-          '">' +
-          '<img src="assets/images/dbms/resized/' +
-          icon +
-          '" height="20px" width="20px"></img> ' +
-          title +
-          "</option>";
-      }
-      $("#sel_dbms").html(dbms);
-    } else {
-      //////-------No Languages found
-      $("#sel_dbms").html("<li>No dbms Loaded.</li>");
-    }
-  });
-}
- */
-
-//////---------------------End dbms

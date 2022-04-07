@@ -60,7 +60,7 @@ include_once("configs/conn.inc");
                 <div class="col-md-6 offset-md-3 card pt-4 pb-3 mt-5 mb-3 border border-info">
                     <div class="d-flex justify-content-center">
                         <h3 class="masthead-heading text-uppercase mb-0">
-                            <img src="assets/images/logo.png" height="40px" alt="ZIDI" />
+                            <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
                         </h3>
                     </div>
                     <h4 class="text-center pt-2 pb-2">Reset Password</h4>
@@ -78,15 +78,25 @@ include_once("configs/conn.inc");
                                 <p>Remember password?&nbsp;<a href="login">Login</a></p>
                             </div>
                         </div>
+
+                        <div class="form-row pt-5">
+                            <div class="form-group col-sm-3">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <hr>
+                            </div>
+                            <div class="form-group col-sm-3">
+                            </div>
+                        </div>
+
+                        <div class="form-group pt-0">
+                            <div class="text-center"><a href="index">Go Home Page</a></div>
+                        </div>
                     </form>
                 </div>
             </div>
 
         </div>
-
-
-
-
         <!-- Start page footer -->
         <!--  <div class="section-body">
             <?php

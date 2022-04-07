@@ -16,9 +16,17 @@
 
 <!-- Start core js and page js -->
 <script src="assets/js/core.js"></script>
-<script src="assets/js/custom.js"></script>
-<script src="assets/js/com"></script>
+<script src="assets/js/custom/common.js"></script>
+<script src="assets/js/custom/authentication.js"></script>
+<script src="assets/js/custom/main.js"></script>
 <script src="assets/js/page/index.js"></script>
+
+
+<!-- SweetAlert2 -->
+<script src="assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="assets/plugins/toastr/toastr.min.js"></script>
+
 
 <!--Required Ace Libralies-->
 <script src="assets/plugins/ace/ace-editor/src-min/ace.js"></script>
