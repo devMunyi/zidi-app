@@ -29,7 +29,7 @@
                         <a class="nav-link text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
                     </li>
                     <li class="" id="sign-up">
-                        <a class="nav-link text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+                        <a class="nav-link text-dark" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
                     </li>
                     <li class="dropdown" id="account">
                         <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; <span id='user-name'>Samuel Munyi</span></div>
@@ -45,7 +45,6 @@
         </div>
         <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" />
     </div>
-
 </header>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
