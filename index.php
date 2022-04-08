@@ -264,6 +264,59 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
+        $(document).ready(function() {
+            //keep account navigation hidden by default
+            $("#account").hide();
+
+            function requireSigninOne() {
+                let current_loc = JSON.parse(localStorage.getItem("persist"));
+                if (current_loc) {
+                    let token = current_loc.token;
+
+                    let user_details = current_loc.user;
+                    if (token && user_details) {
+                        //send request to the server to verify token
+                        crudaction({}, "/current-user", "GET", function(feed) {
+                            if (feed.success) {
+                                $("#sign-in").hide();
+                                $("#sign-up").hide();
+                                $("#account").show();
+                                $("#user-name").html(user_details.username);
+
+                            } else {
+                                $("#account").hide();
+                                $("#sign-in").show();
+                                $("#sign-up").show();
+                            }
+                        })
+                    } else {
+                        $("#account").hide();
+                        $("#sign-in").show();
+                        $("#sign-up").show();
+                    }
+
+                } else {
+                    $("#account").hide();
+                    $("#sign-in").show();
+                    $("#sign-up").show();
+                }
+
+
+            }
+            requireSigninOne();
+
+            //log out
+            var sign_out = document.getElementById("sign-out");
+            sign_out.addEventListener("click", function() {
+                persistence_remove("user");
+                persistence_remove("token");
+
+                requireSigninOne();
+            }, false);
+
+        })
+    </script>
+    <script>
         $('document').ready(function() {
             footer_date(); //load footer
 
@@ -271,17 +324,6 @@ include_once("configs/conn.inc");
             load_languages(); /////Load all the languages
             load_frameworks(); //load all frameworks
             load_implementations(); //load all implementations
-
-            //load_codeSnippet(); ////Load codeSnippet
-
-            /*
-            const checkbox = document.getElementById("custom-switch-input");
-            checkbox.addEventListener('change', ()=>{
-            //change the theme of the website
-            document.body.classList.toggle('dark');
-            }) */
-
-            //$('pre code').each(function(i, e) {hljs.highlightBlock(e)});
         });
     </script>
     <script>
@@ -301,7 +343,6 @@ include_once("configs/conn.inc");
 
         //////-------Search functions/subfunctions
         $(function() {
-
             jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
                 return function(elem) {
                     return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;

@@ -320,7 +320,17 @@ function saveCodeSnippet() {
   let row_code = $("#code_input").val().trim();
   let file_extension = $("#file_extension").val().trim();
   let instructions = $("#instructions_input").val().trim();
-  let added_by = 1; //static user
+  let added_by;
+
+  //grab the current logged in user
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc) {
+    let { user } = current_loc;
+    added_by = user.uid;
+  } else {
+    gotourl("login");
+    return;
+  }
 
   let method = "POST";
   let url = "/add-codesnippet";

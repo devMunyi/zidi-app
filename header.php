@@ -1,12 +1,3 @@
-<script>
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
-    let token = current_loc.token;
-    console.log("TOKEN =>", token);
-
-    let user_details = current_loc.user;
-    console.log("CURRENT USER DETAILS =>", user_details); 
-</script>
-
 <header class="masthead bg-primary text-white">
     <div class="container d-flex  flex-column">
         <!-- Masthead Avatar Image-->
@@ -15,31 +6,48 @@
         <div class="row">
             <div class="col-lg-2">
                 <h3 class="masthead-heading text-uppercase mb-0">
-                    <img src="assets/images/logo.png" height="40px"/>
+                    <img src="assets/images/logo.png" height="40px" />
 
                 </h3>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5 pl-2">
                 <input type="search" id="search_box" class="form-control" placeholder="Search code snippets">
-
             </div>
 
             <div class="col-lg-5">
-                <div class="right">
-                    <div class="notification d-flex">
-                        <a href="javascript:void(0)" class="btn text-dark">Home</a>
-                        <a href="javascript:void(0)" class="btn text-dark">About</a>
-                        <a href="javascript:void(0)" class="btn text-dark">Contribute</a>
-                        <a href="javascript:void(0)" class="btn text-dark">Community</a>
-                        <a href="login" class="btn text-dark"><i class="fe fe-user"></i> Account</a>
-                    </div>
-                </div>
+                <ul class="nav nav-pills d-flex justify-content-center pr-0 pt-2" id="myNav">
+                    <li class="">
+                        <a class="nav-link text-dark" href="javascript:void(0)">About</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-dark" href="javascript:void(0)">Contribute</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link text-dark" href="javascript:void(0)">Community</a>
+                    </li>
+                    <li class="" id="sign-in">
+                        <a class="nav-link text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+                    </li>
+                    <li class="" id="sign-up">
+                        <a class="nav-link text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+                    </li>
+                    <li class="dropdown" id="account">
+                        <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; <span id='user-name'>Samuel Munyi</span></div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="profile">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0)" id="sign-out">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <!-- Icon Divider-->
 
-        <!-- Masthead Subheading-->
+        </div>
+        <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" />
     </div>
-    <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" />
 
 </header>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

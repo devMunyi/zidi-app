@@ -43,11 +43,14 @@ function crudaction(jsonbody, url, method = "POST", callback) {
   let server_ = $("#server_").val();
   //console.log("SERVER => ", server_);
   let cleanJson = JSON.stringify(jsonbody);
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let token = current_loc.token;
   $.ajax({
     url: server_ + url,
     type: method,
     timeout: 0,
     headers: {
+      Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
     dataType: "json",

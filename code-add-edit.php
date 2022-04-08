@@ -22,7 +22,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="">
+<body class="font-opensans">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -31,7 +31,7 @@ include_once("configs/conn.inc");
     </div>
 
     <!-- Start main html -->
-    <div class="container-fluid">
+    <div class="container-fluid" id="add-edit-code-page">
         <div class="row">
             <div class="col-md-8 offset-md-2 card pt-3 pb-2 mt-5 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
@@ -136,8 +136,8 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-row pt-2 pb-2">
-                      
-                        <div class="for-group col-md-4 offset-md-2" style="">
+
+                        <div class="for-group col-md-4 offset-md-2">
                             <p><a href="index"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Return Home Page<i class="fa-solid fa-angles-right"></i></a></p>
                         </div>
                         <div class="for-group col-md-4 d-flex justify-content-end" id="addEditCodeBtn">
@@ -159,9 +159,45 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
-        //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
-        submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to submit");
+        
+        $(document).ready(function() {
+            $("#add-edit-code-page").hide();
+
+            function requireSigninTwo() {
+                let current_loc = JSON.parse(localStorage.getItem("persist"));
+                if (current_loc) {
+                    let token = current_loc.token;
+
+                    let user_details = current_loc.user;
+                    if (token && user_details) {
+                        //send request to the server to verify token
+                        crudaction({}, "/current-user", "GET", function(feed) {
+                            if (feed.success) {
+                                //if okay, display the code add edit form page
+                                $("#add-edit-code-page").show();
+                            } else {
+                                //redirect to login page
+                                gotourl("login");
+                            }
+                        })
+                    } else {
+                        //redirect to login page
+                        gotourl("login");
+                    }
+                } else {
+                    //redirect to login page
+                    gotourl("login");
+                }
+            }
+            requireSigninTwo();
+
+
+            //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
+            submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to submit");
+        })
     </script>
+
+
 </body>
 
 </html>
