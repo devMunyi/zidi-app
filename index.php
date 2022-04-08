@@ -3,14 +3,6 @@ session_start();
 include_once("php_functions/functions.php");
 include_once("configs/conn.inc");
 ?>
-<script>
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
-    let token = current_loc.token;
-    console.log("TOKEN =>", token);
-
-    let user_details = current_loc.user;
-    console.log("CURRENT USER DETAILS =>", user_details); 
-</script>
 
 <!doctype html>
 <html lang="en">
@@ -69,7 +61,6 @@ include_once("configs/conn.inc");
                 </h3>
             </div>
             <div class="input-icon">
-
                 <span class="input-icon-addon">
                     <i class="fe fe-search"></i>
                 </span>
@@ -136,9 +127,9 @@ include_once("configs/conn.inc");
                                 <div class="col-lg-9 col-md-9">
                                     <table style="margin-bottom: 15px;">
                                         <tr>
-                                            <td style="width: 200px;">
+                                            <td style="width: 230px;" class="pt-1">
                                                 <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                                <span class="font-italic"> <span id="imptype-and-contributor">&nbsp;</span> </span>
+                                                <span class="font-italic font-14"> <span id="imptype-and-contributor">&nbsp;</span> </span>
                                             </td>
 
                                             <td class="text-center">
@@ -178,12 +169,11 @@ include_once("configs/conn.inc");
                                 <div class="card-header">
                                     <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
                                 </div>
-                                <div class="card-body" style="padding: 0px 20px;">
+                                <div class="card-body font-10" style="padding: 0px 20px;">
                                     <ul class="metismenu ci-effect-1 prominent" id="language_">
                                         <li class="font-weight-normal font-14 font-italic">Loading...</li>
                                     </ul>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -232,10 +222,8 @@ include_once("configs/conn.inc");
                                             <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
                                             <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
                                             <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
-
                                         </tr>
                                     </table>
-
                                 </div>
                             </div>
                         </div>

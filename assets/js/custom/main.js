@@ -517,11 +517,28 @@ function load_codeSnippet() {
           );
 
           //update implementation type and contributor name
-          imptypeAndContributor =
-            "A " +
-            data.implementation_title +
-            " implementation by " +
-            data.fullname;
+          let impl_title = data.implementation_title;
+
+          //checking the first letter of implementation title to determine whether to use a, an or the as adjective
+          let firstChar = impl_title[0].toLowerCase();
+          let arr = ["a", "e", "i", "o", "u"];
+          let adjective;
+
+          if (arr.includes(firstChar)) {
+            adjective = "An";
+          } else {
+            adjective = "A";
+          }
+
+          if (adjective)
+            imptypeAndContributor =
+              adjective +
+              " " +
+              impl_title +
+              " implementation by " +
+              '<a title="View contributor\'s profile" href="javascript:void(0)">' +
+              data.fullname +
+              "</a>";
 
           $("#imptype-and-contributor").html(imptypeAndContributor);
 

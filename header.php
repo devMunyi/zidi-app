@@ -1,3 +1,12 @@
+<script>
+    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    let token = current_loc.token;
+    console.log("TOKEN =>", token);
+
+    let user_details = current_loc.user;
+    console.log("CURRENT USER DETAILS =>", user_details); 
+</script>
+
 <header class="masthead bg-primary text-white">
     <div class="container d-flex  flex-column">
         <!-- Masthead Avatar Image-->
