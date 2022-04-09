@@ -26,7 +26,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="">
+<body class="font-opensans">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -36,7 +36,10 @@ include_once("configs/conn.inc");
 
     <!-- start main body part-->
     <div class="container-fluid">
-        <div class="row">
+        <div class="row pt-2">
+            <div class="col-md-12">
+                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+            </div>
             <div class="col-md-6 offset-md-3 card pt-4 pb-3 mt-5 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
@@ -55,22 +58,8 @@ include_once("configs/conn.inc");
                             <button type="submit" title="Click to Sign in" onclick="alert('Oops')" class="btn btn-primary">Submit</button>
                         </div>
                         <div class="form-group col-md-6" style="text-align: start;">
-                            <p>Remember password?&nbsp;<a href="login">Login</a></p>
+                            <p>Remember password?&nbsp;<a class="a-override" href="login">Login</a></p>
                         </div>
-                    </div>
-
-                    <div class="form-row pt-5">
-                        <div class="form-group col-sm-3">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <hr>
-                        </div>
-                        <div class="form-group col-sm-3">
-                        </div>
-                    </div>
-
-                    <div class="form-group pt-0">
-                        <div class="text-center"><a href="index">Go Home Page &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></div>
                     </div>
                 </form>
             </div>
@@ -78,7 +67,7 @@ include_once("configs/conn.inc");
 
         <div class="fixed-bottom">
             <?php
-                include_once 'footer.php';
+            include_once 'footer.php';
             ?>
         </div>
     </div>
@@ -88,7 +77,9 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
-        $('document').ready(function() {});
+        $(document).ready(function() {
+            footer_date(); //load footer
+        });
     </script>
 </body>
 

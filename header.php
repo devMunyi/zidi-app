@@ -25,14 +25,24 @@
                     <li class="">
                         <a class="nav-link text-dark" href="javascript:void(0)">Community</a>
                     </li>
-                    <li class="" id="sign-in">
+                    <li class="dropdown" id="account-0">
+                        <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+                            <a class="dropdown-item" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+                            <!-- <a class="dropdown-item" href="profile">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0)" id="sign-out">Sign out</a> -->
+                        </div>
+                    </li>
+                    <!-- <li class="" id="sign-in">
                         <a class="nav-link text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
                     </li>
                     <li class="" id="sign-up">
                         <a class="nav-link text-dark" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
-                    </li>
-                    <li class="dropdown" id="account">
-                        <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; <span id='user-name'>Samuel Munyi</span></div>
+                    </li> -->
+                    <li class="dropdown" id="account-1">
+                        <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; <span id='user-name'></span></div>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="profile">Profile</a>
                             <div class="dropdown-divider"></div>
@@ -43,7 +53,7 @@
             </div>
 
         </div>
-        <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" />
+        <!-- <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" /> -->
     </div>
 </header>
 

@@ -254,3 +254,15 @@ input#search_box {
 }
 
 /*End of Environment Module*/
+
+
+
+/*Common styling*/
+.a-override{
+    color: #0096FF !important;
+}
+
+.a-override:hover{
+    color: #FF5733  !important
+}
+/*End Common styling*/

@@ -54,13 +54,13 @@ include_once("configs/conn.inc");
         </div> -->
 
         <!-- start Main menu -->
-        <div id="left-sidebar" class="sidebar">
+        <div id="left-sidebar" class="sidebar" style="width: 270px !important; padding-left: 50px">
             <div class="logo_">
                 <h3 class="masthead-heading text-uppercase mb-0">
                     <img src="assets/images/logo.png" height="40px" />
                 </h3>
             </div>
-            <div class="input-icon">
+            <div class="input-icon pl-2">
                 <span class="input-icon-addon">
                     <i class="fe fe-search"></i>
                 </span>
@@ -106,78 +106,69 @@ include_once("configs/conn.inc");
 
         <!-- start main body part-->
         <div class="page">
-
             <!-- start body header -->
-
-            <div class="section-body">
-                <div class="container-fluid">
+            <div class="section-body" style="padding-left: 0px;">
+                <div class="container-fluid" style="padding-left: 0px;">
                     <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
-                        <tr class="col-lg-12 col-md-12 d-flex justify-content-end">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 bd-highlight">
-                                    <!-- <h4 class="">Copy file from one directory to another in Web server</h4> -->
-                                    <!-- <p><span id="codeimp-title">&nbsp;</span></p> -->
-                                    <div class="row">
-                                        <div class="col-md-10" id="codeimp-title">
+                        <div class="col-lg-12 col-md-12" id="codeimp-title">
+                            <!-- <div class="row" id="codeimp-title">
+                                    </div> -->
+                        </div>
 
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-lg-9 col-md-9">
+                            <table style="margin-bottom: 15px;">
+                                <tr>
+                                    <td style="width: 230px;" class="pt-1">
+                                        <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
+                                        <h6 class="font-italic" id="imptype-and-contributor"> </h6>
+                                    </td>
 
-                                <div class="col-lg-9 col-md-9">
-                                    <table style="margin-bottom: 15px;">
-                                        <tr>
-                                            <td style="width: 230px;" class="pt-1">
-                                                <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                                <span class="font-italic font-14"> <span id="imptype-and-contributor">&nbsp;</span> </span>
-                                            </td>
+                                    <td class="text-center" id="framework-dropdown">
 
-                                            <td class="text-center">
-                                                <label class="text-center" for="framework"><small>Select Framework:</small></label>
-                                                <select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
-                                                    <option value="0"> --Select Framework</option>
-                                                </select>
-                                            </td>
-                                            <td class="text-center">
-                                                <label class="text-center" for="framework"><small>Select Implementation:</small></label>
+                                        <!-- <select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
+                                            <option value="0"> --No Framework</option>
+                                        </select> -->
+                                    </td>
+                                    <!-- <td class="text-center">
+
                                                 <select class="fancy-select" id="sel_implementation" onchange="load_codeSnippet()">
-                                                    <option value="0"> --Select Implementation</option>
+                                                    <option value="0"> Default Implementation</option>
                                                 </select>
-                                            </td>
+                                            </td> -->
 
-                                            <td class="text-center">
-                                                <label class="text-center" for="framework"><small>Select Code Version:</small></label>
-                                                <select class="fancy-select" id="code-version" onchange="load_codeSnippet()">
-                                                    <option value="0">Code Versions</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <td class="text-center" id="version-dropdown">
+                                        <!-- <select class="fancy-select" id="code-version" onchange="load_codeSnippet()">
 
-                                </div>
+                                        </select> -->
+                                    </td>
+                                </tr>
+                            </table>
 
-                                <div class="col-lg-3 col-md-3 d-flex justify-content-end pt-2 pl-0">
-                                    <a href="code-add-edit" class="text-blue font-weight-bold"> <i class="fe fe-edit"></i> Contribute New Code </a>
-                                </div>
-                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+                            <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row clearfix row-deck" style="min-height: 600px; width: 99%;">
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-2 col-md-2 pl-0 pr-0">
                         <div class="scrollk">
                             <div class="transcard">
-                                <div class="card-header">
+                                <div class="card-header pl-0 pr-0">
                                     <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
                                 </div>
-                                <div class="card-body font-10" style="padding: 0px 20px;">
+                                <div class="card-body" style="padding-top: 0px; padding-right: 0px">
                                     <ul class="metismenu ci-effect-1 prominent" id="language_">
                                         <li class="font-weight-normal font-14 font-italic">Loading...</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
-                    <div class="col-lg-8 col-md-6">
+                    <div class="col-lg-9 col-md-9">
                         <div class="card transcard">
                             <div class="card-header">
                                 <table style="width: 100%">
@@ -228,7 +219,7 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2">
+                    <!-- <div class="col-lg-1 col-md-1">
                         <div class="card transcard">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fe fe-eye"></i> Front End</h3>
@@ -244,11 +235,10 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-
 
         <!-- Start page footer -->
         <div class="section-body">
@@ -265,8 +255,8 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            //keep account navigation hidden by default
-            $("#account").hide();
+            //keep account/user profile navigation hidden by default
+            $("#account-1").hide();
 
             function requireSigninOne() {
                 let current_loc = JSON.parse(localStorage.getItem("persist"));
@@ -278,51 +268,48 @@ include_once("configs/conn.inc");
                         //send request to the server to verify token
                         crudaction({}, "/current-user", "GET", function(feed) {
                             if (feed.success) {
-                                $("#sign-in").hide();
-                                $("#sign-up").hide();
-                                $("#account").show();
+                                $("#account-0").hide();
+                                $("#account-1").show();
                                 $("#user-name").html(user_details.username);
 
                             } else {
-                                $("#account").hide();
-                                $("#sign-in").show();
-                                $("#sign-up").show();
+                                $("#account-1").hide();
+                                $("#account-0").show();
                             }
                         })
                     } else {
-                        $("#account").hide();
-                        $("#sign-in").show();
-                        $("#sign-up").show();
+                        $("#account-1").hide();
+                        $("#account-0").show();
                     }
 
                 } else {
-                    $("#account").hide();
-                    $("#sign-in").show();
-                    $("#sign-up").show();
+                    $("#account-1").hide();
+                    $("#account-0").show();
                 }
-
-
             }
             requireSigninOne();
 
-            //log out
+            //log out 
             var sign_out = document.getElementById("sign-out");
             sign_out.addEventListener("click", function() {
+
+                //remove user and token from localstorage
                 persistence_remove("user");
                 persistence_remove("token");
 
+                //update the header
                 requireSigninOne();
             }, false);
 
         })
     </script>
     <script>
-        $('document').ready(function() {
+        $(document).ready(function() {
             footer_date(); //load footer
 
             functions_load() //load all functions
             load_languages(); /////Load all the languages
-            load_frameworks(); //load all frameworks
+            //load_frameworks(); //load all frameworks
             load_implementations(); //load all implementations
         });
     </script>

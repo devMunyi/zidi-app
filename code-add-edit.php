@@ -12,9 +12,6 @@ include_once("configs/conn.inc");
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
     <meta name="author" content="PuffinTheme the theme designer">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : add-edit-code</title>
     <!-- Bootstrap Core and vendor -->
     <?php
@@ -32,15 +29,18 @@ include_once("configs/conn.inc");
 
     <!-- Start main html -->
     <div class="container-fluid" id="add-edit-code-page">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 card pt-3 pb-2 mt-5 mb-3 border border-info">
+        <div class="row pt-2">
+            <div class="col-md-12">
+                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+            </div>
+            <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
                     </h3>
                 </div>
                 <h4 class="text-center pt-2 pb-2">Add Code</h4>
-                <form class="pl-5 pr-5" onsubmit="return false;" method="POST" style="height:400px; overflow-y:auto;">
+                <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST" style="height:400px; overflow-y:auto;">
                     <div class="form-row">
                         <div class="form-group col-sm-3">
                             <label for="func_sel">Function:</label>
@@ -136,11 +136,7 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-row pt-2 pb-2">
-
-                        <div class="for-group col-md-4 offset-md-2">
-                            <p><a href="index"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Return Home Page<i class="fa-solid fa-angles-right"></i></a></p>
-                        </div>
-                        <div class="for-group col-md-4 d-flex justify-content-end" id="addEditCodeBtn">
+                        <div class="for-group col-md-4 d-flex justify-content-start" id="addEditCodeBtn">
                             <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                         </div>
                     </div>
@@ -159,7 +155,6 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
-        
         $(document).ready(function() {
             $("#add-edit-code-page").hide();
 
@@ -195,9 +190,21 @@ include_once("configs/conn.inc");
             //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
             submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to submit");
         })
+
+        footer_date(); //load footer
     </script>
 
-
+    <script>
+        //custom scroll to enable form scrolling for content overflow
+        (function($) {
+            $(window).on("load", function() {
+                $(".form_").mCustomScrollbar({
+                    theme: "inset-2-dark",
+                    autoHideScrollbar: true
+                });
+            });
+        })(jQuery);
+    </script>
 </body>
 
 </html>

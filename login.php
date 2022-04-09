@@ -12,12 +12,27 @@ include_once("configs/conn.inc");
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
     <meta name="author" content="PuffinTheme the theme designer">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : Login</title>
-    <style type="text/css">
+    <style>
+        /* width */
+        /* .form_::-webkit-scrollbar {
+            width: 10px;
+        } */
 
+        /* Track */
+        /* .form_::-webkit-scrollbar-track {
+            background: #555;
+        } */
+
+        /* Handle */
+        /* .form_::-webkit-scrollbar-thumb {
+            background: #555;
+        } */
+
+        /* Handle on hover */
+        /* .form_::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        } */
     </style>
 
     <!-- Bootstrap Core and vendor -->
@@ -26,7 +41,7 @@ include_once("configs/conn.inc");
     ?>
 </head>
 
-<body class="font-opensans" style="">
+<body class="font-opensans">
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -36,15 +51,18 @@ include_once("configs/conn.inc");
 
     <!-- start main body part-->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 card pt-4 pb-3 mt-5 mb-3 border border-info">
+        <div class="row pt-2">
+            <div class="col-md-12">
+                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+            </div>
+            <div class="col-md-6 offset-md-3 card pb-3 pt-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
                     </h3>
                 </div>
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
-                <form class="pl-5 pr-5" method="POST" onsubmit="return false;" style="height:400px; overflow-y:auto;">
+                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" style="height:400px; overflow-y: scroll;">
                     <div class="form-group">
                         <label for="emailOrUsername_input">Email or username: </label>
                         <input type="text" class="form-control" id="emailOrUsername_input" placeholder="Email or username">
@@ -55,16 +73,15 @@ include_once("configs/conn.inc");
                         <input type="password" class="form-control" id="password_input" placeholder="Password">
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-sm-6" id="loginBtn">
-                            <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
-                        </div>
-
-                        <div class="form-group col-sm-6 text-start">
-                            <p>Forgot password?&nbsp;<a href="reset-password">Reset</a></p>
-                            <p>Don't have account yet?&nbsp;<a href="register">Register</a></p>
-                        </div>
+                    <div class="form-group pt-2 pb-2" id="loginBtn">
+                        <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                     </div>
+
+                    <div class="form-group">
+                        <div>Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
+                        <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Register</a></div>
+                    </div>
+
 
                     <div class="form-row">
                         <div class="form-group col-sm-5">
@@ -86,20 +103,20 @@ include_once("configs/conn.inc");
                             <div class="col-md-6 pt-1 pb-1"><a href="#" style="width: 100%" class="p-1 btn btn-light badge-pill border"> <img src="assets/images/facebook.png" alt="Facebook" /> Sign in with Facebook</a></div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <hr>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
-                        <p class="text-center"><a href="index">Go Home Page&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
-                    </div>
+                    <!-- <div class="form-group">
+                        <p class="text-center"><a class="a-override" href="index">Go Home Page&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                    </div> -->
             </div>
             </form>
         </div>
 
-        <div class="fixed-bottom">
+        <div class="pt-2">
             <?php
-                include_once 'footer.php';
+            include_once 'footer.php';
             ?>
         </div>
     </div>
@@ -109,10 +126,24 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
-        $('document').ready(function() {
+        $(document).ready(function() {
+            footer_date(); //load footer
+
             //call submitBtn() and parse login() as a parameter and on hover hint title
             submitBtn('#loginBtn', 'login()', "Click to login");
         });
+    </script>
+
+    <script>
+        //custom scroll to enable form scrolling for content overflow
+        (function($) {
+            $(window).on("load", function() {
+                $(".form_").mCustomScrollbar({
+                    theme: "inset-2-dark",
+                    autoHideScrollbar: true
+                });
+            });
+        })(jQuery);
     </script>
 </body>
 

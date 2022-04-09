@@ -152,7 +152,7 @@ function load_languages() {
         var icon = data[i].icon;
 
         lang +=
-          '<li class="hover-lang"><a href="javascript:void(0)" onclick="load_frameworks(' +
+          '<li style="margin: 0px; padding: 0px;" class="hover-lang"><a href="javascript:void(0)" onclick="load_frameworks(' +
           uid +
           "); persistence_remove('framework') ; persistence('language','" +
           uid +
@@ -223,7 +223,8 @@ function load_frameworks(language_id_ = 0) {
     let data = result["data"];
     let total_ = data.length;
     // console.log("frameworks =>", total_);
-    let frm = '<option value="0"> Default</option>';
+    let frm =
+      '<select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
 
     if (total_ > 0) {
       for (var i = 0; i < data.length; i++) {
@@ -233,12 +234,12 @@ function load_frameworks(language_id_ = 0) {
         frm += '<option value="' + uid + '">  ' + title + "</option>";
       }
 
-      $("#sel_framework").html(frm);
+      $("#framework-dropdown").html(frm + "</select>");
       //load to code snippet based on id parsed to the load framework function which is called on clicking language list
       load_codeSnippet();
     } else {
       //////-------No Frameworks found
-      $("#sel_framework").html(frm);
+      $("#framework-dropdown").html(frm);
       load_codeSnippet();
     }
   });
@@ -410,13 +411,6 @@ function load_codeSnippet() {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
   let current_loc = JSON.parse(localStorage.getItem("persist"));
-  /* console.log("persist values from load codesnippet function =>", current_loc);
-  console.log("func =>", current_loc.func);
-  console.log("subfunc =>", current_loc.subfunc);
-  console.log("language =>", current_loc.language);
-  console.log("framework =>", current_loc.framework);
-  console.log("implementation =>", current_loc.implementation);
- */
   let sel_func = current_loc.func;
   let sel_subfunc = current_loc.subfunc;
   let sel_language = current_loc.language;
@@ -449,15 +443,19 @@ function load_codeSnippet() {
 
   if (!sel_framework) {
     sel_framework = 51;
-  } else {
-    persistence("framework", sel_framework);
   }
+
+  // else {
+  //   persistence("framework", sel_framework);
+  // }
 
   if (!sel_implementation) {
     sel_implementation = 1;
-  } else {
-    persistence("implementation", sel_implementation);
   }
+
+  // else {
+  //   persistence("implementation", sel_implementation);
+  // }
 
   let codeEditor = ace.edit("editor");
   let editorLib = {
@@ -516,48 +514,59 @@ function load_codeSnippet() {
 
         let codeImpTitle = ""; //intial default value
         let imptypeAndContributor = ""; //initial default value
-        let codeVersions = "<option value = '0'>Default</option>"; //initial default value
 
+        let codeVersions = "";
         if (total_ > 0) {
           let data = feed["data"];
           //update code implementation title
           codeImpTitle = data.title;
           $("#codeimp-title").html(
-            "<h5 class='text-center'>" + codeImpTitle + "</h5>"
+            "<h4 class='text-left'>" + codeImpTitle + "</h4>"
           );
 
           //update implementation type and contributor name
           let impl_title = data.implementation_title;
 
           //checking the first letter of implementation title to determine whether to use a, an or the as adjective
-          let firstChar = impl_title[0].toLowerCase();
-          let arr = ["a", "e", "i", "o", "u"];
-          let adjective;
+          //let firstChar = impl_title[0].toLowerCase();
+          let firstChar = impl_title[0];
+          // let arr = ["o", "p"];
+          // let adjective;
 
-          if (arr.includes(firstChar)) {
-            adjective = "An";
-          } else {
-            adjective = "A";
+          // if (arr.includes(firstChar)) {
+          //   selImpTitle = "im"
+          // } else {
+          //   adjective = "A";
+          // }
+
+          if (firstChar == "D") {
+            impl_title = "";
           }
 
-          if (adjective)
-            imptypeAndContributor =
-              adjective +
-              " " +
-              impl_title +
-              " implementation by " +
-              '<a title="View contributor\'s profile" href="javascript:void(0)">' +
-              data.fullname +
-              "</a>";
+          imptypeAndContributor =
+            "Contributed by " +
+            '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+            data.fullname +
+            "</a>";
 
           $("#imptype-and-contributor").html(imptypeAndContributor);
 
           //add code version drop down
+
+          codeVersions =
+            '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
+
           for (let i = 0; i < total_; i++) {
             codeVersions +=
-              '<option value="' + i + '">Code Version ' + (i + 1) + "</option>";
+              '<option value="' +
+              i +
+              '">Version ' +
+              (i + 1) +
+              " " +
+              impl_title +
+              "</option>";
           }
-          $("#code-version").html(codeVersions);
+          $("#version-dropdown").html(codeVersions + "</select>");
 
           //Display the code snippet
           codeEditor.setValue(data.row_code);
@@ -569,7 +578,7 @@ function load_codeSnippet() {
           $("#imptype-and-contributor").html(imptypeAndContributor);
 
           //add code version drop down
-          $("#code-version").html(codeVersions);
+          $("#version-dropdown").html(codeVersions);
 
           /////-------Display that no codesnippet found
           codeEditor.setValue("No Code Loaded.");
