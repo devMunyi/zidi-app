@@ -439,6 +439,7 @@ function load_codeSnippet() {
     sel_language = 1;
   } else {
     persistence("language", sel_language);
+    load_frameworks(sel_language);
   }
 
   if (!sel_framework) {
