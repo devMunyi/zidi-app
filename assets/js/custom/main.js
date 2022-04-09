@@ -26,11 +26,11 @@ function functions_load() {
     search_;
 
   crudaction(jso, "/functionalities" + query, "GET", function (result) {
-    let data = result["data"];
-    let data_length = data.length;
-    let fun = "";
+    if (result.all_totals > 0) {
+      let data = result["data"];
+      let data_length = data.length;
+      let fun = "";
 
-    if (data_length > 0) {
       //////////--------Lets Pull All sub functions at the same time
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
@@ -89,6 +89,8 @@ function functions_load() {
         }
         $("#functions_").html(fun);
       });
+    } else {
+      $("#functions_").html("No record found");
     }
   });
 }
@@ -139,13 +141,11 @@ function load_languages() {
     rpp;
 
   crudaction(jso, "/languages" + query, "GET", function (result) {
-    let server = $("#server_").val();
-    let data = result["data"];
-    let total_ = data.length;
-    //console.log(total_);
-    let lang = "";
-
-    if (total_ > 0) {
+    if (result.all_totals > 0) {
+      let server = $("#server_").val();
+      let data = result["data"];
+      //console.log(total_);
+      let lang = "";
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].name;

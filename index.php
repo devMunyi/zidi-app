@@ -309,8 +309,17 @@ include_once("configs/conn.inc");
 
             functions_load() //load all functions
             load_languages(); /////Load all the languages
+
+            //load frameworks based on language selected
+            let current_loc = JSON.parse(localStorage.getItem("persist"));
+            let sel_language = current_loc.language;
+            if(sel_language){
+                load_frameworks(sel_language);
+            }
+
+
             //load_frameworks(); //load all frameworks
-            load_implementations(); //load all implementations
+            //load_implementations(); //load all implementations
         });
     </script>
     <script>
