@@ -576,6 +576,9 @@ function load_codeSnippet() {
           //add code version drop down
           $("#version-dropdown").html(codeVersions);
 
+          //empty the code edit link
+          $("#edit-code").html("");
+
           /////-------Display that no codesnippet found
           codeEditor.setValue("No Code Loaded.");
         }
