@@ -222,13 +222,28 @@ function load_frameworks(language_id_ = 0) {
     if (result.all_totals > 0) {
       let data = result["data"];
       let frm =
-        '<select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
+        '<select  class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
+
+      //check for previously selected framework
+      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      let framework_sel = current_loc.framework;
+      //console.log("FRAMEWORK SELECTED=>", framework_sel);
+      let framework_prev_sel;
 
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].name;
-        var icon = data[i].icon;
-        frm += '<option value="' + uid + '">  ' + title + "</option>";
+        //var icon = data[i].icon;
+
+        if (framework_sel) {
+          if (framework_sel == uid) {
+            framework_prev_sel = "SELECTED";
+          } else {
+            framework_prev_sel = "";
+          }
+        }
+
+        frm += `<option ${framework_prev_sel} value="${uid}">${title}</option>`;
       }
 
       $("#framework-dropdown").html(frm + "</select>");
@@ -446,19 +461,15 @@ function load_codeSnippet() {
 
   if (!sel_framework) {
     sel_framework = 51;
+  } else {
+    persistence("framework", sel_framework);
   }
-
-  // else {
-  //   persistence("framework", sel_framework);
-  // }
 
   if (!sel_implementation) {
     sel_implementation = 1;
+  } else {
+    persistence("implementation", sel_implementation);
   }
-
-  // else {
-  //   persistence("implementation", sel_implementation);
-  // }
 
   let codeEditor = ace.edit("editor");
   let editorLib = {
