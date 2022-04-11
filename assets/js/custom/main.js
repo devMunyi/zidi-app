@@ -578,6 +578,8 @@ function load_codeSnippet() {
 
             if (firstChar == "D") {
               impl_title = "";
+            } else {
+              impl_title = " - " + impl_title;
             }
 
             if (impl_sel_) {
