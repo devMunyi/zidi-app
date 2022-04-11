@@ -83,14 +83,14 @@ include_once("configs/conn.inc");
                     </div>
 
 
-                    <div class="form-row">
-                        <div class="form-group col-sm-5">
+                    <div class="row pt-1 pb-1">
+                        <div class="col-sm-5">
                             <hr>
                         </div>
-                        <div class="form-group col-sm-2 text-center">
+                        <div class="col-sm-2 text-center">
                             OR
                         </div>
-                        <div class="form-group col-sm-5">
+                        <div class="col-sm-5">
                             <hr>
                         </div>
                     </div>
@@ -110,8 +110,8 @@ include_once("configs/conn.inc");
                     <!-- <div class="form-group">
                         <p class="text-center"><a class="a-override" href="index">Go Home Page&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
                     </div> -->
+                </form>
             </div>
-            </form>
         </div>
 
         <div class="pt-2">

@@ -191,4 +191,27 @@ function searchFor(objects, searchTerm) {
   return results;
 }
 
+function search() {
+  let search_ = $("#search_functionality").val().trim();
+  if (search_) {
+    $("#search_functionality").val(search_);
+    $("#_offset_").val(0);
+    let func = $("#_func_").val();
+    var fn = eval(func);
+    /*  setTimeout(function () {
+      var html = $(".table").html();
+      // $('.table').html(html.replace(/mercy/gi, '<strong>$&</strong>'));
+    }, 100); */
+  } else {
+    pager_home();
+  }
+}
+
+function pager_home() {
+  $("#_offset_").val(0);
+  //$('#_search_').val("");
+  let func = $("#_func_").val();
+  var fn = eval(func);
+}
+
 ///////--------------End common reusable functions

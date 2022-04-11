@@ -12,12 +12,8 @@ include_once("configs/conn.inc");
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
     <meta name="author" content="PuffinTheme the theme designer">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : Home</title>
-    <style type="text/css">
-    </style>
 
     <!-- Bootstrap Core and vendor -->
     <?php
@@ -48,8 +44,6 @@ include_once("configs/conn.inc");
                         <li style="list-style: none; margin-top: 15px;"><i>Loading ...</i></li>
                     </div>
                 </div>
-
-
             </div>
         </div> -->
 
@@ -57,7 +51,7 @@ include_once("configs/conn.inc");
         <div id="left-sidebar" class="sidebar" style="width: 270px !important; padding-left: 50px">
             <div class="logo_">
                 <h3 class="masthead-heading text-uppercase mb-0">
-                    <img src="assets/images/logo.png" height="40px" />
+                    <a href="index"><img src="assets/images/logo.png" height="40px" /></a>
                 </h3>
             </div>
             <div class="input-icon pl-2">
@@ -148,6 +142,7 @@ include_once("configs/conn.inc");
 
                         <div class="col-lg-3 col-md-3">
                             <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+                            <span id=edit-code></span>
                         </div>
                     </div>
                 </div>

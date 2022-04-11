@@ -219,14 +219,11 @@ function load_frameworks(language_id_ = 0) {
   //console.log(query);
 
   crudaction(jso, "/frameworks" + query, "GET", function (result) {
-    let server = $("#server_").val();
-    let data = result["data"];
-    let total_ = data.length;
-    // console.log("frameworks =>", total_);
-    let frm =
-      '<select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
+    if (result.all_totals > 0) {
+      let data = result["data"];
+      let frm =
+        '<select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
 
-    if (total_ > 0) {
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].name;
@@ -283,12 +280,10 @@ function load_implementations() {
   //console.log(query);
 
   crudaction(jso, "/implementations" + query, "GET", function (result) {
-    let total_ = result["all_totals"];
-    //console.log(total_);
-    let impl = "";
-
-    if (total_ > 0) {
+    if (result.all_totals > 0) {
+      let impl = "";
       let data = result["data"];
+
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].title;
@@ -311,7 +306,7 @@ function saveCodeSnippet() {
   //show disabled/processing button
   disabledBtn("#addEditCodeBtn");
 
-  let codesnippet_id = 0;
+  let codesnippet_id = $("#code_edit_id").val();
   let func_id = $("#func_sel").val();
   let subfunc_id = $("#subfunc_sel").val();
   let language_id = $("#language_sel").val();
@@ -518,31 +513,14 @@ function load_codeSnippet() {
 
         let codeVersions = "";
         if (total_ > 0) {
+          let impl_names = feed["impl_names"];
           let data = feed["data"];
+
           //update code implementation title
           codeImpTitle = data.title;
           $("#codeimp-title").html(
             "<h4 class='text-left'>" + codeImpTitle + "</h4>"
           );
-
-          //update implementation type and contributor name
-          let impl_title = data.implementation_title;
-
-          //checking the first letter of implementation title to determine whether to use a, an or the as adjective
-          //let firstChar = impl_title[0].toLowerCase();
-          let firstChar = impl_title[0];
-          // let arr = ["o", "p"];
-          // let adjective;
-
-          // if (arr.includes(firstChar)) {
-          //   selImpTitle = "im"
-          // } else {
-          //   adjective = "A";
-          // }
-
-          if (firstChar == "D") {
-            impl_title = "";
-          }
 
           imptypeAndContributor =
             "Contributed by " +
@@ -552,21 +530,38 @@ function load_codeSnippet() {
 
           $("#imptype-and-contributor").html(imptypeAndContributor);
 
-          //add code version drop down
+          //append code edit button after add button
+          // let codeId = data.uid.toString().trim();
+          // console.log("CODE ID IS =>", codeId);
+          $("#edit-code").html(
+            ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+          );
 
+          //add code version drop down
           codeVersions =
             '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
 
-          for (let i = 0; i < total_; i++) {
+          let impl_title;
+          let firstChar;
+          for (let i = 0; i < impl_names.length; i++) {
+            impl_title = impl_names[i].implementation;
+
+            firstChar = impl_title[0];
+
+            if (firstChar == "D") {
+              impl_title = "";
+            }
+
             codeVersions +=
               '<option value="' +
               i +
-              '">Version ' +
+              '">Implementation ' +
               (i + 1) +
               " " +
               impl_title +
               "</option>";
           }
+
           $("#version-dropdown").html(codeVersions + "</select>");
 
           //Display the code snippet
@@ -590,20 +585,5 @@ function load_codeSnippet() {
 
   editorLib.init();
 }
-
-/* function codeVersionsDropdown(codeRowCount, htmlId) {
-  let codeVersions = "<option value ='0'>Default</option>";
-  if (codeRowCount > 0) {
-    for (let i = 0; i < codeRowCount; i++) {
-      codeVersions +=
-        '<option value="' + i + '">Code Version ' + (i + 1) + "</option>";
-      $(htmlId).html(codeVersions);
-    }
-  } else {
-    $(htmlId).html(codeVersions);
-  }
-
-  return codeVersions;
-} */
 
 //////---------------------End codeSnippet
