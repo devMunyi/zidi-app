@@ -35,33 +35,33 @@ function functions_load() {
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
         let fun = "";
+
+        //check for previously selected language
+        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let func_sel = current_loc.func;
+        let subfunc_sel = current_loc.subfunc;
+
+        let active_func;
+        let active_subfunc;
+
         for (let i = 0; i < data_length; i++) {
           let function_id = data[i].uid;
           let function_name = data[i].name;
           let function_icon = data[i].icon;
-          fun +=
-            "<li class='outer_list'> <a href=\"javascript:void(0)\" onclick=\"submenu('#fun" +
-            function_id +
-            "'); persistence_remove('subfunc'); persistence('func','" +
-            function_id +
-            '\')" class="has-arrow arrow-b"><img class="icon" src="' +
-            server +
-            "/" +
-            function_icon +
-            '"></img><span data-hover="' +
-            function_name +
-            '">' +
-            function_name +
-            "</span></a>";
+
+          if (function_id == func_sel) {
+            active_func = "active";
+          } else {
+            active_func = "";
+          }
+
+          fun += `<li class="outer_list ${active_func}"> <a href="javascript:void(0)" onclick="submenu('#fun${function_id}'); persistence_remove('subfunc'); persistence('func',${function_id})" class="has-arrow arrow-b"><img class="icon" src="${server}/${function_icon}"></img><span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
           /////------Loop through sub functions
           let sub_data = sub_result["data"];
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
-            fun +=
-              "<ul style='display: none;' class='inner_list' id=\"fun" +
-              function_id +
-              '">';
+            fun += `<ul style="display: none;" class="inner_list" id="fun${function_id}">`;
 
             for (let s = 0; s < sub_data_length; s++) {
               let funct_id = sub_data[s].function_id;
@@ -71,16 +71,13 @@ function functions_load() {
                 let subfunction_name = sub_data[s].name;
                 //console.log("ddjddj"+subfunction_id);
 
-                fun +=
-                  '<li><a href="javascript:void(0)" onclick="subfun(\'#fun' +
-                  function_id +
-                  "'); persistence('subfunc','" +
-                  subfunction_id +
-                  '\'); load_codeSnippet()"><span data-hover="' +
-                  subfunction_name +
-                  '">' +
-                  subfunction_name +
-                  "</span></a></li>";
+                if (subfunction_id == subfunc_sel) {
+                  active_subfunc = "active";
+                } else {
+                  active_subfunc = "";
+                }
+
+                fun += `<li class="${active_subfunc}"><a href="javascript:void(0)" onclick="subfun('#fun${function_id}'); persistence('subfunc', ${subfunction_id}); load_codeSnippet()"><span data-hover="${subfunction_name}">&nbsp;${subfunction_name}</span></a></li>`;
               }
             }
             fun += "</ul>";
@@ -146,23 +143,25 @@ function load_languages() {
       let data = result["data"];
       //console.log(total_);
       let lang = "";
+
+      //check for previously selected language
+      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      let language_sel = current_loc.language;
+      //console.log("LANGUAGE SELECTED=>", language_sel);
+      let active_language;
+
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].name;
         var icon = data[i].icon;
 
-        lang +=
-          '<li style="margin: 0px; padding: 0px;" class="hover-lang"><a href="javascript:void(0)" onclick="load_frameworks(' +
-          uid +
-          "); persistence_remove('framework') ; persistence('language','" +
-          uid +
-          '\')"><img src="' +
-          server +
-          "/" +
-          icon +
-          '" height="20px">   ' +
-          title +
-          "</a></li>";
+        if (uid == language_sel) {
+          active_language = "active";
+        } else {
+          active_language = "";
+        }
+
+        lang += `<li style="margin: 0px; padding: 0px;" class="hover-lang ${active_language}"><a href="javascript:void(0)" onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid}); curActive()"><img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
     } else {
@@ -170,6 +169,10 @@ function load_languages() {
       $("#language_").html("<li>No Languages</li>");
     }
   });
+}
+
+function curActive() {
+  $(this).addClass("active");
 }
 
 //////---------------------End Languages
@@ -438,6 +441,8 @@ function load_codeSnippet() {
   let rpp = 1;
   if (!offset) {
     offset = 0;
+  } else {
+    persistence("offset", offset);
   }
 
   if (!sel_func) {
@@ -561,6 +566,11 @@ function load_codeSnippet() {
 
           let impl_title;
           let firstChar;
+
+          //check for previously selected code implementation
+          let current_loc = JSON.parse(localStorage.getItem("persist"));
+          let impl_sel_ = current_loc.offset;
+          let offset_prev_sel;
           for (let i = 0; i < impl_names.length; i++) {
             impl_title = impl_names[i].implementation;
 
@@ -570,14 +580,17 @@ function load_codeSnippet() {
               impl_title = "";
             }
 
-            codeVersions +=
-              '<option value="' +
-              i +
-              '">Implementation ' +
-              (i + 1) +
-              " " +
-              impl_title +
-              "</option>";
+            if (impl_sel_) {
+              if (impl_sel_ == i) {
+                offset_prev_sel = "SELECTED";
+              } else {
+                offset_prev_sel = "";
+              }
+            }
+
+            codeVersions += `<option ${offset_prev_sel} value="${i}">Implementation ${
+              i + 1
+            } ${impl_title} </option>`;
           }
 
           $("#version-dropdown").html(codeVersions + "</select>");
