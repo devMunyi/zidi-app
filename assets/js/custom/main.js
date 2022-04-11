@@ -398,6 +398,13 @@ function saveCodeSnippet() {
         icon: "success",
         title: message,
       });
+
+      //redirect user to index page on successful update
+      setTimeout(() => {
+        if (method == "PUT") {
+          gotourl("index");
+        }
+      }, 2500);
     }
   });
 }
