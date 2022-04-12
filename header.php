@@ -11,7 +11,7 @@
                 </h3>
             </div>
             <div class="col-lg-5 pl-2">
-                <input type="search" id="search_box" onkeyup="search()" class="form-control" placeholder="Search code snippets">
+                <input type="search" id="search_box" class="form-control" placeholder="Search code snippets">
             </div>
 
             <div class="col-lg-5">
