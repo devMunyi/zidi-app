@@ -36,7 +36,7 @@ function functions_load() {
         //////////-----Loop functions while injecting subfunctions
         let fun = "";
 
-        //check for previously selected language
+        //check for previously selected func and subfunc
         let current_loc = JSON.parse(localStorage.getItem("persist"));
         let func_sel = current_loc.func;
         let subfunc_sel = current_loc.subfunc;
@@ -61,7 +61,7 @@ function functions_load() {
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
-            fun += `<ul style="display: none;" class="inner_list" id="fun${function_id}">`;
+            fun += `<ul class="subfunc_ inner_list" style="display: none;" id="fun${function_id}">`;
 
             for (let s = 0; s < sub_data_length; s++) {
               let funct_id = sub_data[s].function_id;
@@ -69,7 +69,6 @@ function functions_load() {
               if (function_id === funct_id) {
                 let subfunction_id = sub_data[s].uid;
                 let subfunction_name = sub_data[s].name;
-                //console.log("ddjddj"+subfunction_id);
 
                 if (subfunction_id == subfunc_sel) {
                   active_subfunc = "active";
@@ -161,7 +160,7 @@ function load_languages() {
           active_language = "";
         }
 
-        lang += `<li style="margin: 0px; padding: 0px;" class="hover-lang ${active_language}"><a href="javascript:void(0)" onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid}); curActive()"><img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+        lang += `<li class="hover-lang ${active_language}" style="margin: 0px; padding: 0px;"><a href="javascript:void(0)" onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid});"><img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
     } else {
@@ -172,7 +171,10 @@ function load_languages() {
 }
 
 function curActive() {
-  $(this).addClass("active");
+  console.log("CLICKED ELEMENT");
+  $("li").click(function () {
+    $(this).toggleClass("active");
+  });
 }
 
 //////---------------------End Languages
@@ -579,7 +581,7 @@ function load_codeSnippet() {
             if (firstChar == "D") {
               impl_title = "";
             } else {
-              impl_title = " - " + impl_title;
+              impl_title = ` (${impl_title})`;
             }
 
             if (impl_sel_) {

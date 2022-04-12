@@ -137,7 +137,7 @@ function persistence(k, val) {
   if (localStorage.getItem("persist")) {
     let current_loc = JSON.parse(localStorage.getItem("persist"));
     current_loc[k] = val;
-    console.log(JSON.stringify(current_loc));
+    //console.log(JSON.stringify(current_loc));
     localStorage.setItem("persist", JSON.stringify(current_loc));
   } else {
     let current_loc = {};

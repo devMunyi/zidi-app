@@ -14,6 +14,11 @@ include_once("configs/conn.inc");
     <meta name="author" content="PuffinTheme the theme designer">
     <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : Home</title>
+    <style>
+        li.active {
+            color: red;
+        }
+    </style>
 
     <!-- Bootstrap Core and vendor -->
     <?php
@@ -65,7 +70,7 @@ include_once("configs/conn.inc");
                     <div class="tab-pane fade active show" id="all-tab">
                         <nav class="sidebar-nav">
                             <div class="card-body scrolli" style="padding: 10px 10px;">
-                                <ul class="metismenu" id="functions_">
+                                <ul class="metismenu func_" id="functions_">
                                     Loading ...
                                 </ul>
                             </div>
@@ -154,7 +159,7 @@ include_once("configs/conn.inc");
                                     <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
                                 </div>
                                 <div class="card-body" style="padding-top: 0px; padding-right: 0px">
-                                    <ul class="metismenu ci-effect-1 prominent" id="language_">
+                                    <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
                                         <li class="font-weight-normal font-14 font-italic">Loading...</li>
                                     </ul>
                                 </div>
@@ -308,7 +313,7 @@ include_once("configs/conn.inc");
             //load frameworks based on language selected
             let current_loc = JSON.parse(localStorage.getItem("persist"));
             let sel_language = current_loc.language;
-            if(sel_language){
+            if (sel_language) {
                 load_frameworks(sel_language);
             }
 
@@ -343,7 +348,6 @@ include_once("configs/conn.inc");
             $('#search_functionality').keyup(function() {
                 $('ul#functions_ li').hide();
                 $('ul#functions_ .inner_list').fadeIn('fast');
-
                 $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
             })
 
@@ -383,6 +387,24 @@ include_once("configs/conn.inc");
 
                 }
             }); */
+
+            //toggle active function
+            $('.func_').on('click', 'li', function() {
+                $('.func_ li').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            //toggle active subfunction
+            $('._subfunc_').on('click', 'li', function() {
+                $('ul ._subfunc_ ul li').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            //toggle active language
+            $('.lang_').on('click', 'li', function() {
+                $('.lang_ li').removeClass('active');
+                $(this).addClass('active');
+            });
         });
     </script>
 </body>
