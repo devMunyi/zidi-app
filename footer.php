@@ -19,8 +19,8 @@
     </div>
 </footer>
 
-<!-- <input type="hidden" id="server_" value="https://www.backgen.net/back"> -->
-<input type="hidden" id="server_" value="http://localhost:5000/back">
+<input type="hidden" id="server_" value="https://www.backgen.net/back">
+<!-- <input type="hidden" id="server_" value="http://localhost:5000/back"> -->
 <input type="hidden" id="auth_" value="Basic dGVzdDp0ZXN0">
 <input type="hidden" id="sel_language" value="0">
 <input type="hidden" id="sel_func" value="0">
