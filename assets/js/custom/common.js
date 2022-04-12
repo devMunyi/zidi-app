@@ -195,9 +195,11 @@ function search() {
   let search_ = $("#search_functionality").val().trim();
   if (search_) {
     $("#search_functionality").val(search_);
-    $("#_offset_").val(0);
-    let func = $("#_func_").val();
-    var fn = eval(func);
+    //insert a default value for the offset
+    persistence("offset", 0);
+
+    //call load snippet function
+    eval("load_codeSnippet()");
     /*  setTimeout(function () {
       var html = $(".table").html();
       // $('.table').html(html.replace(/mercy/gi, '<strong>$&</strong>'));
@@ -208,10 +210,27 @@ function search() {
 }
 
 function pager_home() {
-  $("#_offset_").val(0);
-  //$('#_search_').val("");
-  let func = $("#_func_").val();
-  var fn = eval(func);
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc.func) {
+    persistence_remove("func");
+  }
+  if (current_loc.subfunc) {
+    persistence_remove("subfunc");
+  }
+
+  if (current_loc.language) {
+    persistence_remove("language");
+  }
+
+  if (current_loc.framework) {
+    persistence_remove("framework");
+  }
+
+  //insert a default value for the offset
+  persistence("offset", 0);
+
+  //call the function to return default page
+  eval("load_codeSnippet()");
 }
 
 ///////--------------End common reusable functions

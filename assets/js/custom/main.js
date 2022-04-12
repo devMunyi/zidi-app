@@ -55,7 +55,12 @@ function functions_load() {
             active_func = "";
           }
 
-          fun += `<li class="outer_list ${active_func}"> <a href="javascript:void(0)" onclick="submenu('#fun${function_id}'); persistence_remove('subfunc'); persistence('func',${function_id})" class="has-arrow arrow-b"><img class="icon" src="${server}/${function_icon}"></img><span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
+          fun += `<li class="outer_list ${active_func}"> 
+            <a href="javascript:void(0)" onclick="submenu('#fun${function_id}'); 
+            persistence_remove('subfunc'); persistence('func',${function_id}); load_codeSnippet()" 
+            class="has-arrow arrow-b"><img class="icon" src="${server}/${function_icon}">
+            </img><span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
+
           /////------Loop through sub functions
           let sub_data = sub_result["data"];
           let sub_data_length = sub_data.length;
@@ -432,13 +437,16 @@ function saveCodeSnippet() {
 function load_codeSnippet() {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
+
+  persistence("offset", $("#code-version").val());
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   let sel_func = current_loc.func;
   let sel_subfunc = current_loc.subfunc;
   let sel_language = current_loc.language;
   let sel_framework = $("#sel_framework").val();
-  let sel_implementation = parseInt($("#sel_implementation").val());
-  let offset = $("#code-version").val();
+  let search_ = $("#search_box").val().trim();
+  let offset = current_loc.offset;
+
   //console.log("OFFSET =>", offset);
   let rpp = 1;
   if (!offset) {
@@ -448,34 +456,34 @@ function load_codeSnippet() {
   }
 
   if (!sel_func) {
-    sel_func = 4;
+    sel_func = null;
   } else {
     persistence("func", sel_func);
   }
 
   if (!sel_subfunc) {
-    sel_subfunc = 1;
+    sel_subfunc = null;
   } else {
     persistence("subfunc", sel_subfunc);
   }
 
   if (!sel_language) {
-    sel_language = 1;
+    sel_language = null;
   } else {
     persistence("language", sel_language);
     //load_frameworks(sel_language);
   }
 
   if (!sel_framework) {
-    sel_framework = 51;
+    sel_framework = null;
   } else {
     persistence("framework", sel_framework);
   }
 
-  if (!sel_implementation) {
-    sel_implementation = 1;
+  if (!search_) {
+    search_ = "";
   } else {
-    persistence("implementation", sel_implementation);
+    persistence("searchKey", search_);
   }
 
   let codeEditor = ace.edit("editor");
@@ -520,12 +528,12 @@ function load_codeSnippet() {
         sel_language +
         "&framework_id=" +
         sel_framework +
-        "&implementation_id=" +
-        sel_implementation +
         "&offset=" +
         offset +
         "&rpp=" +
-        rpp;
+        rpp +
+        "&search_=" +
+        search_;
 
       crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
         //reset code editor to empty
@@ -601,6 +609,16 @@ function load_codeSnippet() {
 
           //Display the code snippet
           codeEditor.setValue(data.row_code);
+
+          //update the reminder of selected combinations for the loaded code snippet
+          persistence("func", data.func_id);
+          persistence("subfunc", data.subfunc_id);
+          persistence("language", data.language_id);
+          persistence("framework", data.framework_id);
+          persistence("offset", data.impl_version);
+          //persistence("searchKey", data.search_);
+
+          console.log("CURRENT SEL =>", current_loc);
         } else {
           //set code implementation title to initialized default value
           $("#codeimp-title").html(codeImpTitle);
