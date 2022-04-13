@@ -70,9 +70,9 @@ include_once("configs/conn.inc");
                                     $uid = $r['uid'];
                                     $name = $r['name'];
 
-                                    if($uid == $code_arr["func_id"]){
+                                    if ($uid == $code_arr["func_id"]) {
                                         $selected = 'SELECTED';
-                                    }else{
+                                    } else {
                                         $selected = '';
                                     }
 
@@ -91,9 +91,9 @@ include_once("configs/conn.inc");
                                     $uid = $r['uid'];
                                     $name = $r['name'];
 
-                                    if($uid == $code_arr["subfunc_id"]){
+                                    if ($uid == $code_arr["subfunc_id"]) {
                                         $selected = 'SELECTED';
-                                    }else{
+                                    } else {
                                         $selected = '';
                                     }
                                     echo "<option $selected value=\"$uid\">$name</option>";
@@ -112,9 +112,9 @@ include_once("configs/conn.inc");
                                     $uid = $r['uid'];
                                     $name = $r['name'];
 
-                                    if($uid == $code_arr["language_id"]){
+                                    if ($uid == $code_arr["language_id"]) {
                                         $selected = 'SELECTED';
-                                    }else{
+                                    } else {
                                         $selected = '';
                                     }
 
@@ -135,9 +135,9 @@ include_once("configs/conn.inc");
                                     $uid = $r['uid'];
                                     $name = $r['name'];
 
-                                    if($uid == $code_arr["framework_id"]){
+                                    if ($uid == $code_arr["framework_id"]) {
                                         $selected = 'SELECTED';
-                                    }else{
+                                    } else {
                                         $selected = '';
                                     }
 
@@ -158,9 +158,9 @@ include_once("configs/conn.inc");
                                     $uid = $r['uid'];
                                     $title = $r['title'];
 
-                                    if($uid == $code_arr["implementation_id"]){
+                                    if ($uid == $code_arr["implementation_id"]) {
                                         $selected = 'SELECTED';
-                                    }else{
+                                    } else {
                                         $selected = '';
                                     }
 
@@ -171,7 +171,7 @@ include_once("configs/conn.inc");
                         </div>
                         <div class="form-group col-md-8">
                             <label for="codeimpl_title">Write User Friendly Code Title:</label>
-                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop"/>
+                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -209,24 +209,21 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             $("#add-edit-code-page").hide();
-            $("#add-edit-code-page").show(
-                `<div class="page-loader-wrapper">
-                    <div class="loader">
-                    </div>
-                </div`
-            );
-
+            
             function requireSigninTwo() {
-                let current_loc = JSON.parse(localStorage.getItem("persist"));
-                if (current_loc) {
-                    let token = current_loc.token;
+                $(".font-opensans").html(`<div class="page-loader-wrapper">
+                            <div class="loader"></div>
+                        </div>`);
 
-                    let user_details = current_loc.user;
-                    if (token && user_details) {
+                let current_loc = JSON.parse(localStorage.getItem("persist"));
+                if (current_loc && current_loc.token) {
+                    let token = current_loc.token;
+                    if (token) {
                         //send request to the server to verify token
                         crudaction({}, "/current-user", "GET", function(feed) {
                             if (feed.success) {
                                 //if okay, display the code add edit form page
+                                $(".font-opensans").html("");
                                 $("#add-edit-code-page").show();
                             } else {
                                 //redirect to login page
@@ -265,4 +262,5 @@ include_once("configs/conn.inc");
     </script>
 </body>
 <input type="hidden" name="code_edit_id" id="code_edit_id" value="<?php echo $code_id; ?>">
+
 </html>
