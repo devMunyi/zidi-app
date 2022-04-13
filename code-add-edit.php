@@ -211,10 +211,6 @@ include_once("configs/conn.inc");
             $("#add-edit-code-page").hide();
             
             function requireSigninTwo() {
-                $(".font-opensans").html(`<div class="page-loader-wrapper">
-                            <div class="loader"></div>
-                        </div>`);
-
                 let current_loc = JSON.parse(localStorage.getItem("persist"));
                 if (current_loc && current_loc.token) {
                     let token = current_loc.token;
@@ -223,7 +219,6 @@ include_once("configs/conn.inc");
                         crudaction({}, "/current-user", "GET", function(feed) {
                             if (feed.success) {
                                 //if okay, display the code add edit form page
-                                $(".font-opensans").html("");
                                 $("#add-edit-code-page").show();
                             } else {
                                 //redirect to login page

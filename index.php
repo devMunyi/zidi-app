@@ -260,9 +260,8 @@ include_once("configs/conn.inc");
 
             function requireSigninOne() {
                 let current_loc = JSON.parse(localStorage.getItem("persist"));
-                if (current_loc) {
+                if (current_loc && current_loc.token && current_loc.user) {
                     let token = current_loc.token;
-
                     let user_details = current_loc.user;
                     if (token && user_details) {
                         //send request to the server to verify token
@@ -312,7 +311,8 @@ include_once("configs/conn.inc");
 
             //load frameworks based on language selected
             let current_loc = JSON.parse(localStorage.getItem("persist"));
-            if (current_loc && current_loc.language) {
+            console.log("CURRENT OFFSET =>", current_loc);
+            if (current_loc && current_loc.language && current_loc.offset) {
                 load_frameworks(current_loc.language);
             }
         });
