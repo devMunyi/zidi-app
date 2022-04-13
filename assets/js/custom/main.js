@@ -53,8 +53,8 @@ function functions_load() {
           }
 
           fun += `<li class="outer_list ${active_func}"> 
-            <a href="javascript:void(0)" onclick="submenu('#fun${function_id}'); 
-            persistence_remove('subfunc'); persistence('func',${function_id}); load_codeSnippet()" 
+            <a href="javascript:void(0)" 
+            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); load_codeSnippet()" 
             class="has-arrow arrow-b"><img class="icon" src="${server}/${function_icon}">
             </img><span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -256,7 +256,7 @@ function load_frameworks(language_id_ = 0) {
       load_codeSnippet();
     } else {
       //////-------No Frameworks found
-      $("#framework-dropdown").html(frm);
+      $("#framework-dropdown").html(frm + "</select>");
       load_codeSnippet();
     }
   });
