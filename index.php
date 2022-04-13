@@ -315,10 +315,6 @@ include_once("configs/conn.inc");
             if (current_loc && current_loc.language) {
                 load_frameworks(current_loc.language);
             }
-
-
-            //load_frameworks(); //load all frameworks
-            //load_implementations(); //load all implementations
         });
     </script>
     <script>

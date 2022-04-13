@@ -147,13 +147,10 @@ function load_languages() {
     if (result.all_totals > 0) {
       let server = $("#server_").val();
       let data = result["data"];
-      //console.log(total_);
       let lang = "";
 
       //check for previously selected language
       let current_loc = JSON.parse(localStorage.getItem("persist"));
-
-      //console.log("LANGUAGE SELECTED=>", language_sel);
       let active_language = "";
       let language_sel;
 
@@ -167,7 +164,7 @@ function load_languages() {
           if (uid == language_sel) {
             active_language = "active";
           } else {
-            active_language = active_language;
+            active_language = "";
           }
         }
 
