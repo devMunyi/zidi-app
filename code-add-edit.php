@@ -208,7 +208,12 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            $("#add-edit-code-page").hide();
+            $("#add-edit-code-page").show(
+                `<div class="page-loader-wrapper">
+                    <div class="loader">
+                    </div>
+                </div`
+            );
 
             function requireSigninTwo() {
                 let current_loc = JSON.parse(localStorage.getItem("persist"));
