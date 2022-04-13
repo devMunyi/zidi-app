@@ -29,30 +29,27 @@ function functions_load() {
     if (result.all_totals > 0) {
       let data = result["data"];
       let data_length = data.length;
-      let fun = "";
 
       //////////--------Lets Pull All sub functions at the same time
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
         let fun = "";
-
-        //check for previously selected func and subfunc
         let current_loc = JSON.parse(localStorage.getItem("persist"));
-        let func_sel = current_loc.func;
-        let subfunc_sel = current_loc.subfunc;
-
+        let func_sel;
         let active_func;
-        let active_subfunc;
 
         for (let i = 0; i < data_length; i++) {
           let function_id = data[i].uid;
           let function_name = data[i].name;
           let function_icon = data[i].icon;
 
-          if (function_id == func_sel) {
-            active_func = "active";
-          } else {
-            active_func = "";
+          if (current_loc && current_loc.func) {
+            func_sel = current_loc.func;
+            if (function_id == func_sel) {
+              active_func = "active";
+            } else {
+              active_func = "";
+            }
           }
 
           fun += `<li class="outer_list ${active_func}"> 
@@ -66,6 +63,8 @@ function functions_load() {
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
+            let subfunc_sel;
+            let active_subfunc;
             fun += `<ul class="subfunc_ inner_list" style="display: none;" id="fun${function_id}">`;
 
             for (let s = 0; s < sub_data_length; s++) {
@@ -75,10 +74,13 @@ function functions_load() {
                 let subfunction_id = sub_data[s].uid;
                 let subfunction_name = sub_data[s].name;
 
-                if (subfunction_id == subfunc_sel) {
-                  active_subfunc = "active";
-                } else {
-                  active_subfunc = "";
+                if (current_loc && current_loc.subfunc) {
+                  subfunc_sel = current_loc.subfunc;
+                  if (subfunction_id == subfunc_sel) {
+                    active_subfunc = "active";
+                  } else {
+                    active_subfunc = "";
+                  }
                 }
 
                 fun += `<li class="${active_subfunc}"><a href="javascript:void(0)" onclick="subfun('#fun${function_id}'); persistence('subfunc', ${subfunction_id}); load_codeSnippet()"><span data-hover="${subfunction_name}">&nbsp;${subfunction_name}</span></a></li>`;
@@ -150,19 +152,23 @@ function load_languages() {
 
       //check for previously selected language
       let current_loc = JSON.parse(localStorage.getItem("persist"));
-      let language_sel = current_loc.language;
+
       //console.log("LANGUAGE SELECTED=>", language_sel);
-      let active_language;
+      let active_language = "";
+      let language_sel;
 
       for (var i = 0; i < data.length; i++) {
         var uid = data[i].uid;
         var title = data[i].name;
         var icon = data[i].icon;
 
-        if (uid == language_sel) {
-          active_language = "active";
-        } else {
-          active_language = "";
+        if (current_loc && current_loc.language) {
+          language_sel = current_loc.language;
+          if (uid == language_sel) {
+            active_language = "active";
+          } else {
+            active_language = active_language;
+          }
         }
 
         lang += `<li class="hover-lang ${active_language}" style="margin: 0px; padding: 0px;"><a href="javascript:void(0)" onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid});"><img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
@@ -172,13 +178,6 @@ function load_languages() {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
     }
-  });
-}
-
-function curActive() {
-  console.log("CLICKED ELEMENT");
-  $("li").click(function () {
-    $(this).toggleClass("active");
   });
 }
 
@@ -236,8 +235,6 @@ function load_frameworks(language_id_ = 0) {
 
       //check for previously selected framework
       let current_loc = JSON.parse(localStorage.getItem("persist"));
-      let framework_sel = current_loc.framework;
-      //console.log("FRAMEWORK SELECTED=>", framework_sel);
       let framework_prev_sel;
 
       for (var i = 0; i < data.length; i++) {
@@ -245,7 +242,8 @@ function load_frameworks(language_id_ = 0) {
         var title = data[i].name;
         //var icon = data[i].icon;
 
-        if (framework_sel) {
+        if (current_loc && current_loc.framework) {
+          let framework_sel = current_loc.framework;
           if (framework_sel == uid) {
             framework_prev_sel = "SELECTED";
           } else {
@@ -447,7 +445,6 @@ function load_codeSnippet() {
   let search_ = $("#search_box").val().trim();
   let offset = current_loc.offset;
 
-  //console.log("OFFSET =>", offset);
   let rpp = 1;
   if (!offset) {
     offset = 0;
@@ -471,7 +468,6 @@ function load_codeSnippet() {
     sel_language = null;
   } else {
     persistence("language", sel_language);
-    //load_frameworks(sel_language);
   }
 
   if (!sel_framework) {
@@ -579,7 +575,6 @@ function load_codeSnippet() {
 
           //check for previously selected code implementation
           let current_loc = JSON.parse(localStorage.getItem("persist"));
-          let impl_sel_ = current_loc.offset;
           let offset_prev_sel;
           for (let i = 0; i < impl_names.length; i++) {
             impl_title = impl_names[i].implementation;
@@ -592,7 +587,8 @@ function load_codeSnippet() {
               impl_title = ` (${impl_title})`;
             }
 
-            if (impl_sel_) {
+            if (current_loc && current_loc.offset) {
+              let impl_sel_ = current_loc.offset;
               if (impl_sel_ == i) {
                 offset_prev_sel = "SELECTED";
               } else {
@@ -616,9 +612,8 @@ function load_codeSnippet() {
           persistence("language", data.language_id);
           persistence("framework", data.framework_id);
           persistence("offset", data.impl_version);
-          //persistence("searchKey", data.search_);
 
-          console.log("CURRENT SEL =>", current_loc);
+          //console.log("CURRENT SEL =>", current_loc);
         } else {
           //set code implementation title to initialized default value
           $("#codeimp-title").html(codeImpTitle);

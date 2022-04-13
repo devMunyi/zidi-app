@@ -1,50 +1,13 @@
-////////---------------Begin common reusable functions
-/* function crudaction(jsonbody, url, method = "POST", callback) {
-  ////////------Reusable
-  let server = $("#server_").val();
-  console.log("SERVER =>", server);
-  let auth = $("#auth").val();
-
-  //////Clean the JSON string
-
-  let cleanJson = JSON.stringify(jsonbody);
-
-  $.ajax({
-    url: server + url,
-    method: method,
-    dataType: "json",
-    timeout: 0,
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json",
-    },
-    data: cleanJson,
-
-    success: function (result) {
-      callback(result);
-    },
-    beforeSend: function () {
-      // Handle the beforeSend event
-      $("#loader").fadeIn();
-    },
-    error: function (err) {
-      console.log("An Error" + err);
-      // feedback("ERROR", "TOAST", ".feedback_", err, 10);
-      callback(JSON.stringify(err));
-    },
-    complete: function () {
-      // Handle the complete event
-      $("#loader").fadeOut();
-    },
-  });
-} */
-
 function crudaction(jsonbody, url, method = "POST", callback) {
   let server_ = $("#server_").val();
-  //console.log("SERVER => ", server_);
   let cleanJson = JSON.stringify(jsonbody);
+  let token;
   let current_loc = JSON.parse(localStorage.getItem("persist"));
-  let token = current_loc.token;
+  if (current_loc && current_loc.token) {
+    token = current_loc.token;
+  }
+  4;
+
   $.ajax({
     url: server_ + url,
     type: method,

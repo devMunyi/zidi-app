@@ -312,9 +312,8 @@ include_once("configs/conn.inc");
 
             //load frameworks based on language selected
             let current_loc = JSON.parse(localStorage.getItem("persist"));
-            let sel_language = current_loc.language;
-            if (sel_language) {
-                load_frameworks(sel_language);
+            if (current_loc && current_loc.language) {
+                load_frameworks(current_loc.language);
             }
 
 
