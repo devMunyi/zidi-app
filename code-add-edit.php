@@ -2,11 +2,24 @@
 session_start();
 include_once("php_functions/functions.php");
 include_once("configs/conn.inc");
+
+$code_id = $_GET['cid'];
+if ($code_id > 0) {
+    $code_id = $_GET['cid'];
+    $code_arr = fetchonerow('pr_code_snippets', "uid='" . $code_id . "'", "uid, title, row_code, file_extension, instructions, func_id, subfunc_id, language_id, framework_id, implementation_id");
+
+    $act = "<span class='text-orange'><i class='fa fa-edit'></i>Edit</span>";
+    // echo "Service <small class='xsm'>Edit</small> <span class='text-green text-bold sm'>address</span> <a title='View details' class='font-16' href=\"services?service=$code_id\"><i class='fa fa-arrow-circle-up'></i></a>";
+} else {
+    $code_arr = array();
+    $code_id = "";
+    $act = "<span class='text-green'><i class='fa fa-edit'></i>Add</span>";
+    // echo "Service <small class='xsm text-muted'>Add</small>";
+}
 ?>
 
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -18,32 +31,12 @@ include_once("configs/conn.inc");
     include_once 'styles.php';
     ?>
 </head>
-
 <body class="font-opensans">
-
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
         </div>
     </div>
-
-    <?php
-    $code_id = $_GET['cid'];
-    if ($code_id > 0) {
-        $code_id = $_GET['cid'];
-        $code_arr = fetchonerow('pr_code_snippets', "uid='" . $code_id . "'", "uid, title, row_code, file_extension, instructions, func_id, subfunc_id, language_id, framework_id, implementation_id");
-
-        $act = "<span class='text-orange'><i class='fa fa-edit'></i>Edit</span>";
-        // echo "Service <small class='xsm'>Edit</small> <span class='text-green text-bold sm'>address</span> <a title='View details' class='font-16' href=\"services?service=$code_id\"><i class='fa fa-arrow-circle-up'></i></a>";
-    } else {
-        $code_arr = array();
-        $code_id = "";
-        $act = "<span class='text-green'><i class='fa fa-edit'></i>Add</span>";
-        // echo "Service <small class='xsm text-muted'>Add</small>";
-    }
-    ?>
-
-
 
     <!-- Start main html -->
     <div class="container-fluid" id="add-edit-code-page">

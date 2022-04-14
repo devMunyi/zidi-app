@@ -77,12 +77,12 @@ function functions_load() {
                 if (current_loc && current_loc.subfunc) {
                   subfunc_sel = current_loc.subfunc;
                   if (subfunction_id == subfunc_sel) {
+                    //console.log("FOUND AN ACTIVE SUBFUNCTION");
                     active_subfunc = "active";
                   } else {
                     active_subfunc = "";
                   }
                 }
-
                 fun += `<li class="${active_subfunc}"><a href="javascript:void(0)" onclick="subfun('#fun${function_id}'); persistence('subfunc', ${subfunction_id}); load_codeSnippet()"><span data-hover="${subfunction_name}">&nbsp;${subfunction_name}</span></a></li>`;
               }
             }
@@ -168,7 +168,10 @@ function load_languages() {
           }
         }
 
-        lang += `<li class="hover-lang ${active_language}" style="margin: 0px; padding: 0px;"><a href="javascript:void(0)" onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid});"><img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+        lang += `<li class="hover-lang ${active_language}" style="margin: 0px; padding: 0px;">
+        <a href="javascript:void(0)" 
+        onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid});">
+        <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
     } else {
@@ -227,8 +230,8 @@ function load_frameworks(language_id_ = 0) {
   crudaction(jso, "/frameworks" + query, "GET", function (result) {
     if (result.all_totals > 0) {
       let data = result["data"];
-      let frm =
-        '<select  class="fancy-select" id="sel_framework" onchange="load_codeSnippet()"><option value="0"> No Framework</option>';
+      let frm = `<select  class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
+        <option value="0"> No Framework</option>`;
 
       //check for previously selected framework
       let current_loc = JSON.parse(localStorage.getItem("persist"));
@@ -404,6 +407,25 @@ function saveCodeSnippet() {
         title: message,
         color: "white",
       });
+
+      // toastr.options = {
+      //   closeButton: true,
+      //   debug: false,
+      //   newestOnTop: false,
+      //   progressBar: true,
+      //   positionClass: "toast-top-right",
+      //   preventDuplicates: true,
+      //   onclick: null,
+      //   showDuration: "300",
+      //   hideDuration: "1000",
+      //   timeOut: "2500",
+      //   extendedTimeOut: "1000",
+      //   showEasing: "swing",
+      //   hideEasing: "linear",
+      //   showMethod: "fadeIn",
+      //   hideMethod: "fadeOut",
+      // };
+      // toastr.error(message);
     } else if (feed["success"] === true) {
       let message = feed["message"];
       var Toast = Swal.mixin({
@@ -429,17 +451,201 @@ function saveCodeSnippet() {
   });
 }
 
+function search_codeSnippet() {
+  let code_search = $("#search_box").val().trim();
+  //$("#code_id_").val("");
+  if (code_search) {
+    let query = "?search_=" + code_search;
+    crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
+      if (result.success) {
+        let totalSearches = result.search_totals;
+        console.log("SEARCH RESULTS =>", totalSearches);
+        let data = result["data"];
+        if (totalSearches > 0) {
+          let tableSearch = `<table class='table table-dark childClass stack-top table-striped table-condensed'>`;
+          for (let i = 0; i < data.length; i++) {
+            tableSearch += `<tr><td><a href="javascript:void(0)" style='color:white;' class='pointer' 
+            onclick=\"select_code('${data[i].uid}', '${data[i].func_id}', '${data[i].subfunc_id}', '${data[i].language_id}', '${data[i].framework_id}', '${data[i].title}')">
+            <span class='font-bold font-16 text-blue'>${data[i].title}</span> <br/>
+            Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
+          }
+          tableSearch += `</table>`;
+          $("#code_results").slideDown("fast");
+          $("#code_results").html(tableSearch);
+        } else {
+          $("#code_results").slideDown("fast");
+          $("#code_results").html(
+            `<div class="text-dark text-center pb-0 mb-0 card">No results</div>`
+          );
+        }
+      } else {
+        $("#code_results").slideDown("fast");
+        $("#code_results").html(
+          `<div class="text-dark text-center pb-0 mb-0 card">No results</div>`
+        );
+      }
+    });
+  } else {
+    $("#code_results").fadeOut("fast");
+  }
+}
+
+function select_code(cid, func, subfunc, language, framework, title) {
+  $("#search_box").val(title);
+  // $("#code_id_").val(uid);
+  // $("#code_results").fadeOut("fast");
+
+  persistence("codeId", cid);
+  persistence("func", func);
+  persistence("subfunc", subfunc);
+  persistence("language", language);
+  persistence("framework", framework);
+  persistence("offset", 0);
+
+  $("#code_results").fadeOut("fast");
+  //console.log("SELECTED");
+  functions_load();
+  load_languages();
+  loadSearchSelCode();
+  // let current_loc = JSON.parse(localStorage.getItem("persist"));
+  // console.log("PERSIST VALUES =>", current_loc);
+}
+
+function loadSearchSelCode() {
+  //codeLoading("#codeimp-title");
+  codeLoading("#imptype-and-contributor");
+
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let codeId;
+  if (current_loc && current_loc.codeId) {
+    codeId = current_loc.codeId;
+  } else {
+    console.log("Error retriving code ID");
+    return;
+  }
+
+  let codeEditor = ace.edit("editor");
+  let editorLib = {
+    init() {
+      //Configure Ace
+      codeEditor.setTheme("ace/theme/monokai");
+
+      //Set Languages
+      codeEditor.session.setMode("ace/mode/javascript");
+      codeEditor.session.setMode("ace/mode/java");
+      //codeEditor.session.setMode("ace/mode.html");
+      //codeEditor.session.setMode("ace/mode/php");
+      //Set Options
+      codeEditor.setOptions({
+        //fontFamily: 'Inconsolata'
+        fontSize: "12pt",
+        //enableBasicAutocompletion: true,
+        //enableLiveAutocompletion: true
+      });
+
+      //Set default code
+      let jso = {};
+      query = "?codesnippet_id=" + codeId;
+
+      crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
+        //reset code editor to empty
+        codeEditor.setValue("");
+
+        let total_ = feed.all_totals;
+
+        let codeImpTitle = ""; //intial default value
+        let imptypeAndContributor = ""; //initial default value
+
+        // let codeVersions = "";
+        if (total_ > 0) {
+          let data = feed["data"];
+
+          //update code implementation title
+          codeImpTitle = data.title;
+          $("#codeimp-title").html(
+            "<h4 class='text-left'>" + codeImpTitle + "</h4>"
+          );
+
+          imptypeAndContributor =
+            "Contributed by " +
+            '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+            data.fullname +
+            "</a>";
+
+          $("#imptype-and-contributor").html(imptypeAndContributor);
+
+          //append code edit button after add button
+          // let codeId = data.uid.toString().trim();
+          // console.log("CODE ID IS =>", codeId);
+          $("#edit-code").html(
+            ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+          );
+
+          //add code version drop down
+          // codeVersions =
+          //   '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
+
+          let firstChar;
+          //check for previously selected code implementation
+          let impl_title = data.impl_name;
+
+          firstChar = impl_title[0];
+
+          if (firstChar == "D") {
+            impl_title = "";
+          } else {
+            impl_title = ` (${impl_title})`;
+          }
+
+          // codeVersions += `<option value="0">Implementation 1 ${impl_title} </option>`;
+
+          // $("#version-dropdown").html(codeVersions + "</select>");
+
+          //Display the code snippet
+          codeEditor.setValue(data.row_code);
+
+          //update the reminder of selected combinations for the loaded code snippet
+          persistence("func", data.func_id);
+          persistence("subfunc", data.subfunc_id);
+          persistence("language", data.language_id);
+          persistence("framework", data.framework_id);
+
+          //console.log("CURRENT SEL =>", current_loc);
+        } else {
+          //set code implementation title to initialized default value
+          $("#codeimp-title").html(codeImpTitle);
+
+          //set implementation type and contributor name to intialized default value
+          $("#imptype-and-contributor").html(imptypeAndContributor);
+
+          //add code version drop down
+          // $("#version-dropdown").html(codeVersions);
+
+          //empty the code edit link
+          $("#edit-code").html("");
+
+          /////-------Display that no codesnippet found
+          codeEditor.setValue("No Code Loaded.");
+        }
+      });
+    },
+  };
+
+  editorLib.init();
+}
+
 function load_codeSnippet() {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
 
   persistence("offset", $("#code-version").val());
+  persistence("offset", $("#sel_framework").val());
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   let sel_func = current_loc.func;
   let sel_subfunc = current_loc.subfunc;
   let sel_language = current_loc.language;
-  let sel_framework = $("#sel_framework").val();
-  let search_ = $("#search_box").val().trim();
+  let sel_framework = current_loc.framework;
+  //let search_ = $("#search_box").val().trim();
   let offset = current_loc.offset;
 
   let rpp = 1;
@@ -471,12 +677,6 @@ function load_codeSnippet() {
     sel_framework = null;
   } else {
     persistence("framework", sel_framework);
-  }
-
-  if (!search_) {
-    search_ = "";
-  } else {
-    persistence("searchKey", search_);
   }
 
   let codeEditor = ace.edit("editor");
@@ -524,9 +724,7 @@ function load_codeSnippet() {
         "&offset=" +
         offset +
         "&rpp=" +
-        rpp +
-        "&search_=" +
-        search_;
+        rpp;
 
       crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
         //reset code editor to empty

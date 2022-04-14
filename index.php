@@ -311,7 +311,7 @@ include_once("configs/conn.inc");
 
             //load frameworks based on language selected
             let current_loc = JSON.parse(localStorage.getItem("persist"));
-            console.log("CURRENT OFFSET =>", current_loc);
+            //console.log("CURRENT OFFSET =>", current_loc);
             if (current_loc && current_loc.language && current_loc.offset) {
                 load_frameworks(current_loc.language);
             }
@@ -402,6 +402,14 @@ include_once("configs/conn.inc");
             });
         });
     </script>
+
+
+<script>
+   var res = "success";
+</script>
+<?php
+   echo "<script>document.writeln(res);</script>";
+?>
 </body>
 
 </html>
