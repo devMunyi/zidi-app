@@ -491,24 +491,16 @@ function search_codeSnippet() {
 }
 
 function select_code(cid, func, subfunc, language, framework, title) {
-  $("#search_box").val(title);
-  // $("#code_id_").val(uid);
-  // $("#code_results").fadeOut("fast");
-
   persistence("codeId", cid);
   persistence("func", func);
   persistence("subfunc", subfunc);
   persistence("language", language);
   persistence("framework", framework);
   persistence("offset", 0);
-
-  $("#code_results").fadeOut("fast");
-  //console.log("SELECTED");
-  //functions_load();
-  //await load_languages();
+  $("#search_box").val(title);
   loadSearchSelCode();
-  // let current_loc = JSON.parse(localStorage.getItem("persist"));
-  // console.log("PERSIST VALUES =>", current_loc);
+  // $("#code_id_").val(uid);
+  $("#code_results").fadeOut("fast");
 }
 
 function loadSearchSelCode() {
