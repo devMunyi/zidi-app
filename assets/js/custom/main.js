@@ -504,8 +504,8 @@ function select_code(cid, func, subfunc, language, framework, title) {
 
   $("#code_results").fadeOut("fast");
   //console.log("SELECTED");
-  functions_load();
-  load_languages();
+  //functions_load();
+  //await load_languages();
   loadSearchSelCode();
   // let current_loc = JSON.parse(localStorage.getItem("persist"));
   // console.log("PERSIST VALUES =>", current_loc);
