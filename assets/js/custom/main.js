@@ -902,20 +902,31 @@ function loadCodesnippetsLink() {
 
       let impl_title;
       let firstChar;
+      let language;
+      let framework;
 
       //check for previously selected code implementation
       let current_loc = JSON.parse(localStorage.getItem("persist"));
       let active_code_link;
       let solns = "";
       for (let i = 0; i < data.length; i++) {
-        impl_title = impl_names[i].implementation;
+        impl_title = data[i].implementation;
+        console.log("impl title", impl_title);
+        language = data[i].language;
+        framework = data[i].framework;
+
+        if (data[i].framework_id == 0) {
+          framework = "";
+        } else {
+          framework = ` with ${framework} framework`;
+        }
 
         firstChar = impl_title[0];
 
         if (firstChar == "D") {
           impl_title = "";
         } else {
-          impl_title = ` (${impl_title})`;
+          impl_title = ` ${impl_title}`;
         }
 
         if (current_loc && current_loc.codeId > 0) {
@@ -927,7 +938,9 @@ function loadCodesnippetsLink() {
           }
         }
 
-        solns += `<a href="javascript:void(0)" onclick="load_codesnippetById('${data[i].uid}')" class="list-group-item list-group-item-action">${data[i].title} ${impl_title}</a>`;
+        solns += `<a href="javascript:void(0)" 
+        onclick="load_codesnippetById('${data[i].uid}')" class="list-group-item list-group-item-action">
+        ${data[i].title} - (<i>${language} ${impl_title} ${framework}</i>) </a>`;
       }
 
       $("#available-solns").html(solns);
