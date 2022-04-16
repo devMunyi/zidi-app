@@ -6,12 +6,12 @@
         <div class="row">
             <div class="col-lg-2">
                 <h3 class="masthead-heading text-uppercase mb-0">
-                    <img src="assets/images/logo.png" height="40px" />
+                    <img src="assets/images/logo.png" height="18px" />
 
                 </h3>
             </div>
-            <div class="col-lg-5 pl-2">
-                <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control" placeholder="Search code snippets">
+            <div class="col-lg-5">
+                <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control pl-2" placeholder="Search code snippets">
                 <input type="hidden" id="code_id_">
                 <div id="code_results" class="">
 

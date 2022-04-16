@@ -109,43 +109,35 @@ include_once("configs/conn.inc");
             <div class="section-body" style="padding-left: 0px;">
                 <div class="container-fluid" style="padding-left: 0px;">
                     <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-lg-12 col-md-12" id="codeimp-title">
+                        <div class="col-lg-12 col-md-12 pt-1" id="codeimp-title">
                             <!-- <div class="row" id="codeimp-title">
                                     </div> -->
                         </div>
 
-                        <div class="col-lg-9 col-md-9">
-                            <table style="margin-bottom: 15px;">
+                        <div class="col-lg-9 col-md-9 pb-1 pt-1">
+                            <table>
                                 <tr>
                                     <td style="width: 230px;" class="pt-1">
                                         <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
                                         <h6 class="font-italic" id="imptype-and-contributor"> </h6>
                                     </td>
+                                    <td class="text-center" id="language-dropdown">
+
+                                    </td>
 
                                     <td class="text-center" id="framework-dropdown">
 
-                                        <!-- <select class="fancy-select" id="sel_framework" onchange="load_codeSnippet()">
-                                            <option value="0"> --No Framework</option>
-                                        </select> -->
                                     </td>
-                                    <!-- <td class="text-center">
 
-                                                <select class="fancy-select" id="sel_implementation" onchange="load_codeSnippet()">
-                                                    <option value="0"> Default Implementation</option>
-                                                </select>
-                                            </td> -->
-
-                                    <td class="text-center" id="version-dropdown">
-                                        <!-- <select class="fancy-select" id="code-version" onchange="load_codeSnippet()">
-
-                                        </select> -->
-                                    </td>
+                                    <!-- <td class="text-center" id="version-dropdown">
+                                    
+                                    </td> -->
                                 </tr>
                             </table>
 
                         </div>
 
-                        <div class="col-lg-3 col-md-3">
+                        <div class="col-lg-3 col-md-3 pt-2 pb-2">
                             <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
                             <span id=edit-code></span>
                         </div>
@@ -155,37 +147,34 @@ include_once("configs/conn.inc");
                     <div class="col-lg-2 col-md-2 pl-0 pr-0">
                         <div class="scrollk">
                             <div class="transcard">
-                                <div class="card-header pl-0 pr-0">
+                                <div class="card-header pl-0 pt-3 pb-1 pr-0">
                                     <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
                                 </div>
-                                <div class="card-body" style="padding-top: 0px; padding-right: 0px">
+                                <div class="card-body p-0">
                                     <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
                                         <li class="font-weight-normal font-14 font-italic">Loading...</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-                    <div class="col-lg-9 col-md-9">
-                        <div class="card transcard">
-                            <div class="card-header">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card transcard ">
+                            <div class="card-header pb-2 pt-2">
                                 <table style="width: 100%">
                                     <tr>
                                         <td>
-                                            <h3 class="card-title"><i class="fe fe-code"></i> Code Snippet </h3>
+                                            <h3 class="card-title"><i title="code" class="fe fe-code"></i> <!--Code Snippet--> </h3>
                                         </td>
                                         <td>
-                                            <button class="btn text-white" style="background: forestgreen;"> <i class="fe fe-download"></i> Download </button>
-                                            <button class="btn text-white bg-indigo"> <i class="fe fe-copy"></i> Copy </button>
-                                            <button class="btn btn-dark"> <i class="fe fe-share-2"></i> Share </button>
+                                            
+                                            <button class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i title="copy" class="fe fe-copy"></i> <!--Copy--> </button>
+                                            <button class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i title="download" class="fe fe-download"></i> <!--Download--> </button>
+                                            <button class="btn btn-dark btn-sm text-sm"> <i title="share" class="fe fe-share-2"></i> <!--Share--> </button>
                                         </td>
                                     </tr>
 
                                 </table>
-
-
                                 <div class="card-options">
                                     <!--
                                     <input type="checkbox" id="checkbox" class="checkbox">
@@ -219,23 +208,21 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-1 col-md-1">
+                    <div class="col-lg-4 col-md-4">
                         <div class="card transcard">
-                            <div class="card-header">
-                                <h3 class="card-title"><i class="fe fe-eye"></i> Front End</h3>
-
+                            <div class="card-header pt-3">
+                                <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
                             </div>
-                            <div class="card-body">
-
+                            <div class="card-body pt-0">
+                                <div class="list-group" id="available-solns">
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="d-flex justify-content-between">
-
-
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -305,16 +292,27 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             footer_date(); //load footer
+            persistence_remove("func");
+            persistence_remove("subfunc");
+            persistence_remove("language");
+            persistence_remove("framework");
+            persistence_remove("offset");
+            //persistence_remove("codeId");
 
             functions_load() //load all functions
             load_languages(); /////Load all the languages
+            loadCodesnippetsLink();
+            
 
             //load frameworks based on language selected
-            let current_loc = JSON.parse(localStorage.getItem("persist"));
+            //let current_loc = JSON.parse(localStorage.getItem("persist"));
             //console.log("CURRENT OFFSET =>", current_loc);
-            if (current_loc && current_loc.language && current_loc.offset) {
-                load_frameworks(current_loc.language);
-            }
+            // if (current_loc && current_loc.language) {
+            //     load_frameworks(current_loc.language);
+            //     if (current_loc.func && current_loc.subfunc && current_loc.framework) {
+            //         load_codeSnippet();
+            //     }
+            // }
         });
     </script>
     <script>
@@ -384,32 +382,30 @@ include_once("configs/conn.inc");
             }); */
 
             //toggle active function
-            $('.func_').on('click', 'li', function() {
-                $('.func_ li').removeClass('active');
-                $(this).addClass('active');
+            $('.func_').on('click', '.func-item', function() {
+                $('.func_ .func-item').removeClass('active-two');
+                $(this).addClass('active-two');
             });
 
             //toggle active subfunction
-            $('._subfunc_').on('click', 'li', function() {
-                $('ul ._subfunc_ ul li').removeClass('active');
-                $(this).addClass('active');
+            $('subfunc_').on('click', '.subfunc-item', function() {
+                $('subfunc_ .subfunc-item').removeClass('active-two');
+                $(this).addClass('active-two');
             });
 
             //toggle active language
-            $('.lang_').on('click', 'li', function() {
-                $('.lang_ li').removeClass('active');
-                $(this).addClass('active');
+            $('.lang_').on('click', '.lang-item', function() {
+                $('.lang_ .lang-item').removeClass('active-two');
+                $(this).addClass('active-two');
+            });
+
+            //toggle active code link
+            $('#available-solns').on('click', 'a', function() {
+                $('#available-solns a').removeClass('active-two');
+                $(this).addClass('active-two');
             });
         });
     </script>
-
-
-<script>
-   var res = "success";
-</script>
-<?php
-   echo "<script>document.writeln(res);</script>";
-?>
 </body>
 
 </html>

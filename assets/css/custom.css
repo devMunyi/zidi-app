@@ -29,8 +29,8 @@ select.fancy-select {
     top: 60px;
 }
 .masthead {
-    margin-bottom: 15px;
-    padding: 8px 10px 10px 10px;
+    /*margin-bottom: 5px;*/
+    padding: 6px 10px;
 }
 .card.transcard {
     background: transparent;
@@ -183,7 +183,7 @@ div#editor {
 .log--array{
     color: darkblue;
 }
-/*End of code editor csss*/
+/*End of code editor css*/
 
 /*Beginining of Environment Module*/
 
@@ -284,3 +284,11 @@ input#search_box {
     z-index: 9;
     /*margin: 20px;*/
 } 
+
+.active-two{
+    background-color: #babcd3 !important;
+    color: white !important;
+    border-right: 2px solid darkblue !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
