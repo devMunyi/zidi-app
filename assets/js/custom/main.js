@@ -606,51 +606,210 @@ function loadSearchSelCode() {
   editorLib.init();
 }
 
+// function load_codesnippetById(codeId) {
+//   //codeLoading("#codeimp-title");
+//   codeLoading("#imptype-and-contributor");
+
+//   // persistence("offset", $("#code-version").val());
+//   // persistence("framework", $("#sel_framework").val());
+//   // persistence("language", $("#sel_language").val());
+//   let current_loc = JSON.parse(localStorage.getItem("persist"));
+//   let sel_func = current_loc.func;
+//   let sel_subfunc = current_loc.subfunc;
+//   let sel_language = current_loc.language;
+//   let sel_framework = current_loc.framework;
+//   //let search_ = $("#search_box").val().trim();
+//   let offset = current_loc.offset;
+
+//   let rpp = 1;
+//   if (!offset) {
+//     offset = 0;
+//   } else {
+//     persistence("offset", offset);
+//   }
+
+//   if (!sel_func) {
+//     sel_func = null;
+//   } else {
+//     persistence("func", sel_func);
+//   }
+
+//   if (!sel_subfunc) {
+//     sel_subfunc = null;
+//   } else {
+//     persistence("subfunc", sel_subfunc);
+//   }
+
+//   if (!sel_language) {
+//     sel_language = null;
+//   } else {
+//     persistence("language", sel_language);
+//   }
+
+//   if (!sel_framework) {
+//     sel_framework = null;
+//   } else {
+//     persistence("framework", sel_framework);
+//   }
+
+//   let codeEditor = ace.edit("editor");
+//   let editorLib = {
+//     init() {
+//       //Configure Ace
+//       codeEditor.setTheme("ace/theme/monokai");
+
+//       //Set Languages
+//       codeEditor.session.setMode("ace/mode/javascript");
+//       codeEditor.session.setMode("ace/mode/java");
+//       //codeEditor.session.setMode("ace/mode.html");
+//       //codeEditor.session.setMode("ace/mode/php");
+//       //Set Options
+//       codeEditor.setOptions({
+//         //fontFamily: 'Inconsolata'
+//         fontSize: "12pt",
+//         //enableBasicAutocompletion: true,
+//         //enableLiveAutocompletion: true
+//       });
+
+//       //Set default code
+
+//       let where_ = "c.status = 1";
+//       let orderby = "c.uid";
+//       let dir = "DESC";
+
+//       let jso = {};
+
+//       let query =
+//         "?where_=" +
+//         where_ +
+//         "&orderby=" +
+//         orderby +
+//         "&dir=" +
+//         dir +
+//         "&func_id=" +
+//         sel_func +
+//         "&subfunc_id=" +
+//         sel_subfunc +
+//         "&language_id=" +
+//         sel_language +
+//         "&framework_id=" +
+//         sel_framework +
+//         "&offset=" +
+//         offset +
+//         "&rpp=" +
+//         rpp +
+//         "&codesnippet_id=" +
+//         codeId;
+
+//       crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
+//         //reset code editor to empty
+//         codeEditor.setValue("");
+
+//         let total_ = feed.all_totals;
+
+//         let codeImpTitle = ""; //intial default value
+//         let imptypeAndContributor = ""; //initial default value
+
+//         //let codeVersions = "";
+//         if (total_ > 0) {
+//           //let impl_names = feed["impl_names"];
+//           let data = feed["data"];
+
+//           //update code implementation title
+//           codeImpTitle = data.title;
+//           $("#codeimp-title").html(
+//             "<h4 class='text-left'>" + codeImpTitle + "</h4>"
+//           );
+
+//           imptypeAndContributor =
+//             "Contributed by " +
+//             '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+//             data.fullname +
+//             "</a>";
+
+//           $("#imptype-and-contributor").html(imptypeAndContributor);
+
+//           //append code edit button after add button
+//           // let codeId = data.uid.toString().trim();
+//           // console.log("CODE ID IS =>", codeId);
+//           $("#edit-code").html(
+//             ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+//           );
+
+//           //add code version drop down
+//           // codeVersions =
+//           //   '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
+
+//           // let impl_title;
+//           // let firstChar;
+
+//           //check for previously selected code implementation
+//           // let current_loc = JSON.parse(localStorage.getItem("persist"));
+//           // let offset_prev_sel;
+//           // for (let i = 0; i < impl_names.length; i++) {
+//           //   impl_title = impl_names[i].implementation;
+
+//           //   firstChar = impl_title[0];
+
+//           //   if (firstChar == "D") {
+//           //     impl_title = "";
+//           //   } else {
+//           //     impl_title = ` (${impl_title})`;
+//           //   }
+
+//           //   if (current_loc && current_loc.offset) {
+//           //     let impl_sel_ = current_loc.offset;
+//           //     if (impl_sel_ == i) {
+//           //       offset_prev_sel = "SELECTED";
+//           //     } else {
+//           //       offset_prev_sel = "";
+//           //     }
+//           //   }
+
+//           //   codeVersions += `<option ${offset_prev_sel} value="${i}">Implementation ${
+//           //     i + 1
+//           //   } ${impl_title} </option>`;
+//           // }
+
+//           // $("#version-dropdown").html(codeVersions + "</select>");
+
+//           //Display the code snippet
+//           codeEditor.setValue(data.row_code);
+
+//           //update the reminder of selected combinations for the loaded code snippet
+//           // persistence("func", data.func_id);
+//           // persistence("subfunc", data.subfunc_id);
+//           // persistence("language", data.language_id);
+//           // persistence("framework", data.framework_id);
+//           // persistence("offset", data.impl_version);
+
+//           //console.log("CURRENT SEL =>", current_loc);
+//         } else {
+//           //set code implementation title to initialized default value
+//           $("#codeimp-title").html(codeImpTitle);
+
+//           //set implementation type and contributor name to intialized default value
+//           $("#imptype-and-contributor").html(imptypeAndContributor);
+
+//           //add code version drop down
+//           // $("#version-dropdown").html(codeVersions);
+
+//           //empty the code edit link
+//           $("#edit-code").html("");
+
+//           /////-------Display that no codesnippet found
+//           codeEditor.setValue("No Code Loaded.");
+//         }
+//       });
+//     },
+//   };
+
+//   editorLib.init();
+// }
+
 function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
-
-  // persistence("offset", $("#code-version").val());
-  // persistence("framework", $("#sel_framework").val());
-  // persistence("language", $("#sel_language").val());
-  let current_loc = JSON.parse(localStorage.getItem("persist"));
-  let sel_func = current_loc.func;
-  let sel_subfunc = current_loc.subfunc;
-  let sel_language = current_loc.language;
-  let sel_framework = current_loc.framework;
-  //let search_ = $("#search_box").val().trim();
-  let offset = current_loc.offset;
-
-  let rpp = 1;
-  if (!offset) {
-    offset = 0;
-  } else {
-    persistence("offset", offset);
-  }
-
-  if (!sel_func) {
-    sel_func = null;
-  } else {
-    persistence("func", sel_func);
-  }
-
-  if (!sel_subfunc) {
-    sel_subfunc = null;
-  } else {
-    persistence("subfunc", sel_subfunc);
-  }
-
-  if (!sel_language) {
-    sel_language = null;
-  } else {
-    persistence("language", sel_language);
-  }
-
-  if (!sel_framework) {
-    sel_framework = null;
-  } else {
-    persistence("framework", sel_framework);
-  }
 
   let codeEditor = ace.edit("editor");
   let editorLib = {
@@ -671,136 +830,107 @@ function load_codesnippetById(codeId) {
         //enableLiveAutocompletion: true
       });
 
-      //Set default code
+      //reset code editor to empty
+      codeEditor.setValue("");
 
-      let where_ = "c.status = 1";
-      let orderby = "c.uid";
-      let dir = "DESC";
+      let current_loc = JSON.parse(localStorage.getItem("persist"));
 
-      let jso = {};
+      let codeImpTitle = ""; //intial default value
+      let imptypeAndContributor = ""; //initial default value
 
-      let query =
-        "?where_=" +
-        where_ +
-        "&orderby=" +
-        orderby +
-        "&dir=" +
-        dir +
-        "&func_id=" +
-        sel_func +
-        "&subfunc_id=" +
-        sel_subfunc +
-        "&language_id=" +
-        sel_language +
-        "&framework_id=" +
-        sel_framework +
-        "&offset=" +
-        offset +
-        "&rpp=" +
-        rpp +
-        "&codesnippet_id=" +
-        codeId;
+      if (current_loc.code.all_totals && current_loc.code.all_totals > 0) {
+        let all_ = current_loc.code.data;
+        let data;
 
-      crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
-        //reset code editor to empty
-        codeEditor.setValue("");
-
-        let total_ = feed.all_totals;
-
-        let codeImpTitle = ""; //intial default value
-        let imptypeAndContributor = ""; //initial default value
-
-        //let codeVersions = "";
-        if (total_ > 0) {
-          //let impl_names = feed["impl_names"];
-          let data = feed["data"];
-
-          //update code implementation title
-          codeImpTitle = data.title;
-          $("#codeimp-title").html(
-            "<h4 class='text-left'>" + codeImpTitle + "</h4>"
-          );
-
-          imptypeAndContributor =
-            "Contributed by " +
-            '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
-            data.fullname +
-            "</a>";
-
-          $("#imptype-and-contributor").html(imptypeAndContributor);
-
-          //append code edit button after add button
-          // let codeId = data.uid.toString().trim();
-          // console.log("CODE ID IS =>", codeId);
-          $("#edit-code").html(
-            ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-          );
-
-          //add code version drop down
-          // codeVersions =
-          //   '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
-
-          // let impl_title;
-          // let firstChar;
-
-          //check for previously selected code implementation
-          // let current_loc = JSON.parse(localStorage.getItem("persist"));
-          // let offset_prev_sel;
-          // for (let i = 0; i < impl_names.length; i++) {
-          //   impl_title = impl_names[i].implementation;
-
-          //   firstChar = impl_title[0];
-
-          //   if (firstChar == "D") {
-          //     impl_title = "";
-          //   } else {
-          //     impl_title = ` (${impl_title})`;
-          //   }
-
-          //   if (current_loc && current_loc.offset) {
-          //     let impl_sel_ = current_loc.offset;
-          //     if (impl_sel_ == i) {
-          //       offset_prev_sel = "SELECTED";
-          //     } else {
-          //       offset_prev_sel = "";
-          //     }
-          //   }
-
-          //   codeVersions += `<option ${offset_prev_sel} value="${i}">Implementation ${
-          //     i + 1
-          //   } ${impl_title} </option>`;
-          // }
-
-          // $("#version-dropdown").html(codeVersions + "</select>");
-
-          //Display the code snippet
-          codeEditor.setValue(data.row_code);
-
-          //update the reminder of selected combinations for the loaded code snippet
-          // persistence("func", data.func_id);
-          // persistence("subfunc", data.subfunc_id);
-          // persistence("language", data.language_id);
-          // persistence("framework", data.framework_id);
-          // persistence("offset", data.impl_version);
-
-          //console.log("CURRENT SEL =>", current_loc);
-        } else {
-          //set code implementation title to initialized default value
-          $("#codeimp-title").html(codeImpTitle);
-
-          //set implementation type and contributor name to intialized default value
-          $("#imptype-and-contributor").html(imptypeAndContributor);
-
-          //add code version drop down
-          // $("#version-dropdown").html(codeVersions);
-
-          //empty the code edit link
-          $("#edit-code").html("");
-
-          /////-------Display that no codesnippet found
-          codeEditor.setValue("No Code Loaded.");
+        for (let i = 0; i < all_.length; i++) {
+          if (all_[i].uid == codeId) {
+            data = all_[i];
+            break;
+          }
         }
-      });
+
+        //update code implementation title
+        codeImpTitle = data.title;
+        $("#codeimp-title").html(
+          "<h4 class='text-left'>" + codeImpTitle + "</h4>"
+        );
+
+        imptypeAndContributor =
+          "Contributed by " +
+          '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+          data.fullname +
+          "</a>";
+
+        $("#imptype-and-contributor").html(imptypeAndContributor);
+
+        $("#edit-code").html(
+          ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+        );
+
+        //Display the code snippet
+        codeEditor.setValue(data.row_code);
+      } else {
+        //set code implementation title to initialized default value
+        $("#codeimp-title").html(codeImpTitle);
+
+        //set implementation type and contributor name to intialized default value
+        $("#imptype-and-contributor").html(imptypeAndContributor);
+
+        //add code version drop down
+        // $("#version-dropdown").html(codeVersions);
+
+        //empty the code edit link
+        $("#edit-code").html("");
+
+        /////-------Display that no codesnippet found
+        codeEditor.setValue("No Code Loaded.");
+      }
+      // crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
+      //   let total_ = feed.all_totals;
+
+      //   // let codeImpTitle = ""; //intial default value
+      //   // let imptypeAndContributor = ""; //initial default value
+
+      //   //let codeVersions = "";
+      //   if (total_ > 0) {
+      //     //let impl_names = feed["impl_names"];
+      //     // let data = feed["data"];
+      //     // //update code implementation title
+      //     // codeImpTitle = data.title;
+      //     // $("#codeimp-title").html(
+      //     //   "<h4 class='text-left'>" + codeImpTitle + "</h4>"
+      //     // );
+      //     // imptypeAndContributor =
+      //     //   "Contributed by " +
+      //     //   '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+      //     //   data.fullname +
+      //     //   "</a>";
+      //     // $("#imptype-and-contributor").html(imptypeAndContributor);
+      //     //append code edit button after add button
+      //     // let codeId = data.uid.toString().trim();
+      //     // console.log("CODE ID IS =>", codeId);
+      //     // $("#edit-code").html(
+      //     //   ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+      //     // );
+      //     // //Display the code snippet
+      //     // codeEditor.setValue(data.row_code);
+      //   } else {
+      //     //set code implementation title to initialized default value
+      //     $("#codeimp-title").html(codeImpTitle);
+
+      //     //set implementation type and contributor name to intialized default value
+      //     $("#imptype-and-contributor").html(imptypeAndContributor);
+
+      //     //add code version drop down
+      //     // $("#version-dropdown").html(codeVersions);
+
+      //     //empty the code edit link
+      //     $("#edit-code").html("");
+
+      //     /////-------Display that no codesnippet found
+      //     codeEditor.setValue("No Code Loaded.");
+      //   }
+      // });
     },
   };
 
@@ -944,11 +1074,17 @@ function loadCodesnippetsLink() {
       }
 
       $("#available-solns").html(solns);
+
+      persistence("code", feed);
+
+      console.log("ALL DATA =>", current_loc);
     } else {
       //add code version drop down
       $("#available-solns").html(
         `<p class="list-group-item list-group-item-action">No record found</p>`
       );
+
+      persistence_remove("code");
     }
   });
 }
