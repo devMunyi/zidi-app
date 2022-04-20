@@ -54,7 +54,7 @@ function functions_load() {
 
           fun += `<li class="outer_list"> 
             <a class="func-item ${active_func} has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); loadCodesnippetsLink()">
+            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
