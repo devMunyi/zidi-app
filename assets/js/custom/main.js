@@ -53,10 +53,10 @@ function functions_load() {
           }
 
           fun += `<li class="outer_list"> 
-            <a class="func-item ${active_func}" href="javascript:void(0)" 
-            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); loadCodesnippetsLink()" 
-            class="has-arrow arrow-b"><img class="icon" src="${server}/${function_icon}">
-            </img><span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
+            <a class="func-item ${active_func} has-arrow arrow-b" href="javascript:void(0)" 
+            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); loadCodesnippetsLink()">
+            <img class="icon" src="${server}/${function_icon}"/>
+            <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
           /////------Loop through sub functions
           let sub_data = sub_result["data"];
