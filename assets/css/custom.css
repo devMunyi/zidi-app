@@ -62,8 +62,8 @@ select.fancy-select {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .editor_wrapper{
@@ -303,7 +303,7 @@ input#search_box {
 
 input:invalid {
     border-color: red;
-  }
+}
   
 /* input:valid {
     border-color: green;
@@ -311,4 +311,27 @@ input:invalid {
 
 select:invalid {
     border-color: red;
+}
+
+
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #CCC;
+    vertical-align: top;
+    padding-right: 5px !important;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 10px !important;
 }

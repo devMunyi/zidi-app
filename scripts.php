@@ -46,6 +46,9 @@
 
 <!--Require Highlight js Library-->
 <script src="assets/plugins/highlightjs/highlight.min.js"></script>
+<script src="assets/plugins/highlightjs/highlightjs-line-numbers.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script>hljs.initLineNumbersOnLoad();</script>
 
 <!--Custom script for the editor-->
 <script src="assets/plugins/ace/editor.js"></script>

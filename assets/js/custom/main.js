@@ -811,6 +811,66 @@ function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
 
+  // //reset code editor to empty
+  // $("#code-display").html(
+  //   `<pre class="editor">
+  //     <code></code>
+  //   </pre>`
+  // );
+
+  // let current_loc = JSON.parse(localStorage.getItem("persist"));
+
+  // let codeImpTitle = ""; //intial default value
+  // let imptypeAndContributor = ""; //initial default value
+
+  // if (current_loc.code.all_totals && current_loc.code.all_totals > 0) {
+  //   let all_ = current_loc.code.data;
+  //   let data;
+
+  //   for (let i = 0; i < all_.length; i++) {
+  //     if (all_[i].uid == codeId) {
+  //       data = all_[i];
+  //       break;
+  //     }
+  //   }
+
+  //   //update code implementation title
+  //   codeImpTitle = data.title;
+  //   $("#codeimp-title").html("<h4 class='text-left'>" + codeImpTitle + "</h4>");
+
+  //   imptypeAndContributor =
+  //     "Contributed by " +
+  //     '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+  //     data.fullname +
+  //     "</a>";
+
+  //   $("#imptype-and-contributor").html(imptypeAndContributor);
+
+  //   $("#edit-code").html(
+  //     ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+  //   );
+
+  //   //Display the code snippet
+  //   $("#code-display").html(
+  //     `<pre class='editor'><code>${data.row_code}</code></pre>`
+  //   );
+  // } else {
+  //   //set code implementation title to initialized default value
+  //   $("#codeimp-title").html(codeImpTitle);
+
+  //   //set implementation type and contributor name to intialized default value
+  //   $("#imptype-and-contributor").html(imptypeAndContributor);
+
+  //add code version drop down
+  //   // $("#version-dropdown").html(codeVersions);
+
+  //   //empty the code edit link
+  //   $("#edit-code").html("");
+
+  //   /////-------Display that no codesnippet found
+  //   $("#code-display").html("No Code Loaded.");
+  // }
+
   let codeEditor = ace.edit("editor");
   let editorLib = {
     init() {

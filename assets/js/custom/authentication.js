@@ -168,8 +168,6 @@ function onSuccess(googleUser) {
           color: "white",
         });
       } else if (feed["success"] === true) {
-        signOut(); //sign out user from his google account
-
         let message = feed["message"];
         var Toast = Swal.mixin({
           toast: true,
@@ -189,8 +187,9 @@ function onSuccess(googleUser) {
         persistence("user", feed.user);
 
         setTimeout(() => {
+          signOut(); //sign out user from his google account
           gotourl("index"); //redirect the user to index page to perform an action meant for authenticated users
-        }, 2500);
+        }, 2000);
       }
     }
   );
