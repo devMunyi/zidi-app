@@ -256,7 +256,7 @@ include_once("configs/conn.inc");
                             if (feed.success) {
                                 $("#account-0").hide();
                                 $("#account-1").show();
-                                $("#user-name").html(user_details.username);
+                                $("#user-name").html(user_details.fullname.trimStart().split(" ")[0]);
 
                             } else {
                                 $("#account-1").hide();
