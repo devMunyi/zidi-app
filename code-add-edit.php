@@ -164,16 +164,16 @@ if ($code_id > 0) {
                         </div>
                         <div class="form-group col-md-8">
                             <label for="codeimpl_title">Write User Friendly Code Title:</label>
-                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" />
+                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="code_input">Codesnippet (Write/Paste your code below):</label>
-                        <textarea class="form-control" rows="5" id="code_input" name="code_input"><?php echo $code_arr['row_code']; ?></textarea>
+                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input"><?php echo $code_arr['row_code']; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="file_extension">Code File Extension:</label>
-                        <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on">
+                        <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2">
                     </div>
                     <div class="form-group">
                         <label for="instructions_input">Instructions/description of Code Use (if any):</label>

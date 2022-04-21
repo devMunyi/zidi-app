@@ -139,3 +139,98 @@ function login() {
 }
 
 ///////-------------------End authentication
+
+//////----------------------------Google auth functions
+
+function onSuccess(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  crudaction(
+    {
+      token: id_token,
+    },
+    "/google/signin",
+    "POST",
+    function (feed) {
+      // console.log("FEEDBACK =>", feed);
+      if (feed["success"] === false) {
+        let message = feed["message"];
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2500,
+          padding: "0.85rem",
+        });
+
+        Toast.fire({
+          icon: "error",
+          title: message,
+          color: "white",
+        });
+      } else if (feed["success"] === true) {
+        signOut(); //sign out user from his google account
+
+        let message = feed["message"];
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2500,
+          padding: "0.85rem",
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: message,
+        });
+
+        //add user & token to localstorage
+        persistence("token", feed.token);
+        persistence("user", feed.user);
+
+        setTimeout(() => {
+          gotourl("index"); //redirect the user to index page to perform an action meant for authenticated users
+        }, 2500);
+      }
+    }
+  );
+}
+
+function onFailure(error) {
+  console.log(error);
+  let message = "Sign in with Google Failed. Try again";
+  var Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    showConfirmButton: false,
+    timer: 2500,
+    padding: "0.85rem",
+  });
+
+  Toast.fire({
+    icon: "error",
+    title: message,
+    color: "white",
+  });
+}
+
+function renderButton() {
+  gapi.signin2.render("my-signin2", {
+    scope: "profile email",
+    longtitle: true,
+    theme: "dark",
+    onsuccess: onSuccess,
+    onfailure: onFailure,
+    width: "inherit",
+    height: 40,
+  });
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log("User signed out.");
+  });
+}
+
+///////----------------------------End Google Auth functions

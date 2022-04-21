@@ -21,3 +21,5 @@
 <!--Cusom scroll css --> 
 <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.css" />
 
+<!--Core Google auth button styling --->
+<meta name="google-signin-client_id" content="545549745917-bt32oena9mo7ankcbcqpg2thpc6kigdm.apps.googleusercontent.com">

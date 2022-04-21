@@ -1041,7 +1041,7 @@ function loadCodesnippetsLink() {
       let solns = "";
       for (let i = 0; i < data.length; i++) {
         impl_title = data[i].implementation;
-        console.log("impl title", impl_title);
+        //console.log("impl title", impl_title);
         language = data[i].language;
         framework = data[i].framework;
 
@@ -1077,7 +1077,7 @@ function loadCodesnippetsLink() {
 
       persistence("code", feed);
 
-      console.log("ALL DATA =>", current_loc);
+      //console.log("ALL DATA =>", current_loc);
     } else {
       //add code version drop down
       $("#available-solns").html(

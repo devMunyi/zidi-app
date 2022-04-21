@@ -388,8 +388,8 @@ include_once("configs/conn.inc");
             });
 
             //toggle active subfunction
-            $('subfunc_').on('click', '.subfunc-item', function() {
-                $('subfunc_ .subfunc-item').removeClass('active-two');
+            $('.subfunc-item').on('click', '.subfunc-item', function() {
+                $('.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');
             });
 

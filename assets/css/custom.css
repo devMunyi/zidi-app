@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
 .page #page_top {
     border-bottom: 4px solid #d9dbde;
     /* box-shadow: 0px 4px 2px #3333331c; */
@@ -41,6 +44,10 @@ select.fancy-select {
 #lang{
     cursor: pointer;
 }
+
+/* body {
+    font-family: 'Roboto', sans-serif !important;
+} */
 
 
 /*Beginning of code editor csss*/
@@ -291,4 +298,17 @@ input#search_box {
     border-right: 2px solid darkblue !important;
     padding-top: 0px;
     padding-bottom: 0px;
+}
+
+
+input:invalid {
+    border-color: red;
+  }
+  
+/* input:valid {
+    border-color: green;
+} */
+
+select:invalid {
+    border-color: red;
 }

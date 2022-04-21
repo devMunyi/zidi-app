@@ -52,3 +52,8 @@
 <script src="assets/plugins/ace/editor-console.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
+
+
+
+<!--Core Google auth script -->
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>

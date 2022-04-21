@@ -41,14 +41,14 @@ include_once("configs/conn.inc");
                     <div class="form-group row d-flex justify-content-center">
                         <label for="username_input" class="col-sm-2 col-form-label">Username:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="username_input" placeholder="Username">
+                            <input type="text" class="form-control" id="username_input" placeholder="Username" minlength="3">
                         </div>
                     </div>
 
                     <div class="form-group row d-flex justify-content-center">
                         <label for="fullname_input" class="col-sm-2 col-form-label">Fullname:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="fullname_input" placeholder="Firstname Lastname">
+                            <input type="text" class="form-control" id="fullname_input" placeholder="Firstname Lastname" minlength="5">
                         </div>
                     </div>
 
@@ -61,8 +61,8 @@ include_once("configs/conn.inc");
                     <div class="form-group row d-flex justify-content-center">
                         <label for="country_input" class="col-sm-2 col-form-label">Country:</label>
                         <div class="col-sm-10">
-                            <select class="form-control" name="country_input" id="country_input">
-                                <option value="0">--Select One</option>
+                            <select class="form-control" name="country_input" id="country_input" min="1">
+                                <option value="">--Select One</option>
                                 <?php
 
                                 $recs = fetchtable('pr_countries', "status > 0", "name", "asc", "255", "uid ,name");
@@ -78,14 +78,14 @@ include_once("configs/conn.inc");
                     <div class="form-group row d-flex justify-content-center">
                         <label for="password_input" class="col-sm-2 col-form-label">Password:</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password_input" placeholder="Password">
+                            <input type="password" class="form-control" id="password_input" placeholder="Password" minlength="6">
                         </div>
                     </div>
 
                     <div class="form-group row d-flex justify-content-center">
                         <label for="cpassword_input" class="col-sm-2 col-form-label">Confirm Password:</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="cpassword_input" placeholder="Password">
+                            <input type="password" class="form-control" id="cpassword_input" placeholder="Password" minlength="6">
                         </div>
                     </div>
                     <div class="form-group">
