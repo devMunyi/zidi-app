@@ -177,7 +177,7 @@ if ($code_id > 0) {
                     </div>
                     <div class="form-group">
                         <label for="instructions_input">Instructions/description of Code Use (if any):</label>
-                        <textarea class="form-control" rows="3" id="instructions_input" name="instructions_input"><?php echo $code_arr['row_code']; ?></textarea>
+                        <textarea class="form-control" rows="3" id="instructions_input" name="instructions_input"><?php echo $instructions['row_code']; ?></textarea>
                     </div>
 
                     <div class="form-row pt-2 pb-2">
