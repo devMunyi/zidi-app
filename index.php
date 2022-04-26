@@ -162,18 +162,18 @@ include_once("configs/conn.inc");
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
-                                                    <h3 class="card-title"><i title="code" class="fe fe-code"></i>
+                                                    <h3 title="code" class="card-title"><i class="fe fe-code"></i>
                                                         <!--Code Snippet-->
                                                     </h3>
                                                 </td>
                                                 <td>
-                                                    <button class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i title="copy" class="fe fe-copy"></i>
+                                                    <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
                                                         <!--Copy-->
                                                     </button>
-                                                    <button class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i title="download" class="fe fe-download"></i>
+                                                    <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
                                                         <!--Download-->
                                                     </button>
-                                                    <button class="btn btn-dark btn-sm text-sm"> <i title="share" class="fe fe-share-2"></i>
+                                                    <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
                                                         <!--Share-->
                                                     </button>
                                                 </td>
