@@ -240,7 +240,7 @@ div#editor {
 input#search_box {
     background: #f0f2f5 !important;
     border: 1px solid transparent;
-    padding: 8px 10px;
+    /* padding: 8px 10px; */
     color: #000000;
     border-radius: 34px;
 }
@@ -301,17 +301,17 @@ input#search_box {
 }
 
 
-input:invalid {
+/* input:invalid {
     border-color: red;
-}
+} */
   
 /* input:valid {
     border-color: green;
 } */
-
+/* 
 select:invalid {
     border-color: red;
-}
+} */
 
 
 .hljs-ln-numbers {
@@ -335,3 +335,72 @@ select:invalid {
 .hljs-ln-code {
     padding-left: 10px !important;
 }
+
+
+/*Google button color*/
+.google,.facebook,.github, .twitter{
+    color: white !important;
+}
+
+.google,.facebook,.github, .twitter:hover{
+    cursor: pointer;;
+}
+
+
+.google{
+    background-color: #df4930;
+}
+
+/*Facebook button color*/
+.facebook{
+    background-color: #507cc0;
+}
+
+/*Twitter button color*/
+.twitter{
+    background-color: #00acee;
+}
+
+/*Github button color*/
+.github{
+    background-color: black;
+}
+
+.header-img:hover{
+    cursor: pointer;
+}
+
+.error{
+    color: red;
+}
+
+.page-top-margin{
+    margin-top: 70px !important;
+}
+
+
+.small-img {
+    width: 20px;
+    height: 18px;
+    border-radius: 50%;
+    padding: 0px 10px 20px 10px;
+    background-color: purple;
+    color: white;
+}
+
+#profile-page{
+    height: 500px;
+    margin-bottom: 100px;
+}
+
+
+.link:hover{
+    background-color: #0096FF;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close*/
+    margin-right: 30px !important;
+ }

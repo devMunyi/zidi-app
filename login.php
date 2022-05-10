@@ -10,15 +10,7 @@ include_once("configs/conn.inc");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
-    <meta name="author" content="PuffinTheme the theme designer">
-
-    <!-- <meta name="google-signin-client_id" content="545549745917-bt32oena9mo7ankcbcqpg2thpc6kigdm.apps.googleusercontent.com" /> -->
-    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
     <title> Zidi : Login</title>
-    <style>
-    </style>
-
     <!-- Bootstrap Core and vendor -->
     <?php
     include_once 'styles.php';
@@ -33,93 +25,81 @@ include_once("configs/conn.inc");
         </div>
     </div>
 
-    <!-- start main body part-->
-    <div class="container-fluid">
-        <div class="row pt-2">
-            <div class="col-md-12">
-                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
-            </div>
-            <div class="col-md-6 offset-md-3 card pb-3 pt-3 mb-3 border border-info">
-                <div class="d-flex justify-content-center">
+   <!--Header section -->
+    <?php
+        include_once 'header.php';
+    ?>
+     <!-- start main body part-->
+    <div class="container-fluid page-top-margin" id='login-page'>
+        <div class="row">
+            <div class="col-md-4 offset-md-4 card pb-3 mb-3 border border-info">
+                <div class="d-flex justify-content-center pt-3">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
                     </h3>
                 </div>
-                <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
-                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" style="height:400px; overflow-y: scroll;">
-                    <div class="form-group">
-                        <label for="emailOrUsername_input">*Email or username: </label>
-                        <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password_input">*Password: </label>
-                        <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password">
-                    </div>
-
-                    <div class="form-group pt-2 pb-2" id="loginBtn">
-                        <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
-                    </div>
-
-                    <div class="form-group">
-                        <div>Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
-                        <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Register</a></div>
-                    </div>
-
-
-                    <div class="row pt-1 pb-1">
-                        <div class="col-sm-5">
-                            <hr>
+                <h4 class="text-center pb-3 ">Sign in</h4>
+                <div class="col-md-12">
+                    <form class="form_ pl-5 pr-3" method="POST" onsubmit="return false;" style="height:400px; overflow-y: scroll;">
+                        <div class="form-group">
+                            <label for="emailOrUsername_input">*Email or username: </label>
+                            <input type="text" class="form-control" id="emailOrUsername_input" placeholder="Email or username" required>
+                            <div class="error" id="usernameErr"></div>
                         </div>
-                        <div class="col-sm-2 text-center">
-                            OR
+
+                        <div class="form-group">
+                            <label for="password_input">*Password: </label>
+                            <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password" required>
+                            <div class="error" id="passwordErr"></div>
                         </div>
-                        <div class="col-sm-5">
-                            <hr>
+
+                        <div class="form-group pt-2 pb-2" id="loginBtn">
+                            <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6 offset-md-3 pt-1 pb-1" id="my-signin2"></div>
-                    </div>
+                        <div class="form-group">
+                            <div>Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
+                            <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Sign up</a></div>
+                        </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6 offset-md-3 pt-1 pb-1" onclick="alert('Implementation Coming Soon')"><a href="javascript:void(0)" style="width: 100%; height: 40px" class="p-1 btn btn-light btn btn-outline-primary"> <img src="assets/images/github.png" alt="Github" /> Sign in with Github </a></div>
-                    </div>
 
-                    <!-- <div class="form-group d-flex justify-content-between"> -->
-                    <!-- <div class="row"> -->
-                    <!-- <div class="col-md-6 pt-1 pb-1" id="my-signin2"></div> -->
-                    <!-- <div id="g_id_onload" data-client_id="545549745917-bt32oena9mo7ankcbcqpg2thpc6kigdm.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="handleResponse" data-auto_prompt="false">
+                        <div class="row pt-1 pb-1">
+                            <div class="col-sm-5">
+                                <hr>
                             </div>
+                            <div class="col-sm-2 text-center">
+                                OR
+                            </div>
+                            <div class="col-sm-5">
+                                <hr>
+                            </div>
+                        </div>
 
-                            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
-                            </div> -->
-                    <!-- <div class="g-signin2 col-md-6 pt-1 pb-1" data-onsuccess="onSignIn"></div> -->
+                        <div class="form-group">
+                            <div class="google p-2 text-center" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1 text-start" alt="Google" /> Sign in with Google </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="p-2 github text-center" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
+                        </div>
 
-                    <!-- <div class="col-md-6 pt-1 pb-1" id="my-signin2"> <a href="javascript:void(0)" style="width: 100%" class="p-1 btn btn-light badge-pill border"> <img src="assets/images/google.png" alt="Google" /> Sign in with Google</a> </div> -->
+                        <div class="form-group">
+                            <div class="p-2 facebook text-center" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign in with Facebook</div>
+                        </div>
 
-                    <!-- <div class="col-md-6 pt-1 pb-1"><a href="javascript:void(0)" style="width: 100%" class="p-1 btn btn-light badge-pill border"> <img src="assets/images/github.png" alt="Github" /> Sign in with Github </a></div>
-                            <div class="col-md-6 pt-1 pb-1"><a href="javascript:void(0)" style="width: 100%" class="p-1 btn btn-light badge-pill border"> <img src="assets/images/twitter.png" alt="Twitter" /> Sign in with Twitter</a></div>
-                            <div class="col-md-6 pt-1 pb-1"><a href="javascript:void(0)" style="width: 100%" class="p-1 btn btn-light badge-pill border"> <img src="assets/images/facebook.png" alt="Facebook" /> Sign in with Facebook</a></div> -->
-                    <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="form-group">
-                        <hr>
-                    </div> -->
-
-                    <!-- <div class="form-group">
-                        <p class="text-center"><a class="a-override" href="index">Go Home Page&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
-                    </div> -->
-                </form>
+                        <div class="form-group">
+                            <div class="p-2 twitter text-center" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign in with Twitter</div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="pt-2">
-            <?php
-            include_once 'footer.php';
-            ?>
-        </div>
+    <div class="pt-2">
+        <?php
+        include_once 'footer.php';
+        ?>
+    </div>
     </div>
 
 
@@ -129,10 +109,13 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
+            updateHeader('login-page'); //check for logged in user so as to update the header accordingly
+            //authCheck('login-page', 'login') //check for avilable session, if so redirect to home page
             footer_date(); //load footer
 
             //call submitBtn() and parse login() as a parameter and on hover hint title
-            submitBtn('#loginBtn', 'login()', "Click to login");
+            submitBtn('#loginBtn', 'validateLoginForm()', "Click to Sign in", "Submit");
+
         });
     </script>
 
@@ -147,74 +130,5 @@ include_once("configs/conn.inc");
             });
         })(jQuery);
     </script>
-
-    <script>
-        // function onSignIn(googleUser) {
-        //     var id_token = googleUser.getAuthResponse().id_token;
-        //     //console.log("GOOGLE TOKEN =>", id_token);
-        //     alert(id_token);
-
-        //     var xhr = new XMLHttpRequest();
-        //     let server_ = $("#server_").val();
-
-        //     crudaction({
-        //         token: id_token
-        //     }, '/google/signin', 'POST', function(feed) {
-
-        //         console.log("FEEDBACK =>", feed);
-
-        //         if (feed["success"] === false) {
-        //             signOut(); //sign out user from his google account
-
-        //             let message = feed["message"];
-        //             var Toast = Swal.mixin({
-        //                 toast: true,
-        //                 position: "top",
-        //                 showConfirmButton: false,
-        //                 timer: 2500,
-        //                 padding: "0.85rem",
-        //             });
-
-        //             Toast.fire({
-        //                 icon: "error",
-        //                 title: message,
-        //                 color: "white",
-        //             });
-        //         } else if (feed["success"] === true) {
-        //             let message = feed["message"];
-        //             var Toast = Swal.mixin({
-        //                 toast: true,
-        //                 position: "top",
-        //                 showConfirmButton: false,
-        //                 timer: 2500,
-        //                 padding: "0.85rem",
-        //             });
-
-        //             Toast.fire({
-        //                 icon: "success",
-        //                 title: message,
-        //             });
-
-        //             //add user & token to localstorage
-        //             persistence("token", feed.token);
-        //             persistence("user", feed.user);
-
-        //             setTimeout(() => {
-        //                 gotourl("index"); //redirect the user to index page to perform an action meant for authenticated users
-        //             }, 2500);
-        //         }
-        //     })
-        // }
-    </script>
-
-    <script>
-        // function signOut() {
-        //     var auth2 = gapi.auth2.getAuthInstance();
-        //     auth2.signOut().then(function() {
-        //         console.log("User signed out.");
-        //     });
-        // }
-    </script>
 </body>
-
 </html>

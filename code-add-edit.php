@@ -20,17 +20,17 @@ if ($code_id > 0) {
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
-    <meta name="author" content="PuffinTheme the theme designer">
     <title> Zidi : add-edit-code</title>
     <!-- Bootstrap Core and vendor -->
     <?php
     include_once 'styles.php';
     ?>
 </head>
+
 <body class="font-opensans">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -38,24 +38,26 @@ if ($code_id > 0) {
         </div>
     </div>
 
+    <!--Header section -->
+    <?php
+    include_once 'header.php';
+    ?>
+
     <!-- Start main html -->
-    <div class="container-fluid" id="add-edit-code-page">
-        <div class="row pt-2">
-            <div class="col-md-12">
-                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
-            </div>
+    <div class="container-fluid mb-5 page-top-margin" id="addeditcode-page">
+        <div class="row">
             <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
                     </h3>
                 </div>
-                <h4 class="text-center pt-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
+                <h4 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
                 <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST" style="height:400px; overflow-y:auto;">
                     <div class="form-row">
                         <div class="form-group col-sm-3">
                             <label for="func_sel">Function:</label>
-                            <select class="form-control" name="func_sel" id="func_sel">
+                            <select class="form-control" name="func_sel" id="func_sel" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
@@ -73,10 +75,11 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
+                            <div class="error" id="funErr"></div>
                         </div>
                         <div class="form-group col-sm-3">
                             <label for="subfunc_sel">Subfunction:</label>
-                            <select class="form-control" name="subfunc_sel" id="subfunc_sel">
+                            <select class="form-control" name="subfunc_sel" id="subfunc_sel" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_subfunctions', "status > 0", "name", "asc", "300", "uid ,name");
@@ -93,11 +96,12 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
+                            <div class="error" id="subfunErr"></div>
                         </div>
 
                         <div class="form-group col-sm-3">
                             <label for="language_sel">Language:</label>
-                            <select class="form-control" name="language_sel" id="language_sel">
+                            <select class="form-control" name="language_sel" id="language_sel" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
@@ -115,11 +119,12 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
+                            <div class="error" id="langErr"></div>
                         </div>
 
                         <div class="form-group col-sm-3">
                             <label for="framework_sel">Language Framework:</label>
-                            <select class="form-control" name="framework_sel" id="framework_sel">
+                            <select class="form-control" name="framework_sel" id="framework_sel" required>
                                 <option value="">--Select One</option>
                                 <option value="0"> No framework</option>
                                 <?php
@@ -138,12 +143,13 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
+                            <div class="error" id="framErr"></div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="impl_sel">Implementation Type:</label>
-                            <select class="form-control" name="impl_sel" id="impl_sel">
+                            <select class="form-control" name="impl_sel" id="impl_sel" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_implementations', "status > 0", "title", "asc", "25", "uid ,title");
@@ -161,19 +167,23 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
+                            <div class="error" id="implErr"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="codeimpl_title">Write User Friendly Code Title:</label>
-                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70"/>
+                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
+                            <div class="error" id="titleErr"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="code_input">Codesnippet (Write/Paste your code below):</label>
-                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input"><?php echo $code_arr['row_code']; ?></textarea>
+                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
+                        <div class="error" id="codeErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="file_extension">Code File Extension:</label>
-                        <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2">
+                        <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
+                        <div class="error" id="fileExtErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="instructions_input">Instructions/description of Code Use (if any):</label>
@@ -189,11 +199,9 @@ if ($code_id > 0) {
             </div>
         </div>
 
-        <div class="fixed-bottom">
-            <?php
-            include_once 'footer.php';
-            ?>
-        </div>
+        <?php
+        include_once 'footer.php';
+        ?>
     </div>
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -201,40 +209,21 @@ if ($code_id > 0) {
     ?>
     <script>
         $(document).ready(function() {
-            $("#add-edit-code-page").hide();
-            
-            function requireSigninTwo() {
-                let current_loc = JSON.parse(localStorage.getItem("persist"));
-                if (current_loc && current_loc.token) {
-                    let token = current_loc.token;
-                    if (token) {
-                        //send request to the server to verify token
-                        crudaction({}, "/current-user", "GET", function(feed) {
-                            if (feed.success) {
-                                //if okay, display the code add edit form page
-                                $("#add-edit-code-page").show();
-                            } else {
-                                //redirect to login page
-                                gotourl("login");
-                            }
-                        })
-                    } else {
-                        //redirect to login page
-                        gotourl("login");
-                    }
-                } else {
-                    //redirect to login page
-                    gotourl("login");
-                }
-            }
-            requireSigninTwo();
-
+            updateHeader("addeditcode-page"); //check for logged in user so as to update the header accordingly
+            signedUserMenu("addeditcode-page") //populate dropdown menu as per current page
+            //authCheck("addeditcode-page", "addeditcode") //check for logged-in user before rendering page
+            $("#add-edit-code-page").hide(); //hide this page by default
 
             //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
-            submitBtn('#addEditCodeBtn', 'saveCodeSnippet()', "Click to submit");
+            submitBtn('#addEditCodeBtn', 'codesnippetValidate()', "Click to submit");
+            // var sign_out = document.getElementById("sign-out");
+            // sign_out.addEventListener("click", function() {
+            //     //remove user and token from localstorage
+            //     persistence_remove("user");
+            //     logout() //call logout function                
+            // }, false);
+            footer_date(); //load footer
         })
-
-        footer_date(); //load footer
     </script>
 
     <script>

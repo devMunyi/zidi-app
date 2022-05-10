@@ -1,17 +1,8 @@
 <!-- jQuery 3 -->
 <script src="assets/plugins/jquery/jquery.min.js"></script>
 
-<!-- Popper --> 
-<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
-<!-- <script src="assets/plugins/jquery/popper.min.js"></script>
-<script src="assets/plugins/jquery/popper.min.js.map"></script>
- -->
 <!-- Bootstrap-->
 <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 
 
 <script src="assets/bundles/lib.vendor.bundle.js"></script>
@@ -45,10 +36,10 @@
 <script src="assets/plugins/ace/ace-editor/src-min/ext-beautify.js"></script>
 
 <!--Require Highlight js Library-->
-<script src="assets/plugins/highlightjs/highlight.min.js"></script>
+<!-- <script src="assets/plugins/highlightjs/highlight.min.js"></script>
 <script src="assets/plugins/highlightjs/highlightjs-line-numbers.min.js"></script>
 <script>hljs.highlightAll();</script>
-<script>hljs.initLineNumbersOnLoad();</script>
+<script>hljs.initLineNumbersOnLoad();</script> -->
 
 <!--Custom script for the editor-->
 <script src="assets/plugins/ace/editor.js"></script>
@@ -56,7 +47,3 @@
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
-
-
-<!--Core Google auth script -->
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
