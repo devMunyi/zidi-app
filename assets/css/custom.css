@@ -388,9 +388,9 @@ select:invalid {
     color: white;
 }
 
-#profile-page{
+#profile-body{
     height: 500px;
-    margin-bottom: 100px;
+    margin-bottom: 90px;
 }
 
 
@@ -401,6 +401,6 @@ select:invalid {
 
 .dropdown:hover .dropdown-menu {
     display: block;
-    margin-top: 0; /* remove the gap so it doesn't close*/
+    margin-top: 0;
     margin-right: 30px !important;
  }

@@ -122,11 +122,10 @@ include_once("configs/conn.inc");
             </div>
         </div>
 
+        <?php
+        include_once 'footer.php';
+        ?>
     </div>
-
-    <?php
-    include_once 'footer.php';
-    ?>
     <!-- jQuery and bootstrtap js -->
     <?php
     include_once('scripts.php');

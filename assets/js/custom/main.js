@@ -975,6 +975,8 @@ function signedUserMenu(currentPage) {
     `
     );
   }
+
+  console.log("SIGNED USER MENU UPDATER CALLED");
 }
 
 /////-----------------------------------End of profile

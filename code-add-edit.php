@@ -197,8 +197,9 @@ if ($code_id > 0) {
                     </div>
                 </form>
             </div>
-        </div>
 
+
+        </div>
         <?php
         include_once 'footer.php';
         ?>

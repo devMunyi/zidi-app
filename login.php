@@ -25,11 +25,11 @@ include_once("configs/conn.inc");
         </div>
     </div>
 
-   <!--Header section -->
+    <!--Header section -->
     <?php
-        include_once 'header.php';
+    include_once 'header.php';
     ?>
-     <!-- start main body part-->
+    <!-- start main body part-->
     <div class="container-fluid page-top-margin" id='login-page'>
         <div class="row">
             <div class="col-md-4 offset-md-4 card pb-3 mb-3 border border-info">
@@ -93,15 +93,11 @@ include_once("configs/conn.inc");
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="pt-2">
         <?php
         include_once 'footer.php';
         ?>
     </div>
-    </div>
-
 
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -131,4 +127,5 @@ include_once("configs/conn.inc");
         })(jQuery);
     </script>
 </body>
+
 </html>

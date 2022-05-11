@@ -311,14 +311,14 @@ function updateHeader(pageId) {
   $(`#${pageId}`).hide();
 
   let server_ = $("#server_").val();
-  let proceed = false;
+  let authorized = false;
   crudaction({}, "/logged-in", "GET", function (feed) {
     if (feed) {
       if (feed.success) {
         //add user & token to localstorage
         let user = feed.user;
         persistence("user", user);
-
+        console.log("SIGNED USER FOUND");
         $("#account-0").hide();
         $("#account-1").show();
 
@@ -344,8 +344,9 @@ function updateHeader(pageId) {
         $("#user-name").html(displayName);
         $("#user-photo").html(displayPhoto);
 
-        proceed = true; //gives a signal to render a proteceted page
+        authorized = true; //gives a signal to render a proteceted page
       } else {
+        console.log("NO SIGNED USER FOUND");
         $("#account-1").hide();
         $("#account-0").show();
       }
@@ -353,26 +354,36 @@ function updateHeader(pageId) {
       console.log(feed);
     }
 
-    //call authcheck immediately after header has been updated
-    authCheck(pageId);
+    //call isAuthorized immediately after header has been updated
+    console.log("HEADER UPDATER CALLED");
+    isAuthorized(pageId, authorized);
   });
 }
 
 //used with login, register and profile pages to check if user is logged in
 //for both login and register page, if user is logged in redirect to index page
 //for profile page redirect user to login page
-function authCheck(pageId) {
+function isAuthorized(pageId, authorized) {
   $(`#${pageId}`).hide();
-  let current_loc = JSON.parse(localStorage.getItem("persist"));
-  if (current_loc && current_loc.user) {
-    if (
-      pageId !== "profile-page" &&
-      pageId !== "addeditcode-page" &&
-      pageId !== "index"
-    ) {
-      gotourl("index");
+  if (authorized) {
+    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    if (current_loc && current_loc.user) {
+      if (
+        pageId !== "profile-page" &&
+        pageId !== "addeditcode-page" &&
+        pageId !== "index"
+      ) {
+        gotourl("index");
+      } else {
+        $(`#${pageId}`).show();
+      }
     } else {
-      $(`#${pageId}`).show();
+      if (pageId === "profile-page" || pageId === "addeditcode-page") {
+        $(`#${pageId}`).hide();
+        gotourl("login");
+      } else {
+        $(`#${pageId}`).show();
+      }
     }
   } else {
     if (pageId === "profile-page" || pageId === "addeditcode-page") {
@@ -382,6 +393,8 @@ function authCheck(pageId) {
       $(`#${pageId}`).show();
     }
   }
+
+  console.log("AUTH CHECKER CALLED");
   // crudaction({}, "/logged-in", "GET", function (feed) {
   //   if (feed && feed.success) {
   //     if (currentPage !== "profile" && currentPage !== "addeditcode") {

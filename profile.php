@@ -19,6 +19,7 @@ if ($user_id > 0) {
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -28,6 +29,7 @@ if ($user_id > 0) {
     include_once 'styles.php';
     ?>
 </head>
+
 <body class="font-opensans">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -41,7 +43,7 @@ if ($user_id > 0) {
     ?>
     <!-- start main body part-->
     <div class="container-fluid page-top-margin" id="profile-page">
-        <div class="row pr-5 pl-5 pt-3">
+        <div class="row pr-5 pl-5 pt-3" id="profile-body">
             <div class="col-md-2" style="color: white; border-right: 1px solid silver">
                 <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link pt-2 pb-2 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">View Profile</a>
@@ -170,13 +172,11 @@ if ($user_id > 0) {
                 </div>
             </div>
         </div>
-    </div>
 
-    <?php
-    include_once 'footer.php';
-    ?>
+        <?php
+        include_once 'footer.php';
+        ?>
     </div>
-
 
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -209,4 +209,5 @@ if ($user_id > 0) {
         })(jQuery);
     </script>
 </body>
+
 </html>
