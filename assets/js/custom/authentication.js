@@ -357,6 +357,7 @@ function updateHeader(pageId) {
     //call isAuthorized immediately after header has been updated
     console.log("HEADER UPDATER CALLED");
     isAuthorized(pageId, authorized);
+    signedUserMenu(pageId);
   });
 }
 

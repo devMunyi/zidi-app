@@ -211,7 +211,7 @@ if ($code_id > 0) {
     <script>
         $(document).ready(function() {
             updateHeader("addeditcode-page"); //check for logged in user so as to update the header accordingly
-            signedUserMenu("addeditcode-page") //populate dropdown menu as per current page
+            //signedUserMenu("addeditcode-page") //populate dropdown menu as per current page
             //authCheck("addeditcode-page", "addeditcode") //check for logged-in user before rendering page
             $("#add-edit-code-page").hide(); //hide this page by default
 

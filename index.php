@@ -246,8 +246,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("index"); //check for logged in user so as to update the header accordingly 
-            signedUserMenu("index") //populate dropdown menu as per current page
+            updateHeader("index", "index"); //check for logged in user so as to update the header accordingly 
         })
     </script>
     <script>

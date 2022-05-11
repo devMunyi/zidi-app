@@ -38,9 +38,9 @@
                     <li class="dropdown" id="account-1">
                         <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><span id="user-photo"><i class="fe fe-user"></i></span>&nbsp; <span id='user-name'></span></div>
                         <div class="dropdown-menu" id="dropdown-menu">
-                            <a class="dropdown-item" href="profile">Profile</a>
+                            <!-- <a class="dropdown-item" href="profile">Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)" onclick="logout()" id="sign-out">Sign out</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="logout()" id="sign-out">Sign out</a> -->
                         </div>
                     </li>
                 </ul>
