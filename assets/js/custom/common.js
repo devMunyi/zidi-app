@@ -15,6 +15,7 @@ function crudaction(jsonbody, url, method = "POST", callback) {
     xhrFields: { withCredentials: true },
     headers: {
       Authorization: token,
+      accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
     },

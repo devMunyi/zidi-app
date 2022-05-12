@@ -246,6 +246,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
+            console.log("Available Cookies => ", document.cookie)
             updateHeader("index", "index"); //check for logged in user so as to update the header accordingly 
         })
     </script>
