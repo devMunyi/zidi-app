@@ -17,10 +17,6 @@ function crudaction(jsonbody, url, method = "POST", callback) {
       Authorization: token,
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Origin": [
-        "https://zidiapp.com",
-        "http://localhost",
-      ],
     },
     data: cleanJson,
     beforeSend: function () {
