@@ -5,10 +5,12 @@
         <!-- Masthead Heading-->
         <div class="row">
             <div class="col-lg-2">
+                <a href="index" id="logo_home">
                 <h3 class="masthead-heading text-uppercase mb-0">
-                    <img src="assets/images/logo.png" height="18px" />
+                    <img src="assets/images/logo.png" height="30px" />
 
                 </h3>
+                </a>
             </div>
             <div class="col-lg-5">
                 <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control pl-2" placeholder="Search code snippets">

@@ -109,17 +109,17 @@ include_once("configs/conn.inc");
             <div class="section-body" style="padding-left: 0px;">
                 <div class="container-fluid" style="padding-left: 0px;">
                     <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-lg-12 col-md-12 pt-1" id="codeimp-title">
+                        <div class="col-lg-12 col-md-12 pt-1 " id="codeimp-title">
                             <!-- <div class="row" id="codeimp-title">
                                     </div> -->
                         </div>
 
-                        <div class="col-lg-9 col-md-9 pb-1 pt-1">
+                        <div class="col-lg-9 col-md-9">
                             <table>
                                 <tr>
-                                    <td style="width: 300px;" class="pt-1">
+                                    <td style="width: 300px;" >
                                         <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                        <h6 class="font-italic" id="imptype-and-contributor"> </h6>
+                                        <div  id="imptype-and-contributor"> </div>
                                     </td>
                                     <!-- <td class="text-center" id="language-dropdown">
 
@@ -140,9 +140,7 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
                 <div class="row" style="min-height: 400px;">
-                    <div class="col-lg-8 col-md-8">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3 pl-2 pr-0">
+                            <div class="col-lg-2 col-md-2 pr-0">
                                 <div class="scrollk">
                                     <div class="transcard">
                                         <div class="card-header pl-0 pt-3 pb-1 pr-0">
@@ -156,7 +154,7 @@ include_once("configs/conn.inc");
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-md-9 pl-2 pr-0">
+                            <div class="col-lg-7 col-md-7 pl-0 pr-0">
                                 <div class="card transcard ">
                                     <div class="card-header pb-2 pt-2">
                                         <table style="width: 100%">
@@ -186,7 +184,7 @@ include_once("configs/conn.inc");
                                         <i class="fas fa-moon"></i>
                                         <i class="fas fa-sun"></i>
                                         <div class="ball">
-                                            
+
                                         </div>
                                     </label>
                                     `-->
@@ -211,15 +209,15 @@ include_once("configs/conn.inc");
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
+
+                           <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
                         <div class="card transcard">
                             <div class="card-header pt-3">
                                 <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
                             </div>
-                            <div class="card-body pt-0">
+                            <div class="card-body pt-0" style="padding: 20px 0px;">
                                 <div class="list-group" id="available-solns">
                                 </div>
                             </div>
@@ -325,6 +323,7 @@ include_once("configs/conn.inc");
         //////--------Custom scroll
         (function($) {
             $(window).on("load", function() {
+                $('#logo_home').css('display','none');
                 $(".scrolli").mCustomScrollbar({
                     theme: "inset-2-dark",
                     autoHideScrollbar: true

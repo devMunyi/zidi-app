@@ -26,7 +26,9 @@ include_once("configs/conn.inc");
 </head>
 
 <body class="font-opensans">
-
+<?php
+include_once 'header.php';
+?>
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -37,16 +39,14 @@ include_once("configs/conn.inc");
     <div class="container-fluid">
         <div class="row pt-2">
             <div class="col-md-12">
-                <p class="text-start"><a class="a-override" href="index">Home&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                <br/>
             </div>
             <div class="col-md-6 offset-md-3 card pb-3 pt-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
-                    <h3 class="masthead-heading text-uppercase mb-0">
-                        <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
-                    </h3>
+
                 </div>
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
-                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" style="height:400px; overflow-y: scroll;">
+                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" >
                     <div class="form-group">
                         <label for="emailOrUsername_input">*Email or username: </label>
                         <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
@@ -136,17 +136,7 @@ include_once("configs/conn.inc");
         });
     </script>
 
-    <script>
-        //custom scroll to enable form scrolling for content overflow
-        (function($) {
-            $(window).on("load", function() {
-                $(".form_").mCustomScrollbar({
-                    theme: "inset-2-dark",
-                    autoHideScrollbar: true
-                });
-            });
-        })(jQuery);
-    </script>
+
 
     <script>
         // function onSignIn(googleUser) {
