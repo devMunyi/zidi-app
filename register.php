@@ -10,8 +10,6 @@ include_once("configs/conn.inc");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
-    <meta name="author" content="PuffinTheme the theme designer">
     <?php
     include_once 'styles.php';
     ?>
@@ -27,6 +25,11 @@ include_once("configs/conn.inc");
         </div>
     </div>
 
+    <!--Header section -->
+    <?php
+    include_once 'header.php';
+    ?>
+
     <!-- start main body part-->
     <div class="container-fluid">
         <div class="row pt-2">
@@ -34,6 +37,9 @@ include_once("configs/conn.inc");
               <br/>
             </div>
             <div class="col-md-6 offset-md-3 card pt-3 pb-3 mb-3 border border-info">
+    <div class="container-fluid page-top-margin" id="register-page">
+        <div class="row">
+            <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
 
                 </div>
@@ -44,53 +50,53 @@ include_once("configs/conn.inc");
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="username_input" placeholder="Username" minlength="3">
                         </div>
+                <h4 class="text-center pb-2">Sign up</h4>
+                <form name="registerForm" class="form_ pl-5 pr-3" onsubmit="return false;" method="POST" style="height:400px; overflow-y: scroll;">
+                    <div class="form-group">
+                        <label for="username_input" class="col-form-label">*Username:</label>
+                        <input type="text" class="form-control" name="username_input" id="username_input" placeholder="Username" required />
+                        <div class="error" id="usernameErr"></div>
                     </div>
 
-                    <div class="form-group row d-flex justify-content-center">
-                        <label for="fullname_input" class="col-sm-2 col-form-label">Fullname:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="fullname_input" placeholder="Firstname Lastname" minlength="5">
-                        </div>
+                    <div class="form-group">
+                        <label for="fullname_input" class="col-form-label">*Fullname:</label>
+                        <input type="text" class="form-control" name="fullname_input" id="fullname_input" placeholder="Firstname Lastname" minlength="5" required>
+                        <div class="error" id="fullnameErr"></div>
                     </div>
 
-                    <div class="form-group row d-flex justify-content-center">
-                        <label for="email_input" class="col-sm-2 col-form-label">Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email_input" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex justify-content-center">
-                        <label for="country_input" class="col-sm-2 col-form-label">Country:</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="country_input" id="country_input" min="1">
-                                <option value="">--Select One</option>
-                                <?php
-
-                                $recs = fetchtable('pr_countries', "status > 0", "name", "asc", "255", "uid ,name");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $name = $r['name'];
-                                    echo "<option value=\"$uid\">$name</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex justify-content-center">
-                        <label for="password_input" class="col-sm-2 col-form-label">Password:</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password_input" placeholder="Password" minlength="6">
-                        </div>
-                    </div>
-
-                    <div class="form-group row d-flex justify-content-center">
-                        <label for="cpassword_input" class="col-sm-2 col-form-label">Confirm Password:</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="cpassword_input" placeholder="Password" minlength="6">
-                        </div>
+                    <div class="form-group">
+                        <label for="email_input" class="col-form-label">*Email:</label>
+                        <input type="email" class="form-control" name="email_input" id="email_input" placeholder="Email" required>
+                        <div class="error" id="emailErr"></div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-10 offset-sm-2 pt-1 pb-2" id="regBtn">
+                        <label for="country_input" class="col-form-label">*Country:</label>
+                        <select class="form-control" name="country_input" name="country_input" id="country_input" required>
+                            <option value="">--Select--</option>
+                            <?php
+                            $recs = fetchtable('pr_countries', "status > 0", "name", "asc", "255", "uid ,name");
+                            while ($r = mysqli_fetch_array($recs)) {
+                                $uid = $r['uid'];
+                                $name = $r['name'];
+                                echo "<option value=\"$uid\">$name</option>";
+                            }
+                            ?>
+                        </select>
+                        <div class="error" id="countryErr"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_input" class="col-form-label">*Password:</label>
+                        <input type="password" class="form-control" name="password_input" id="password_input" placeholder="Password" minlength="6" required>
+                        <div class="error" id="passwordErr"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cpassword_input" class="col-form-label">*Confirm Password:</label>
+                        <input type="password" class="form-control" name="cpassword_input" id="cpassword_input" placeholder="Confirm Password" minlength="6" required>
+                        <div class="error" id="cpasswordErr"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="pt-1 pb-2" id="regBtn">
                             <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                         </div>
                     </div>
@@ -99,31 +105,55 @@ include_once("configs/conn.inc");
                         <div class="col-sm-10">
                             <div>Already have account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
                             <div class="pt-1">Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
+                        <div>Already have account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
+                        <div class="pt-1">Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
+                    </div>
+
+                    <div class="row pt-1 pb-1">
+                        <div class="col-sm-5">
+                            <hr>
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            OR
+                        </div>
+                        <div class="col-sm-5">
+                            <hr>
                         </div>
                     </div>
+
+                    <div class="form-group text-center">
+                        <div class="google p-2" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign up with Google </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign up with Github </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <div class="p-2 facebook" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <div class="p-2 twitter" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign up with Twitter</div>
+                    </div>
+                </form>
             </div>
-            </form>
         </div>
 
-    </div>
-    <div class="fixed-bottom">
         <?php
         include_once 'footer.php';
         ?>
     </div>
-    </div>
-
-
     <!-- jQuery and bootstrtap js -->
     <?php
     include_once('scripts.php');
     ?>
     <script>
         $(document).ready(function() {
+            updateHeader("register-page"); //check for logged in user so as to update the header accordingly
+            //authCheck('register-page', 'register') //check for avilable session, if so redirect to home page
             footer_date(); //load footer
-
             //call submitBtn() and parse register() as a parameter and on hover hint title
-            submitBtn('#regBtn', 'register()', "Click to register");
+            submitBtn('#regBtn', 'validateRegForm()', "Click to register");
         });
     </script>
 

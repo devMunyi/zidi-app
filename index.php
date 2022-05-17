@@ -10,8 +10,6 @@ include_once("configs/conn.inc");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
-    <meta name="author" content="PuffinTheme the theme designer">
     <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : Home</title>
     <style>
@@ -38,7 +36,7 @@ include_once("configs/conn.inc");
     <!-- Start main html -->
     <div id="main_content">
         <?php
-        include_once 'header.php';
+        include_once 'index-header.php';
         ?>
         <!-- Small icon top menu -->
         <!-- <div id="header_top" style="display: none;" class="header_top">
@@ -54,14 +52,14 @@ include_once("configs/conn.inc");
 
         <!-- start Main menu -->
         <div id="left-sidebar" class="sidebar" style="width: 270px !important; padding-left: 50px">
-            <div class="logo_">
-                <h3 class="masthead-heading text-uppercase mb-0">
+            <div class="logo_ pb-4">
+                <!-- <h3 class="masthead-heading text-uppercase mb-0">
                     <a href="index"><img src="assets/images/logo.png" height="40px" /></a>
-                </h3>
+                </h3> -->
             </div>
-            <div class="input-icon pl-2">
+            <div class="input-icon pl-2 pt-2">
                 <span class="input-icon-addon">
-                    <i class="fe fe-search"></i>
+                    <i class="fe fe-search pl-2 pt-2"></i>
                 </span>
                 <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
             </div>
@@ -104,7 +102,7 @@ include_once("configs/conn.inc");
         </div>
 
         <!-- start main body part-->
-        <div class="page">
+        <div class="page pt-5">
             <!-- start body header -->
             <div class="section-body" style="padding-left: 0px;">
                 <div class="container-fluid" style="padding-left: 0px;">
@@ -160,18 +158,18 @@ include_once("configs/conn.inc");
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
-                                                    <h3 class="card-title"><i title="code" class="fe fe-code"></i>
+                                                    <h3 title="code" class="card-title"><i class="fe fe-code"></i>
                                                         <!--Code Snippet-->
                                                     </h3>
                                                 </td>
                                                 <td>
-                                                    <button class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i title="copy" class="fe fe-copy"></i>
+                                                    <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
                                                         <!--Copy-->
                                                     </button>
-                                                    <button class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i title="download" class="fe fe-download"></i>
+                                                    <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
                                                         <!--Download-->
                                                     </button>
-                                                    <button class="btn btn-dark btn-sm text-sm"> <i title="share" class="fe fe-share-2"></i>
+                                                    <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
                                                         <!--Share-->
                                                     </button>
                                                 </td>
@@ -246,51 +244,8 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            //keep account/user profile navigation hidden by default
-            $("#account-1").hide();
-
-            function requireSigninOne() {
-                let current_loc = JSON.parse(localStorage.getItem("persist"));
-                if (current_loc && current_loc.token && current_loc.user) {
-                    let token = current_loc.token;
-                    let user_details = current_loc.user;
-                    if (token && user_details) {
-                        //send request to the server to verify token
-                        crudaction({}, "/current-user", "GET", function(feed) {
-                            if (feed.success) {
-                                $("#account-0").hide();
-                                $("#account-1").show();
-                                $("#user-name").html(user_details.fullname.trimStart().split(" ")[0]);
-
-                            } else {
-                                $("#account-1").hide();
-                                $("#account-0").show();
-                            }
-                        })
-                    } else {
-                        $("#account-1").hide();
-                        $("#account-0").show();
-                    }
-
-                } else {
-                    $("#account-1").hide();
-                    $("#account-0").show();
-                }
-            }
-            requireSigninOne();
-
-            //log out 
-            var sign_out = document.getElementById("sign-out");
-            sign_out.addEventListener("click", function() {
-
-                //remove user and token from localstorage
-                persistence_remove("user");
-                persistence_remove("token");
-
-                //update the header
-                requireSigninOne();
-            }, false);
-
+            console.log("Available Cookies => ", document.cookie)
+            updateHeader("index", "index"); //check for logged in user so as to update the header accordingly 
         })
     </script>
     <script>
@@ -304,19 +259,8 @@ include_once("configs/conn.inc");
             //persistence_remove("codeId");
 
             functions_load() //load all functions
-            load_languages(); /////Load all the languages
-            loadCodesnippetsLink();
-
-
-            //load frameworks based on language selected
-            //let current_loc = JSON.parse(localStorage.getItem("persist"));
-            //console.log("CURRENT OFFSET =>", current_loc);
-            // if (current_loc && current_loc.language) {
-            //     load_frameworks(current_loc.language);
-            //     if (current_loc.func && current_loc.subfunc && current_loc.framework) {
-            //         load_codeSnippet();
-            //     }
-            // }
+            load_languages(); //Load all the languages
+            loadCodesnippetsLink(); //load code links
         });
     </script>
     <script>

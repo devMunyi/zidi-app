@@ -179,33 +179,6 @@ function load_languages() {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
     }
-    // if (result.all_totals > 0) {
-    //   let data = result["data"];
-    //   //check for previously selected language
-    //   let current_loc = JSON.parse(localStorage.getItem("persist"));
-    //   let lang_prev_sel;
-    //   lang = `<select class="fancy-select" id="sel-language" onchange="load_codeSnippet(); load_frameworks();">
-    //               <option value="">--Language--</option>`;
-    //   for (var i = 0; i < data.length; i++) {
-    //     var uid = data[i].uid;
-    //     var name = data[i].name;
-    //     //var icon = data[i].icon;
-    //     if (current_loc && current_loc.language) {
-    //       let language_sel = current_loc.language;
-    //       if (language_sel == uid) {
-    //         lang_prev_sel = "SELECTED";
-    //       } else {
-    //         lang_prev_sel = "";
-    //       }
-    //     }
-    //     lang += `<option ${lang_prev_sel} value="${uid}">${name}</option>`;
-    //   }
-    //   $("#language-dropdown").html(lang + "</select>");
-    //   //load to code snippet based on id parsed to the load language function which is called on clicking language list
-    // } else {
-    //   //////-------No languages found
-    //   $("#language-dropdown").html(lang + "</select>");
-    // }
   });
 }
 
@@ -213,25 +186,7 @@ function load_languages() {
 
 //////------Begin framework
 function load_frameworks(language_id_) {
-  // let query =
-  //   "?where_=" +
-  //   where_ +
-  //   "&orderby=" +
-  //   orderby +
-  //   "&dir=" +
-  //   dir +
-  //   "&offset=" +
-  //   offset +
-  //   "&rpp=" +
-  //   rpp;
-
-  //let language_id = parseInt(language_id_);
-  //let language_id = $("#sel-language").val();
-  //parse a hidden language to use the value in the load code snippet function
-  //$("#sel_language").val(language_id);
-
   if (language_id_) {
-    //console.log("FRAMEWORKS FOR THIS LANGUAGE ID =>", language_id);
     let offset = 0;
     let rpp = 100;
     let where_ = "f.status = 1";
@@ -301,11 +256,9 @@ function load_frameworks(language_id_) {
 //////---------------------End frameworks
 
 //////------Begin codeSnippet
-function saveCodeSnippet() {
-  //show disabled/processing button
-  disabledBtn("#addEditCodeBtn");
-
-  let codesnippet_id = $("#code_edit_id").val();
+function codesnippetValidate() {
+  // Retrieving the values of form elements
+  //let codesnippet_id = $("#code_edit_id").val();
   let func_id = $("#func_sel").val();
   let subfunc_id = $("#subfunc_sel").val();
   let language_id = $("#language_sel").val();
@@ -316,7 +269,6 @@ function saveCodeSnippet() {
   let file_extension = $("#file_extension").val().trim();
   let instructions = $("#instructions_input").val().trim();
   let added_by;
-
   //grab the current logged in user
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   if (current_loc) {
@@ -327,26 +279,110 @@ function saveCodeSnippet() {
     return;
   }
 
-  let method = "POST";
-  let url = "/add-codesnippet";
+  // Defining error variables with a default value
+  let funErr =
+    (subfunErr =
+    langErr =
+    framErr =
+    implErr =
+    titleErr =
+    codeErr =
+    fileExtErr =
+    instrErr =
+      true);
 
-  let jso = {
-    func_id,
-    subfunc_id,
-    language_id,
-    framework_id,
-    implementation_id,
-    title,
-    row_code,
-    file_extension,
-    instructions,
-    added_by,
-  };
+  // Validate function
+  if (func_id == "") {
+    printError("funErr", "Please select function");
+  } else {
+    printError("funErr", "");
+    funErr = false;
+  }
 
-  if (codesnippet_id > 0) {
-    method = "PUT";
-    url = "/edit-codesnippet";
-    jso = {
+  // Validate subfunction
+  if (subfunc_id == "") {
+    printError("subfunErr", "Please select subfunction");
+  } else {
+    printError("subfunErr", "");
+    subfunErr = false;
+  }
+
+  // Validate language
+  if (language_id == "") {
+    printError("langErr", "Please select language");
+  } else {
+    printError("langErr", "");
+    langErr = false;
+  }
+
+  // Validate framework
+  if (framework_id == "") {
+    printError("framErr", "Please select framework");
+  } else {
+    printError("framErr", "");
+    framErr = false;
+  }
+
+  // Validate implementation
+  if (implementation_id == "") {
+    printError("implErr", "Please select implementation");
+  } else {
+    printError("implErr", "");
+    implErr = false;
+  }
+
+  // Validate title
+  if (title == "") {
+    printError("titleErr", "Please add a user friendly code title");
+  } else {
+    printError("titleErr", "");
+    titleErr = false;
+  }
+
+  // Validate code
+  if (row_code == "") {
+    printError("codeErr", "Please enter your code");
+  } else {
+    printError("codeErr", "");
+    codeErr = false;
+  }
+
+  // Validate file extension
+  if (file_extension == "") {
+    printError("fileExtErr", "File extension used with code added is required");
+  } else {
+    printError("fileExtErr", "");
+    fileExtErr = false;
+  }
+
+  // var regex = /^\S+@\S+\.\S+$/;
+  // Validate username
+  // if (username == "") {
+  //   printError("usernameErr", "Please enter your username");
+  // } else {
+  //   var regex = /^[a-zA-Z0-9.@\s]+$/;
+  //   if (regex.test(username) === false) {
+  //     printError("usernameErr", "Please enter a valid username");
+  //   } else {
+  //     printError("usernameErr", "");
+  //     usernameErr = false;
+  //   }
+  // }
+
+  if (
+    (funErr ||
+      subfunErr ||
+      langErr ||
+      framErr ||
+      implErr ||
+      titleErr ||
+      codeErr ||
+      fileExtErr) == true
+  ) {
+    return false;
+  } else {
+    // Creating a string from input data for preview
+    data = {
       func_id,
       subfunc_id,
       language_id,
@@ -357,65 +393,76 @@ function saveCodeSnippet() {
       file_extension,
       instructions,
       added_by,
-      codesnippet_id,
     };
+    //pass the data for saving;
+    saveCodeSnippet(data);
+  }
+}
+
+function saveCodeSnippet(data) {
+  //show disabled/processing button
+  disabledBtn("#addEditCodeBtn");
+
+  // let func_id = $("#func_sel").val();
+  // let subfunc_id = $("#subfunc_sel").val();
+  // let language_id = $("#language_sel").val();
+  // let framework_id = $("#framework_sel").val();
+  // let implementation_id = $("#impl_sel").val();
+  // let title = $("#codeimpl_title").val().trim();
+  // let row_code = $("#code_input").val().trim();
+  // let file_extension = $("#file_extension").val().trim();
+  // let instructions = $("#instructions_input").val().trim();
+
+  let codesnippet_id = $("#code_edit_id").val();
+  let method = "POST";
+  let url = "/add-codesnippet";
+  let jso = data;
+  // let jso = {
+  //   func_id,
+  //   subfunc_id,
+  //   language_id,
+  //   framework_id,
+  //   implementation_id,
+  //   title,
+  //   row_code,
+  //   file_extension,
+  //   instructions,
+  //   added_by,
+  // };
+
+  if (codesnippet_id > 0) {
+    method = "PUT";
+    url = "/edit-codesnippet";
+    data.codesnippet_id = codesnippet_id;
+    jso = data;
+    // jso = {
+    //   func_id,
+    //   subfunc_id,
+    //   language_id,
+    //   framework_id,
+    //   implementation_id,
+    //   title,
+    //   row_code,
+    //   file_extension,
+    //   instructions,
+    //   added_by,
+    //   codesnippet_id,
+    // };
   }
 
   //make api request
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn("#addEditCodeBtn", "saveCodeSnippet()", "Click to submit");
+      submitBtn("#addEditCodeBtn", "codesnippetValidate()", "Click to submit");
     }
 
     if (feed["success"] === false) {
       let message = feed["message"];
-      var Toast = Swal.mixin({
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2500,
-        padding: "0.85rem",
-      });
-
-      Toast.fire({
-        icon: "error",
-        title: message,
-        color: "white",
-      });
-
-      // toastr.options = {
-      //   closeButton: true,
-      //   debug: false,
-      //   newestOnTop: false,
-      //   progressBar: true,
-      //   positionClass: "toast-top-right",
-      //   preventDuplicates: true,
-      //   onclick: null,
-      //   showDuration: "300",
-      //   hideDuration: "1000",
-      //   timeOut: "2500",
-      //   extendedTimeOut: "1000",
-      //   showEasing: "swing",
-      //   hideEasing: "linear",
-      //   showMethod: "fadeIn",
-      //   hideMethod: "fadeOut",
-      // };
-      // toastr.error(message);
+      errorToast(message);
     } else if (feed["success"] === true) {
       let message = feed["message"];
-      var Toast = Swal.mixin({
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2500,
-        padding: "0.85rem",
-      });
-
-      Toast.fire({
-        icon: "success",
-        title: message,
-      });
+      successToast(message);
 
       //redirect user to index page on successful update
       setTimeout(() => {
@@ -429,7 +476,6 @@ function saveCodeSnippet() {
 
 function search_codeSnippet() {
   let code_search = $("#search_box").val().trim();
-  //$("#code_id_").val("");
   if (code_search) {
     let query = "?search_=" + code_search;
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
@@ -547,15 +593,9 @@ function loadSearchSelCode() {
           $("#imptype-and-contributor").html(imptypeAndContributor);
 
           //append code edit button after add button
-          // let codeId = data.uid.toString().trim();
-          // console.log("CODE ID IS =>", codeId);
           $("#edit-code").html(
             ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
           );
-
-          //add code version drop down
-          // codeVersions =
-          //   '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
 
           let firstChar;
           //check for previously selected code implementation
@@ -606,270 +646,10 @@ function loadSearchSelCode() {
   editorLib.init();
 }
 
-// function load_codesnippetById(codeId) {
-//   //codeLoading("#codeimp-title");
-//   codeLoading("#imptype-and-contributor");
-
-//   // persistence("offset", $("#code-version").val());
-//   // persistence("framework", $("#sel_framework").val());
-//   // persistence("language", $("#sel_language").val());
-//   let current_loc = JSON.parse(localStorage.getItem("persist"));
-//   let sel_func = current_loc.func;
-//   let sel_subfunc = current_loc.subfunc;
-//   let sel_language = current_loc.language;
-//   let sel_framework = current_loc.framework;
-//   //let search_ = $("#search_box").val().trim();
-//   let offset = current_loc.offset;
-
-//   let rpp = 1;
-//   if (!offset) {
-//     offset = 0;
-//   } else {
-//     persistence("offset", offset);
-//   }
-
-//   if (!sel_func) {
-//     sel_func = null;
-//   } else {
-//     persistence("func", sel_func);
-//   }
-
-//   if (!sel_subfunc) {
-//     sel_subfunc = null;
-//   } else {
-//     persistence("subfunc", sel_subfunc);
-//   }
-
-//   if (!sel_language) {
-//     sel_language = null;
-//   } else {
-//     persistence("language", sel_language);
-//   }
-
-//   if (!sel_framework) {
-//     sel_framework = null;
-//   } else {
-//     persistence("framework", sel_framework);
-//   }
-
-//   let codeEditor = ace.edit("editor");
-//   let editorLib = {
-//     init() {
-//       //Configure Ace
-//       codeEditor.setTheme("ace/theme/monokai");
-
-//       //Set Languages
-//       codeEditor.session.setMode("ace/mode/javascript");
-//       codeEditor.session.setMode("ace/mode/java");
-//       //codeEditor.session.setMode("ace/mode.html");
-//       //codeEditor.session.setMode("ace/mode/php");
-//       //Set Options
-//       codeEditor.setOptions({
-//         //fontFamily: 'Inconsolata'
-//         fontSize: "12pt",
-//         //enableBasicAutocompletion: true,
-//         //enableLiveAutocompletion: true
-//       });
-
-//       //Set default code
-
-//       let where_ = "c.status = 1";
-//       let orderby = "c.uid";
-//       let dir = "DESC";
-
-//       let jso = {};
-
-//       let query =
-//         "?where_=" +
-//         where_ +
-//         "&orderby=" +
-//         orderby +
-//         "&dir=" +
-//         dir +
-//         "&func_id=" +
-//         sel_func +
-//         "&subfunc_id=" +
-//         sel_subfunc +
-//         "&language_id=" +
-//         sel_language +
-//         "&framework_id=" +
-//         sel_framework +
-//         "&offset=" +
-//         offset +
-//         "&rpp=" +
-//         rpp +
-//         "&codesnippet_id=" +
-//         codeId;
-
-//       crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
-//         //reset code editor to empty
-//         codeEditor.setValue("");
-
-//         let total_ = feed.all_totals;
-
-//         let codeImpTitle = ""; //intial default value
-//         let imptypeAndContributor = ""; //initial default value
-
-//         //let codeVersions = "";
-//         if (total_ > 0) {
-//           //let impl_names = feed["impl_names"];
-//           let data = feed["data"];
-
-//           //update code implementation title
-//           codeImpTitle = data.title;
-//           $("#codeimp-title").html(
-//             "<h4 class='text-left'>" + codeImpTitle + "</h4>"
-//           );
-
-//           imptypeAndContributor =
-//             "Contributed by " +
-//             '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
-//             data.fullname +
-//             "</a>";
-
-//           $("#imptype-and-contributor").html(imptypeAndContributor);
-
-//           //append code edit button after add button
-//           // let codeId = data.uid.toString().trim();
-//           // console.log("CODE ID IS =>", codeId);
-//           $("#edit-code").html(
-//             ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-//           );
-
-//           //add code version drop down
-//           // codeVersions =
-//           //   '<select class="fancy-select"id="code-version" onchange="load_codeSnippet()">'; //initial default value
-
-//           // let impl_title;
-//           // let firstChar;
-
-//           //check for previously selected code implementation
-//           // let current_loc = JSON.parse(localStorage.getItem("persist"));
-//           // let offset_prev_sel;
-//           // for (let i = 0; i < impl_names.length; i++) {
-//           //   impl_title = impl_names[i].implementation;
-
-//           //   firstChar = impl_title[0];
-
-//           //   if (firstChar == "D") {
-//           //     impl_title = "";
-//           //   } else {
-//           //     impl_title = ` (${impl_title})`;
-//           //   }
-
-//           //   if (current_loc && current_loc.offset) {
-//           //     let impl_sel_ = current_loc.offset;
-//           //     if (impl_sel_ == i) {
-//           //       offset_prev_sel = "SELECTED";
-//           //     } else {
-//           //       offset_prev_sel = "";
-//           //     }
-//           //   }
-
-//           //   codeVersions += `<option ${offset_prev_sel} value="${i}">Implementation ${
-//           //     i + 1
-//           //   } ${impl_title} </option>`;
-//           // }
-
-//           // $("#version-dropdown").html(codeVersions + "</select>");
-
-//           //Display the code snippet
-//           codeEditor.setValue(data.row_code);
-
-//           //update the reminder of selected combinations for the loaded code snippet
-//           // persistence("func", data.func_id);
-//           // persistence("subfunc", data.subfunc_id);
-//           // persistence("language", data.language_id);
-//           // persistence("framework", data.framework_id);
-//           // persistence("offset", data.impl_version);
-
-//           //console.log("CURRENT SEL =>", current_loc);
-//         } else {
-//           //set code implementation title to initialized default value
-//           $("#codeimp-title").html(codeImpTitle);
-
-//           //set implementation type and contributor name to intialized default value
-//           $("#imptype-and-contributor").html(imptypeAndContributor);
-
-//           //add code version drop down
-//           // $("#version-dropdown").html(codeVersions);
-
-//           //empty the code edit link
-//           $("#edit-code").html("");
-
-//           /////-------Display that no codesnippet found
-//           codeEditor.setValue("No Code Loaded.");
-//         }
-//       });
-//     },
-//   };
-
-//   editorLib.init();
-// }
-
+//load codesnippet by id
 function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
-
-  // //reset code editor to empty
-  // $("#code-display").html(
-  //   `<pre class="editor">
-  //     <code></code>
-  //   </pre>`
-  // );
-
-  // let current_loc = JSON.parse(localStorage.getItem("persist"));
-
-  // let codeImpTitle = ""; //intial default value
-  // let imptypeAndContributor = ""; //initial default value
-
-  // if (current_loc.code.all_totals && current_loc.code.all_totals > 0) {
-  //   let all_ = current_loc.code.data;
-  //   let data;
-
-  //   for (let i = 0; i < all_.length; i++) {
-  //     if (all_[i].uid == codeId) {
-  //       data = all_[i];
-  //       break;
-  //     }
-  //   }
-
-  //   //update code implementation title
-  //   codeImpTitle = data.title;
-  //   $("#codeimp-title").html("<h4 class='text-left'>" + codeImpTitle + "</h4>");
-
-  //   imptypeAndContributor =
-  //     "Contributed by " +
-  //     '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
-  //     data.fullname +
-  //     "</a>";
-
-  //   $("#imptype-and-contributor").html(imptypeAndContributor);
-
-  //   $("#edit-code").html(
-  //     ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-  //   );
-
-  //   //Display the code snippet
-  //   $("#code-display").html(
-  //     `<pre class='editor'><code>${data.row_code}</code></pre>`
-  //   );
-  // } else {
-  //   //set code implementation title to initialized default value
-  //   $("#codeimp-title").html(codeImpTitle);
-
-  //   //set implementation type and contributor name to intialized default value
-  //   $("#imptype-and-contributor").html(imptypeAndContributor);
-
-  //add code version drop down
-  //   // $("#version-dropdown").html(codeVersions);
-
-  //   //empty the code edit link
-  //   $("#edit-code").html("");
-
-  //   /////-------Display that no codesnippet found
-  //   $("#code-display").html("No Code Loaded.");
-  // }
 
   let codeEditor = ace.edit("editor");
   let editorLib = {
@@ -915,10 +695,23 @@ function load_codesnippetById(codeId) {
           "<h4 class='text-left'>" + codeImpTitle + "</h4>"
         );
 
+        //console.log("Contributor name => ", safe_tags_replace(data.fullname));
+
+        let displayName = "";
+        if (data.provider === "Local" || data.provider === "Google") {
+          displayName = data.fullname;
+        } else if (data.provider == "Github") {
+          displayName = data.username;
+        } else if (data.provider == "Facebook") {
+          displayName += displayName;
+        } else if (data.provider == "Twitter") {
+          displayName = data.fullname;
+        }
+
         imptypeAndContributor =
           "<i class='fe fe-globe'></i> Contributed by: " +
           '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
-          data.fullname +
+          safe_tags_replace(displayName) +
           "</a>";
 
         $("#imptype-and-contributor").html(imptypeAndContributor);
@@ -945,56 +738,24 @@ function load_codesnippetById(codeId) {
         /////-------Display that no codesnippet found
         codeEditor.setValue("No Code Loaded.");
       }
-      // crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
-      //   let total_ = feed.all_totals;
-
-      //   // let codeImpTitle = ""; //intial default value
-      //   // let imptypeAndContributor = ""; //initial default value
-
-      //   //let codeVersions = "";
-      //   if (total_ > 0) {
-      //     //let impl_names = feed["impl_names"];
-      //     // let data = feed["data"];
-      //     // //update code implementation title
-      //     // codeImpTitle = data.title;
-      //     // $("#codeimp-title").html(
-      //     //   "<h4 class='text-left'>" + codeImpTitle + "</h4>"
-      //     // );
-      //     // imptypeAndContributor =
-      //     //   "Contributed by " +
-      //     //   '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
-      //     //   data.fullname +
-      //     //   "</a>";
-      //     // $("#imptype-and-contributor").html(imptypeAndContributor);
-      //     //append code edit button after add button
-      //     // let codeId = data.uid.toString().trim();
-      //     // console.log("CODE ID IS =>", codeId);
-      //     // $("#edit-code").html(
-      //     //   ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-      //     // );
-      //     // //Display the code snippet
-      //     // codeEditor.setValue(data.row_code);
-      //   } else {
-      //     //set code implementation title to initialized default value
-      //     $("#codeimp-title").html(codeImpTitle);
-
-      //     //set implementation type and contributor name to intialized default value
-      //     $("#imptype-and-contributor").html(imptypeAndContributor);
-
-      //     //add code version drop down
-      //     // $("#version-dropdown").html(codeVersions);
-
-      //     //empty the code edit link
-      //     $("#edit-code").html("");
-
-      //     /////-------Display that no codesnippet found
-      //     codeEditor.setValue("No Code Loaded.");
-      //   }
-      // });
     },
   };
 
   editorLib.init();
+}
+
+const tagsToReplace = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+};
+
+function replaceTag(tag) {
+  return tagsToReplace[tag] || tag;
+}
+
+function safe_tags_replace(str) {
+  return str.replace(/[&<>]/g, replaceTag);
 }
 
 function loadCodesnippetsLink() {
@@ -1082,13 +843,10 @@ function loadCodesnippetsLink() {
     rpp;
 
   crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
-    //console.log("FEEDBACK =>", feed);
     let total_ = feed.all_totals;
     if (total_ > 0) {
       let impl_names = feed["impl_names"];
-      //console.log("IMPL NAMES =>", impl_names);
       let data = feed["data"];
-      //console.log("DATA =>", data);
 
       let impl_title;
       let firstChar;
@@ -1101,7 +859,6 @@ function loadCodesnippetsLink() {
       let solns = "";
       for (let i = 0; i < data.length; i++) {
         impl_title = data[i].implementation;
-        //console.log("impl title", impl_title);
         language = data[i].language;
         framework = data[i].framework;
 
@@ -1136,8 +893,6 @@ function loadCodesnippetsLink() {
       $("#available-solns").html(solns);
 
       persistence("code", feed);
-
-      //console.log("ALL DATA =>", current_loc);
     } else {
       //add code version drop down
       $("#available-solns").html(
@@ -1150,3 +905,78 @@ function loadCodesnippetsLink() {
 }
 
 //////---------------------End codeSnippet
+
+//////------------------------------------Begin profile Profile
+function populateProfile() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc && current_loc.user) {
+    let user = current_loc.user;
+    // console.log("USER INFO => ", user);
+    //handle photo display
+    let displayPhoto = "";
+    if (user.provider === "Local" && user.photo) {
+      displayPhoto = `<img src='${server_}/user/${user.photo}' style='width: 100px; height: 100px; border-radius: 50%;' />`;
+    } else if (user.provider === "Local" && !user.photo) {
+      displayPhoto = `<span class="d-flex justify-content-center align-items-center font-24" style='width: 100px; height: 100px; font-weight: bold; border-radius: 50%; background-color: purple; color: white;'>${user.fullname[0]}</span>`;
+    } else {
+      displayPhoto = `<img src='${user.photo}' referrerpolicy="no-referrer" style='width: 100px; height: 100px; border-radius: 50%;' />`;
+    }
+
+    $(".profile-photo-view").html(displayPhoto);
+
+    $("#profile-info").html(
+      `<table class="table table-bordered">
+        <tr>
+          <td><b>Username</b></td>
+          <td>${!user.username ? "----------" : user.username}</td>
+        </tr>
+        <tr>
+          <td><b>Email</b></td>
+          <td>${!user.email ? "------------" : user.email}</td>
+        </tr>
+        <tr>
+          <td><b>Fullname</b></td>
+          <td>${
+            !user.fullname ? "---------" : safe_tags_replace(user.fullname)
+          }</td>
+        </tr>
+        <tr>
+          <td><b>Country</b></td>
+          <td>${!user.country ? "----------" : user.country}</td>
+        </tr>
+        <tr>
+          <td><b>Contribution Rate</b></td>
+          <td>50%</td>
+        </tr>
+      </table>`
+    );
+  }
+}
+
+function signedUserMenu(currentPage) {
+  const current_loc = JSON.parse(localStorage.getItem("persist"));
+  const menuItem = currentPage === "index" ? "Profile" : "Home";
+
+  if (current_loc && current_loc.user) {
+    const user = current_loc.user;
+    const { uid } = user;
+
+    let navLink = "profile?uid=" + uid;
+    //console.log("NAVLINK WITH USER ID => ", navLink);
+    if (menuItem === "Home") {
+      navLink = "index";
+    }
+
+    $("#dropdown-menu").html(
+      `
+    <a class="dropdown-item" href="${navLink}">${menuItem}</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="javascript:void(0)" onclick="logout('${currentPage}')" id="sign-out">Sign out</a>
+    `
+    );
+  }
+
+  console.log("SIGNED USER MENU UPDATER CALLED");
+}
+
+/////-----------------------------------End of profile
