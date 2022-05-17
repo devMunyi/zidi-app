@@ -18,7 +18,9 @@ include_once("configs/conn.inc");
 </head>
 
 <body class="font-opensans">
-
+<?php
+include_once 'header.php';
+?>
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -30,6 +32,40 @@ include_once("configs/conn.inc");
     include_once 'header.php';
     ?>
     <!-- start main body part-->
+    <div class="container-fluid">
+        <div class="row pt-2">
+            <div class="col-md-12">
+                <br/>
+            </div>
+            <div class="col-md-6 offset-md-3 card pb-3 pt-3 mb-3 border border-info">
+                <div class="d-flex justify-content-center">
+
+                </div>
+                <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
+                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" >
+                    <div class="form-group">
+                        <label for="emailOrUsername_input">*Email or username: </label>
+                        <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_input">*Password: </label>
+                        <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password">
+                    </div>
+
+                    <div class="form-group pt-2 pb-2" id="loginBtn">
+                        <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
+                    </div>
+
+                    <div class="form-group">
+                        <div>Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
+                        <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Register</a></div>
+                    </div>
+
+
+                    <div class="row pt-1 pb-1">
+                        <div class="col-sm-5">
+                            <hr>
     <div class="container-fluid page-top-margin" id='login-page'>
         <div class="row">
             <div class="col-md-4 offset-md-4 card pb-3 mb-3 border border-info">

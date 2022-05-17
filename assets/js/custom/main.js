@@ -709,7 +709,7 @@ function load_codesnippetById(codeId) {
         }
 
         imptypeAndContributor =
-          "Contributed by " +
+          "<i class='fe fe-globe'></i> Contributed by: " +
           '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
           safe_tags_replace(displayName) +
           "</a>";
@@ -885,8 +885,8 @@ function loadCodesnippetsLink() {
           }
         }
 
-        solns += `<a href="javascript:void(0)" 
-        onclick="load_codesnippetById('${data[i].uid}')" class="list-group-item list-group-item-action">
+        solns += `<a href="javascript:void(0)"  onclick="load_codesnippetById('${data[i].uid}')" class="list-group-item list-group-item-action">
+<span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${data[i].title} - (<i>${language} ${impl_title} ${framework}</i>) </a>`;
       }
 

@@ -17,6 +17,9 @@ include_once("configs/conn.inc");
 
 <body class="font-opensans">
     <!-- Page Loader -->
+    <?php
+    include_once 'header.php';
+    ?>
     <div class="page-loader-wrapper">
         <div class="loader">
         </div>
@@ -28,14 +31,25 @@ include_once("configs/conn.inc");
     ?>
 
     <!-- start main body part-->
+    <div class="container-fluid">
+        <div class="row pt-2">
+            <div class="col-md-12">
+              <br/>
+            </div>
+            <div class="col-md-6 offset-md-3 card pt-3 pb-3 mb-3 border border-info">
     <div class="container-fluid page-top-margin" id="register-page">
         <div class="row">
             <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
-                    <h3 class="masthead-heading text-uppercase mb-0">
-                        <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
-                    </h3>
+
                 </div>
+                <h4 class="text-center pt-2 pb-2">Sign up</h4>
+                <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
+                    <div class="form-group row d-flex justify-content-center">
+                        <label for="username_input" class="col-sm-2 col-form-label">Username:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="username_input" placeholder="Username" minlength="3">
+                        </div>
                 <h4 class="text-center pb-2">Sign up</h4>
                 <form name="registerForm" class="form_ pl-5 pr-3" onsubmit="return false;" method="POST" style="height:400px; overflow-y: scroll;">
                     <div class="form-group">
@@ -86,8 +100,11 @@ include_once("configs/conn.inc");
                             <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
                         </div>
                     </div>
-
+                  <hr/>
                     <div class="form-group">
+                        <div class="col-sm-10">
+                            <div>Already have account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
+                            <div class="pt-1">Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
                         <div>Already have account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
                         <div class="pt-1">Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
                     </div>
@@ -141,17 +158,7 @@ include_once("configs/conn.inc");
     </script>
 
 
-    <script>
-        //custom scroll to enable form scrolling for content overflow
-        (function($) {
-            $(window).on("load", function() {
-                $(".form_").mCustomScrollbar({
-                    theme: "inset-2-dark",
-                    autoHideScrollbar: true
-                });
-            });
-        })(jQuery);
-    </script>
+
 </body>
 
 </html>
