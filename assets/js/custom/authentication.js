@@ -155,6 +155,9 @@ function register(data) {
     } else if (feed["success"] === true) {
       let message = feed["message"];
       successToast(message);
+      setTimeout(() => {
+        gotourl("login");
+      }, 2550);
     }
   });
 }

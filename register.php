@@ -90,7 +90,7 @@ include_once("configs/conn.inc");
                     <hr />
                     <div class="form-group">
                         <div class="col-sm-10">
-                            <div>Already have account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
+                            <div>Already have an account?&nbsp;<a class="a-override" href="login">Sign in</a></div>
                             <div class="pt-1">Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
                         </div>
 

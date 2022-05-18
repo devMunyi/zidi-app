@@ -51,8 +51,8 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-group">
-                        <div>Forgot password?&nbsp;<a class="a-override" href="reset-password">Reset</a></div>
-                        <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Register</a></div>
+                        <div>Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
+                        <div class="pt-1">Don't have an account yet?&nbsp;<a class="a-override" href="register">Sign up</a></div>
                     </div>
 
                     <div class="row pt-1 pb-1">
