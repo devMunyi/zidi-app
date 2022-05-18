@@ -35,7 +35,7 @@ include_once("configs/conn.inc");
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
                 <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;">
                     <div class="form-group">
-                        <label for="emailOrUsername_input">*Email/Username: </label>
+                        <label for="emailOrUsername_input">*Email|Username: </label>
                         <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
                         <div class="error" id="usernameErr"></div>
                     </div>
@@ -81,7 +81,6 @@ include_once("configs/conn.inc");
                         <div class="form-group text-center">
                             <div class="p-2 twitter" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign up with Twitter</div>
                         </div> -->
-                
                 </form>
             </div>
         </div>

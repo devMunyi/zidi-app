@@ -53,7 +53,7 @@ if ($code_id > 0) {
                     </h3>
                 </div>
                 <h4 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
-                <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST" style="height:400px; overflow-y:auto;">
+                <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                     <div class="form-row">
                         <div class="form-group col-sm-3">
                             <label for="func_sel">Function:</label>
