@@ -77,7 +77,6 @@ include_once("configs/conn.inc");
                         <input type="password" class="form-control" name="password_input" id="password_input" placeholder="Password" minlength="6" required>
                         <div class="error" id="passwordErr"></div>
                     </div>
-
                     <div class="form-group">
                         <label for="cpassword_input" class="col-form-label">*Confirm Password:</label>
                         <input type="password" class="form-control" name="cpassword_input" id="cpassword_input" placeholder="Confirm Password" minlength="6" required>
@@ -142,9 +141,5 @@ include_once("configs/conn.inc");
         });
     </script>
 </body>
-
 </html>
-
-
-
-//https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=select_account&include_granted_scopes=true&response_type=code&redirect_uri=https%3A%2F%2Fwww.loom.com%2Fapi%2Fauth%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&client_id=443240113960-6mj529r3r24gpp4c9u57n9ndrg01i911.apps.googleusercontent.com&flowName=GeneralOAuthFlow
+<!-- //https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=select_account&include_granted_scopes=true&response_type=code&redirect_uri=https%3A%2F%2Fwww.loom.com%2Fapi%2Fauth%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&client_id=443240113960-6mj529r3r24gpp4c9u57n9ndrg01i911.apps.googleusercontent.com&flowName=GeneralOAuthFlow -->
