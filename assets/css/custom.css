@@ -269,7 +269,7 @@ input#search_box {
 /*Common styling*/
 .a-override{
     color: blue !important;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .a-override:hover{
@@ -355,6 +355,7 @@ div#codeimp-title {
     border: 1px solid #595959;
     padding: 3px 10px;
     margin-top: -4px;
+    margin-left: 2px;
 }
 
 

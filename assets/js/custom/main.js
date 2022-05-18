@@ -953,30 +953,4 @@ function populateProfile() {
   }
 }
 
-function signedUserMenu(currentPage) {
-  const current_loc = JSON.parse(localStorage.getItem("persist"));
-  const menuItem = currentPage === "index" ? "Profile" : "Home";
-
-  if (current_loc && current_loc.user) {
-    const user = current_loc.user;
-    const { uid } = user;
-
-    let navLink = "profile?uid=" + uid;
-    //console.log("NAVLINK WITH USER ID => ", navLink);
-    if (menuItem === "Home") {
-      navLink = "index";
-    }
-
-    $("#dropdown-menu").html(
-      `
-    <a class="dropdown-item" href="${navLink}">${menuItem}</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="javascript:void(0)" onclick="logout('${currentPage}')" id="sign-out">Sign out</a>
-    `
-    );
-  }
-
-  console.log("SIGNED USER MENU UPDATER CALLED");
-}
-
 /////-----------------------------------End of profile

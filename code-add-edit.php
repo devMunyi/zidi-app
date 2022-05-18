@@ -33,9 +33,6 @@ if ($code_id > 0) {
 
 <body class="font-opensans">
     <!-- Page Loader -->
-    <?php
-    include_once 'header.php';
-    ?>
     <div class="page-loader-wrapper">
         <div class="loader">
         </div>
@@ -47,8 +44,6 @@ if ($code_id > 0) {
     ?>
 
     <!-- Start main html -->
-    <div class="container-fluid" id="add-edit-code-page">
-        <div class="row pt-2">
     <div class="container-fluid mb-5 page-top-margin" id="addeditcode-page">
         <div class="row">
             <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">

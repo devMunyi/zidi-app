@@ -38,7 +38,7 @@
                             <a class="dropdown-item" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
                         </div>
                     </li>
-                    <li class="dropdown" id="account-1">
+                    <li class="dropdown" id="account-1" style="outline: none;">
                         <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><span id="user-photo"><i class="fe fe-user"></i></span>&nbsp; <span id='user-name'></span></div>
                         <div class="dropdown-menu mr-3" id="dropdown-menu">
                             <!-- <a class="dropdown-item" href="profile">Profile</a>

@@ -41,9 +41,9 @@ include_once("configs/conn.inc");
         <div class="row">
             <div class="col-md-4 offset-md-4 card pt-4 pb-3 mt-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
-                    <h3 class="masthead-heading text-uppercase mb-0">
+                    <!-- <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
-                    </h3>
+                    </h3> -->
                 </div>
                 <h4 class="text-center pt-2 pb-2">Request Reset Link</h4>
                 <form class="pl-5 pr-5" method="POST" onsubmit="return false;">

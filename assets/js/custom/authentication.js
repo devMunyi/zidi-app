@@ -163,24 +163,36 @@ function register(data) {
 function logout(currentPage = "other") {
   //remove user and token from localstorage
   persistence_remove("user");
-  crudaction({}, "/log-out", "GET", function (feed) {
-    if (feed && feed.success) {
-      if (currentPage == "index") {
-        updateHeader();
-      } else {
-        gotourl("login");
-      }
-    }
-  });
+  persistence_remove("token");
 
-  //const sign_out = document.getElementById("sign-out");
-  // sign_out.addEventListener(
-  //   "click",
-  //   function () {
-  //   },
-  //   false
-  // );
+  if (currentPage == "index") {
+    updateHeader();
+  } else {
+    gotourl("login");
+  }
 }
+// function logout(currentPage = "other") {
+//   //remove user and token from localstorage
+//   persistence_remove("user");
+//   persistence_remove("token");
+//   crudaction({}, "/log-out", "GET", function (feed) {
+//     if (feed && feed.success) {
+//       if (currentPage == "index") {
+//         updateHeader();
+//       } else {
+//         gotourl("login");
+//       }
+//     }
+//   });
+
+//   //const sign_out = document.getElementById("sign-out");
+//   // sign_out.addEventListener(
+//   //   "click",
+//   //   function () {
+//   //   },
+//   //   false
+//   // );
+// }
 
 //vailidate login form
 function validateLoginForm() {
@@ -228,7 +240,6 @@ function validateLoginForm() {
   }
 }
 
-//passport-local login
 function login(data) {
   //show disabled/processing button
   disabledBtn("#loginBtn");
@@ -241,8 +252,8 @@ function login(data) {
   // };
 
   //make api request
-  crudaction(data, "/login", "POST", function (feed) {
-    console.log("LOGIN FEEDBACK => ", feed);
+  crudaction(data, "/user/login", "POST", function (feed) {
+    //console.log("LOGIN FEEDBACK => ", feed);
     if (feed) {
       //return the initial button
       submitBtn(
@@ -251,58 +262,26 @@ function login(data) {
         "Click to Sign in",
         "Submit"
       );
-    }
 
-    if (feed.status === 401) {
-      let message = "Invalid username or password";
-      errorToast(message);
-    } else if (feed["success"] === false) {
-      let message = feed["message"];
-      errorToast(message);
-    } else if (feed["success"] === true) {
-      let message = feed["message"];
-      successToast(message);
+      if (feed.success === false) {
+        //show error notification
+        errorToast(feed.message);
+      } else if ((feed.success = true)) {
+        //store user info in local storage for reference
+        console.log("USER => ", feed.user);
+        persistence("user", feed.user);
+        persistence("token", feed.token);
 
-      persistence("user", feed.user);
+        //show success notification
+        successToast(feed.message);
 
-      setTimeout(() => {
-        gotourl("index"); //redirect the user to index page to perform an action meant for authenticated users
-      }, 2500);
-    } else {
-      let message = "Something went wrong. Try again";
-      errorToast(message);
+        setTimeout(() => {
+          gotourl("index");
+        }, 2550);
+      }
     }
   });
 }
-
-///////-------------------End authentication
-
-//////----------------------------Social logins strategies
-//google auth trigger
-function googleAuth() {
-  let server_ = $("#server_").val();
-  window.open(`${server_}/google`, "_self");
-}
-
-//github auth trigger
-function githubAuth() {
-  let server_ = $("#server_").val();
-  window.open(`${server_}/github`, "_self");
-}
-
-//facebook auth trigger
-function facebookAuth() {
-  let server_ = $("#server_").val();
-  window.open(`${server_}/facebook`, "_self");
-}
-
-//facebook auth trigger
-function twitterAuth() {
-  let server_ = $("#server_").val();
-  window.open(`${server_}/twitter`, "_self");
-}
-
-//////----------------------------End Social logins strategies
 
 //verify logged-in user by sending cookie token/session id to server side
 function updateHeader(pageId) {
@@ -310,14 +289,14 @@ function updateHeader(pageId) {
   $("#account-1").hide();
   $(`#${pageId}`).hide();
 
-  let server_ = $("#server_").val();
   let authorized = false;
-  crudaction({}, "/logged-in", "GET", function (feed) {
+  crudaction({}, "/current-user", "GET", function (feed) {
     if (feed) {
       if (feed.success) {
         //add user & token to localstorage
-        let user = feed.user;
-        persistence("user", user);
+        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let user = current_loc.user;
+
         console.log("SIGNED USER FOUND");
         $("#account-0").hide();
         $("#account-1").show();
@@ -355,11 +334,66 @@ function updateHeader(pageId) {
     }
 
     //call isAuthorized immediately after header has been updated
-    console.log("HEADER UPDATER CALLED");
+    //console.log("HEADER UPDATER CALLED");
     isAuthorized(pageId, authorized);
     signedUserMenu(pageId);
   });
 }
+// function updateHeader(pageId) {
+//   //keep account/user profile navigation hidden by default
+//   $("#account-1").hide();
+//   $(`#${pageId}`).hide();
+
+//   let authorized = false;
+//   crudaction({}, "/current-user", "GET", function (feed) {
+//     if (feed) {
+//       if (feed.success) {
+//         //add user & token to localstorage
+//         let user = feed.user;
+//         persistence("user", user);
+
+//         console.log("SIGNED USER FOUND");
+//         $("#account-0").hide();
+//         $("#account-1").show();
+
+//         let displayPhoto = "";
+//         if (user.provider === "Local" && user.photo) {
+//           displayPhoto = `<img src='${server_}/user/${user.photo}' style='width: 18px; border-radius: 50%;' />`;
+//         } else if (user.provider === "Local" && !user.photo) {
+//           displayPhoto = `<span class='d-flex justify-content-center small-img'>${user.fullname[0]}</span>`;
+//         } else {
+//           displayPhoto = `<img src='${user.photo}' referrerpolicy="no-referrer" style='width: 18px; border-radius: 50%;' />`;
+//         }
+
+//         let displayName = "";
+//         if (user.provider === "Local" || user.provider === "Google") {
+//           displayName = user.fullname.trimStart().split(" ")[0];
+//         } else if (user.provider == "Github") {
+//           displayName = user.username;
+//         } else if (user.provider == "Facebook") {
+//           displayName += displayName;
+//         } else if (user.provider == "Twitter") {
+//           displayName = user.fullname.trimStart().split(" ")[0];
+//         }
+//         $("#user-name").html(displayName);
+//         $("#user-photo").html(displayPhoto);
+
+//         authorized = true; //gives a signal to render a proteceted page
+//       } else {
+//         console.log("NO SIGNED USER FOUND");
+//         $("#account-1").hide();
+//         $("#account-0").show();
+//       }
+//     } else {
+//       console.log(feed);
+//     }
+
+//     //call isAuthorized immediately after header has been updated
+//     //console.log("HEADER UPDATER CALLED");
+//     isAuthorized(pageId, authorized);
+//     signedUserMenu(pageId);
+//   });
+// }
 
 //used with login, register and profile pages to check if user is logged in
 //for both login and register page, if user is logged in redirect to index page
@@ -394,25 +428,109 @@ function isAuthorized(pageId, authorized) {
       $(`#${pageId}`).show();
     }
   }
-
-  console.log("AUTH CHECKER CALLED");
-  // crudaction({}, "/logged-in", "GET", function (feed) {
-  //   if (feed && feed.success) {
-  //     if (currentPage !== "profile" && currentPage !== "addeditcode") {
-  //       gotourl("index");
-  //     } else {
-  //       $(`#${htmlId}`).show();
-  //     }
-  //   } else {
-  //     if (currentPage === "profile" || currentPage === "addeditcode") {
-  //       $(`#${htmlId}`).hide();
-  //       gotourl("login");
-  //     } else {
-  //       $(`#${htmlId}`).show();
-  //     }
-  //   }
-  // });
 }
+
+function signedUserMenu(currentPage) {
+  const current_loc = JSON.parse(localStorage.getItem("persist"));
+  const menuItem = currentPage === "index" ? "Profile" : "Home";
+
+  if (current_loc && current_loc.user) {
+    const user = current_loc.user;
+    const { uid } = user;
+
+    let navLink = "profile?uid=" + uid;
+    //console.log("NAVLINK WITH USER ID => ", navLink);
+    if (menuItem === "Home") {
+      navLink = "index";
+    }
+
+    $("#dropdown-menu").html(
+      `
+    <a class="dropdown-item" href="${navLink}">${menuItem}</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="javascript:void(0)" onclick="logout('${currentPage}')" id="sign-out">Sign out</a>
+    `
+    );
+  }
+
+  console.log("SIGNED USER MENU UPDATER CALLED");
+}
+
+//passport-local login
+// function login(data) {
+//   //show disabled/processing button
+//   disabledBtn("#loginBtn");
+
+//   // let username = $("#emailOrUsername_input").val().trim();
+//   // let password = $("#password_input").val().trim();
+//   // let data = {
+//   //   username,
+//   //   password,
+//   // };
+
+//   //make api request
+//   crudaction(data, "/login", "POST", function (feed) {
+//     console.log("LOGIN FEEDBACK => ", feed);
+//     if (feed) {
+//       //return the initial button
+//       submitBtn(
+//         "#loginBtn",
+//         "validateLoginForm()",
+//         "Click to Sign in",
+//         "Submit"
+//       );
+//     }
+
+//     if (feed.status === 401) {
+//       let message = "Invalid username or password";
+//       errorToast(message);
+//     } else if (feed["success"] === false) {
+//       let message = feed["message"];
+//       errorToast(message);
+//     } else if (feed["success"] === true) {
+//       let message = feed["message"];
+//       successToast(message);
+
+//       persistence("user", feed.user);
+
+//       setTimeout(() => {
+//         gotourl("index"); //redirect the user to index page to perform an action meant for authenticated users
+//       }, 2500);
+//     } else {
+//       let message = "Something went wrong. Try again";
+//       errorToast(message);
+//     }
+//   });
+// }
+
+///////-------------------End authentication
+
+//////----------------------------Social logins strategies
+//google auth trigger
+function googleAuth() {
+  let server_ = $("#server_").val();
+  window.open(`${server_}/google`, "_self");
+}
+
+//github auth trigger
+function githubAuth() {
+  let server_ = $("#server_").val();
+  window.open(`${server_}/github`, "_self");
+}
+
+//facebook auth trigger
+function facebookAuth() {
+  let server_ = $("#server_").val();
+  window.open(`${server_}/facebook`, "_self");
+}
+
+//facebook auth trigger
+function twitterAuth() {
+  let server_ = $("#server_").val();
+  window.open(`${server_}/twitter`, "_self");
+}
+
+//////----------------------------End Social logins strategies
 
 ///////--------------------------------------------End Google Auth functions
 

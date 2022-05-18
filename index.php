@@ -128,9 +128,7 @@ include_once("configs/conn.inc");
                                     </td>
                                 </tr>
                             </table>
-
                         </div>
-
                         <div class="col-lg-3 col-md-3 pt-2 pb-2">
                             <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
                             <span id=edit-code></span>
@@ -244,8 +242,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            console.log("Available Cookies => ", document.cookie)
-            updateHeader("index", "index"); //check for logged in user so as to update the header accordingly 
+            updateHeader("index"); //check for logged in user so as to update the header accordingly 
         })
     </script>
     <script>

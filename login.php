@@ -18,9 +18,6 @@ include_once("configs/conn.inc");
 </head>
 
 <body class="font-opensans">
-<?php
-include_once 'header.php';
-?>
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -32,25 +29,21 @@ include_once 'header.php';
     include_once 'header.php';
     ?>
     <!-- start main body part-->
-    <div class="container-fluid">
+    <div class="container-fluid page-top-margin" id="login-page">
         <div class="row pt-2">
-            <div class="col-md-12">
-                <br/>
-            </div>
-            <div class="col-md-6 offset-md-3 card pb-3 pt-3 mb-3 border border-info">
-                <div class="d-flex justify-content-center">
-
-                </div>
+            <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
-                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;" >
+                <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;">
                     <div class="form-group">
-                        <label for="emailOrUsername_input">*Email or username: </label>
+                        <label for="emailOrUsername_input">*Email/Username: </label>
                         <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
+                        <div class="error" id="usernameErr"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password_input">*Password: </label>
                         <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password">
+                        <div class="error" id="passwordErr"></div>
                     </div>
 
                     <div class="form-group pt-2 pb-2" id="loginBtn">
@@ -62,44 +55,7 @@ include_once 'header.php';
                         <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Register</a></div>
                     </div>
 
-
                     <div class="row pt-1 pb-1">
-                        <div class="col-sm-5">
-                            <hr>
-    <div class="container-fluid page-top-margin" id='login-page'>
-        <div class="row">
-            <div class="col-md-4 offset-md-4 card pb-3 mb-3 border border-info">
-                <div class="d-flex justify-content-center pt-3">
-                    <h3 class="masthead-heading text-uppercase mb-0">
-                        <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
-                    </h3>
-                </div>
-                <h4 class="text-center pb-3 ">Sign in</h4>
-                <div class="col-md-12">
-                    <form class="form_ pl-5 pr-3" method="POST" onsubmit="return false;" style="height:400px; overflow-y: scroll;">
-                        <div class="form-group">
-                            <label for="emailOrUsername_input">*Email or username: </label>
-                            <input type="text" class="form-control" id="emailOrUsername_input" placeholder="Email or username" required>
-                            <div class="error" id="usernameErr"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password_input">*Password: </label>
-                            <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password" required>
-                            <div class="error" id="passwordErr"></div>
-                        </div>
-
-                        <div class="form-group pt-2 pb-2" id="loginBtn">
-                            <!-- <button type="submit" title="Click to Sign in" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
-                        </div>
-
-                        <div class="form-group">
-                            <div>Forgot password?&nbsp;<a class="a-override" href="forgot-password">Reset</a></div>
-                            <div class="pt-1">Don't have account yet?&nbsp;<a class="a-override" href="register">Sign up</a></div>
-                        </div>
-
-
-                        <div class="row pt-1 pb-1">
                             <div class="col-sm-5">
                                 <hr>
                             </div>
@@ -111,29 +67,29 @@ include_once 'header.php';
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="google p-2 text-center" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1 text-start" alt="Google" /> Sign in with Google </div>
+                        <div class="form-group text-center">
+                            <div class="google p-2" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign in with Google </div>
                         </div>
-                        <div class="form-group">
-                            <div class="p-2 github text-center" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
+                        <div class="form-group text-center">
+                            <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
+                        </div>
+<!-- 
+                        <div class="form-group text-center">
+                            <div class="p-2 facebook" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="p-2 facebook text-center" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign in with Facebook</div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="p-2 twitter text-center" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign in with Twitter</div>
-                        </div>
-                    </form>
-                </div>
+                        <div class="form-group text-center">
+                            <div class="p-2 twitter" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign up with Twitter</div>
+                        </div> -->
+                
+                </form>
             </div>
         </div>
-
-        <?php
-        include_once 'footer.php';
-        ?>
     </div>
+
+    <?php
+    include_once 'footer.php';
+    ?>
 
     <!-- jQuery and bootstrtap js -->
     <?php
