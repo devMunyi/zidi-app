@@ -269,7 +269,7 @@ input#search_box {
 /*Common styling*/
 .a-override{
     color: blue !important;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .a-override:hover{

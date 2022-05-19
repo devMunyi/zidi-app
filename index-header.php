@@ -5,7 +5,7 @@
         <!-- Masthead Heading-->
         <div class="row">
             <div class="col-lg-2 d-flex justify-content-center logo-container" onclick="index()">
-                <h3 class="masthead-heading text-uppercase">
+                <h3 class="masthead-heading text-uppercase pl-3">
                     <img src="assets/images/logo.png" height="40px" />
                 </h3>
             </div>

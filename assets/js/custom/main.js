@@ -717,7 +717,7 @@ function load_codesnippetById(codeId) {
         $("#imptype-and-contributor").html(imptypeAndContributor);
 
         $("#edit-code").html(
-          ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+          `|<a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
         );
 
         //Display the code snippet
