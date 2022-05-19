@@ -1,12 +1,12 @@
-<header class="bg-primary text-white fixed-top border-bottom border-info mb-5">
+<header class="bg-primary text-white fixed-top border-bottom border-info mb-5 pt-1 pb-1">
     <div class="d-flex  flex-column">
         <!-- Masthead Avatar Image-->
 
         <!-- Masthead Heading-->
         <div class="row">
-            <div class="col-lg-2 d-flex justify-content-center link" onclick="index()">
+            <div class="col-lg-2 d-flex justify-content-center logo-container" onclick="index()">
                 <h3 class="masthead-heading text-uppercase">
-                    <img src="assets/images/logo.png" height="20px" />
+                    <img src="assets/images/logo.png" height="40px" />
                 </h3>
             </div>
            
@@ -20,13 +20,13 @@
             </div>
             <div class="col-lg-5 pt-2">
                 <ul class="nav nav-pills d-flex justify-content-center" id="myNav">
-                    <li class="link">
+                    <li class="">
                         <a class="nav-link text-dark" href="javascript:void(0)">About</a>
                     </li>
-                    <li class="link">
+                    <li class="">
                         <a class="nav-link text-dark" href="javascript:void(0)">Contribute</a>
                     </li>
-                    <li class="link">
+                    <li class="">
                         <a class="nav-link text-dark" href="javascript:void(0)">Community</a>
                     </li>
                     <li class="dropdown" id="account-0">

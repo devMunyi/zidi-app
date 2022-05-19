@@ -449,9 +449,9 @@ function signedUserMenu(currentPage) {
 
     $("#dropdown-menu").html(
       `
-    <a class="dropdown-item" href="${navLink}">${menuItem}</a>
+    <a class="dropdown-item text-dark" href="${navLink}">${menuItem}</a>
     <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="javascript:void(0)" onclick="logout('${currentPage}')" id="sign-out">Sign out</a>
+    <a class="dropdown-item text-dark" href="javascript:void(0)" onclick="logout('${currentPage}')" id="sign-out">Sign out</a>
     `
     );
   }

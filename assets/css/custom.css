@@ -269,15 +269,21 @@ input#search_box {
 /*Common styling*/
 .a-override{
     color: blue !important;
-    /* font-weight: bold; */
+    font-weight: bold;
 }
 
 .a-override:hover{
-    color: darkblue  !important;
     text-decoration: underline;
 }
 /*End Common styling*/
 
+.logo-container:hover{
+    cursor: pointer;
+}
+
+.text-dark:hover{
+    font-weight: bold !important;
+}
 
 /*Search codesnippet css*/
 #main_content{
