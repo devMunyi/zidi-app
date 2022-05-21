@@ -5,13 +5,13 @@
     <!-- Masthead Heading-->
     <div class="row d-flex justify-content-center align-items-center">
         <div class="logo-container d-flex flex-start" onclick="index()">
-            <h3 class="masthead-heading text-uppercase pl-3">
+            <!-- <h3 class="masthead-heading text-uppercase pl-3">
                 <img src="assets/images/logo.png" height="30px" />
-            </h3>
+            </h3> -->
 
         </div>
-        <!-- <div class="col-lg-1">
-            </div> -->
+        <div class="col-lg-1">
+            </div>
 
         <div class="col-lg-5 pl-5">
             <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control pl-2" placeholder="Search code snippets">
