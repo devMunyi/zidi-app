@@ -59,7 +59,7 @@ include_once("configs/conn.inc");
             </div>
             <div class="input-icon pl-2">
                 <span class="input-icon-addon">
-                    <i class="fe fe-search pl-2 pt-2"></i>
+                    <i class="fe fe-search"></i>
                 </span>
                 <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
             </div>
