@@ -112,12 +112,24 @@ function apiSubfunLoad(callback) {
   let jso = {};
   let status = 1;
   let orderby = "name";
+  let offset = 0;
+  let rpp = 150;
   let dir = "ASC";
-  let query = "?status=" + status + "&orderby=" + orderby + "&dir=" + dir;
+  let query =
+    "?status=" +
+    status +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
 
-  crudaction(jso, "/subFunctionalities" + query, "GET", function (result) {
+  crudaction(jso, "/subfunctionalities" + query, "GET", function (result) {
     callback(result);
-    //console.log(result);
+    console.log("Subf functions => ", result);
   });
 }
 
@@ -481,7 +493,7 @@ function search_codeSnippet() {
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
       if (result.success) {
         let totalSearches = result.search_totals;
-        console.log("SEARCH RESULTS =>", totalSearches);
+        //console.log("SEARCH RESULTS =>", totalSearches);
         let data = result["data"];
         if (totalSearches > 0) {
           let tableSearch = `<table class='table table-dark childClass stack-top table-striped table-condensed'>`;
@@ -497,13 +509,19 @@ function search_codeSnippet() {
         } else {
           $("#code_results").slideDown("fast");
           $("#code_results").html(
-            `<div class="text-dark text-center childClass stack-top pb-0 mb-0 card">No results</div>`
+            `<div class="text-center childClass stack-top card">
+            <span class="text-dark">*</span>
+            <br/>
+          </div>`
           );
         }
       } else {
         $("#code_results").slideDown("fast");
         $("#code_results").html(
-          `<div class="text-dark text-center childClass stack-top pb-0 mb-0 card">No results</div>`
+          `<div class="text-center childClass stack-top card">
+            <span class="text-dark">*</span>
+            <br/>
+          </div>`
         );
       }
     });
