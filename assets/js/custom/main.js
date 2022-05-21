@@ -86,7 +86,7 @@ function functions_load() {
                 fun += `<li class="subfunc_">
                 <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
                 onclick="subfun('#fun${function_id}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
-                <span data-hover="${subfunction_name}">&nbsp;${subfunction_name}</span>
+                <span data-hover="${subfunction_name}">${subfunction_name}</span>
                 </a>
                 </li>`;
               }

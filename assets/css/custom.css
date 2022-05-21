@@ -439,3 +439,10 @@ div#codeimp-title {
  .search-dropdown-noresults{
     color: black;
  }
+
+
+ .metismenu ul a {
+    padding: 0 15px 0 20px !important;
+    position: relative;
+    height: auto !important;
+}
