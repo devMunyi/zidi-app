@@ -33,8 +33,8 @@
             <li class="dropdown" id="account-0">
                 <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
                 <div class="dropdown-menu mr-3">
-                    <a class="dropdown-item" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
-                    <a class="dropdown-item" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+                    <a class="dropdown-item text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+                    <a class="dropdown-item text-dark" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
                 </div>
             </li>
             <li class="dropdown" id="account-1" style="outline: none;">

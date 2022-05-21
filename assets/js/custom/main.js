@@ -497,13 +497,13 @@ function search_codeSnippet() {
         } else {
           $("#code_results").slideDown("fast");
           $("#code_results").html(
-            `<div class="text-dark text-center pb-0 mb-0 card">No results</div>`
+            `<div class="text-dark text-center childClass stack-top pb-0 mb-0 card">No results</div>`
           );
         }
       } else {
         $("#code_results").slideDown("fast");
         $("#code_results").html(
-          `<div class="text-dark text-center pb-0 mb-0 card">No results</div>`
+          `<div class="text-dark text-center childClass stack-top pb-0 mb-0 card">No results</div>`
         );
       }
     });
