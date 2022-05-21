@@ -509,18 +509,16 @@ function search_codeSnippet() {
         } else {
           $("#code_results").slideDown("fast");
           $("#code_results").html(
-            `<div class="text-center childClass stack-top card">
-            <span class="text-dark">*</span>
-            <br/>
+            `<div class="childClass stack-top card">
+            <span class="text-center search-dropdown-noresults">No results</span>
           </div>`
           );
         }
       } else {
         $("#code_results").slideDown("fast");
         $("#code_results").html(
-          `<div class="text-center childClass stack-top card">
-            <span class="text-dark">*</span>
-            <br/>
+          `<div class="childClass stack-top card">
+          <span class="text-center search-dropdown-noresults">No results</span>
           </div>`
         );
       }

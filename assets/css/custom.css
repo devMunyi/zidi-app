@@ -435,3 +435,7 @@ div#codeimp-title {
     margin-right: 30px !important;
  }
 
+
+ .search-dropdown-noresults{
+    color: black;
+ }
