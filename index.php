@@ -36,7 +36,7 @@ include_once("configs/conn.inc");
     <!-- Start main html -->
     <div id="main_content">
         <?php
-        include_once 'index-header.php';
+            include_once 'index-header.php';
         ?>
         <!-- Small icon top menu -->
         <!-- <div id="header_top" style="display: none;" class="header_top">
@@ -52,12 +52,12 @@ include_once("configs/conn.inc");
 
         <!-- start Main menu -->
         <div id="left-sidebar" class="sidebar" style="width: 270px !important; padding-left: 50px">
-            <div class="logo_ pb-4">
-                <!-- <h3 class="masthead-heading text-uppercase mb-0">
-                    <a href="index"><img src="assets/images/logo.png" height="40px" /></a>
-                </h3> -->
+            <div class="logo_">
+                <h3 class="masthead-heading text-uppercase mb-0">
+                    <a href="index"><img src="assets/images/logo.png" height="35px" /></a>
+                </h3>
             </div>
-            <div class="input-icon pl-2 pt-2">
+            <div class="input-icon pl-2">
                 <span class="input-icon-addon">
                     <i class="fe fe-search pl-2 pt-2"></i>
                 </span>
@@ -102,12 +102,12 @@ include_once("configs/conn.inc");
         </div>
 
         <!-- start main body part-->
-        <div class="page pt-5">
+        <div class="page">
             <!-- start body header -->
             <div class="section-body" style="padding-left: 0px;">
                 <div class="container-fluid" style="padding-left: 0px;">
                     <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-lg-12 col-md-12 pt-1 " id="codeimp-title">
+                        <div class="col-lg-12 col-md-12" id="codeimp-title">
                             <!-- <div class="row" id="codeimp-title">
                                     </div> -->
                         </div>

@@ -33,10 +33,12 @@ select.fancy-select {
 #header_top{
     top: 60px;
 }
+
 .masthead {
-    /*margin-bottom: 5px;*/
+    margin-bottom: 5px;
     padding: 6px 10px;
 }
+
 .card.transcard {
     background: transparent;
     border-right: 2px solid #dfdfdf;

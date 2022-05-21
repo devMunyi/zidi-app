@@ -31,7 +31,7 @@ include_once("configs/conn.inc");
     ?>
 
     <!-- start main body part-->
-    <div class="container-fluid page-top-margin" id="register-page">
+    <div class="container-fluid pt-2" id="register-page">
         <div class="row">
             <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
@@ -112,7 +112,7 @@ include_once("configs/conn.inc");
                         <div class="form-group text-center">
                             <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign up with Github </div>
                         </div>
-<!-- 
+                        <!-- 
                         <div class="form-group text-center">
                             <div class="p-2 facebook" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
                         </div>
@@ -124,9 +124,11 @@ include_once("configs/conn.inc");
             </div>
         </div>
     </div>
+
     <?php
-    include_once 'footer.php';
-    ?>
+        include_once 'footer.php';
+        ?>
+
     <!-- jQuery and bootstrtap js -->
     <?php
     include_once('scripts.php');
@@ -141,5 +143,6 @@ include_once("configs/conn.inc");
         });
     </script>
 </body>
+
 </html>
 <!-- //https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=select_account&include_granted_scopes=true&response_type=code&redirect_uri=https%3A%2F%2Fwww.loom.com%2Fapi%2Fauth%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&client_id=443240113960-6mj529r3r24gpp4c9u57n9ndrg01i911.apps.googleusercontent.com&flowName=GeneralOAuthFlow -->

@@ -29,8 +29,8 @@ include_once("configs/conn.inc");
     include_once 'header.php';
     ?>
     <!-- start main body part-->
-    <div class="container-fluid page-top-margin" id="login-page">
-        <div class="row pt-2">
+    <div class="container-fluid pt-2" id="login-page">
+        <div class="row">
             <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
                 <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;">
@@ -56,24 +56,24 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="row pt-1 pb-1">
-                            <div class="col-sm-5">
-                                <hr>
-                            </div>
-                            <div class="col-sm-2 text-center">
-                                OR
-                            </div>
-                            <div class="col-sm-5">
-                                <hr>
-                            </div>
+                        <div class="col-sm-5">
+                            <hr>
                         </div>
+                        <div class="col-sm-2 text-center">
+                            OR
+                        </div>
+                        <div class="col-sm-5">
+                            <hr>
+                        </div>
+                    </div>
 
-                        <div class="form-group text-center">
-                            <div class="google p-2" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign in with Google </div>
-                        </div>
-                        <div class="form-group text-center">
-                            <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
-                        </div>
-<!-- 
+                    <div class="form-group text-center">
+                        <div class="google p-2" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign in with Google </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
+                    </div>
+                    <!-- 
                         <div class="form-group text-center">
                             <div class="p-2 facebook" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
                         </div>
@@ -86,9 +86,7 @@ include_once("configs/conn.inc");
         </div>
     </div>
 
-    <?php
-    include_once 'footer.php';
-    ?>
+
 
     <!-- jQuery and bootstrtap js -->
     <?php

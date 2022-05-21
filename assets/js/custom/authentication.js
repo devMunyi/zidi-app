@@ -271,7 +271,7 @@ function login(data) {
         errorToast(feed.message);
       } else if ((feed.success = true)) {
         //store user info in local storage for reference
-        console.log("USER => ", feed.user);
+        //console.log("USER => ", feed.user);
         persistence("user", feed.user);
         persistence("token", feed.token);
 

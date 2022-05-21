@@ -48,9 +48,9 @@ if ($code_id > 0) {
         <div class="row">
             <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">
                 <div class="d-flex justify-content-center">
-                    <!-- <h3 class="masthead-heading text-uppercase mb-0">
-                        <a href="index"><img src="assets/images/logo.png" height="40px" alt="ZIDI" /></a>
-                    </h3> -->
+                    <h3 class="masthead-heading text-uppercase mb-0">
+                        <a href="index"><img src="assets/images/logo.png" height="35px" alt="ZIDI" /></a>
+                    </h3>
                 </div>
                 <h4 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
                 <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
