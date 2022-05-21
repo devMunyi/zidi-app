@@ -84,9 +84,14 @@ include_once("configs/conn.inc");
                 </form>
             </div>
         </div>
+
+        <?php
+        include_once 'footer.php';
+        ?>
+
     </div>
 
-
+    
 
     <!-- jQuery and bootstrtap js -->
     <?php
