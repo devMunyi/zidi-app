@@ -110,8 +110,6 @@ include_once("configs/conn.inc");
             const url = new URL(url_string);
             const success = url.searchParams.get("success");
             const provider = url.searchParams.get("provider");
-            // console.log("SUCCESS VALUE => ", success)
-            // console.log(typeof success)
             if(success === 'true' || success === 'false' && provider === "Google"){
                 //console.log("GOOGLE SIGN IN TRUE")
                 googleSignin()
