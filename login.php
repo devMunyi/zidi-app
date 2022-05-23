@@ -29,7 +29,7 @@ include_once("configs/conn.inc");
     include_once 'header.php';
     ?>
     <!-- start main body part-->
-    <div class="container-fluid pt-2" id="login-page">
+    <div class="container-fluid pt-4" id="login-page">
         <div class="row">
             <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
@@ -68,18 +68,18 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="form-group text-center">
-                        <div class="google p-2" onclick="googleAuth()"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign in with Google </div>
+                        <div class="google p-2" onclick="googleOAuth('signin')"> <img src="assets/images/google.png" class="pr-1" alt="Google" /> Sign in with Google </div>
                     </div>
                     <div class="form-group text-center">
-                        <div class="p-2 github" onclick="githubAuth()"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
+                        <div class="p-2 github" onclick="githubOAuth('signin')"><img src="assets/images/github.png" alt="Github" /> Sign in with Github </div>
                     </div>
                     <!-- 
                         <div class="form-group text-center">
-                            <div class="p-2 facebook" onclick="facebookAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
+                            <div class="p-2 facebook" onclick="facebookOAuth()"><img src="assets/images/facebook.png" alt="Facebook" /> Sign up with Facebook</div>
                         </div>
 
                         <div class="form-group text-center">
-                            <div class="p-2 twitter" onclick="twitterAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign up with Twitter</div>
+                            <div class="p-2 twitter" onclick="twitterOAuth()"><img src="assets/images/twitter.png" alt="Twitter" /> Sign up with Twitter</div>
                         </div> -->
                 </form>
             </div>
@@ -91,7 +91,7 @@ include_once("configs/conn.inc");
 
     </div>
 
-    
+
 
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -106,6 +106,20 @@ include_once("configs/conn.inc");
             //call submitBtn() and parse login() as a parameter and on hover hint title
             submitBtn('#loginBtn', 'validateLoginForm()', "Click to Sign in", "Submit");
 
+            const url_string = window.location.href;
+            const url = new URL(url_string);
+            const success = url.searchParams.get("success");
+            const provider = url.searchParams.get("provider");
+            // console.log("SUCCESS VALUE => ", success)
+            // console.log(typeof success)
+            if(success === 'true' || success === 'false' && provider === "Google"){
+                //console.log("GOOGLE SIGN IN TRUE")
+                googleSignin()
+            }
+
+            if(success === 'true' || success === 'false' && provider === "Github"){
+                githubSignin()
+            }
         });
     </script>
 

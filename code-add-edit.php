@@ -8,6 +8,7 @@ if ($code_id > 0) {
     $code_id = $_GET['cid'];
     $code_arr = fetchonerow('pr_code_snippets', "uid='" . $code_id . "'", "uid, title, row_code, file_extension, instructions, func_id, subfunc_id, language_id, framework_id, implementation_id");
 
+
     $act = "<span class='text-orange'><i class='fa fa-edit'></i>Edit</span>";
     // echo "Service <small class='xsm'>Edit</small> <span class='text-green text-bold sm'>address</span> <a title='View details' class='font-16' href=\"services?service=$code_id\"><i class='fa fa-arrow-circle-up'></i></a>";
 } else {
@@ -44,20 +45,20 @@ if ($code_id > 0) {
     ?>
 
     <!-- Start main html -->
-    <div class="container-fluid mb-5 page-top-margin" id="addeditcode-page">
+    <div class="container-fluid mb-5 pt-4" id="addeditcode-page">
         <div class="row">
             <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">
-                <div class="d-flex justify-content-center">
+                <!-- <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="35px" alt="ZIDI" /></a>
                     </h3>
-                </div>
+                </div> -->
                 <h4 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
                 <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                     <div class="form-row">
                         <div class="form-group col-sm-3">
                             <label for="func_sel">Function:</label>
-                            <select class="form-control" name="func_sel" id="func_sel" required>
+                            <select class="form-control" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required >
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
@@ -81,8 +82,10 @@ if ($code_id > 0) {
                             <label for="subfunc_sel">Subfunction:</label>
                             <select class="form-control" name="subfunc_sel" id="subfunc_sel" required>
                                 <option value="">--Select One</option>
+                                <option value="0">No subfunction</option>
                                 <?php
                                 $recs = fetchtable('pr_subfunctions', "status > 0", "name", "asc", "300", "uid ,name");
+
                                 while ($r = mysqli_fetch_array($recs)) {
                                     $uid = $r['uid'];
                                     $name = $r['name'];
@@ -101,7 +104,7 @@ if ($code_id > 0) {
 
                         <div class="form-group col-sm-3">
                             <label for="language_sel">Language:</label>
-                            <select class="form-control" name="language_sel" id="language_sel" required>
+                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");

@@ -27,6 +27,7 @@ function functions_load() {
 
   crudaction(jso, "/functionalities" + query, "GET", function (result) {
     if (result.all_totals > 0) {
+      //persistence("allFuns", result);
       let data = result["data"];
       let data_length = data.length;
 
@@ -113,7 +114,7 @@ function apiSubfunLoad(callback) {
   let status = 1;
   let orderby = "name";
   let offset = 0;
-  let rpp = 150;
+  let rpp = 500;
   let dir = "ASC";
   let query =
     "?status=" +
@@ -129,8 +130,45 @@ function apiSubfunLoad(callback) {
 
   crudaction(jso, "/subfunctionalities" + query, "GET", function (result) {
     callback(result);
-    console.log("Subf functions => ", result);
+    //console.log("Subf functions => ", result);
+    persistence("allSubfuns", result);
   });
+}
+
+function filterSubFuncByFunc() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+
+  if (current_loc && current_loc.allSubfuns) {
+    let subfuns = current_loc.allSubfuns.data;
+
+    let sel_fun = parseInt($("#func_sel").val().trim());
+    let subfun = `<option value="">--Select One</option><option value="0">No subfunction</option>`;
+
+    if (sel_fun >= 0) {
+      let subfunsByFunc = [];
+      for (let i = 0; i < subfuns.length; i++) {
+        // console.log("subfuns available");
+        if (sel_fun == subfuns[i].function_id) {
+          subfunsByFunc.push(subfuns[i]);
+        }
+      }
+
+      if (subfunsByFunc.length > 0) {
+        // console.log("subfuns available2");
+        for (let sf = 0; sf < subfunsByFunc.length; sf++) {
+          subfun += ` <option value="${subfunsByFunc[sf].uid}">${subfunsByFunc[sf].name}</option>`;
+        }
+        $("#subfunc_sel").html(subfun);
+      } else {
+        $("#subfunc_sel").html(subfun);
+      }
+    } else {
+      for (let ii = 0; ii < subfuns.length; ii++) {
+        subfun += `<option value="${subfuns[ii].uid}">${subfuns[ii].name}</option>`;
+      }
+      $("#subfunc_sel").html(subfun);
+    }
+  }
 }
 
 /////------End subFunctionalities
@@ -144,7 +182,7 @@ function load_languages() {
   let dir = "ASC";
   let orderby = "name";
   let offset = 0;
-  let rpp = 40;
+  let rpp = 100;
 
   let jso = {};
 
@@ -183,7 +221,7 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
         <a class="lang-item ${active_language}" href="javascript:void(0)"
-        onclick="load_frameworks(${uid}); persistence_remove('framework'); persistence('language', ${uid});">
+        onclick="getFramsByLang(${uid}); persistence_remove('framework'); persistence('language', ${uid});">
         <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
@@ -197,7 +235,69 @@ function load_languages() {
 //////---------------------End Languages
 
 //////------Begin framework
-function load_frameworks(language_id_) {
+function filterFramsByLang() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+
+  if (current_loc && current_loc.allFrams) {
+    let frams = current_loc.allFrams.data;
+
+    let sel_lang = parseInt($("#language_sel").val().trim());
+    let fram = `<option value="">--Select One</option><option value="0">No Framework</option>`;
+
+    if (sel_lang >= 0) {
+      let framsByLang = []; //initialize available frameworks for a particular language as empty array
+      for (let i = 0; i < frams.length; i++) {
+        // console.log("frams available");
+        if (sel_lang == frams[i].language_id) {
+          framsByLang.push(frams[i]);
+        }
+      }
+
+      if (framsByLang.length > 0) {
+        // console.log("subfuns available2");
+        for (let frm = 0; frm < framsByLang.length; frm++) {
+          fram += `<option value="${framsByLang[frm].uid}">${framsByLang[frm].name}</option>`;
+        }
+        $("#framework_sel").html(fram);
+      } else {
+        $("#framework_sel").html(fram);
+      }
+    } else {
+      for (let ii = 0; ii < frams.length; ii++) {
+        fram += `<option value="${frams[ii].uid}">${frams[ii].name}</option>`;
+      }
+      $("#framework_sel").html(fram);
+    }
+  }
+}
+
+function getAllFrams() {
+  let offset = 0;
+  let rpp = 500;
+  let where_ = "f.status = 1";
+  let orderby = "f.name";
+  let dir = "ASC";
+
+  let query =
+    "?where_=" +
+    where_ +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
+
+  crudaction({}, "/frameworks" + query, "GET", function (result) {
+    if (result.all_totals > 0) {
+      persistence("allFrams", result);
+    }
+  });
+}
+
+function getFramsByLang(language_id_) {
   if (language_id_) {
     let offset = 0;
     let rpp = 100;

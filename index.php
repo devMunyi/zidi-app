@@ -258,6 +258,7 @@ include_once("configs/conn.inc");
             functions_load() //load all functions
             load_languages(); //Load all the languages
             loadCodesnippetsLink(); //load code links
+            getAllFrams(); //persist all frameworks in local storage
         });
     </script>
     <script>

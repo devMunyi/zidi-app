@@ -286,6 +286,118 @@ function login(data) {
   });
 }
 
+function googleSignin() {
+  const url_string = window.location.href;
+  const url = new URL(url_string);
+
+  const success = url.searchParams.get("success");
+
+  if (success === "true") {
+    let uid = url.searchParams.get("uid");
+    const username = url.searchParams.get("username");
+    const email = url.searchParams.get("email");
+    const fullname = url.searchParams.get("fullname");
+    const provider = url.searchParams.get("provider");
+    const photo = url.searchParams.get("photo");
+    const token = url.searchParams.get("tkn");
+
+    if (uid) {
+      uid = parseInt(uid);
+    }
+
+    let user = { uid, username, email, fullname, provider, photo };
+
+    persistence("user", user);
+    persistence("token", "Bearer " + token);
+
+    successToast("Login success");
+
+    setTimeout(() => {
+      gotourl("index");
+    }, 2550);
+  } else if (success === "false") {
+    const message = url.searchParams.get("message");
+    errorToast(message);
+  } else {
+    //do nothing
+  }
+}
+
+function googleSignup() {
+  const url_string = window.location.href;
+  const url = new URL(url_string);
+
+  const success = url.searchParams.get("success");
+  if (success === "true") {
+    const message = url.searchParams.get("message");
+    successToast(message); //toast sign up success message
+    setTimeout(() => {
+      gotourl("login");
+    }, 2550);
+  } else if (success === "false") {
+    const message = url.searchParams.get("message");
+    errorToast(message);
+  } else {
+    //do nothing
+  }
+}
+
+function githubSignin() {
+  const url_string = window.location.href;
+  const url = new URL(url_string);
+
+  const success = url.searchParams.get("success");
+
+  if (success === "true") {
+    let uid = url.searchParams.get("uid");
+    const username = url.searchParams.get("username");
+    const email = url.searchParams.get("email");
+    const fullname = url.searchParams.get("fullname");
+    const provider = url.searchParams.get("provider");
+    const photo = url.searchParams.get("photo");
+    const token = url.searchParams.get("tkn");
+
+    if (uid) {
+      uid = parseInt(uid);
+    }
+
+    let user = { uid, username, email, fullname, provider, photo };
+
+    persistence("user", user);
+    persistence("token", "Bearer " + token);
+
+    successToast("Login success");
+
+    setTimeout(() => {
+      gotourl("index");
+    }, 2550);
+  } else if (success === "false") {
+    const message = url.searchParams.get("message");
+    errorToast(message);
+  } else {
+    //do nothing
+  }
+}
+
+function githubSignup() {
+  const url_string = window.location.href;
+  const url = new URL(url_string);
+
+  const success = url.searchParams.get("success");
+  if (success === "true") {
+    const message = url.searchParams.get("message");
+    successToast(message); //toast sign up success message
+    setTimeout(() => {
+      gotourl("login");
+    }, 2550);
+  } else if (success === "false") {
+    const message = url.searchParams.get("message");
+    errorToast(message);
+  } else {
+    //do nothing
+  }
+}
+
 //verify logged-in user by sending cookie token/session id to server side
 function updateHeader(pageId) {
   //keep account/user profile navigation hidden by default
@@ -300,7 +412,7 @@ function updateHeader(pageId) {
         let current_loc = JSON.parse(localStorage.getItem("persist"));
         let user = current_loc.user;
 
-        console.log("SIGNED USER FOUND");
+        //console.log("SIGNED USER FOUND");
         $("#account-0").hide();
         $("#account-1").show();
 
@@ -456,7 +568,7 @@ function signedUserMenu(currentPage) {
     );
   }
 
-  console.log("SIGNED USER MENU UPDATER CALLED");
+  //console.log("SIGNED USER MENU UPDATER CALLED");
 }
 
 //passport-local login
@@ -510,25 +622,30 @@ function signedUserMenu(currentPage) {
 
 //////----------------------------Social logins strategies
 //google auth trigger
-function googleAuth() {
+// function googleAuth() {
+//   let server_ = $("#server_").val();
+//   window.open(`${server_}/google`, "_self");
+// }
+
+function googleOAuth(endpoint) {
   let server_ = $("#server_").val();
-  window.open(`${server_}/google`, "_self");
+  window.open(`${server_}/google/${endpoint}`, "_self");
 }
 
 //github auth trigger
-function githubAuth() {
+function githubOAuth(endpoint) {
   let server_ = $("#server_").val();
-  window.open(`${server_}/github`, "_self");
+  window.open(`${server_}/github/${endpoint}`, "_self");
 }
 
 //facebook auth trigger
-function facebookAuth() {
+function facebookOAuth() {
   let server_ = $("#server_").val();
   window.open(`${server_}/facebook`, "_self");
 }
 
 //facebook auth trigger
-function twitterAuth() {
+function twitterOAuth() {
   let server_ = $("#server_").val();
   window.open(`${server_}/twitter`, "_self");
 }
