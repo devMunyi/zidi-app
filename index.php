@@ -36,7 +36,7 @@ include_once("configs/conn.inc");
     <!-- Start main html -->
     <div id="main_content">
         <?php
-            include_once 'index-header.php';
+        include_once 'index-header.php';
         ?>
         <!-- Small icon top menu -->
         <!-- <div id="header_top" style="display: none;" class="header_top">
@@ -115,15 +115,19 @@ include_once("configs/conn.inc");
                         <div class="col-lg-9 col-md-9">
                             <table>
                                 <tr>
-                                    <td style="width: 300px;" >
+                                    <td style="width: 300px;">
                                         <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                        <div  id="imptype-and-contributor"> </div>
+                                        <div id="imptype-and-contributor"> </div>
                                     </td>
                                     <!-- <td class="text-center" id="language-dropdown">
 
                                     </td> -->
 
                                     <td class="text-center" id="framework-dropdown">
+
+                                    </td>
+
+                                    <td class="text-center" id="implementation-dropdown">
 
                                     </td>
                                 </tr>
@@ -136,45 +140,45 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
                 <div class="row" style="min-height: 400px;">
-                            <div class="col-lg-2 col-md-2 pr-0">
-                                <div class="scrollk">
-                                    <div class="transcard">
-                                        <div class="card-header pl-0 pt-3 pb-1 pr-0">
-                                            <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
-                                        </div>
-                                        <div class="card-body p-0">
-                                            <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
-                                                <li class="font-weight-normal font-14 font-italic">Loading...</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                    <div class="col-lg-2 col-md-2 pr-0">
+                        <div class="scrollk">
+                            <div class="transcard">
+                                <div class="card-header pl-0 pt-3 pb-1 pr-0">
+                                    <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
+                                        <li class="font-weight-normal font-14 font-italic">Loading...</li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-7 col-md-7 pl-0 pr-0">
-                                <div class="card transcard ">
-                                    <div class="card-header pb-2 pt-2">
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td>
-                                                    <h3 title="code" class="card-title"><i class="fe fe-code"></i>
-                                                        <!--Code Snippet-->
-                                                    </h3>
-                                                </td>
-                                                <td>
-                                                    <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
-                                                        <!--Copy-->
-                                                    </button>
-                                                    <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
-                                                        <!--Download-->
-                                                    </button>
-                                                    <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
-                                                        <!--Share-->
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div class="card-options">
-                                            <!--
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 pl-0 pr-0">
+                        <div class="card transcard ">
+                            <div class="card-header pb-2 pt-2">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td>
+                                            <h3 title="code" class="card-title"><i class="fe fe-code"></i>
+                                                <!--Code Snippet-->
+                                            </h3>
+                                        </td>
+                                        <td>
+                                            <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
+                                                <!--Copy-->
+                                            </button>
+                                            <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
+                                                <!--Download-->
+                                            </button>
+                                            <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
+                                                <!--Share-->
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="card-options">
+                                    <!--
                                     <input type="checkbox" id="checkbox" class="checkbox">
                                     <label for="checkbox" class="label">
                                         <i class="fas fa-moon"></i>
@@ -184,31 +188,31 @@ include_once("configs/conn.inc");
                                         </div>
                                     </label>
                                     `-->
-                                            <label class="custom-switch m-0">
-                                                <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
-                                                <span class="custom-switch-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div id="editor" class="card-body dark-screen">
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex justify-content-between">
-                                            <table style="width: 70%;">
-                                                <tr>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <label class="custom-switch m-0">
+                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
+                                        <span class="custom-switch-indicator"></span>
+                                    </label>
                                 </div>
+                            </div>
+                            <div id="editor" class="card-body dark-screen">
 
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <table style="width: 70%;">
+                                        <tr>
+                                            <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
+                                            <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
+                                            <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
 
-                           <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
+                    </div>
+
+                    <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
                         <div class="card transcard">
                             <div class="card-header pt-3">
                                 <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
@@ -265,7 +269,7 @@ include_once("configs/conn.inc");
         //////--------Custom scroll
         (function($) {
             $(window).on("load", function() {
-                $('#logo_home').css('display','none');
+                $('#logo_home').css('display', 'none');
                 $(".scrolli").mCustomScrollbar({
                     theme: "inset-2-dark",
                     autoHideScrollbar: true
@@ -350,6 +354,18 @@ include_once("configs/conn.inc");
             $('#available-solns').on('click', 'a', function() {
                 $('#available-solns a').removeClass('active-two');
                 $(this).addClass('active-two');
+            });
+
+            // Dropdown toggle fuction
+            $('.outer_list').click(function(e) {
+                //console.log("outer list was clicked");
+                $(this).next('.inner_list').slideToggle("fast");
+            });
+            //Hide dropdown on page click
+            $(document).on('click', function(e) {
+                if (!$(".outer_list").is(e.target) && !$(".outer_list").has(e.target).length) {
+                    $('.inner_list').slideUp("fast");
+                }
             });
         });
     </script>
