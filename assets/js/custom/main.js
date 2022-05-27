@@ -375,7 +375,8 @@ function codesnippetValidate() {
   let subfunc_id = $("#subfunc_sel").val();
   let language_id = $("#language_sel").val();
   let framework_id = $("#framework_sel").val();
-  let implementation_id = $("#impl_sel").val();
+  let lang_impl_type_id = $("#sel_lang_impl").val();
+  let user_impl_type_id = $("#sel_user_impl").val();
   let title = $("#codeimpl_title").val().trim();
   let row_code = $("#code_input").val().trim();
   let file_extension = $("#file_extension").val().trim();
@@ -396,7 +397,8 @@ function codesnippetValidate() {
     (subfunErr =
     langErr =
     framErr =
-    implErr =
+    langImplErr =
+    userImplErr =
     titleErr =
     codeErr =
     fileExtErr =
@@ -435,12 +437,20 @@ function codesnippetValidate() {
     framErr = false;
   }
 
-  // Validate implementation
-  if (implementation_id == "") {
-    printError("implErr", "Please select implementation");
+  // Validate language implementation
+  if (lang_impl_type_id == "") {
+    printError("langImplErr", "Please select language implementation type");
   } else {
-    printError("implErr", "");
-    implErr = false;
+    printError("langImplErr", "");
+    langImplErr = false;
+  }
+
+  // Validate language implementation
+  if (user_impl_type_id == "") {
+    printError("userImplErr", "Please select your implementation type");
+  } else {
+    printError("userImplErr", "");
+    userImplErr = false;
   }
 
   // Validate title
@@ -486,7 +496,8 @@ function codesnippetValidate() {
       subfunErr ||
       langErr ||
       framErr ||
-      implErr ||
+      langImplErr ||
+      userImplErr ||
       titleErr ||
       codeErr ||
       fileExtErr) == true
@@ -499,7 +510,8 @@ function codesnippetValidate() {
       subfunc_id,
       language_id,
       framework_id,
-      implementation_id,
+      lang_impl_type_id,
+      user_impl_type_id,
       title,
       row_code,
       file_extension,
@@ -715,7 +727,7 @@ function loadSearchSelCode() {
 
           let firstChar;
           //check for previously selected code implementation
-          let impl_title = data.impl_name;
+          let impl_title = data.language_implementation_type;
 
           firstChar = impl_title[0];
 
@@ -962,10 +974,9 @@ function loadCodesnippetsLink() {
     console.log(feed);
     let total_ = feed.all_totals;
     if (total_ > 0) {
-      let impl_names = feed["impl_names"];
       let data = feed["data"];
 
-      let impl_title;
+      let language_implementation_type;
       let firstChar;
       let language;
       let framework;
@@ -975,7 +986,7 @@ function loadCodesnippetsLink() {
       let active_code_link;
       let solns = "";
       for (let i = 0; i < data.length; i++) {
-        impl_title = data[i].implementation;
+        language_implementation_type = data[i].language_implementation_type;
         language = data[i].language;
         framework = data[i].framework;
 
@@ -985,12 +996,12 @@ function loadCodesnippetsLink() {
           framework = ` with ${framework} framework`;
         }
 
-        firstChar = impl_title[0];
+        firstChar = language_implementation_type[0];
 
         if (firstChar == "D") {
-          impl_title = "";
+          language_implementation_type = "";
         } else {
-          impl_title = ` ${impl_title}`;
+          language_implementation_type = ` ${language_implementation_type}`;
         }
 
         if (current_loc && current_loc.codeId > 0) {
@@ -1004,7 +1015,7 @@ function loadCodesnippetsLink() {
 
         solns += `<a href="javascript:void(0)"  onclick="load_codesnippetById('${data[i].uid}')" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-        ${data[i].title} - (<i>${language} ${impl_title} ${framework}</i>) </a>`;
+        ${data[i].title} - (<i>${language} ${language_implementation_type} ${framework}</i>) </a>`;
       }
 
       $("#available-solns").html(solns);

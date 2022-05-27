@@ -6,7 +6,7 @@ include_once("configs/conn.inc");
 $code_id = $_GET['cid'];
 if ($code_id > 0) {
     $code_id = $_GET['cid'];
-    $code_arr = fetchonerow('pr_code_snippets', "uid='" . $code_id . "'", "uid, title, row_code, file_extension, instructions, func_id, subfunc_id, language_id, framework_id, implementation_id");
+    $code_arr = fetchonerow('pr_code_snippets', "uid='" . $code_id . "'", "uid, title, row_code, file_extension, instructions, func_id, subfunc_id, language_id, framework_id, lang_impl_type_id, user_impl_type_id");
 
 
     $act = "<span class='text-orange'><i class='fa fa-edit'></i>Edit</span>";
@@ -57,8 +57,8 @@ if ($code_id > 0) {
                 <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                     <div class="form-row">
                         <div class="form-group col-sm-3">
-                            <label for="func_sel">Function:</label>
-                            <select class="form-control" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required >
+                            <label for="func_sel">*Function:</label>
+                            <select class="form-control" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
@@ -79,7 +79,7 @@ if ($code_id > 0) {
                             <div class="error" id="funErr"></div>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="subfunc_sel">Subfunction:</label>
+                            <label for="subfunc_sel">*Subfunction:</label>
                             <select class="form-control" name="subfunc_sel" id="subfunc_sel" required>
                                 <option value="">--Select One</option>
                                 <option value="0">No subfunction</option>
@@ -103,7 +103,7 @@ if ($code_id > 0) {
                         </div>
 
                         <div class="form-group col-sm-3">
-                            <label for="language_sel">Language:</label>
+                            <label for="language_sel">*Language:</label>
                             <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang()" required>
                                 <option value="">--Select One</option>
                                 <?php
@@ -126,7 +126,7 @@ if ($code_id > 0) {
                         </div>
 
                         <div class="form-group col-sm-3">
-                            <label for="framework_sel">Language Framework:</label>
+                            <label for="framework_sel">*Language Framework:</label>
                             <select class="form-control" name="framework_sel" id="framework_sel" required>
                                 <option value="">--Select One</option>
                                 <option value="0"> No framework</option>
@@ -150,17 +150,17 @@ if ($code_id > 0) {
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="impl_sel">Implementation Type:</label>
-                            <select class="form-control" name="impl_sel" id="impl_sel" required>
+                        <div class="form-group col-md-6">
+                            <label for="impl_sel">*Language Implementation Type:</label>
+                            <select class="form-control" name="sel_lang_impl" id="sel_lang_impl" required>
                                 <option value="">--Select One</option>
                                 <?php
-                                $recs = fetchtable('pr_implementations', "status > 0", "title", "asc", "25", "uid ,title");
+                                $recs = fetchtable('pr_language_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
                                 while ($r = mysqli_fetch_array($recs)) {
                                     $uid = $r['uid'];
                                     $title = $r['title'];
 
-                                    if ($uid == $code_arr["implementation_id"]) {
+                                    if ($uid == $code_arr["lang_impl_type_id"]) {
                                         $selected = 'SELECTED';
                                     } else {
                                         $selected = '';
@@ -170,21 +170,46 @@ if ($code_id > 0) {
                                 }
                                 ?>
                             </select>
-                            <div class="error" id="implErr"></div>
+                            <div class="error" id="langImplErr"></div>
                         </div>
-                        <div class="form-group col-md-8">
-                            <label for="codeimpl_title">Write User Friendly Code Title:</label>
-                            <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
-                            <div class="error" id="titleErr"></div>
+                        <div class="form-group col-md-6">
+                            <label for="impl_sel">*Your Implementation Type:</label>
+                            <select class="form-control" name="sel_user_impl" id="sel_user_impl" required>
+                                <option value="">--Select One</option>
+                                <?php
+                                $recs = fetchtable('pr_user_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
+                                while ($r = mysqli_fetch_array($recs)) {
+                                    $uid = $r['uid'];
+                                    $title = $r['title'];
+
+                                    if ($uid == $code_arr["user_impl_type_id"]) {
+                                        $selected = 'SELECTED';
+                                    } else {
+                                        $selected = '';
+                                    }
+
+                                    echo "<option $selected value=\"$uid\">$title</option>";
+                                }
+                                ?>
+                            </select>
+                            <div class="error" id="userImplErr"></div>
                         </div>
                     </div>
+
+
                     <div class="form-group">
-                        <label for="code_input">Codesnippet (Write/Paste your code below):</label>
+                        <label for="codeimpl_title">*Write User Friendly Code Title:</label>
+                        <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
+                        <div class="error" id="titleErr"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
                         <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
                         <div class="error" id="codeErr"></div>
                     </div>
                     <div class="form-group">
-                        <label for="file_extension">Code File Extension:</label>
+                        <label for="file_extension">*Code File Extension:</label>
                         <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
                         <div class="error" id="fileExtErr"></div>
                     </div>
@@ -200,8 +225,6 @@ if ($code_id > 0) {
                     </div>
                 </form>
             </div>
-
-
         </div>
         <?php
         include_once 'footer.php';
