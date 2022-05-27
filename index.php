@@ -51,180 +51,156 @@ include_once("configs/conn.inc");
         </div> -->
 
         <!-- start Main menu -->
-        <div id="left-sidebar" class="sidebar" style="width: 270px !important; padding-left: 50px">
-            <div class="logo_">
-                <h3 class="masthead-heading text-uppercase mb-0">
-                    <a href="index"><img src="assets/images/logo.png" height="35px" /></a>
-                </h3>
-            </div>
-            <div class="input-icon pl-2">
+
+
+        <!-- start main body part-->
+        <div class="row">
+            <!-- start body header -->
+            <div class="col-lg-1"></div>
+               <div class="col-lg-2" style="border-right: 3px solid #dfdfdf;">
+
+                   <div class="input-icon pl-2">
                 <span class="input-icon-addon">
                     <i class="fe fe-search"></i>
                 </span>
-                <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
-            </div>
-            <div class="">
-                <div class="tab-content">
-                    <div class="tab-pane fade active show" id="all-tab">
-                        <nav class="sidebar-nav">
-                            <div class="card-body scrolli" style="padding: 10px 10px;">
-                                <ul class="metismenu func_" id="functions_">
-                                    Loading ...
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
-                    <!-- <div class="tab-pane fade" id="app-tab">
-                        <nav class="sidebar-nav">
-                            <ul class="metismenu">
-                                <li class="g_heading">Components</li>
-                                <li><a href="components/typography.html"><i class="fe fe-type"></i><span>Typography</span></a></li>
-                                <li><a href="components/colors.html"><i class="fe fe-feather"></i><span>Colors</span></a></li>
-                                <li><a href="components/alerts.html"><i class="fe fe-alert-triangle"></i><span>Alerts</span></a></li>
-                                <li><a href="components/avatars.html"><i class="fe fe-user"></i><span>Avatars</span></a></li>
-                                <li><a href="components/buttons.html"><i class="fe fe-toggle-right"></i><span>Buttons</span></a></li>
-                                <li><a href="components/breadcrumb.html"><i class="fe fe-link-2"></i><span>Breadcrumb</span></a></li>
-                                <li><a href="components/forms.html"><i class="fe fe-layers"></i><span>Input group</span></a></li>
-                                <li><a href="components/list-group.html"><i class="fe fe-list"></i><span>List group</span></a></li>
-                                <li><a href="components/modal.html"><i class="fe fe-square"></i><span>Modal</span></a></li>
-                                <li><a href="components/pagination.html"><i class="fe fe-file-text"></i><span>Pagination</span></a></li>
-                                <li><a href="components/cards.html"><i class="fe fe-image"></i><span>Cards</span></a></li>
-                                <li><a href="components/charts.html"><i class="fe fe-pie-chart"></i><span>Charts</span></a></li>
-                                <li><a href="components/form-components.html"><i class="fe fe-check-square"></i><span>Form</span></a></li>
-                                <li><a href="components/tags.html"><i class="fe fe-tag"></i><span>Tags</span></a></li>
-                                <li><a href="javascript:void(0)"><i class="fe fe-help-circle"></i><span>Documentation</span></a></li>
-                                <li><a href="javascript:void(0)"><i class="fe fe-life-buoy"></i><span>Changelog</span></a></li>
-                            </ul>
-                        </nav>
-                    </div> -->
-                </div>
-            </div>
-        </div>
+                       <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
+                   </div>
+                   <div class="">
+                       <div class="tab-content">
+                           <div class="tab-pane fade active show" id="all-tab">
+                               <nav class="sidebar-nav">
+                                   <div class="card-body scrolli" style="padding: 10px 10px;">
+                                       <ul class="metismenu func_" id="functions_">
+                                           Loading ...
+                                       </ul>
+                                   </div>
+                               </nav>
+                           </div>
 
-        <!-- start main body part-->
-        <div class="page">
-            <!-- start body header -->
-            <div class="section-body" style="padding-left: 0px;">
-                <div class="container-fluid" style="padding-left: 0px;">
-                    <div class="row clearfix" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-lg-12 col-md-12" id="codeimp-title">
-                            <!-- <div class="row" id="codeimp-title">
-                                    </div> -->
-                        </div>
+                       </div>
+                   </div>
+               </div>
 
-                        <div class="col-lg-9 col-md-9">
-                            <table>
-                                <tr>
-                                    <td style="width: 300px;" >
+                <div class="col-lg-9">
+                    <div class="row" id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
+                        <div class="col-sm-12" id="codeimp-title"><h4><i class="fa fa-hand-o-left"></i> Select functionality</h4></div>
+                        <div class="col-lg-8">
+                            <div class="row">
+
+
                                         <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                        <div  id="imptype-and-contributor"> </div>
-                                    </td>
+                                   <div class="col-lg-6"  id="imptype-and-contributor">
+                                       <a class="a-override a-alt" href=""><i class="fe fe-book-open"></i> VIew All Implementations</a> |
+                                       <a class="a-override a-alt" href=""><i class="fe fe-users"></i> Find Contributors</a>
+                                   </div>
+
                                     <!-- <td class="text-center" id="language-dropdown">
 
                                     </td> -->
 
-                                    <td class="text-center" id="framework-dropdown">
+                                    <div class="text-center col-lg-6" id="framework-dropdown">
 
-                                    </td>
-                                </tr>
-                            </table>
+                                    </div>
+
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 pt-2 pb-2">
+                        <div class="col-lg-4">
                             <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
                             <span id=edit-code></span>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="min-height: 400px;">
-                            <div class="col-lg-2 col-md-2 pr-0">
-                                <div class="scrollk">
-                                    <div class="transcard">
-                                        <div class="card-header pl-0 pt-3 pb-1 pr-0">
-                                            <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
-                                        </div>
-                                        <div class="card-body p-0">
-                                            <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
-                                                <li class="font-weight-normal font-14 font-italic">Loading...</li>
-                                            </ul>
-                                        </div>
+                    <div class="row" style="min-height: 400px;">
+                        <div class="col-lg-2 col-md-2 pr-0">
+                            <div class="scrollk">
+                                <div class="transcard">
+                                    <div class="card-header pl-0 pt-3 pb-1 pr-0">
+                                        <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
+                                            <li class="font-weight-normal font-14 font-italic">Loading...</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-7 col-md-7 pl-0 pr-0">
-                                <div class="card transcard ">
-                                    <div class="card-header pb-2 pt-2">
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td>
-                                                    <h3 title="code" class="card-title"><i class="fe fe-code"></i>
-                                                        <!--Code Snippet-->
-                                                    </h3>
-                                                </td>
-                                                <td>
-                                                    <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
-                                                        <!--Copy-->
-                                                    </button>
-                                                    <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
-                                                        <!--Download-->
-                                                    </button>
-                                                    <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
-                                                        <!--Share-->
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div class="card-options">
-                                            <!--
-                                    <input type="checkbox" id="checkbox" class="checkbox">
-                                    <label for="checkbox" class="label">
-                                        <i class="fas fa-moon"></i>
-                                        <i class="fas fa-sun"></i>
-                                        <div class="ball">
-
-                                        </div>
-                                    </label>
-                                    `-->
-                                            <label class="custom-switch m-0">
-                                                <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
-                                                <span class="custom-switch-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div id="editor" class="card-body dark-screen">
+                        </div>
+                        <div class="col-lg-7 col-md-7 pl-0 pr-0">
+                            <div class="card transcard ">
+                                <div class="card-header pb-2 pt-2">
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td>
+                                                <h3 title="code" class="card-title"><i class="fe fe-code"></i>
+                                                    <!--Code Snippet-->
+                                                </h3>
+                                            </td>
+                                            <td>
+                                                <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
+                                                    <!--Copy-->
+                                                </button>
+                                                <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
+                                                    <!--Download-->
+                                                </button>
+                                                <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
+                                                    <!--Share-->
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="card-options">
+                                        <!--
+                                <input type="checkbox" id="checkbox" class="checkbox">
+                                <label for="checkbox" class="label">
+                                    <i class="fas fa-moon"></i>
+                                    <i class="fas fa-sun"></i>
+                                    <div class="ball">
 
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex justify-content-between">
-                                            <table style="width: 70%;">
-                                                <tr>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
-                                                    <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
-                                                </tr>
-                                            </table>
-                                        </div>
+                                </label>
+                                `-->
+                                        <label class="custom-switch m-0">
+                                            <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
+                                            <span class="custom-switch-indicator"></span>
+                                        </label>
                                     </div>
                                 </div>
+                                <div id="editor" class="card-body dark-screen">
+
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-flex justify-content-between">
+                                        <table style="width: 70%;">
+                                            <tr>
+                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
+                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
+                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
 
-                           <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
-                        <div class="card transcard">
-                            <div class="card-header pt-3">
-                                <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
-                            </div>
-                            <div class="card-body pt-0" style="padding: 20px 0px;">
-                                <div class="list-group" id="available-solns">
+                        <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
+                            <div class="card transcard">
+                                <div class="card-header pt-3">
+                                    <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-flex justify-content-between">
+                                <div class="card-body pt-0" style="padding: 20px 0px;">
+                                    <div class="list-group" id="available-solns">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-flex justify-content-between">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
         </div>
 
         <!-- Start page footer -->

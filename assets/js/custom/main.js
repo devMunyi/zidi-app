@@ -55,7 +55,7 @@ function functions_load() {
 
           fun += `<li class="outer_list"> 
             <a class="func-item ${active_func} has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="submenu('#fun${function_id}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
+            onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -86,8 +86,8 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_">
                 <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="subfun('#fun${function_id}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
-                <span data-hover="${subfunction_name}">${subfunction_name}</span>
+                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                 <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
                 </a>
                 </li>`;
               }
@@ -959,6 +959,7 @@ function loadCodesnippetsLink() {
     rpp;
 
   crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+    console.log(feed);
     let total_ = feed.all_totals;
     if (total_ > 0) {
       let impl_names = feed["impl_names"];
@@ -1069,4 +1070,9 @@ function populateProfile() {
   }
 }
 
+
 /////-----------------------------------End of profile
+///----Update title and URL
+function title_update(title){
+  $("#codeimp-title").html('<h4>'+title+'</h4>');
+}
