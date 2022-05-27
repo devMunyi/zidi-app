@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.page{
-    left: 300px !important;
-}
+
 .page #page_top {
     border-bottom: 4px solid #d9dbde;
     /* box-shadow: 0px 4px 2px #3333331c; */
@@ -18,12 +16,12 @@
     color: #333333;
 }
 select.fancy-select {
-    padding: 5px 10px;
     background: transparent;
-    border-radius: 5px;
-    border: 1px solid #272c31;
+    border-radius: 2px;
+    border: 1px solid #0d0d0f;
     margin-left: 10px;
-    width: 150px;
+    font-size: 13px;
+    color: #0d0d0f;
 }
 #left-sidebar{
     top: 0;
@@ -277,6 +275,11 @@ input#search_box {
 .a-override:hover{
     text-decoration: underline;
 }
+.a-alt {
+    font-size: 13px;
+    font-weight: normal;
+    color: #333333 !important;
+}
 /*End Common styling*/
 
 .logo-container:hover{
@@ -356,8 +359,8 @@ select:invalid {
 div#codeimp-title {
     margin: 10px 0 0 0px;
 }
-#imptype-and-contributor{
-    margin-top: 7px;
+div#title-bar {
+    padding: 0px 0px 5px 6px;
 }
 .nav-link.dropdown-toggle.bg-white.text-black {
     border: 1px solid #595959;
@@ -445,4 +448,21 @@ div#codeimp-title {
     padding: 0 15px 0 20px !important;
     position: relative;
     height: auto !important;
+}
+.metismenu ul a::before {
+    font-size: 0;
+    font-family: 'none';
+    content: none;
+    display: none;
+
+}
+.metismenu>li i {
+    width: 24px !important;
+    top: 5px !important;
+}
+span.subfun_ {
+    display: flex;
+}
+.masthead {
+    padding: 0px 10px;
 }
