@@ -177,7 +177,7 @@ if ($code_id > 0) {
                             <select class="form-control" name="sel_user_impl" id="sel_user_impl" required>
                                 <option value="">--Select One</option>
                                 <?php
-                                $recs = fetchtable('pr_user_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
+                                $recs = fetchtable('pr_user_implementation_type', "status > 0", "uid", "asc", "25", "uid ,title");
                                 while ($r = mysqli_fetch_array($recs)) {
                                     $uid = $r['uid'];
                                     $title = $r['title'];
