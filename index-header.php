@@ -9,7 +9,7 @@
 
 
         <!-- <div class="col-lg-5 pt-2"> -->
-       <div class="col-sm-11">
+       <div  class="col-sm-11">
            <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
                <a class="navbar-brand" href="index">
                    <h3 class="masthead-heading text-uppercase pl-3">
@@ -43,14 +43,14 @@
                        <li class="nav-item">
                            <a class="nav-link" href="javascript:void(0)">Contribute</a>
                        </li>
-                       <li class="dropdown" id="account-0">
+                       <li class="nav-item dropdown" id="account-0">
                            <div class="nav-link dropdown-toggle bg-white btn text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
                            <div class="dropdown-menu mr-3">
                                <a class="dropdown-item text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
                                <a class="dropdown-item text-dark" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
                            </div>
                        </li>
-                       <li class="dropdown" id="account-1" style="outline: none;">
+                       <li class="nav-item dropdown" id="account-1" style="outline: none;">
                            <div class="nav-link dropdown-toggle bg-white text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><span id="user-photo"><i class="fe fe-user"></i></span>&nbsp; <span id='user-name'></span></div>
                            <div class="dropdown-menu mr-3" id="dropdown-menu">
                                <!-- <a class="dropdown-item" href="profile">Profile</a>
@@ -58,17 +58,18 @@
                                        <a onclick="logout('index')" class="dropdown-item" href="javascript:void(0)" id="sign-out">Sign out</a> -->
                            </div>
                        </li>
+                       <li class="nav-item">
+
+                       </li>
                    </ul>
 
                </div>
            </nav>
 
        </div>
+
         <!-- </div> -->
     </div>
     <!-- </div> -->
 </header>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

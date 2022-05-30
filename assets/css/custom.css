@@ -1,12 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-
+@media (min-width: 768px) {
+    .collapse.dont-collapse-sm {
+        display: block;
+        height: auto !important;
+        visibility: visible;
+    }
+    .mobile_button{
+        display: none !important;
+    }
+}
+@media (max-width: 768px) {
+    .mobile_button {
+        display: block !important;
+    }
+}
 .page #page_top {
     border-bottom: 4px solid #d9dbde;
     /* box-shadow: 0px 4px 2px #3333331c; */
 }
 .bg-primary {
-    background-color: #ffffff !important;
+    background-color: #f8f9fa !important;
     box-shadow: 2px 2px 2px #d8d8d8;
 }
 .prominent {
@@ -363,10 +377,8 @@ div#title-bar {
     padding: 0px 0px 5px 6px;
 }
 .nav-link.dropdown-toggle.bg-white.text-black {
-    border: 1px solid #595959;
-    padding: 3px 10px;
-    margin-top: -4px;
-    margin-left: 2px;
+    border: 1px solid #90a4ae;
+
 }
 
 
@@ -465,4 +477,7 @@ span.subfun_ {
 }
 .masthead {
     padding: 0px 10px;
+}
+.nav-link, .nav-item {
+    padding: 4px;
 }

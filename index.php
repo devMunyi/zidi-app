@@ -58,14 +58,17 @@ include_once("configs/conn.inc");
             <!-- start body header -->
             <div class="col-lg-1"></div>
                <div class="col-lg-2" style="border-right: 3px solid #dfdfdf;">
-
+                   <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#funct_box" aria-expanded="false" aria-controls="collapseExample">
+                     <i class="fe fe-chevrons-down"></i>  Show Functionality List
+                   </button>
+                   <div class="collapse dont-collapse-sm" id="funct_box">
                    <div class="input-icon pl-2">
                 <span class="input-icon-addon">
                     <i class="fe fe-search"></i>
                 </span>
                        <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
                    </div>
-                   <div class="">
+
                        <div class="tab-content">
                            <div class="tab-pane fade active show" id="all-tab">
                                <nav class="sidebar-nav">
@@ -83,7 +86,7 @@ include_once("configs/conn.inc");
 
                 <div class="col-lg-9">
                     <div class="row" id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-sm-12" id="codeimp-title"><h4><i class="fa fa-hand-o-left"></i> Select functionality</h4></div>
+                        <div class="col-sm-12" id="codeimp-title"><h4> Select a functionality to get started...</h4></div>
                         <div class="col-lg-8">
                             <div class="row">
 
@@ -111,6 +114,10 @@ include_once("configs/conn.inc");
                     </div>
                     <div class="row" style="min-height: 400px;">
                         <div class="col-lg-2 col-md-2 pr-0">
+                            <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#lang_box" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fe fe-chevrons-down"></i>  Show Languages List
+                            </button>
+                            <div class="collapse dont-collapse-sm" id="lang_box">
                             <div class="scrollk">
                                 <div class="transcard">
                                     <div class="card-header pl-0 pt-3 pb-1 pr-0">
@@ -122,6 +129,7 @@ include_once("configs/conn.inc");
                                         </ul>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-7 pl-0 pr-0">
