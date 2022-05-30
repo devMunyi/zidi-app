@@ -898,6 +898,7 @@ function loadCodesnippetsLink() {
   let sel_subfunc;
   let sel_language;
   let sel_framework;
+  let sel_impl = parseInt($("#sel_userimpltype").val().trim());
   let offset;
 
   if (current_loc && current_loc.func > 0) {
@@ -944,6 +945,12 @@ function loadCodesnippetsLink() {
     persistence("framework", sel_framework);
   }
 
+  if (!sel_impl) {
+    sel_impl = "";
+  } else {
+    persistence("impl", sel_impl);
+  }
+
   let where_ = "c.status = 1 ";
   let orderby = "c.uid";
   let dir = "DESC";
@@ -965,6 +972,8 @@ function loadCodesnippetsLink() {
     sel_language +
     "&framework_id=" +
     sel_framework +
+    "&user_impl_type_id=" +
+    sel_impl +
     "&offset=" +
     offset +
     "&rpp=" +
@@ -1034,13 +1043,82 @@ function loadCodesnippetsLink() {
 
 //////---------------------End codeSnippet
 
+///////--------------Begin Implementations
+function getImplementations(language_id_) {
+  if (language_id_) {
+    let offset = 0;
+    let rpp = 100;
+    let where_ = "f.status = 1";
+    let orderby = "f.name";
+    let dir = "ASC";
+
+    let query =
+      "?language_id=" +
+      language_id_ +
+      "&where_=" +
+      where_ +
+      "&orderby=" +
+      orderby +
+      "&dir=" +
+      dir +
+      "&offset=" +
+      offset +
+      "&rpp=" +
+      rpp;
+
+    let jso = {};
+
+    //console.log(query);
+
+    crudaction(jso, "/frameworks" + query, "GET", function (result) {
+      if (result.all_totals > 0) {
+        let data = result["data"];
+        let frm = `<select  class="fancy-select" id="sel_framework" onchange="loadCodesnippetsLink()">
+        <option value="0"> No Framework</option>`;
+
+        //check for previously selected framework
+        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let framework_prev_sel;
+
+        for (var i = 0; i < data.length; i++) {
+          var uid = data[i].uid;
+          var title = data[i].name;
+          //var icon = data[i].icon;
+
+          if (current_loc && current_loc.framework) {
+            let framework_sel = current_loc.framework;
+            if (framework_sel == uid) {
+              framework_prev_sel = "SELECTED";
+            } else {
+              framework_prev_sel = "";
+            }
+          }
+
+          frm += `<option ${framework_prev_sel} value="${uid}">${title}</option>`;
+        }
+
+        $("#framework-dropdown").html(frm + "</select>");
+        //load to code snippet based on id parsed to the load framework function which is called on clicking language list
+        loadCodesnippetsLink();
+      } else {
+        //////-------No Frameworks found
+        $("#framework-dropdown").html(frm + "</select>");
+        loadCodesnippetsLink();
+      }
+    });
+  } else {
+    //console.log("No Language id value found");
+    $("#framework-dropdown").html("");
+  }
+}
+
+////////-------------End Implementations
+
 //////------------------------------------Begin profile Profile
 function populateProfile() {
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   if (current_loc && current_loc.user) {
     let user = current_loc.user;
-    // console.log("USER INFO => ", user);
-    //handle photo display
     let displayPhoto = "";
     if (user.provider === "Local" && user.photo) {
       displayPhoto = `<img src='${server_}/user/${user.photo}' style='width: 100px; height: 100px; border-radius: 50%;' />`;
@@ -1081,9 +1159,8 @@ function populateProfile() {
   }
 }
 
-
 /////-----------------------------------End of profile
 ///----Update title and URL
-function title_update(title){
-  $("#codeimp-title").html('<h4>'+title+'</h4>');
+function title_update(title) {
+  $("#codeimp-title").html("<h4>" + title + "</h4>");
 }

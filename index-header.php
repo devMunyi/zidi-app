@@ -5,14 +5,11 @@
     <!-- Masthead Heading-->
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-sm-1"></div>
-
-
-
         <!-- <div class="col-lg-5 pt-2"> -->
        <div class="col-sm-11">
            <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
                <a class="navbar-brand" href="index">
-                   <h3 class="masthead-heading text-uppercase pl-3">
+                   <h3 class="masthead-heading text-uppercase">
                        <img src="assets/images/logo.png" height="35px" />
                    </h3>
                </a>
