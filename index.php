@@ -101,9 +101,24 @@ include_once("configs/conn.inc");
 
                                     </td> -->
 
-                                    <div class="text-center col-lg-6" id="framework-dropdown">
+                                    <div class="text-center col-lg-3" id="framework-dropdown">
 
                                     </div>
+                                    <div class="col-lg-3">
+                                        <div class="row">
+                                            <div class="col-lg-6" id="framework-dropdown"></div>
+                                            <div class="col-lg-6">
+                                                <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
+                                                    <option value="0"> All Implementations</option>
+                                                    <option value="1">Plain Code</option>
+                                                    <option value="2">Function Based</option>
+                                                    <option value="3">Class Based</option>
+                                                    <option value="4">API Based</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                             </div>
                         </div>
