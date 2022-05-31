@@ -101,9 +101,9 @@ include_once("configs/conn.inc");
 
                                     </td> -->
 
-                                    <div class="text-center col-lg-3" id="framework-dropdown">
+                                    <!--<div class="text-center col-lg-3" id="framework-dropdown">
 
-                                    </div>
+                                    </div>-->
                                     <div class="col-lg-3">
                                         <div class="row">
                                             <div class="col-lg-6" id="framework-dropdown"></div>
