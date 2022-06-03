@@ -36,6 +36,7 @@ select.fancy-select {
     margin-left: 10px;
     font-size: 13px;
     color: #0d0d0f;
+    max-width: 160px;
 }
 #left-sidebar{
     top: 0;
@@ -374,7 +375,7 @@ div#codeimp-title {
     margin: 10px 0 0 0px;
 }
 div#title-bar {
-    padding: 0px 0px 5px 6px;
+    padding: 0px 0px 10px 2px;
 }
 .nav-link.dropdown-toggle.bg-white.text-black {
     border: 1px solid #90a4ae;
