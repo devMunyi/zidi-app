@@ -438,9 +438,9 @@ function updateHeader(pageId) {
         $("#user-name").html(displayName);
         $("#user-photo").html(displayPhoto);
 
-        authorized = true; //gives a signal to render a proteceted page
+        authorized = true; //gives a signal to render a protected page
       } else {
-        console.log("NO SIGNED USER FOUND");
+        //console.log("NO SIGNED USER FOUND");
         $("#account-1").hide();
         $("#account-0").show();
       }
@@ -632,19 +632,19 @@ function googleOAuth(endpoint) {
   window.open(`${server_}/google/${endpoint}`, "_self");
 }
 
-//github auth trigger
+//github auth popup trigger
 function githubOAuth(endpoint) {
   let server_ = $("#server_").val();
   window.open(`${server_}/github/${endpoint}`, "_self");
 }
 
-//facebook auth trigger
+//facebook auth popup trigger
 function facebookOAuth() {
   let server_ = $("#server_").val();
   window.open(`${server_}/facebook`, "_self");
 }
 
-//facebook auth trigger
+//twitter auth popup trigger
 function twitterOAuth() {
   let server_ = $("#server_").val();
   window.open(`${server_}/twitter`, "_self");
@@ -723,10 +723,6 @@ function resetPassword() {
   const url = new URL(url_string);
   const uid = url.searchParams.get("uid");
   const token = url.searchParams.get("token");
-
-  // console.log("URL =>", url);
-  // console.log("User id =>", uid);
-  // console.log("Token =>", token);
 
   let jso = {
     uid,
