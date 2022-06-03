@@ -612,7 +612,7 @@ function search_codeSnippet() {
           for (let i = 0; i < data.length; i++) {
             tableSearch += `<tr><td><a href="javascript:void(0)" style='color:white;' class='pointer' 
             onclick=\"select_code('${data[i].uid}', '${data[i].func_id}', '${data[i].subfunc_id}', '${data[i].language_id}', '${data[i].framework_id}', '${data[i].title}')">
-            <span class='font-bold font-16 text-blue'>${data[i].title}</span> <br/>
+            <span class='a-override a-alt'>${data[i].title}</span> <br/>
             Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
           }
           tableSearch += `</table>`;

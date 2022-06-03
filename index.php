@@ -85,46 +85,25 @@ include_once("configs/conn.inc");
                </div>
 
                 <div class="col-lg-9">
-                    <div class="row" id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="col-sm-12" id="codeimp-title"><h4> Select a functionality to get started...</h4></div>
-                        <div class="col-lg-8">
-                            <div class="row">
+                    <div id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
+                        <div class="row">
+                            <div class="col-sm-12" id="codeimp-title"><h4> Select a functionality to get started...</h4></div>
 
-
-                                        <!-- <span class="font-italic"> An OOP Implementation by Jonah Ngarama </span> -->
-                                   <div class="col-lg-6"  id="imptype-and-contributor">
-                                       <a class="a-override a-alt" href=""><i class="fe fe-book-open"></i> VIew All Implementations</a> |
-                                       <a class="a-override a-alt" href=""><i class="fe fe-users"></i> Find Contributors</a>
-                                   </div>
-
-                                    <!-- <td class="text-center" id="language-dropdown">
-
-                                    </td> -->
-
-                                    <!--<div class="text-center col-lg-3" id="framework-dropdown">
-
-                                    </div>-->
-                                    <div class="col-lg-3">
-                                        <div class="row">
-                                            <div class="col-lg-6" id="framework-dropdown"></div>
-                                            <div class="col-lg-6">
-                                                <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
-                                                    <option value="0"> All Implementations</option>
-                                                    <option value="1">Plain Code</option>
-                                                    <option value="2">Function Based</option>
-                                                    <option value="3">Class Based</option>
-                                                    <option value="4">API Based</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
-                            <span id=edit-code></span>
+                        <div class="row">
+                            <div class="col-sm-2" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
+                            <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
+                            <div class="col-sm-2" id="filter-dropdown">   <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
+                                    <option value="0"> All Code Styles</option>
+                                    <option value="1">Plain Code</option>
+                                    <option value="2">Function Based</option>
+                                    <option value="3">Class Based</option>
+                                    <option value="4">API Based</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2"><span id=edit-code></span></div>
+                            <div class="col-sm-4"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
+
                         </div>
                     </div>
                     <div class="row" style="min-height: 400px;">
