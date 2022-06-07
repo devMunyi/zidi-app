@@ -88,10 +88,9 @@ include_once("configs/conn.inc");
                     <div id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
                         <div class="row">
                             <div class="col-sm-12" id="codeimp-title"><h4> Select a functionality to get started...</h4></div>
-
                         </div>
                         <div class="row">
-                            <div class="col-sm-2" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
+                            <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
                             <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
                             <div class="col-sm-2" id="filter-dropdown">   <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
                                     <option value="0"> All Code Styles</option>
@@ -101,8 +100,8 @@ include_once("configs/conn.inc");
                                     <option value="4">API Based</option>
                                 </select>
                             </div>
-                            <div class="col-sm-2"><span id=edit-code></span></div>
-                            <div class="col-sm-4"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
+                            <div class="col-sm-1"><span id=edit-code></span></div>
+                            <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
 
                         </div>
                     </div>
@@ -170,14 +169,194 @@ include_once("configs/conn.inc");
 
                                 </div>
                                 <div class="card-footer">
-                                    <div class="d-flex justify-content-between">
-                                        <table style="width: 70%;">
-                                            <tr>
-                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-alert-triangle"></i> <label></label>Issues <span class="badge bg-dark">4</span></button></td>
-                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></td>
-                                                <td><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></td>
-                                            </tr>
-                                        </table>
+
+                                        <div class="row">
+
+
+                                                <div class="col-sm-3"><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></div>
+                                                <div class="col-sm-3"><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></div>
+
+                                        </div>
+
+                                </div>
+                            </div>
+                            <div class="foot_">
+                                <h5>Comments</h5>
+                                <div class="comments_wrapper">
+                                    <div class="comment_box">
+                                        <div class="row">
+                                            <div class="col-sm-1"><div class="hicon">J</div></div>
+                                            <div class="col-sm-11">
+                                                <div class="row chead">
+                                                    <div class="col-sm-9 cwho">
+                                                        Jonah Ngarama  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label  class="font-12  font-weight-bold"><i class="fe fe-star"></i> Top Comment</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row cbody">
+
+                                                    <div class="col-sm-12">
+                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                    </div>
+                                                </div>
+                                                <div class="row cfoot">
+
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                    </div>
+                                                    <div class="col-sm-4 pull-right">
+                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment_box inner-box">
+                                            <div class="row">
+                                                <div class="col-sm-1"><div class="hicon">C</div></div>
+                                                <div class="col-sm-11">
+                                                    <div class="row chead">
+                                                        <div class="col-sm-9 cwho">
+                                                            Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                        </div>
+                                                        <div class="col-sm-3">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row cbody">
+
+                                                        <div class="col-sm-12">
+                                                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                        </div>
+                                                    </div>
+                                                    <div class="row cfoot">
+
+                                                        <div class="col-sm-4">
+                                                            <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                        </div>
+                                                        <div class="col-sm-4 pull-right">
+                                                            <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                            <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                            <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="comment_box inner-box">
+                                                <div class="row">
+                                                    <div class="col-sm-1"><div class="hicon">C</div></div>
+                                                    <div class="col-sm-11">
+                                                        <div class="row chead">
+                                                            <div class="col-sm-9 cwho">
+                                                                Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                            </div>
+                                                            <div class="col-sm-3">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row cbody">
+
+                                                            <div class="col-sm-12">
+                                                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                            </div>
+                                                        </div>
+                                                        <div class="row cfoot">
+
+                                                            <div class="col-sm-4">
+                                                                <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                            </div>
+                                                            <div class="col-sm-4 pull-right">
+                                                                <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                                <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                                <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment_box">
+                                        <div class="row">
+                                            <div class="col-sm-1"><div class="hicon">S</div></div>
+                                            <div class="col-sm-11">
+                                                <div class="row chead">
+                                                    <div class="col-sm-9 cwho">
+                                                        Samuel Munyi  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                    </div>
+                                                    <div class="col-sm-3">
+
+                                                    </div>
+                                                </div>
+                                                <div class="row cbody">
+
+                                                    <div class="col-sm-12">
+                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                    </div>
+                                                </div>
+                                                <div class="row cfoot">
+
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                    </div>
+                                                    <div class="col-sm-4 pull-right">
+                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment_box">
+                                        <div class="row">
+                                            <div class="col-sm-1"><div class="hicon">C</div></div>
+                                            <div class="col-sm-11">
+                                                <div class="row chead">
+                                                    <div class="col-sm-9 cwho">
+                                                        Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                    </div>
+                                                    <div class="col-sm-3">
+
+                                                    </div>
+                                                </div>
+                                                <div class="row cbody">
+
+                                                    <div class="col-sm-12">
+                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                    </div>
+                                                </div>
+                                                <div class="row cfoot">
+
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                    </div>
+                                                    <div class="col-sm-4 pull-right">
+                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

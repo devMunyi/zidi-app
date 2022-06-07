@@ -482,3 +482,42 @@ span.subfun_ {
 .nav-link, .nav-item {
     padding: 4px;
 }
+
+.hicon {
+    font-size: 23px;
+    border-radius: 100%;
+    background: white;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    font-family: inherit;
+    font-weight: 200;
+}
+
+.cbody {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #333;
+    margin-top: 10px;
+    font-weight: 500;
+}
+.cwho {
+    font-weight: bold;
+    font-size: 14px;
+}
+.cfoot {
+    margin-top: 15px;
+    font-size: 13px;
+    font-weight: 400;
+}
+.comment_box {
+    margin-bottom: 5px;
+    padding: 15px 0px;
+    border-bottom: 1px solid #c8c8c8;
+}
+.comment_box.inner-box {
+    margin-left: 20px;
+    padding: 5px 15px;
+    margin-top: 10px;
+}
+
