@@ -521,3 +521,11 @@ span.subfun_ {
     margin-top: 10px;
 }
 
+.foot_ {
+    padding: 10px 0px;
+    border-top: 2px solid #dfdfdf;
+}
+.comment_area{
+    background: #e7e9eb;
+    padding: 15px;
+}

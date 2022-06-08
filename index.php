@@ -173,16 +173,22 @@ include_once("configs/conn.inc");
                                         <div class="row">
 
 
-                                                <div class="col-sm-3"><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-message-square"></i> Comments <span class="badge bg-dark">15</span></button></div>
-                                                <div class="col-sm-3"><button class="btn bg-transparent text-black font-weight-bold"> <i class="fe fe-heart"></i> Likes <span class="badge bg-dark">120</span></button></div>
+                                            No Instructions
 
                                         </div>
 
                                 </div>
                             </div>
                             <div class="foot_">
-                                <h5>Comments</h5>
+                                <h5> 2 Comments</h5>
                                 <div class="comments_wrapper">
+                                    <div class="comment_area">
+                                    <div class="row">
+                                        <div class="col-sm-1"><div class="hicon">J</div></div>
+                                        <div class="col-sm-9"><textarea class="form-control" placeholder="Leave a comment..."></textarea></div>
+                                        <div class="col-sm-2"><button class="btn btn-success"><i class="fe fe-check-circle"></i> POST</button></div>
+                                    </div>
+                                    </div>
                                     <div class="comment_box">
                                         <div class="row">
                                             <div class="col-sm-1"><div class="hicon">J</div></div>
