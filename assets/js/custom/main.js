@@ -844,9 +844,19 @@ function load_codesnippetById(codeId) {
 
         $("#imptype-and-contributor").html(imptypeAndContributor);
 
-        $("#edit-code").html(
-          `|<a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-        );
+        //toggle edit code button based on whether the logged in user is the same as the author of the displayed code
+        if (current_loc.user && current_loc.user.uid) {
+          let user_id = current_loc.user.uid;
+          if (user_id === data.added_by) {
+            $("#edit-code").html(
+              `|<a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+            );
+          } else {
+            $("#edit-code").html("");
+          }
+        } else {
+          $("#edit-code").html("");
+        }
 
         //Display the code snippet
         codeEditor.setValue(data.row_code);
