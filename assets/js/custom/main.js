@@ -714,7 +714,7 @@ function loadSearchSelCode() {
 
           imptypeAndContributor =
             "Contributed by " +
-            '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+            '<a class="a-override a-alt bold" title="View contributor\'s profile" href="javascript:void(0)">' +
             data.fullname +
             "</a>";
 
@@ -838,7 +838,7 @@ function load_codesnippetById(codeId) {
 
         imptypeAndContributor =
           "<i class='fe fe-globe'></i> Contributed by: " +
-          '<a class="a-override" title="View contributor\'s profile" href="javascript:void(0)">' +
+          '<a class="a-override a-alt bold" title="View contributor\'s profile" href="javascript:void(0)">' +
           safe_tags_replace(displayName) +
           "</a>";
 
@@ -860,6 +860,38 @@ function load_codesnippetById(codeId) {
 
         //Display the code snippet
         codeEditor.setValue(data.row_code);
+
+        //diplay instructions if any
+        if (data.instructions) {
+          $("#code-instructions").html(data.instructions);
+        } else {
+          $("#code-instructions").html("No Instructions");
+        }
+
+        //display total comments for this particular codesnippet
+        let commentCountView;
+        if (data.total_comments) {
+          let commentsCount = data.total_comments;
+          if (commentsCount == 1) {
+            commentCountView = `${commentsCount} comment`;
+          } else {
+            commentCountView = `${commentsCount} comments`;
+          }
+          $("#total-comments").html(commentCountView);
+        } else {
+          $("#total-comments").html("0 comments");
+        }
+
+        //add comment button
+        $("#add-comment").html(
+          `<a class="a-alt" onclick="toggleCommentForm()" href="javascript:void(0)" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
+        );
+
+        //persist code Id to be referenced later
+        persistence("codeId", codeId);
+
+        //retrieve comments for the loaded codesnippet
+        getCommentsByCodesnippetId();
       } else {
         //set code implementation title to initialized default value
         $("#codeimp-title").html(codeImpTitle);
@@ -990,7 +1022,7 @@ function loadCodesnippetsLink() {
     rpp;
 
   crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
-    console.log(feed);
+    //console.log(feed);
     let total_ = feed.all_totals;
     if (total_ > 0) {
       let data = feed["data"];
@@ -1079,7 +1111,6 @@ function getImplementations(language_id_) {
     let jso = {};
 
     //console.log(query);
-
     crudaction(jso, "/frameworks" + query, "GET", function (result) {
       if (result.all_totals > 0) {
         let data = result["data"];
@@ -1124,7 +1155,7 @@ function getImplementations(language_id_) {
 
 ////////-------------End Implementations
 
-//////------------------------------------Begin profile Profile
+//////------------------------------------Begin Profile
 function populateProfile() {
   let current_loc = JSON.parse(localStorage.getItem("persist"));
   if (current_loc && current_loc.user) {
@@ -1174,3 +1205,635 @@ function populateProfile() {
 function title_update(title) {
   $("#codeimp-title").html("<h4>" + title + "</h4>");
 }
+
+//////----------------------------------Begin comments
+function getCommentsByCodesnippetId(clistId = 0) {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+
+  let code_id;
+  if (current_loc.codeId) {
+    code_id = current_loc.codeId;
+  } else {
+    return;
+  }
+
+  //check for logged in user to hide actions that needs authorization
+  let comment_author;
+  if (current_loc && current_loc.user && current_loc.user.uid) {
+    comment_author = current_loc.user.uid;
+  }
+
+  //let li = $(`#${clistId}`);
+  let cur_page;
+  if (document.getElementById(`${clistId}`)) {
+    let li = document.getElementById(`${clistId}`);
+    //console.log("Unfiltered list value => ", li);
+    li = (li.textContent || li.innerText).trim();
+    if (li.length > 1) {
+      cur_page = li[0];
+    }
+    if (li.length == 1) {
+      cur_page = li;
+    }
+    persistence("cur_page", li);
+  } else {
+    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    if (current_loc && current_loc.cur_page) {
+      cur_page = current_loc.cur_page;
+    } else {
+      cur_page = 1;
+    }
+  }
+  cur_page--; //decrement by one to align with db offsets multiples
+  let rpp = 5;
+  let where_ = `cmt.code_snippet_id = ${code_id} AND cmt.replying_to = 0 AND cmt.status = 1`;
+  let orderby = "cmt.uid"; //cmt denote an alias for pr_comments table
+  let dir = "DESC";
+  let offset = cur_page;
+  if (cur_page > 0) {
+    offset = cur_page * rpp;
+  }
+
+  let query =
+    "?where_=" +
+    where_ +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
+
+  crudaction({}, "/comments-by-codeid" + query, "GET", function (result) {
+    //comment loading indicator
+    $("#outer-c").html("<i>Loading...</i>");
+
+    let row = "";
+    let total_records = 0;
+    if (result && result.data && result.data.length > 0) {
+      //console.log("Comments available", result);
+      let { data } = result;
+      let count = data.length;
+      total_records = result.total_records;
+
+      //persistence("code_comments_total", total_records);
+
+      for (let i = 0; i < count; i++) {
+        //console.log(data[i].comment_body);
+        let author_name = data[i].author_name;
+        let hicon = data[i].author_name[0];
+        let posted_date_ = reformatDate(data[i].added_date);
+        let posted_date = momentDatetime(posted_date_);
+        let tag_name = data[i].tag_name;
+        let tag_icon = data[i].tag_icon;
+        let tag_color = data[i].tag_color;
+        let comment_body = data[i].comment_body;
+        let replies = data[i].total_replies;
+        let votes = data[i].votes;
+        let comment_id = (commentReplyId = data[i].uid);
+        let replying_to = data[i].replying_to;
+        let author_id = data[i].author_id;
+
+        if (replies > 0) {
+          replies = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${commentReplyId}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
+        } else {
+          replies = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
+        }
+
+        let toggleActionsView = "";
+        if (author_id === comment_author) {
+          toggleActionsView = `
+            <div class="col-sm-3" id="load-cmt${comment_id}">
+            ${replies}
+            </div>
+
+            <div class="col-sm-5">
+                <a title="reply" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)" onclick="toggleCommentForm('${comment_id}', 'reply')"><i class="fa fa-mail-reply"></i> Reply</a>
+                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+                <span id="comment${comment_id}-votes"> ${votes} </span>
+                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+            </div>
+            <div class="col-sm-4">
+                <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+            </div>
+          `;
+        } else {
+          toggleActionsView = `
+          <div class="col-sm-4" id="load-cmt${comment_id}">
+            ${replies}
+          </div>
+          <div class="col-sm-4">
+            <a class="a-override a-alt"><i class="fe fe-thumbs-up" id="comment${comment_id}-votes"></i> ${votes} </a>
+          </div>
+          <div class="col-sm-4 pull-right">
+            <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
+            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+          </div>
+          `;
+        }
+
+        row += `<div class="comment_box">
+          <div class="row">
+            <div class="col-sm-1"><div class="hicon">${hicon}</div></div>
+            <div class="col-sm-11">
+                <div class="row chead">
+                    <div class="col-sm-9 cwho">
+                        ${author_name}  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> ${posted_date}</span>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="font-12 font-weight-bold ${tag_color}"><i class="${tag_icon}"></i> ${tag_name}</label>
+                    </div>
+                </div>
+                <div class="row cbody">
+                    <div class="col-sm-12" id="cdisply${comment_id}">
+                       ${comment_body}
+                    </div>
+                </div>
+                <div class="row cfoot">
+                   ${toggleActionsView}
+                    <div class="mt-2 col-sm-12">
+                        <div class="comment_area hide" id="cform${comment_id}">
+                          <div class="row">
+                              <div class="col-sm-1" id="replyHicon${comment_id}">
+
+                              </div>
+                              <input type="hidden" id="comment-edit-id${comment_id}" value="new comment">
+                              <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="inner-box${commentReplyId}">
+        </div>
+      </div>
+    `;
+      }
+
+      $("#outer-c").html(row);
+
+      //perisist comments with replying_to = 0 to local storage for reference
+      persistence("code_comments", data);
+    } else {
+      $("#outer-c").html(row);
+    }
+
+    paginateComments(total_records);
+    paginationRefactor(); //refactor pagination
+  });
+}
+
+function getCommentReplies(commentReplyId, repliesCount) {
+  //content loading indicator
+  $(`#load-cmt${commentReplyId}`).html("<i>Loading...</i>");
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+
+  //check for logged in user to hide actions that needs authorization
+  let comment_author;
+  if (current_loc && current_loc.user && current_loc.user.uid) {
+    comment_author = current_loc.user.uid;
+  }
+  let offset = 0;
+  let rpp = 10;
+  let query;
+  if (current_loc && current_loc.codeId) {
+    let code_snippet_id = current_loc.codeId;
+    let where_ = `cmt.code_snippet_id=${code_snippet_id} AND cmt.replying_to=${commentReplyId} AND cmt.status=1`;
+    query = `?where_=${where_}&offset=${offset}&rpp=${rpp}`;
+    //console.log(query);
+  } else {
+    alert("Oops! No code selected");
+    return;
+  }
+
+  crudaction({}, `/comments-by-codeid${query}`, "GET", (feed) => {
+    //console.log("Feedback => ", feed);
+    let row = "";
+    if (feed && feed.data && feed.data.length > 0) {
+      //clear loading text
+      $(`#load-cmt${commentReplyId}`).html("");
+      //console.log("Comments available", feed);
+      let { data } = feed;
+      let count = data.length;
+      let replying_to;
+
+      for (let i = 0; i < count; i++) {
+        //console.log(data[i].comment_body);
+        let author_name = data[i].author_name;
+        let hicon = data[i].author_name[0];
+        let posted_date_ = reformatDate(data[i].added_date);
+        let posted_date = momentDatetime(posted_date_);
+        let tag_name = data[i].tag_name;
+        let tag_icon = data[i].tag_icon;
+        let tag_color = data[i].tag_color;
+        let comment_body = data[i].comment_body;
+        let replies = data[i].total_replies;
+        let votes = data[i].votes;
+        let comment_id = data[i].uid;
+        replying_to = data[i].replying_to;
+        let author_id = data[i].author_id;
+        //console.log("comment id => ", comment_id);
+
+        //conditionally render replies icon
+        if (replies > 0) {
+          replies = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
+        } else {
+          replies = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
+        }
+
+        let toggleActionsView = "";
+
+        if (author_id === comment_author) {
+          toggleActionsView = `
+            <div class="col-sm-3" id="load-cmt${comment_id}">
+            ${replies}
+            </div>
+
+            <div class="col-sm-5">
+                <a title="reply" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)" onclick="toggleCommentForm('${comment_id}', 'reply')"><i class="fa fa-mail-reply"></i> Reply</a>
+                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+                <span id="comment${comment_id}-votes"> ${votes} </span>
+                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+            </div>
+            <div class="col-sm-4">
+                <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+            </div>
+          `;
+        } else {
+          toggleActionsView = `
+          <div class="col-sm-4" id="load-cmt${comment_id}">
+            ${replies}
+          </div>
+          <div class="col-sm-4">
+            <a class="a-override a-alt"><i class="fe fe-thumbs-up" id="comment${comment_id}-votes"></i> ${votes} </a>
+          </div>
+          <div class="col-sm-4 pull-right">
+            <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
+            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+          </div>
+          `;
+        }
+
+        row += `<div class="comment_box inner-box">
+          <div class="row">
+            <div class="col-sm-1"><div class="hicon">${hicon}</div></div>
+            <div class="col-sm-11">
+                <div class="row chead">
+                    <div class="col-sm-9 cwho">
+                        ${author_name}  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> ${posted_date}</span>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="font-12 font-weight-bold ${tag_color}"><i class="${tag_icon}"></i> ${tag_name}</label>
+                    </div>
+                </div>
+                <div class="row cbody">
+                    <div class="col-sm-12" id="cdisply${comment_id}">
+                       ${comment_body}
+                    </div>
+                </div>
+                <div class="row cfoot">
+                    ${toggleActionsView}
+                    <div class="mt-2 col-sm-12">
+                        <div class="comment_area hide" id="cform${comment_id}">
+                          <div class="row">
+                              <div class="col-sm-1" id="replyHicon${comment_id}">
+
+                              </div>
+                              <input type="hidden" id="comment-edit-id${comment_id}" value="new comment">
+                              <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="inner-box${comment_id}">
+        </div>
+      </div>
+    `;
+      }
+
+      $(`#inner-box${commentReplyId}`).html(row);
+
+      //persist comments with replying_to > 0 to local storage for reference
+      if (current_loc && current_loc.comment_replies) {
+        let comment_replies = current_loc.comment_replies;
+        for (let j = 0; j < data.length; j++) {
+          comment_replies.push(data[j]);
+        }
+        //perisist comment replies with updated content
+        persistence(`comment_replies`, comment_replies);
+      } else {
+        persistence(`comment_replies`, data);
+      }
+    } else {
+      $(`#inner-box${commentReplyId}`).html(row);
+      //revert the replies hyperlink
+    }
+  });
+}
+
+function toggleCommentForm(
+  comment_id = 0,
+  action = "new comment",
+  replying_to = 0
+) {
+  //check if a user is logged in before allowing commenting
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc.user && current_loc.user.uid && current_loc.user.fullname) {
+    let replyHicon;
+    if (current_loc.user && current_loc.user.fullname) {
+      replyHicon = `<div class="hicon">${current_loc.user.fullname[0]}</div>`;
+    }
+    $(`#replyHicon${comment_id}`).html(replyHicon);
+  } else {
+    alert(`Please sign in to ${action}`);
+    return;
+    //gotourl("login");
+  }
+
+  //toggle form visibility on function call
+  $(`#cform${comment_id}`).toggle();
+
+  //update the comment edit id value with the targeted comment action, the input is hidden type above the textarea
+  $(`#comment-edit-id${comment_id}`).val(action);
+
+  //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
+  if (action === "edit comment" && replying_to == 0) {
+    //retrieve the comment from local storage from the key code_comments
+    let code_comments = [];
+    let comment_to_edit = {};
+    if (current_loc && current_loc.code_comments) {
+      code_comments = current_loc.code_comments;
+      for (let cc = 0; cc < code_comments.length; cc++) {
+        if (code_comments[cc].uid == comment_id) {
+          comment_to_edit = code_comments[cc];
+          break; //exit the loop
+        }
+      }
+      //load the previous content to the form for editing
+      $(`#fcbody${comment_id}`).val(comment_to_edit.comment_body);
+    }
+    //handle case if the form is requested for comment edit purpose and the comment is a reply to another comment
+  } else if (action === "edit comment" && replying_to > 0) {
+    let comment_replies = [];
+    let creply_to_edit = {};
+    if (current_loc && current_loc.comment_replies) {
+      comment_replies = current_loc.comment_replies;
+      for (let cr = 0; cr < comment_replies.length; cr++) {
+        if (comment_replies[cr].uid == comment_id) {
+          creply_to_edit = comment_replies[cr];
+          break; //exit the loop
+        }
+      }
+      //load the previous content to the form for editing
+      $(`#fcbody${comment_id}`).val(creply_to_edit.comment_body);
+    }
+  } else {
+    //clear the form incase it was loaded with content by edit action
+    if ($(`#fcbody${comment_id}`).val().trim().length > 1) {
+      $(`#fcbody${comment_id}`).val("");
+    }
+  }
+}
+
+function nextPageBtn() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let current_page;
+  if (current_loc && current_loc.cur_page) {
+    current_page = current_loc.cur_page;
+    current_page++; //increment current page by 1;
+
+    persistence("cur_page", current_page);
+
+    getCommentsByCodesnippetId(); //load comments for the requested page
+  }
+}
+
+function prevPageBtn() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let current_page;
+  if (current_loc && current_loc.cur_page) {
+    current_page = current_loc.cur_page;
+    current_page--; //decrement current page by 1;
+
+    persistence("cur_page", current_page);
+
+    getCommentsByCodesnippetId(); //load comments for the requested page
+  }
+}
+
+function paginationRefactor() {
+  let current_page;
+  let last_page;
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc && current_loc.cur_page && current_loc.last_page) {
+    current_page = current_loc.cur_page;
+    last_page = current_loc.last_page;
+    current_page = current_loc.cur_page;
+
+    if (last_page == 1) {
+      $("#next-btn").addClass("disable-list-elem");
+      //or document.getElementById("next-btn").style.pointerEvents = "none";
+    }
+
+    if (current_page == 1) {
+      $("#prev-btn").addClass("disable-list-elem");
+      //or document.getElementById("prev-btn").style.pointerEvents = "none";
+    }
+
+    if (current_page == last_page && current_page > 1 && last_page > 1) {
+      $("#next-btn").addClass("disable-list-elem");
+      //or document.getElementById("next-btn").style.pointerEvents = "none";
+    }
+  }
+}
+
+function paginateComments(records) {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  //let records = current_loc.code_comments_total;
+  //update the value for the total comments displayed
+
+  let commentCountView;
+  if (records == 1) {
+    commentCountView = `${records} comment`;
+  } else {
+    commentCountView = `${records} comments`;
+  }
+  $(`#total-comments`).html(commentCountView);
+
+  let row = "";
+
+  if (records > 0) {
+    let rpp = 5;
+    let current_page;
+    if (current_loc.cur_page) {
+      //console.log("current page => ", current_loc.cur_page);
+      current_page = current_loc.cur_page;
+    }
+
+    let num_of_pages = Math.ceil(records / rpp);
+    persistence("last_page", num_of_pages);
+    row += `
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li class="page-item" id="prev-btn" onclick="prevPageBtn()">
+                <a class="page-link" href="javascript:void(0)" tabindex="-1">Previous</a>
+            </li>
+  `;
+    for (let i = 1; i <= num_of_pages; i++) {
+      if (i == current_page) {
+        row += `<li class="page-item active" aria-current="page" id="clist-item${i}">
+                  <span class="page-link">
+                      ${i}
+                      <span class="sr-only">(current)</span>
+                  </span>
+                </li>`;
+      } else {
+        row += `<li class="page-item" onclick="getCommentsByCodesnippetId('clist-item${i}')" id="clist-item${i}"><a class="page-link" href="javascript:void(0)">${i}</a></li>`;
+      }
+    }
+    row += `<li class="page-item" id="next-btn" onclick="nextPageBtn()">
+                <a class="page-link" href="javascript:void(0)">Next</a>
+            </li>
+        </ul>
+      </nav>`;
+    $("#pag-comments").html(row);
+  } else {
+    $("#pag-comments").html(row);
+  }
+}
+
+function saveComment(comment_id = 0) {
+  //first check if user is logged in before saving the comment
+  let added_by;
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc.user && current_loc.user.uid) {
+    added_by = current_loc.user.uid;
+  } else {
+    gotourl("login");
+  }
+
+  let code_snippet_id = parseInt(current_loc.codeId);
+  let replying_to = parseInt(comment_id);
+  let tag = 1; //Author
+  let comment_body = $(`#fcbody${comment_id}`).val().trim();
+  let url = "/add-comment";
+  let method = "POST";
+  let jso = {
+    code_snippet_id,
+    comment_body,
+    replying_to,
+    tag,
+    added_by,
+  };
+  //grab edit-comment-id from the hidden input
+  let action = $(`#comment-edit-id${comment_id}`).val();
+  if (action == "edit comment" && comment_id > 0) {
+    url = "/edit-comment";
+    method = "PUT";
+    jso = {
+      comment_body,
+      comment_id,
+    };
+  }
+
+  //console.log("Comment Details => ", jso);
+  crudaction(jso, url, method, (feed) => {
+    //console.log("comment save feedback => ", feed);
+    console.log("action => ", action, "replying_to value => ", replying_to);
+    if (feed.success) {
+      toggleCommentForm(comment_id);
+      if (action == "new comment" && replying_to == 0) {
+        console.log("new comment for the code, not a reply to a comment");
+
+        load_codesnippetById(code_snippet_id);
+      } else if (action == "reply" && replying_to > 0) {
+        console.log("new comment reply to a comment");
+        getCommentsByCodesnippetId(code_snippet_id); //re-render the whole comment list;
+      } else {
+        console.log(
+          "editing a comment which will be followed by a re-render of the new content"
+        );
+        reRenderEditedCommentBody(comment_id); //re-render the comment body
+      }
+      successToast(feed.message);
+    } else {
+      errorToast(feed.message);
+    }
+  });
+}
+
+function reRenderEditedCommentBody(comment_id) {
+  //cdisply${comment_id}
+  query = "?comment_id=" + comment_id;
+
+  crudaction({}, "/comment" + query, "GET", (feed) => {
+    //console.log(feed.success, feed.data);
+    if (feed && feed.success && feed.data && feed.data.comment_body) {
+      $(`#cdisply${comment_id}`).html(feed.data.comment_body);
+    }
+  });
+}
+
+function upvoteComment(comment_id, action = "upvote comment") {
+  //check if a user is logged in before allowing commenting
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc.user && current_loc.user.uid) {
+  } else {
+    return alert(`Please sign in to ${action}`);
+  }
+
+  let cur_page;
+  if (document.getElementById(`comment-${comment_id}-votes`)) {
+    let li = document.getElementById(`${clistId}`);
+    //console.log("Unfiltered list value => ", li);
+    li = (li.textContent || li.innerText).trim();
+    if (li.length > 1) {
+      cur_page = li[0];
+    }
+    if (li.length == 1) {
+      cur_page = li;
+    }
+    persistence("cur_page", li);
+  }
+}
+
+function upvoteComment(comment_id, action = "downvote comment") {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc.user && current_loc.user.uid) {
+  } else {
+    return alert(`Please sign in to ${action}`);
+  }
+}
+
+function reformatDate(date_) {
+  let d = new Date(date_);
+  let date =
+    d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0];
+  return date;
+}
+
+//friendly datetime formatter
+function momentDatetime(targetdt) {
+  return moment(targetdt).fromNow();
+}
+
+///////----------------------------------End Comments

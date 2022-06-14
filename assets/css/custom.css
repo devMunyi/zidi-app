@@ -529,3 +529,19 @@ span.subfun_ {
     background: #e7e9eb;
     padding: 15px;
 }
+.bold {
+    font-weight: bold;
+}
+
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}
+
+.disable-list-elem{
+    pointer-events: none;
+    cursor: not-allowed;
+}

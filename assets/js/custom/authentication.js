@@ -440,9 +440,21 @@ function updateHeader(pageId) {
 
         authorized = true; //gives a signal to render a protected page
       } else {
+        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let user = current_loc.user;
         //console.log("NO SIGNED USER FOUND");
         $("#account-1").hide();
         $("#account-0").show();
+
+        //delete user details if there exist and the session is expired
+        if (current_loc.user) {
+          persistence_remove("user");
+        }
+
+        //delete the session token if they exist but expired
+        if (current_loc.token) {
+          persistence_remove("token");
+        }
       }
     } else {
       console.log(feed);

@@ -36,7 +36,7 @@ include_once("configs/conn.inc");
     <!-- Start main html -->
     <div id="main_content">
         <?php
-            include_once 'index-header.php';
+        include_once 'index-header.php';
         ?>
         <!-- Small icon top menu -->
         <!-- <div id="header_top" style="display: none;" class="header_top">
@@ -57,60 +57,62 @@ include_once("configs/conn.inc");
         <div class="row">
             <!-- start body header -->
             <div class="col-lg-1"></div>
-               <div class="col-lg-2" style="border-right: 3px solid #dfdfdf;">
-                   <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#funct_box" aria-expanded="false" aria-controls="collapseExample">
-                     <i class="fe fe-chevrons-down"></i>  Show Functionality List
-                   </button>
-                   <div class="collapse dont-collapse-sm" id="funct_box">
-                   <div class="input-icon pl-2">
-                <span class="input-icon-addon">
-                    <i class="fe fe-search"></i>
-                </span>
-                       <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
-                   </div>
+            <div class="col-lg-2" style="border-right: 3px solid #dfdfdf;">
+                <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#funct_box" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fe fe-chevrons-down"></i> Show Functionality List
+                </button>
+                <div class="collapse dont-collapse-sm" id="funct_box">
+                    <div class="input-icon pl-2">
+                        <span class="input-icon-addon">
+                            <i class="fe fe-search"></i>
+                        </span>
+                        <input type="text" id="search_functionality" class="form-control" placeholder="Filter Functionalities...">
+                    </div>
 
-                       <div class="tab-content">
-                           <div class="tab-pane fade active show" id="all-tab">
-                               <nav class="sidebar-nav">
-                                   <div class="card-body scrolli" style="padding: 10px 10px;">
-                                       <ul class="metismenu func_" id="functions_">
-                                           Loading ...
-                                       </ul>
-                                   </div>
-                               </nav>
-                           </div>
-
-                       </div>
-                   </div>
-               </div>
-
-                <div class="col-lg-9">
-                    <div id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
-                        <div class="row">
-                            <div class="col-sm-12" id="codeimp-title"><h4> Select a functionality to get started...</h4></div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="all-tab">
+                            <nav class="sidebar-nav">
+                                <div class="card-body scrolli" style="padding: 10px 10px;">
+                                    <ul class="metismenu func_" id="functions_">
+                                        Loading ...
+                                    </ul>
+                                </div>
+                            </nav>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
-                            <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
-                            <div class="col-sm-2" id="filter-dropdown">   <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
-                                    <option value="0"> All Code Styles</option>
-                                    <option value="1">Plain Code</option>
-                                    <option value="2">Function Based</option>
-                                    <option value="3">Class Based</option>
-                                    <option value="4">API Based</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-1"><span id=edit-code></span></div>
-                            <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div id="title-bar" style="border-bottom: 2px solid #d0d0d0;">
+                    <div class="row">
+                        <div class="col-sm-12" id="codeimp-title">
+                            <h4> Select a functionality to get started...</h4>
                         </div>
                     </div>
-                    <div class="row" style="min-height: 400px;">
-                        <div class="col-lg-2 col-md-2 pr-0">
-                            <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#lang_box" aria-expanded="false" aria-controls="collapseExample">
-                                <i class="fe fe-chevrons-down"></i>  Show Languages List
-                            </button>
-                            <div class="collapse dont-collapse-sm" id="lang_box">
+                    <div class="row">
+                        <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
+                        <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
+                        <div class="col-sm-2" id="filter-dropdown"> <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
+                                <option value="0"> All Code Styles</option>
+                                <option value="1">Plain Code</option>
+                                <option value="2">Function Based</option>
+                                <option value="3">Class Based</option>
+                                <option value="4">API Based</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1"><span id=edit-code></span></div>
+                        <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
+
+                    </div>
+                </div>
+                <div class="row" style="min-height: 400px;">
+                    <div class="col-lg-2 col-md-2 pr-0">
+                        <button class="btn btn-default btn-block hidden visible-xs mobile_button" type="button" data-toggle="collapse" data-target="#lang_box" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fe fe-chevrons-down"></i> Show Languages List
+                        </button>
+                        <div class="collapse dont-collapse-sm" id="lang_box">
                             <div class="scrollk">
                                 <div class="transcard">
                                     <div class="card-header pl-0 pt-3 pb-1 pr-0">
@@ -123,33 +125,33 @@ include_once("configs/conn.inc");
                                     </div>
                                 </div>
                             </div>
-                            </div>
                         </div>
-                        <div class="col-lg-7 col-md-7 pl-0 pr-0">
-                            <div class="card transcard ">
-                                <div class="card-header pb-2 pt-2">
-                                    <table style="width: 100%">
-                                        <tr>
-                                            <td>
-                                                <h3 title="code" class="card-title"><i class="fe fe-code"></i>
-                                                    <!--Code Snippet-->
-                                                </h3>
-                                            </td>
-                                            <td>
-                                                <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
-                                                    <!--Copy-->
-                                                </button>
-                                                <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
-                                                    <!--Download-->
-                                                </button>
-                                                <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
-                                                    <!--Share-->
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <div class="card-options">
-                                        <!--
+                    </div>
+                    <div class="col-lg-7 col-md-7 pl-0 pr-0">
+                        <div class="card transcard ">
+                            <div class="card-header pb-2 pt-2">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td>
+                                            <h3 title="code" class="card-title"><i class="fe fe-code"></i>
+                                                <!--Code Snippet-->
+                                            </h3>
+                                        </td>
+                                        <td>
+                                            <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
+                                                <!--Copy-->
+                                            </button>
+                                            <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
+                                                <!--Download-->
+                                            </button>
+                                            <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
+                                                <!--Share-->
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="card-options">
+                                    <!--
                                 <input type="checkbox" id="checkbox" class="checkbox">
                                 <label for="checkbox" class="label">
                                     <i class="fas fa-moon"></i>
@@ -159,46 +161,123 @@ include_once("configs/conn.inc");
                                     </div>
                                 </label>
                                 `-->
-                                        <label class="custom-switch m-0">
-                                            <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
-                                            <span class="custom-switch-indicator"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div id="editor" class="card-body dark-screen">
-
-                                </div>
-                                <div class="card-footer">
-
-                                        <div class="row">
-
-
-                                            No Instructions
-
-                                        </div>
-
+                                    <label class="custom-switch m-0">
+                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
+                                        <span class="custom-switch-indicator"></span>
+                                    </label>
                                 </div>
                             </div>
-                            <div class="foot_">
-                                <h5> 2 Comments</h5>
-                                <div class="comments_wrapper">
-                                    <div class="comment_area">
+                            <div id="editor" class="card-body dark-screen">
+
+                            </div>
+                            <div class="card-footer">
+
+                                <div class="row" id="code-instructions">
+
+                                    <!-- No Instructions -->
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="foot_">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h5 id="total-comments"></h5>
+                                </div>
+                                <div class="col-md-3" id="add-comment"></div>
+                                <!-- <nav aria-label="...">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Previous</span>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">
+                                                2
+                                                <span class="sr-only">(current)</span>
+                                            </span>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav> -->
+
+                                <!-- <ul>
+                                    <li id="myLi">1</li>
+                                </ul> -->
+
+
+                            </div>
+
+                            <div class="comments_wrapper">
+                                <div class="comment_area hide" id="cform0">
                                     <div class="row">
-                                        <div class="col-sm-1"><div class="hicon">J</div></div>
-                                        <div class="col-sm-9"><textarea class="form-control" placeholder="Leave a comment..."></textarea></div>
-                                        <div class="col-sm-2"><button class="btn btn-success"><i class="fe fe-check-circle"></i> POST</button></div>
+                                        <div class="col-sm-1">
+                                            <div class="hicon" id="replyHicon0"></div>
+                                        </div>
+                                        <input type="hidden" id="comment-edit-id0" value="new comment">
+                                        <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
                                     </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-8"><button onclick="toggleCommentForm()" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                                        <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                                     </div>
-                                    <div class="comment_box">
+                                </div>
+
+
+                                <!-- <div class="comment_box">
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="hicon">J</div>
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <div class="row chead">
+                                                <div class="col-sm-9 cwho">
+                                                    Jonah Ngarama <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="font-12  font-weight-bold"><i class="fe fe-star"></i> Top Comment</label>
+                                                </div>
+                                            </div>
+                                            <div class="row cbody">
+
+                                                <div class="col-sm-12">
+                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                </div>
+                                            </div>
+                                            <div class="row cfoot">
+
+                                                <div class="col-sm-4">
+                                                    <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                </div>
+                                                <div class="col-sm-4 pull-right">
+                                                    <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                    <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                    <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment_box inner-box">
                                         <div class="row">
-                                            <div class="col-sm-1"><div class="hicon">J</div></div>
+                                            <div class="col-sm-1">
+                                                <div class="hicon">C</div>
+                                            </div>
                                             <div class="col-sm-11">
                                                 <div class="row chead">
                                                     <div class="col-sm-9 cwho">
-                                                        Jonah Ngarama  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                        Chelsea <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <label  class="font-12  font-weight-bold"><i class="fe fe-star"></i> Top Comment</label>
+
                                                     </div>
                                                 </div>
                                                 <div class="row cbody">
@@ -225,11 +304,13 @@ include_once("configs/conn.inc");
                                         </div>
                                         <div class="comment_box inner-box">
                                             <div class="row">
-                                                <div class="col-sm-1"><div class="hicon">C</div></div>
+                                                <div class="col-sm-1">
+                                                    <div class="hicon">C</div>
+                                                </div>
                                                 <div class="col-sm-11">
                                                     <div class="row chead">
                                                         <div class="col-sm-9 cwho">
-                                                            Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                            Chelsea <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
                                                         </div>
                                                         <div class="col-sm-3">
 
@@ -257,80 +338,48 @@ include_once("configs/conn.inc");
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="comment_box inner-box">
-                                                <div class="row">
-                                                    <div class="col-sm-1"><div class="hicon">C</div></div>
-                                                    <div class="col-sm-11">
-                                                        <div class="row chead">
-                                                            <div class="col-sm-9 cwho">
-                                                                Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                            </div>
-                                                            <div class="col-sm-3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment_box">
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="hicon">S</div>
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <div class="row chead">
+                                                <div class="col-sm-9 cwho">
+                                                    Samuel Munyi <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
+                                                </div>
+                                                <div class="col-sm-3">
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="row cbody">
+                                                </div>
+                                            </div>
+                                            <div class="row cbody">
 
-                                                            <div class="col-sm-12">
-                                                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                            </div>
-                                                        </div>
-                                                        <div class="row cfoot">
+                                                <div class="col-sm-12">
+                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                </div>
+                                            </div>
+                                            <div class="row cfoot">
 
-                                                            <div class="col-sm-4">
-                                                                <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                            </div>
-                                                            <div class="col-sm-4 pull-right">
-                                                                <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                                <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                                <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-sm-4">
+                                                    <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
+                                                </div>
+                                                <div class="col-sm-4 pull-right">
+                                                    <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
+                                                    <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
+                                                    <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="comment_box">
-                                        <div class="row">
-                                            <div class="col-sm-1"><div class="hicon">S</div></div>
-                                            <div class="col-sm-11">
-                                                <div class="row chead">
-                                                    <div class="col-sm-9 cwho">
-                                                        Samuel Munyi  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                    </div>
-                                                    <div class="col-sm-3">
-
-                                                    </div>
-                                                </div>
-                                                <div class="row cbody">
-
-                                                    <div class="col-sm-12">
-                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                    </div>
-                                                </div>
-                                                <div class="row cfoot">
-
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                    </div>
-                                                    <div class="col-sm-4 pull-right">
-                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="comment_box">
-                                        <div class="row">
+                                </div> -->
+                                <div id="outer-c">
+                                    <!-- <div class="row">
                                             <div class="col-sm-1"><div class="hicon">C</div></div>
                                             <div class="col-sm-11">
                                                 <div class="row chead">
@@ -362,30 +411,34 @@ include_once("configs/conn.inc");
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div> -->
+
+
+
+                                </div>
+                                <div class="row" id="pag-comments">
+
                                 </div>
                             </div>
-
                         </div>
-
-                        <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
-                            <div class="card transcard">
-                                <div class="card-header pt-3">
-                                    <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
+                    </div>
+                    <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
+                        <div class="card transcard">
+                            <div class="card-header pt-3">
+                                <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
+                            </div>
+                            <div class="card-body pt-0" style="padding: 20px 0px;">
+                                <div class="list-group" id="available-solns">
                                 </div>
-                                <div class="card-body pt-0" style="padding: 20px 0px;">
-                                    <div class="list-group" id="available-solns">
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between">
-                                    </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
         </div>
@@ -416,19 +469,24 @@ include_once("configs/conn.inc");
             persistence_remove("language");
             persistence_remove("framework");
             persistence_remove("offset");
+            persistence_remove("code_comments");
+            persistence_remove("comment_replies");
             //persistence_remove("codeId");
 
             functions_load() //load all functions
             load_languages(); //Load all the languages
             loadCodesnippetsLink(); //load code links
             getAllFrams(); //persist all frameworks in local storage
+            persistence("cur_page", 1); //reset default comment page to 1
+            persistence("last_page", 1); //reset default comment page to 1
+
         });
     </script>
     <script>
         //////--------Custom scroll
         (function($) {
             $(window).on("load", function() {
-                $('#logo_home').css('display','none');
+                $('#logo_home').css('display', 'none');
                 $(".scrolli").mCustomScrollbar({
                     theme: "inset-2-dark",
                     autoHideScrollbar: true
@@ -498,6 +556,7 @@ include_once("configs/conn.inc");
             });
 
             //toggle active subfunction
+            //city, state, postal code, country
             $('.subfunc-item').on('click', '.subfunc-item', function() {
                 $('.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');
@@ -514,6 +573,7 @@ include_once("configs/conn.inc");
                 $('#available-solns a').removeClass('active-two');
                 $(this).addClass('active-two');
             });
+
         });
     </script>
 </body>

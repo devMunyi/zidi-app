@@ -45,5 +45,5 @@
 <script src="assets/plugins/ace/editor.js"></script>
 <script src="assets/plugins/ace/editor-console.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-
+<!-- Moment plugin script -->
+<script src="assets/plugins/moment/moment.min.js"></script>
