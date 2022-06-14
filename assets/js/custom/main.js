@@ -1361,7 +1361,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
                               <div class="col-sm-1" id="replyHicon${comment_id}">
 
                               </div>
-                              <input type="hidden" id="comment-edit-id${comment_id}" value="new comment">
+                              <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
                           </div>
                           <div class="row mt-2">
@@ -1511,7 +1511,7 @@ function getCommentReplies(commentReplyId, repliesCount) {
                               <div class="col-sm-1" id="replyHicon${comment_id}">
 
                               </div>
-                              <input type="hidden" id="comment-edit-id${comment_id}" value="new comment">
+                              <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
                           </div>
                           <div class="row mt-2">
@@ -1552,7 +1552,7 @@ function getCommentReplies(commentReplyId, repliesCount) {
 
 function toggleCommentForm(
   comment_id = 0,
-  action = "new comment",
+  action = "add comment",
   replying_to = 0
 ) {
   //check if a user is logged in before allowing commenting
@@ -1758,20 +1758,13 @@ function saveComment(comment_id = 0) {
   //console.log("Comment Details => ", jso);
   crudaction(jso, url, method, (feed) => {
     //console.log("comment save feedback => ", feed);
-    console.log("action => ", action, "replying_to value => ", replying_to);
     if (feed.success) {
       toggleCommentForm(comment_id);
-      if (action == "new comment" && replying_to == 0) {
-        console.log("new comment for the code, not a reply to a comment");
-
+      if (action == "add comment" && replying_to == 0) {
         load_codesnippetById(code_snippet_id);
       } else if (action == "reply" && replying_to > 0) {
-        console.log("new comment reply to a comment");
         getCommentsByCodesnippetId(code_snippet_id); //re-render the whole comment list;
       } else {
-        console.log(
-          "editing a comment which will be followed by a re-render of the new content"
-        );
         reRenderEditedCommentBody(comment_id); //re-render the comment body
       }
       successToast(feed.message);

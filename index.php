@@ -219,7 +219,7 @@ include_once("configs/conn.inc");
                                         <div class="col-sm-1">
                                             <div class="hicon" id="replyHicon0"></div>
                                         </div>
-                                        <input type="hidden" id="comment-edit-id0" value="new comment">
+                                        <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
                                     </div>
                                     <div class="row mt-2">
