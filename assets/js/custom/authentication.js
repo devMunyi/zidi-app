@@ -271,7 +271,6 @@ function login(data) {
         errorToast(feed.message);
       } else if ((feed.success = true)) {
         //store user info in local storage for reference
-        //console.log("USER => ", feed.user);
         persistence("user", feed.user);
         persistence("token", feed.token);
 
@@ -307,12 +306,18 @@ function googleSignin() {
 
     let user = { uid, username, email, fullname, provider, photo };
 
-    persistence("user", user);
-    persistence("token", "Bearer " + token);
-
     successToast("Login success");
 
     setTimeout(() => {
+      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      if (current_loc && current_loc.user && current_loc.user.uid == user.uid) {
+      } else {
+        persistence("user", user);
+      }
+      if (current_loc && current_loc.token && current_loc.token == user.token) {
+      } else {
+        persistence("token", "Bearer " + token);
+      }
       gotourl("index");
     }, 2550);
   } else if (success === "false") {
@@ -363,12 +368,18 @@ function githubSignin() {
 
     let user = { uid, username, email, fullname, provider, photo };
 
-    persistence("user", user);
-    persistence("token", "Bearer " + token);
-
     successToast("Login success");
-
     setTimeout(() => {
+      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      if (current_loc && current_loc.user && current_loc.user.uid == user.uid) {
+      } else {
+        persistence("user", user);
+      }
+      if (current_loc && current_loc.token && current_loc.token == user.token) {
+      } else {
+        persistence("token", "Bearer " + token);
+      }
+
       gotourl("index");
     }, 2550);
   } else if (success === "false") {
@@ -445,6 +456,8 @@ function updateHeader(pageId) {
         //console.log("NO SIGNED USER FOUND");
         $("#account-1").hide();
         $("#account-0").show();
+
+        // this will avoid headerUpdater from destroying session details when a user sign in
 
         //delete user details if there exist and the session is expired
         if (current_loc.user) {

@@ -145,11 +145,11 @@ include_once("configs/conn.inc");
             const url = new URL(url_string);
             const success = url.searchParams.get("success");
             const provider = url.searchParams.get("provider");
-            if(success === 'true' || success === 'false' && provider === "Google"){
+            if((success === 'true' || success === 'false') && provider === "Google"){
                 googleSignup()
             }
 
-            if(success === 'true' || success === 'false' && provider === "Github"){
+            if((success === 'true' || success === 'false') && provider === "Github"){
                 githubSignup()
             }
         });

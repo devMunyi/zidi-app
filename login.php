@@ -5,15 +5,17 @@ include_once("configs/conn.inc");
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title> Zidi : Login</title>
     <!-- Bootstrap Core and vendor -->
     <?php
-        include_once 'styles.php';
+    include_once 'styles.php';
     ?>
 </head>
+
 <body class="font-opensans">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -23,7 +25,7 @@ include_once("configs/conn.inc");
 
     <!--Header section -->
     <?php
-        include_once 'header.php';
+    include_once 'header.php';
     ?>
     <!-- start main body part-->
     <div class="container-fluid pt-4" id="login-page">
@@ -104,12 +106,11 @@ include_once("configs/conn.inc");
             const url = new URL(url_string);
             const success = url.searchParams.get("success");
             const provider = url.searchParams.get("provider");
-            if(success === 'true' || success === 'false' && provider === "Google"){
-                //console.log("GOOGLE SIGN IN TRUE")
+            if ((success === 'true' || success === 'false') && provider === "Google") {
                 googleSignin()
             }
 
-            if(success === 'true' || success === 'false' && provider === "Github"){
+            if ((success === 'true' || success === 'false') && provider === "Github") {
                 githubSignin()
             }
         });
