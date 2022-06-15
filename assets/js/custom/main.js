@@ -1317,7 +1317,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
             </div>
             <div class="col-sm-4">
                 <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
-                <a title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+                <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
         } else {
@@ -1393,7 +1393,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
   });
 }
 
-function getCommentReplies(commentReplyId, repliesCount) {
+function getCommentReplies(commentReplyId) {
   //content loading indicator
   $(`#load-cmt${commentReplyId}`).html("<i>Loading...</i>");
   let current_loc = JSON.parse(localStorage.getItem("persist"));
@@ -1417,7 +1417,7 @@ function getCommentReplies(commentReplyId, repliesCount) {
   }
 
   crudaction({}, `/comments-by-codeid${query}`, "GET", (feed) => {
-    //console.log("Feedback => ", feed);
+    console.log("Get comments replies feedback => ", feed);
     let row = "";
     if (feed && feed.data && feed.data.length > 0) {
       //clear loading text
@@ -1452,7 +1452,6 @@ function getCommentReplies(commentReplyId, repliesCount) {
         }
 
         let toggleActionsView = "";
-
         if (author_id === comment_author) {
           toggleActionsView = `
             <div class="col-sm-3" id="load-cmt${comment_id}">
@@ -1467,7 +1466,7 @@ function getCommentReplies(commentReplyId, repliesCount) {
             </div>
             <div class="col-sm-4">
                 <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
-                <a title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+                <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
         } else {
@@ -1763,9 +1762,35 @@ function saveComment(comment_id = 0) {
       if (action == "add comment" && replying_to == 0) {
         load_codesnippetById(code_snippet_id);
       } else if (action == "reply" && replying_to > 0) {
-        getCommentsByCodesnippetId(code_snippet_id); //re-render the whole comment list;
+        getCommentReplies(replying_to); //re-render the whole comment list;
       } else {
         reRenderEditedCommentBody(comment_id); //re-render the comment body
+      }
+      successToast(feed.message);
+    } else {
+      errorToast(feed.message);
+    }
+  });
+}
+
+function deleteComment(comment_id = 0, replying_to) {
+  //console.log("comment id => ", comment_id, ", replying to => ", replying_to);
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let code_snippet_id;
+  if (current_loc && current_loc.codeId) {
+    code_snippet_id = current_loc.codeId;
+  }
+  let query =
+    "?replying_to=" + replying_to + "&code_snippet_id=" + code_snippet_id;
+
+  crudaction({ comment_id }, "/del-comment" + query, "DELETE", (feed) => {
+    //console.log("comment delete feedback =>", feed);
+    if (feed.success) {
+      if (replying_to == 0) {
+        load_codesnippetById(code_snippet_id);
+      }
+      if (replying_to > 0) {
+        getCommentReplies(replying_to);
       }
       successToast(feed.message);
     } else {
