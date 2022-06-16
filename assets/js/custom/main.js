@@ -1326,7 +1326,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
             ${replies}
           </div>
           <div class="col-sm-4">
-            <a class="a-override a-alt"><i class="fe fe-thumbs-up" id="comment${comment_id}-votes"></i> ${votes} </a>
+            <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
           <div class="col-sm-4 pull-right">
             <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
@@ -1475,7 +1475,7 @@ function getCommentReplies(commentReplyId) {
             ${replies}
           </div>
           <div class="col-sm-4">
-            <a class="a-override a-alt"><i class="fe fe-thumbs-up" id="comment${comment_id}-votes"></i> ${votes} </a>
+          <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
           <div class="col-sm-4 pull-right">
             <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
