@@ -104,7 +104,6 @@ include_once("configs/conn.inc");
                         </div>
                         <div class="col-sm-1"><span id=edit-code></span></div>
                         <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
-
                     </div>
                 </div>
                 <div class="row" style="min-height: 400px;">
@@ -221,6 +220,7 @@ include_once("configs/conn.inc");
                                         </div>
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                                        <div id ="comment0Err"></div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-2"></div>
@@ -413,6 +413,7 @@ include_once("configs/conn.inc");
                                             </div>
                                         </div> -->
 
+                                    <!DOCTYPE html>
 
 
                                 </div>
@@ -469,8 +470,7 @@ include_once("configs/conn.inc");
             persistence_remove("language");
             persistence_remove("framework");
             persistence_remove("offset");
-            persistence_remove("code_comments");
-            persistence_remove("comment_replies");
+            persistence_remove("comments");
             //persistence_remove("codeId");
 
             functions_load() //load all functions

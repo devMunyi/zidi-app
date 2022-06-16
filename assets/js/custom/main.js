@@ -1363,6 +1363,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                              <div id="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
@@ -1383,7 +1384,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
       $("#outer-c").html(row);
 
       //perisist comments with replying_to = 0 to local storage for reference
-      persistence("code_comments", data);
+      persistence("comments", data);
     } else {
       $("#outer-c").html(row);
     }
@@ -1419,6 +1420,7 @@ function getCommentReplies(commentReplyId) {
   crudaction({}, `/comments-by-codeid${query}`, "GET", (feed) => {
     console.log("Get comments replies feedback => ", feed);
     let row = "";
+    let repliesView = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> 0 Replies </a>`;
     if (feed && feed.data && feed.data.length > 0) {
       //clear loading text
       $(`#load-cmt${commentReplyId}`).html("");
@@ -1444,18 +1446,16 @@ function getCommentReplies(commentReplyId) {
         let author_id = data[i].author_id;
         //console.log("comment id => ", comment_id);
 
-        //conditionally render replies icon
+        //if replies count is greater than 1 make the replies icon clickable
         if (replies > 0) {
-          replies = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
-        } else {
-          replies = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
+          repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
         }
 
         let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
             <div class="col-sm-3" id="load-cmt${comment_id}">
-            ${replies}
+            ${repliesView}
             </div>
 
             <div class="col-sm-5">
@@ -1512,6 +1512,7 @@ function getCommentReplies(commentReplyId) {
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                              <div id ="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
@@ -1532,19 +1533,21 @@ function getCommentReplies(commentReplyId) {
       $(`#inner-box${commentReplyId}`).html(row);
 
       //persist comments with replying_to > 0 to local storage for reference
-      if (current_loc && current_loc.comment_replies) {
-        let comment_replies = current_loc.comment_replies;
+      if (current_loc && current_loc.comments) {
+        let comments = current_loc.comments;
         for (let j = 0; j < data.length; j++) {
-          comment_replies.push(data[j]);
+          comments.push(data[j]);
         }
         //perisist comment replies with updated content
-        persistence(`comment_replies`, comment_replies);
+        persistence("comments", comments);
       } else {
-        persistence(`comment_replies`, data);
+        persistence("comments", data);
       }
     } else {
+      //means no replies for this comment, hence clear replies list
       $(`#inner-box${commentReplyId}`).html(row);
-      //revert the replies hyperlink
+      //then revoke current comment replies hyperlink
+      $(`#load-cmt${commentReplyId}`).html(repliesView);
     }
   });
 }
@@ -1575,35 +1578,20 @@ function toggleCommentForm(
   $(`#comment-edit-id${comment_id}`).val(action);
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
-  if (action === "edit comment" && replying_to == 0) {
-    //retrieve the comment from local storage from the key code_comments
-    let code_comments = [];
+  if (action === "edit comment") {
+    //retrieve the comments from local storage from the key comments
+    let comments = [];
     let comment_to_edit = {};
-    if (current_loc && current_loc.code_comments) {
-      code_comments = current_loc.code_comments;
-      for (let cc = 0; cc < code_comments.length; cc++) {
-        if (code_comments[cc].uid == comment_id) {
-          comment_to_edit = code_comments[cc];
+    if (current_loc && current_loc.comments) {
+      comments = current_loc.comments;
+      for (let cc = 0; cc < comments.length; cc++) {
+        if (comments[cc].uid == comment_id) {
+          comment_to_edit = comments[cc];
           break; //exit the loop
         }
       }
       //load the previous content to the form for editing
       $(`#fcbody${comment_id}`).val(comment_to_edit.comment_body);
-    }
-    //handle case if the form is requested for comment edit purpose and the comment is a reply to another comment
-  } else if (action === "edit comment" && replying_to > 0) {
-    let comment_replies = [];
-    let creply_to_edit = {};
-    if (current_loc && current_loc.comment_replies) {
-      comment_replies = current_loc.comment_replies;
-      for (let cr = 0; cr < comment_replies.length; cr++) {
-        if (comment_replies[cr].uid == comment_id) {
-          creply_to_edit = comment_replies[cr];
-          break; //exit the loop
-        }
-      }
-      //load the previous content to the form for editing
-      $(`#fcbody${comment_id}`).val(creply_to_edit.comment_body);
     }
   } else {
     //clear the form incase it was loaded with content by edit action
@@ -1734,6 +1722,23 @@ function saveComment(comment_id = 0) {
   let replying_to = parseInt(comment_id);
   let tag = 1; //Author
   let comment_body = $(`#fcbody${comment_id}`).val().trim();
+
+  //----checking if there is content in the comment body;
+  //Defining error variables with a default value
+  let commentErr = true;
+  // Validate username
+  if (comment_body == "") {
+    printError(`comment${comment_id}Err`, "Comment content required");
+  } else {
+    printError(`comment${comment_id}Err`, "");
+    commentErr = false;
+  }
+
+  if (commentErr == true) {
+    return false;
+  }
+  ////------End of checking if there is content in the comment body;
+
   let url = "/add-comment";
   let method = "POST";
   let jso = {
@@ -1762,7 +1767,7 @@ function saveComment(comment_id = 0) {
       if (action == "add comment" && replying_to == 0) {
         load_codesnippetById(code_snippet_id);
       } else if (action == "reply" && replying_to > 0) {
-        getCommentReplies(replying_to); //re-render the whole comment list;
+        getCommentReplies(replying_to); //re-render comment replies list;
       } else {
         reRenderEditedCommentBody(comment_id); //re-render the comment body
       }
@@ -1812,34 +1817,69 @@ function reRenderEditedCommentBody(comment_id) {
 }
 
 function upvoteComment(comment_id, action = "upvote comment") {
-  //check if a user is logged in before allowing commenting
+  //check if a user is logged in before allowing voting
   let current_loc = JSON.parse(localStorage.getItem("persist"));
-  if (current_loc.user && current_loc.user.uid) {
+  let user_id = 0;
+  if (current_loc && current_loc.user && current_loc.user.uid) {
+    user_id = current_loc.user.uid;
   } else {
     return alert(`Please sign in to ${action}`);
   }
 
-  let cur_page;
-  if (document.getElementById(`comment-${comment_id}-votes`)) {
-    let li = document.getElementById(`${clistId}`);
-    //console.log("Unfiltered list value => ", li);
-    li = (li.textContent || li.innerText).trim();
-    if (li.length > 1) {
-      cur_page = li[0];
+  let jso = {
+    post_id: comment_id,
+    user_id,
+    table: "pr_comments",
+    upvote: 1,
+    downvote: 0,
+  };
+
+  crudaction(jso, "/upvote-comment", "PUT", (feed) => {
+    if (!feed) {
+      return errorToast("Server error");
     }
-    if (li.length == 1) {
-      cur_page = li;
+    if (feed && feed.success == true) {
+      $(`#comment${comment_id}-votes`).html(feed.votes);
+      return successToast(feed.message);
     }
-    persistence("cur_page", li);
-  }
+
+    if (feed && feed.success == false) {
+      return errorToast(feed.message);
+    }
+  });
 }
 
-function upvoteComment(comment_id, action = "downvote comment") {
+function downvoteComment(comment_id, action = "downvote comment") {
+  //check if a user is logged in before allowing voting
   let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let user_id = 0;
   if (current_loc.user && current_loc.user.uid) {
+    user_id = current_loc.user.uid;
   } else {
     return alert(`Please sign in to ${action}`);
   }
+
+  let jso = {
+    post_id: comment_id,
+    user_id,
+    table: "pr_comments",
+    upvote: 0,
+    downvote: -1,
+  };
+
+  crudaction(jso, "/downvote-comment", "PUT", (feed) => {
+    if (!feed) {
+      return errorToast("Server error");
+    }
+    if (feed && feed.success == true) {
+      $(`#comment${comment_id}-votes`).html(feed.votes);
+      return successToast(feed.message);
+    }
+
+    if (feed && feed.success == false) {
+      return errorToast(feed.message);
+    }
+  });
 }
 
 function reformatDate(date_) {
