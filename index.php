@@ -220,7 +220,7 @@ include_once("configs/conn.inc");
                                         </div>
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
-                                        <div class="offset-sm-1 col-sm-11" id ="comment0Err"></div>
+                                        <div class="offset-sm-1 col-sm-11 error" id ="comment0Err"></div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-2"></div>

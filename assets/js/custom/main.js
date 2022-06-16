@@ -1363,7 +1363,7 @@ function getCommentsByCodesnippetId(clistId = 0) {
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
-                              <div class="offset-sm-1 col-sm-11" id="comment${comment_id}Err"></div>
+                              <div class="offset-sm-1 col-sm-11 error" id="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
@@ -1512,7 +1512,7 @@ function getCommentReplies(commentReplyId) {
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
-                              <div class="offset-sm-1 col-sm-11" id ="comment${comment_id}Err"></div>
+                              <div class="offset-sm-1 col-sm-11 error" id ="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
