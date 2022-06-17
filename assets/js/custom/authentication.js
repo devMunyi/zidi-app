@@ -309,7 +309,7 @@ function googleSignin() {
     successToast("Login success");
 
     setTimeout(() => {
-      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      let current_loc = currentLoc();
       if (current_loc && current_loc.user && current_loc.user.uid == user.uid) {
       } else {
         persistence("user", user);
@@ -370,7 +370,7 @@ function githubSignin() {
 
     successToast("Login success");
     setTimeout(() => {
-      let current_loc = JSON.parse(localStorage.getItem("persist"));
+      let current_loc = currentLoc();
       if (current_loc && current_loc.user && current_loc.user.uid == user.uid) {
       } else {
         persistence("user", user);
@@ -420,7 +420,7 @@ function updateHeader(pageId) {
     if (feed) {
       if (feed.success) {
         //add user & token to localstorage
-        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let current_loc = currentLoc();
         let user = current_loc.user;
 
         //console.log("SIGNED USER FOUND");
@@ -451,7 +451,7 @@ function updateHeader(pageId) {
 
         authorized = true; //gives a signal to render a protected page
       } else {
-        let current_loc = JSON.parse(localStorage.getItem("persist"));
+        let current_loc = currentLoc();
         let user = current_loc.user;
         //console.log("NO SIGNED USER FOUND");
         $("#account-1").hide();
@@ -541,7 +541,7 @@ function updateHeader(pageId) {
 function isAuthorized(pageId, authorized) {
   $(`#${pageId}`).hide();
   if (authorized) {
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    let current_loc = currentLoc();
     if (current_loc && current_loc.user) {
       if (
         pageId !== "profile-page" &&

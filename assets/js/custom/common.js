@@ -3,7 +3,7 @@ function crudaction(jsonbody, url, method = "POST", callback) {
   let server_ = $("#server_").val();
   let cleanJson = JSON.stringify(jsonbody);
   let token;
-  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let current_loc = currentLoc();
   if (current_loc && current_loc.token) {
     token = current_loc.token;
   }
@@ -190,7 +190,7 @@ function gotourl(url) {
 //persist fetched data in browser local storage for later user
 function persistence(k, val) {
   if (localStorage.getItem("persist")) {
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    let current_loc = currentLoc();
     current_loc[k] = val;
     //console.log(JSON.stringify(current_loc));
     localStorage.setItem("persist", JSON.stringify(current_loc));
@@ -205,7 +205,7 @@ function persistence(k, val) {
 //deletes particular data stored in localstorage by referencing key
 function persistence_remove(k) {
   if (localStorage.getItem("persist")) {
-    let current_loc = JSON.parse(localStorage.getItem("persist"));
+    let current_loc = currentLoc();
     delete current_loc[k];
     localStorage.setItem("persist", JSON.stringify(current_loc));
   }
@@ -262,7 +262,7 @@ function search() {
 }
 
 function pager_home() {
-  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  let current_loc = currentLoc();
   if (current_loc.func) {
     persistence_remove("func");
   }
@@ -283,6 +283,20 @@ function pager_home() {
 
   //call the function to return default page
   eval("load_codeSnippet()");
+}
+
+//check for persisted data
+function currentLoc() {
+  let current_loc = JSON.parse(localStorage.getItem("persist"));
+  if (current_loc) {
+    return current_loc;
+  } else {
+    return false;
+  }
+}
+
+function hyphenateSentence(str) {
+  return str.replace(/ /gi, "-");
 }
 
 ///////--------------End common reusable functions

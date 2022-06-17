@@ -480,6 +480,12 @@ include_once("configs/conn.inc");
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
 
+            //check if user had previously selcted a code
+            let current_loc = currentLoc();
+            if(current_loc && current_loc.code_sel && current_loc.code_sel.uid){
+                load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
+            }
+
         });
     </script>
     <script>
@@ -574,6 +580,8 @@ include_once("configs/conn.inc");
                 $(this).addClass('active-two');
             });
 
+            //tracking browsing history
+            console.log("history checking => ", typeof history.pushState);
         });
     </script>
 </body>
