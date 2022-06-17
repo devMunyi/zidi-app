@@ -976,6 +976,17 @@ function load_codesnippetById(codeId, language_name = "java") {
 
       //Set Languages
       language = language_name.toLowerCase();
+      if (language == "nodejs") {
+        language = "javascript";
+      }
+      if (language == "c#") {
+        language = "csharp";
+      }
+
+      if (language == "c" || language == "c++") {
+        language = "c_cpp";
+      }
+
       console.log("code language => ", language);
       //codeEditor.session.setMode("ace/mode/javascript");
       codeEditor.session.setMode("ace/mode/" + language);
