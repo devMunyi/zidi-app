@@ -1418,7 +1418,6 @@ function getCommentReplies(commentReplyId) {
   }
 
   crudaction({}, `/comments-by-codeid${query}`, "GET", (feed) => {
-    console.log("Get comments replies feedback => ", feed);
     let row = "";
     let repliesView = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> 0 Replies </a>`;
     if (feed && feed.data && feed.data.length > 0) {
@@ -1446,7 +1445,6 @@ function getCommentReplies(commentReplyId) {
         let author_id = data[i].author_id;
         //console.log("comment id => ", comment_id);
 
-        //if replies count is greater than 1 make the replies icon clickable
         if (replies > 0) {
           repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
         }
@@ -1472,7 +1470,7 @@ function getCommentReplies(commentReplyId) {
         } else {
           toggleActionsView = `
           <div class="col-sm-4" id="load-cmt${comment_id}">
-            ${replies}
+            ${repliesView}
           </div>
           <div class="col-sm-4">
           <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
