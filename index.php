@@ -3,10 +3,8 @@ session_start();
 include_once("php_functions/functions.php");
 include_once("configs/conn.inc");
 ?>
-
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -23,16 +21,12 @@ include_once("configs/conn.inc");
     include_once 'styles.php';
     ?>
 </head>
-
 <body class="font-opensans">
-
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
         </div>
     </div>
-
-
     <!-- Start main html -->
     <div id="main_content">
         <?php
@@ -94,7 +88,7 @@ include_once("configs/conn.inc");
                     <div class="row">
                         <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
                         <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
-                        <div class="col-sm-2" id="filter-dropdown"> <select class="fancy-select" id="sel_userimpltype" onchange="loadCodesnippetsLink()">
+                        <div class="col-sm-2" id="codestyle-dropdown"> <select class="fancy-select" id="sel_codestyle" onchange="loadCodesnippetsLink()">
                                 <option value="0"> All Code Styles</option>
                                 <option value="1">Plain Code</option>
                                 <option value="2">Function Based</option>
@@ -465,24 +459,17 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             footer_date(); //load footer
-            persistence_remove("func");
-            persistence_remove("subfunc");
-            persistence_remove("language");
-            persistence_remove("framework");
-            persistence_remove("offset");
-            persistence_remove("comments");
-            //persistence_remove("codeId");
-
             functions_load() //load all functions
             load_languages(); //Load all the languages
             loadCodesnippetsLink(); //load code links
             getAllFrams(); //persist all frameworks in local storage
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
+            codeStyles();
 
             //check if user had previously selcted a code
             let current_loc = currentLoc();
-            if(current_loc && current_loc.code_sel && current_loc.code_sel.uid){
+            if (current_loc && current_loc.code_sel && current_loc.code_sel.uid) {
                 load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
             }
 
@@ -563,8 +550,8 @@ include_once("configs/conn.inc");
 
             //toggle active subfunction
             //city, state, postal code, country
-            $('.subfunc-item').on('click', '.subfunc-item', function() {
-                $('.subfunc-item').removeClass('active-two');
+            $('.subfunc_').on('click', '.subfunc_', function() {
+                $('a.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');
             });
 
@@ -581,7 +568,7 @@ include_once("configs/conn.inc");
             });
 
             //tracking browsing history
-            console.log("history checking => ", typeof history.pushState);
+            //console.log("history checking => ", typeof history.pushState);
         });
     </script>
 </body>
