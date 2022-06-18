@@ -394,6 +394,7 @@ function getFramsByLang(lang_id) {
     let { data } = current_loc.allFrams;
     let fram_arr_size = data.length;
 
+    let active_fram;
     if (
       current_loc &&
       current_loc.code_sel &&
