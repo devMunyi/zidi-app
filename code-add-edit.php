@@ -104,7 +104,7 @@ if ($code_id > 0) {
 
                         <div class="form-group col-sm-3">
                             <label for="language_sel">*Language:</label>
-                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang()" required>
+                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit(); codeAddEdit()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
@@ -204,9 +204,17 @@ if ($code_id > 0) {
                     </div>
 
                     <div class="form-group">
-                        <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
-                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
+                        <div id="code-editor">
+                        function langAddEdit() {
+  let sel_lang = $("#language_sel").val();
+  console.log("selected language => ", sel_lang);
+  persistence("langAddEdit", sel_lang);
+}
+                        </div>
                         <div class="error" id="codeErr"></div>
+                        <!-- <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
+                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
+                        <div class="error" id="codeErr"></div> -->
                     </div>
                     <div class="form-group">
                         <label for="file_extension">*Code File Extension:</label>
@@ -250,6 +258,7 @@ if ($code_id > 0) {
             //     logout() //call logout function                
             // }, false);
             footer_date(); //load footer
+            codeAddEdit();
         })
     </script>
 

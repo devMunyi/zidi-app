@@ -24,3 +24,6 @@
 
 <!--Core Google auth button styling --->
 <!-- <meta name="google-signin-client_id" content="545549745917-bt32oena9mo7ankcbcqpg2thpc6kigdm.apps.googleusercontent.com"> -->
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet"/>

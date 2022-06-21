@@ -295,8 +295,107 @@ function currentLoc() {
   }
 }
 
-function hyphenateSentence(str) {
+function hyphenateTitle(str) {
   return str.replace(/ /gi, "-");
 }
 
+function goTo(url) {
+  if (typeof history.pushState !== undefined) {
+    history.pushState(null, null, url);
+  } else {
+    window.location.assign(url);
+  }
+}
+
+function getCurrentUrl() {
+  const url_string = window.location.href;
+  return new URL(url_string);
+}
+
+///pagination
+function Paging(
+  PageNumber,
+  PageSize,
+  TotalRecords,
+  ClassName,
+  DisableClassName
+) {
+  let commentCountView;
+  if (TotalRecords == 1) {
+    commentCountView = `${TotalRecords} comment`;
+  } else {
+    commentCountView = `${TotalRecords} comments`;
+  }
+  $(`#total-comments`).html(commentCountView);
+
+  var ReturnValue = "";
+
+  var TotalPages = Math.ceil(TotalRecords / PageSize);
+  if (+PageNumber > 1) {
+    if (+PageNumber == 2)
+      ReturnValue =
+        ReturnValue +
+        "<a data-pn='" +
+        (+PageNumber - 1) +
+        "' class='" +
+        ClassName +
+        "'>Previous</a>   ";
+    else {
+      ReturnValue = ReturnValue + "<a data-pn='";
+      ReturnValue =
+        ReturnValue +
+        (+PageNumber - 1) +
+        "' class='" +
+        ClassName +
+        "'>Previous</a>   ";
+    }
+  } else
+    ReturnValue =
+      ReturnValue + "<span class='" + DisableClassName + "'>Previous</span>   ";
+  if (+PageNumber - 3 > 1)
+    ReturnValue =
+      ReturnValue + "<a data-pn='1' class='" + ClassName + "'>1</a> ..... ";
+  for (var i = +PageNumber - 3; i <= +PageNumber; i++)
+    if (i >= 1) {
+      if (+PageNumber != i) {
+        ReturnValue = ReturnValue + "<a data-pn='";
+        ReturnValue =
+          ReturnValue + i + "' class='" + ClassName + "'>" + i + "</a>  ";
+      } else {
+        ReturnValue =
+          ReturnValue + "<span style='font-weight:bold;'>" + i + "</span>  ";
+      }
+    }
+  for (var i = +PageNumber + 1; i <= +PageNumber + 3; i++)
+    if (i <= TotalPages) {
+      if (+PageNumber != i) {
+        ReturnValue = ReturnValue + "<a data-pn='";
+        ReturnValue =
+          ReturnValue + i + "' class='" + ClassName + "'>" + i + "</a>  ";
+      } else {
+        ReturnValue =
+          ReturnValue + "<span style='font-weight:bold;'>" + i + "</span>  ";
+      }
+    }
+  if (+PageNumber + 3 < TotalPages) {
+    ReturnValue = ReturnValue + "..... <a data-pn='";
+    ReturnValue =
+      ReturnValue +
+      TotalPages +
+      "' class='" +
+      ClassName +
+      "'>" +
+      TotalPages +
+      "</a>";
+  }
+  if (+PageNumber < TotalPages) {
+    ReturnValue = ReturnValue + "   <a data-pn='";
+    ReturnValue =
+      ReturnValue + (+PageNumber + 1) + "' class='" + ClassName + "'>Next</a>";
+  } else
+    ReturnValue =
+      ReturnValue + "   <span class='" + DisableClassName + "'>Next</span>";
+
+  return ReturnValue;
+}
 ///////--------------End common reusable functions

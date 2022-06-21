@@ -33,7 +33,7 @@
 <script src="assets/plugins/ace/ace-editor/src-min/ace.js"></script>
 <script src="assets/plugins/ace/ace-editor/src-min/mode-javascript.js"></script>
 <script src="assets/plugins/ace/ace-editor/src-min/ext-language_tools.js"></script>
-<script src="assets/plugins/ace/ace-editor/src-min/ext-beautify.js"></script>
+<!-- <script src="assets/plugins/ace/ace-editor/src-min/ext-beautify.js"></script> -->
 
 <!--Require Highlight js Library-->
 <!-- <script src="assets/plugins/highlightjs/highlight.min.js"></script>
@@ -47,3 +47,5 @@
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Moment plugin script -->
 <script src="assets/plugins/moment/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify.js"></script>

@@ -5,6 +5,7 @@ include_once("configs/conn.inc");
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -21,6 +22,7 @@ include_once("configs/conn.inc");
     include_once 'styles.php';
     ?>
 </head>
+
 <body class="font-opensans">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -88,13 +90,7 @@ include_once("configs/conn.inc");
                     <div class="row">
                         <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
                         <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
-                        <div class="col-sm-2" id="codestyle-dropdown"> <select class="fancy-select" id="sel_codestyle" onchange="loadCodesnippetsLink()">
-                                <option value="0"> All Code Styles</option>
-                                <option value="1">Plain Code</option>
-                                <option value="2">Function Based</option>
-                                <option value="3">Class Based</option>
-                                <option value="4">API Based</option>
-                            </select>
+                        <div class="col-sm-2" id="codestyle-dropdown">
                         </div>
                         <div class="col-sm-1"><span id=edit-code></span></div>
                         <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
@@ -160,9 +156,12 @@ include_once("configs/conn.inc");
                                     </label>
                                 </div>
                             </div>
+
                             <div id="editor" class="card-body dark-screen">
 
                             </div>
+
+
                             <div class="card-footer">
 
                                 <div class="row" id="code-instructions">
@@ -411,16 +410,17 @@ include_once("configs/conn.inc");
 
 
                                 </div>
-                                <div class="row" id="pag-comments">
+                                <div id="pagingDiv"></div>
+                                <!-- <div class="row" id="pag-comments">
 
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
                         <div class="card transcard">
                             <div class="card-header pt-3">
-                                <h3 class="card-title"><i class="fe fe-eye"></i> Available Solutions</h3>
+                                <h3 class="card-title"><i class="fe fe-eye"></i> <span id="links-title"> Available Solutions</span></h3>
                             </div>
                             <div class="card-body pt-0" style="padding: 20px 0px;">
                                 <div class="list-group" id="available-solns">
@@ -458,21 +458,41 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
+            let current_loc = currentLoc();
             footer_date(); //load footer
             functions_load() //load all functions
             load_languages(); //Load all the languages
-            loadCodesnippetsLink(); //load code links
-            getAllFrams(); //persist all frameworks in local storage
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
             codeStyles();
 
+            if (current_loc && current_loc.language) {
+                getFramsByLang(current_loc.language)
+            } else {
+                getAllFrams();
+            }
+
+            if (current_loc && current_loc.code_sel) {
+                persistence("func", current_loc.code_sel.func_id);
+                persistence("subfunc", current_loc.code_sel.subfunc_id)
+                persistence("language", current_loc.code_sel.language_id)
+                persistence("framework", current_loc.code_sel.framework_id)
+                persistence("codestyle", current_loc.code_sel.codestyle_id)
+                loadCodesnippetsLink(); //load code links with previously loaded code params
+                $("#links-title").html("Your Previous Solution")
+            } else {
+                loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
+            }
+
             //check if user had previously selcted a code
-            let current_loc = currentLoc();
             if (current_loc && current_loc.code_sel && current_loc.code_sel.uid) {
                 load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
             }
 
+            //pagination click even listener
+            $("#pagingDiv").on("click", "a", function() {
+                setTargetPage($(this).attr("data-pn"))
+            });
         });
     </script>
     <script>
@@ -567,8 +587,15 @@ include_once("configs/conn.inc");
                 $(this).addClass('active-two');
             });
 
-            //tracking browsing history
-            //console.log("history checking => ", typeof history.pushState);
+
+            const url = getCurrentUrl();
+            const codeId = url.searchParams.get("code-id");
+            const language = url.searchParams.get("language");
+            if (codeId > 0 && language.length) {
+                load_codesnippetById(codeId, language);
+                persistence("language", language);
+            }
+
         });
     </script>
 </body>

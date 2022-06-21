@@ -99,9 +99,6 @@ function functions_load() {
         }
         $("#functions_").html(fun);
       });
-      console.log(
-        "functionality and subfunctionality were loaded----------------"
-      );
     } else {
       $("#functions_").html("No record found");
     }
@@ -215,8 +212,12 @@ function load_languages() {
         let uid = data[i].uid;
         let title = data[i].name;
         let icon = data[i].icon;
-        if (current_loc && current_loc.language) {
-          language_sel = current_loc.language;
+        if (
+          current_loc &&
+          current_loc.code_sel &&
+          current_loc.code_sel.language_id > 0
+        ) {
+          language_sel = current_loc.code_sel.language_id;
           if (uid == language_sel) {
             active_language = "active-two";
           } else {
@@ -229,7 +230,6 @@ function load_languages() {
         <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
-      console.log("Languages were loaded----------------");
     } else {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
@@ -241,10 +241,14 @@ function load_languages() {
 
 //////------Begin framework
 function filterFramsByLang() {
+  //meant for the code-add-edit form page
   let current_loc = currentLoc();
-
+  console.log(
+    "Framework retrieval from the localstorage => ",
+    current_loc.allFrams
+  );
   if (current_loc && current_loc.allFrams) {
-    let frams = current_loc.allFrams.data;
+    let frams = current_loc.allFrams;
 
     let sel_lang = parseInt($("#language_sel").val().trim());
     let fram = `<option value="">--Select One</option><option value="0">No Framework</option>`;
@@ -296,31 +300,46 @@ function getAllFrams() {
     rpp;
 
   crudaction({}, "/frameworks" + query, "GET", function (feed) {
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink()'>
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFramework()'>
+    <option value = "">--Select Framework</option>
     `;
-    let current_loc = currentLoc();
-    let active_fram;
-
-    if (
-      current_loc &&
-      current_loc.code_sel &&
-      current_loc.code_sel.framework_id
-    ) {
-      active_fram = current_loc.code_sel.framework_id;
-    }
 
     if (feed && feed.data && feed.data.length > 0) {
       let { data } = feed;
       let arr_size = data.length;
+
+      let index = data.findIndex(function (o) {
+        return o.uid == 0;
+      });
+
+      console.log("The framework with uid of 0 is at index => ", index);
+      if (index !== -1) data.splice(index, 1);
+
+      //append the framework data with uid as the first object within the array
+      data.unshift({
+        description: "",
+        icon: 0,
+        language: "",
+        language_id: 0,
+        name: "No Framework",
+        status: 1,
+        uid: 0,
+      });
+
+      let current_loc = currentLoc();
+      let active_fram;
+
+      if (
+        current_loc &&
+        current_loc.code_sel &&
+        current_loc.code_sel.framework_id >= 0
+      ) {
+        active_fram = current_loc.code_sel.framework_id;
+      }
       //console.log("data size => ", arr_size);
-      row += `<option value="0">No framework</option>`;
       for (let i = 0; i < arr_size; i++) {
         let fram_id = data[i].uid;
         let fram_name = data[i].name;
-
-        if (fram_id == 0) {
-          continue;
-        }
 
         if (fram_id == active_fram) {
           row += `<option SELECTED value="${fram_id}">${fram_name}</option>`;
@@ -332,7 +351,9 @@ function getAllFrams() {
       $("#framework-dropdown").html(row + "</select>");
 
       //persist the data for later use
-      persistence("allFrams", feed);
+      persistence("allFrams", data);
+
+      persistFramework(); //persist selected framework
     } else {
       row = `
       <select>
@@ -345,73 +366,28 @@ function getAllFrams() {
   });
 }
 
-function codeStyles() {
-  let data = [
-    {
-      uid: 0,
-      name: "All Code Styles",
-    },
-    { uid: 1, name: "Plain Code" },
-    { uid: 2, name: "Function Based" },
-    { uid: 3, name: "Class Based" },
-    { uid: 4, name: "API Based" },
-  ]; //static code style data
-  let current_loc = currentLoc(); //access persisted localstorage key values
-  //check for the previously loaded code and if avilable grab the codestyle_id
-  if (
-    current_loc &&
-    current_loc.code_sel &&
-    current_loc.code_sel.codestyle_id
-  ) {
-    active_codestyle = current_loc.code_sel.codestyle_id;
-  }
-
-  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='loadCodesnippetsLink()'>`;
-  for (let i = 0; i < data.length > 0; i++) {
-    let codestyle_id = data[i].uid;
-    let codestyle_title = data[i].name;
-    if (codestyle_id == active_codestyle) {
-      row += `<option SELECTED value="${codestyle_id}">${codestyle_title}</option>`;
-    } else {
-      row += `<option value="${codestyle_id}">${codestyle_title}</option>`;
-    }
-  }
-
-  //display framework select box with frameworks for the selected language
-  $("#codestyle-dropdown").html(row + "<select");
-}
-
 function getFramsByLang(lang_id) {
   let current_loc = currentLoc();
-  let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink()'>
+  let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFramework()'>
+  <option value = "">--Select Framework</option>
   `;
-  if (
-    current_loc &&
-    current_loc.allFrams &&
-    current_loc.allFrams.data &&
-    current_loc.allFrams.data.length > 0
-  ) {
-    let { data } = current_loc.allFrams;
+  if (current_loc && current_loc.allFrams) {
+    let data = current_loc.allFrams;
     let fram_arr_size = data.length;
 
     let active_fram;
     if (
       current_loc &&
       current_loc.code_sel &&
-      current_loc.code_sel.framework_id
+      current_loc.code_sel.framework_id >= 0
     ) {
       active_fram = current_loc.code_sel.framework_id;
     }
 
-    row += `<option value="0">No framework</option>`;
-
     for (let i = 0; i < fram_arr_size; i++) {
-      if (data[i].language_id == lang_id) {
+      if (data[i].language_id == lang_id || data[i].name == "No Framework") {
         let fram_id = data[i].uid;
         let fram_name = data[i].name;
-        if (fram_id == 0) {
-          continue;
-        }
 
         if (fram_id == active_fram) {
           row += `<option SELECTED value="${fram_id}">${fram_name}</option>`;
@@ -422,6 +398,8 @@ function getFramsByLang(lang_id) {
     }
     //display framework select box with frameworks for the selected language
     $("#framework-dropdown").html(row + "</select>");
+
+    persistFramework(); //persist selected framework
   } else {
     row = `
       <select>
@@ -857,130 +835,41 @@ function select_code(
   $("#code_results").fadeOut("fast");
 }
 
-// function loadSearchSelCode() {
-//   //codeLoading("#codeimp-title");
-//   codeLoading("#imptype-and-contributor");
-
-//   let current_loc = currentLoc();
-//   let codeId;
-//   if (current_loc && current_loc.code_sel) {
-//     codeId = current_loc.code_sel.uid;
-//   } else {
-//     console.log("Error retriving code ID");
-//     return;
-//   }
-
-//   let codeEditor = ace.edit("editor");
-//   let editorLib = {
-//     init() {
-//       //Configure Ace
-//       codeEditor.setTheme("ace/theme/monokai");
-
-//       //Set Languages
-//       codeEditor.session.setMode("ace/mode/javascript");
-//       codeEditor.session.setMode("ace/mode/java");
-//       //codeEditor.session.setMode("ace/mode.html");
-//       //codeEditor.session.setMode("ace/mode/php");
-//       //Set Options
-//       codeEditor.setOptions({
-//         //fontFamily: 'Inconsolata'
-//         fontSize: "12pt",
-//         //enableBasicAutocompletion: true,
-//         //enableLiveAutocompletion: true
-//       });
-
-//       //Set default code
-//       let jso = {};
-//       query = "?codesnippet_id=" + codeId;
-
-//       crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
-//         //reset code editor to empty
-//         codeEditor.setValue("");
-
-//         let total_ = feed.all_totals;
-
-//         let codeImpTitle = ""; //intial default value
-//         let imptypeAndContributor = ""; //initial default value
-
-//         // let codeVersions = "";
-//         if (total_ > 0) {
-//           //clear load framework dropdown
-//           $("#framework-dropdown").html("");
-//           $("#version-dropdown").html("");
-
-//           let data = feed["data"];
-
-//           //update code implementation title
-//           codeImpTitle = data.title;
-//           $("#codeimp-title").html(
-//             "<h4 class='text-left'>" + codeImpTitle + "</h4>"
-//           );
-
-//           imptypeAndContributor =
-//             "Contributed by " +
-//             '<a class="a-override a-alt bold" title="View contributor\'s profile" href="javascript:void(0)">' +
-//             data.fullname +
-//             "</a>";
-
-//           $("#imptype-and-contributor").html(imptypeAndContributor);
-
-//           //append code edit button after add button
-//           $("#edit-code").html(
-//             ` | <a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
-//           );
-
-//           let firstChar;
-//           //check for previously selected code implementation
-//           let impl_title = data.language_implementation_type;
-
-//           firstChar = impl_title[0];
-
-//           if (firstChar == "D") {
-//             impl_title = "";
-//           } else {
-//             impl_title = ` (${impl_title})`;
-//           }
-
-//           // codeVersions += `<option value="0">Implementation 1 ${impl_title} </option>`;
-
-//           // $("#version-dropdown").html(codeVersions + "</select>");
-
-//           //Display the code snippet
-//           codeEditor.setValue(data.row_code);
-
-//           //update the reminder of selected combinations for the loaded code snippet
-//         } else {
-//           //set code implementation title to initialized default value
-//           $("#codeimp-title").html(codeImpTitle);
-
-//           //set implementation type and contributor name to intialized default value
-//           $("#imptype-and-contributor").html(imptypeAndContributor);
-
-//           //add code version drop down
-//           // $("#version-dropdown").html(codeVersions);
-
-//           //empty the code edit link
-//           $("#edit-code").html("");
-
-//           /////-------Display that no codesnippet found
-//           codeEditor.setValue("No Code Loaded.");
-//         }
-//       });
-//     },
-//   };
-
-//   editorLib.init();
-// }
-
-//load codesnippet by id
-
-//appending current laoded code to url
-function goTo(page, title, url) {
-  if ("undefined" !== typeof history.pushState) {
-    history.pushState({ page: page }, title, url);
-  } else {
-    window.location.assign(url);
+function codeStyles() {
+  let data = [
+    {
+      uid: "",
+      name: "All Code Styles",
+    },
+    { uid: 1, name: "Plain Code" },
+    { uid: 2, name: "Function Based" },
+    { uid: 3, name: "Class Based" },
+    { uid: 4, name: "API Based" },
+  ]; //static code style data
+  let current_loc = currentLoc(); //access persisted localstorage key values
+  //check for the previously loaded code and if avilable grab the codestyle_id
+  let active_codestyle;
+  if (
+    current_loc &&
+    current_loc.code_sel &&
+    current_loc.code_sel.codestyle_id
+  ) {
+    active_codestyle = current_loc.code_sel.codestyle_id;
   }
+
+  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='loadCodesnippetsLink()'>`;
+  for (let i = 0; i < data.length > 0; i++) {
+    let codestyle_id = data[i].uid;
+    let codestyle_title = data[i].name;
+    if (codestyle_id == active_codestyle) {
+      row += `<option SELECTED value="${codestyle_id}">${codestyle_title}</option>`;
+    } else {
+      row += `<option value="${codestyle_id}">${codestyle_title}</option>`;
+    }
+  }
+
+  //display framework select box with frameworks for the selected language
+  $("#codestyle-dropdown").html(row + "<select");
 }
 
 const tagsToReplace = {
@@ -997,20 +886,23 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function loadCodesnippetsLink() {
-  //display a loader
-  codeLoading("#available-solns");
+function persistFramework() {
+  let sel_framework = parseInt($("#sel_framework").val());
+  persistence("framework", sel_framework);
+}
 
-  //persistence("offset", $("#code-version").val());
-  persistence("framework", $("#sel_framework").val());
+function loadCodesnippetsLink() {
+  //show a loader
+  codeLoading("#available-solns");
+  $("#links-title").html("Available Solutions");
+  let sel_codestyle = parseInt($("#sel_codestyle").val());
+  persistence("codestyle", sel_codestyle);
   //persistence("language", $("#sel_language").val());
   let current_loc = currentLoc();
   let sel_func;
   let sel_subfunc;
   let sel_language;
   let sel_framework;
-  let sel_impl = parseInt($("#sel_codestyle").val().trim());
-  let offset;
 
   if (current_loc && current_loc.func > 0) {
     sel_func = current_loc.func;
@@ -1027,14 +919,12 @@ function loadCodesnippetsLink() {
     sel_framework = current_loc.framework;
   }
 
-  if (current_loc && current_loc.offset >= 0) {
-    sel_offset = current_loc.offset;
+  if (current_loc && current_loc.codestyle > 0) {
+    sel_codestyle = current_loc.codestyle;
   }
 
   let rpp = 25;
-  if (!offset) {
-    offset = 0;
-  }
+  let offset = 0;
 
   if (!sel_func) {
     sel_func = "";
@@ -1046,20 +936,14 @@ function loadCodesnippetsLink() {
 
   if (!sel_language) {
     sel_language = "";
-  } else {
-    persistence("language", sel_language);
   }
 
-  if (!sel_framework) {
+  if (!sel_framework && sel_framework !== 0 && !sel_framework >= 0) {
     sel_framework = "";
-  } else {
-    persistence("framework", sel_framework);
   }
 
-  if (!sel_impl) {
-    sel_impl = "";
-  } else {
-    persistence("impl", sel_impl);
+  if (!sel_codestyle || sel_codestyle === 0) {
+    sel_codestyle = "";
   }
 
   let where_ = "c.status = 1 ";
@@ -1084,7 +968,7 @@ function loadCodesnippetsLink() {
     "&framework_id=" +
     sel_framework +
     "&user_impl_type_id=" +
-    sel_impl +
+    sel_codestyle +
     "&offset=" +
     offset +
     "&rpp=" +
@@ -1163,6 +1047,9 @@ function load_codesnippetById(codeId, language_name = "java") {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor");
 
+  //Set default code
+  let jso = {};
+  query = "?codesnippet_id=" + codeId;
   let codeEditor = ace.edit("editor");
   let editorLib = {
     init() {
@@ -1181,13 +1068,14 @@ function load_codesnippetById(codeId, language_name = "java") {
       if (language == "c" || language == "c++") {
         language = "c_cpp";
       }
-
       codeEditor.session.setMode("ace/mode/" + language);
+
       //Set Options
       codeEditor.setOptions({
         //fontFamily: "Inconsolata",
         fontSize: "12pt",
         enableBasicAutocompletion: true,
+        autoScrollEditorIntoView: true,
         //enableLiveAutocompletion: true,
       });
 
@@ -1208,11 +1096,13 @@ function load_codesnippetById(codeId, language_name = "java") {
         if (feed.data && feed.data.uid > 0 && feed.data.uid == codeId) {
           //clear load framework dropdown
           let data = feed["data"];
+          let { title } = data;
+          //console.log("loaded code details => ", data);
           let { func_id, subfunc_id, language_id, framework_id, codestyle_id } =
             data;
 
           //update code implementation title
-          codeImpTitle = data.title;
+          codeImpTitle = title;
           $("#codeimp-title").html(
             "<h4 class='text-left'>" + codeImpTitle + "</h4>"
           );
@@ -1250,6 +1140,23 @@ function load_codesnippetById(codeId, language_name = "java") {
             $("#edit-code").html("");
           }
 
+          //append url to the current page
+          const url = getCurrentUrl();
+          let hyphenatedTitle = hyphenateTitle(title);
+          let language_name = data.language_name;
+          language_name = language_name.toLowerCase();
+          let code_uid = data.uid;
+
+          const host = url.host;
+          let origin = "https://zidiapp.com/";
+          if (host == "localhost") {
+            origin = "http://localhost/backgen/zidi/";
+          } else {
+          }
+
+          let myUrl = `${origin}?${hyphenatedTitle}&language=${language_name}&code-id=${code_uid}`;
+          goTo(myUrl);
+
           //display the codesnippet
           codeEditor.setValue(data.row_code);
 
@@ -1258,20 +1165,6 @@ function load_codesnippetById(codeId, language_name = "java") {
             $("#code-instructions").html(data.instructions);
           } else {
             $("#code-instructions").html("No Instructions");
-          }
-
-          //display total comments for this particular codesnippet
-          let commentCountView;
-          if (data.total_comments) {
-            let commentsCount = data.total_comments;
-            if (commentsCount == 1) {
-              commentCountView = `${commentsCount} comment`;
-            } else {
-              commentCountView = `${commentsCount} comments`;
-            }
-            $("#total-comments").html(commentCountView);
-          } else {
-            $("#total-comments").html("0 comments");
           }
 
           //add comment button
@@ -1288,6 +1181,17 @@ function load_codesnippetById(codeId, language_name = "java") {
           persistence("codestyle", data.codestyle_id);
 
           //retrieve comments for the loaded codesnippet
+          //let ctotals = getCommentsByCodesnippetId();
+          let ctotal = data.total_comments;
+          persistence("total_comments", ctotal);
+          let commentCountView;
+          if (ctotal == 1) {
+            commentCountView = `${ctotal} comment`;
+          } else {
+            commentCountView = `${ctotal} comments`;
+          }
+          $(`#total-comments`).html(commentCountView);
+
           getCommentsByCodesnippetId();
 
           //highlight the
@@ -1300,7 +1204,9 @@ function load_codesnippetById(codeId, language_name = "java") {
             codestyle_id
           );
 
-          console.log("codesnippet was loaded----------------");
+          // setTimeout(() => {
+          //   formatCode(language_name); //format the codesnippet
+          // }, 500);
         } else {
           //set code implementation title to initialized default value
           $("#codeimp-title").html(codeImpTitle);
@@ -1315,6 +1221,61 @@ function load_codesnippetById(codeId, language_name = "java") {
           codeEditor.setValue("No Code Loaded.");
         }
       });
+    },
+  };
+  editorLib.init();
+}
+
+// function formatCode(language) {
+//   let codeEditor = ace.edit("editor");
+//   let editorLib = {
+//     init() {
+//       //let modelist = ace.require("ace/ext/modelist");
+//       //Configure Ace
+//       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
+//       codeEditor.setTheme("ace/theme/monokai");
+//       codeEditor.session.setMode("ace/mode/" + language);
+//       //Set Options
+//       let setOptions = {
+//         //fontFamily: "Inconsolata",
+//         fontSize: "12pt",
+//         enableBasicAutocompletion: true,
+//         autoScrollEditorIntoView: true,
+//       };
+//       codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
+//     },
+//   };
+//   editorLib.init();
+// }
+
+function langAddEdit() {
+  let sel_lang = $("#language_sel").val();
+  //console.log("selected language => ", sel_lang);
+  persistence("langAddEdit", sel_lang);
+}
+
+function codeAddEdit() {
+  let current_loc = currentLoc();
+  let language = current_loc.langAddEdit;
+
+  let codeEditor = ace.edit("code-editor");
+  let editorLib = {
+    init() {
+      //Configure Ace
+      //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
+      codeEditor.resize();
+      codeEditor.setTheme("ace/theme/monokai");
+      codeEditor.session.setMode("ace/mode/" + language);
+
+      //Set Options
+      let setOptions = {
+        //fontFamily: "Inconsolata",
+        fontSize: "12pt",
+        enableBasicAutocompletion: true,
+        autoScrollEditorIntoView: true,
+        setTabSize: 4,
+      };
+      codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
     },
   };
   editorLib.init();
@@ -1342,106 +1303,14 @@ function highlightSelCodeParams(
   //highlight the function for the code loaded
   let targetFuncId = "#func-item" + func_id;
   let targetFuncElem = $(`${targetFuncId}`);
-  console.log("selected func item => ", targetFuncElem);
   //alert($(`#func-item${func_id}`).hasClass("has-arrow"));
   if (targetFuncElem) {
-    console.log(`func item ${func_id} was found`);
     //("#func-item-" + func_id).addClass("active-two");
     targetFuncElem.toggleClass("active");
-  } else {
-    console.log("func item was not found");
   }
-
-  //highlight the subfunction for the code loaded
-  // if ($("#subfunc-item" + subfunc_id)) {
-  //   $("#subfunc-item" + subfunc_id).addClass("active-two");
-  //   let subfunc_item = $("#subfunc-item" + subfunc_id);
-  //   console.log(`subfunc item ${subfunc_item} was found`);
-  // } else {
-  //   console.log("subfunc item was not found");
-  // }
-
-  //highlight the language for the code loaded
-  // $("#lang-item" + lang_id).addClass("active-two");
-  // if ($("#lang-item" + lang_id)) {
-  //   let lang_item = $("#lang-item" + lang_id);
-  //   console.log(`subfunc item ${lang_item} was found`);
-  // } else {
-  //   console.log("subfunc item was not found");
-  // }
 }
 
 //////---------------------End codeSnippet
-
-///////--------------Begin Implementations
-// function getImplementations(language_id_) {
-//   if (language_id_) {
-//     let offset = 0;
-//     let rpp = 100;
-//     let where_ = "f.status = 1";
-//     let orderby = "f.name";
-//     let dir = "ASC";
-
-//     let query =
-//       "?language_id=" +
-//       language_id_ +
-//       "&where_=" +
-//       where_ +
-//       "&orderby=" +
-//       orderby +
-//       "&dir=" +
-//       dir +
-//       "&offset=" +
-//       offset +
-//       "&rpp=" +
-//       rpp;
-
-//     let jso = {};
-
-//     //console.log(query);
-//     crudaction(jso, "/frameworks" + query, "GET", function (result) {
-//       if (result.all_totals > 0) {
-//         let data = result["data"];
-//         let frm = `<select  class="fancy-select" id="sel_framework" onchange="loadCodesnippetsLink()">
-//         <option value="0"> No Framework</option>`;
-
-//         //check for previously selected framework
-//         let current_loc = currentLoc();
-//         let framework_prev_sel;
-
-//         for (var i = 0; i < data.length; i++) {
-//           var uid = data[i].uid;
-//           var title = data[i].name;
-//           //var icon = data[i].icon;
-
-//           if (current_loc && current_loc.framework) {
-//             let framework_sel = current_loc.framework;
-//             if (framework_sel == uid) {
-//               framework_prev_sel = "SELECTED";
-//             } else {
-//               framework_prev_sel = "";
-//             }
-//           }
-
-//           frm += `<option ${framework_prev_sel} value="${uid}">${title}</option>`;
-//         }
-
-//         $("#framework-dropdown").html(frm + "</select>");
-//         //load to code snippet based on id parsed to the load framework function which is called on clicking language list
-//         loadCodesnippetsLink();
-//       } else {
-//         //////-------No Frameworks found
-//         $("#framework-dropdown").html(frm + "</select>");
-//         loadCodesnippetsLink();
-//       }
-//     });
-//   } else {
-//     //console.log("No Language id value found");
-//     $("#framework-dropdown").html("");
-//   }
-// }
-
-////////-------------End Implementations
 
 //////------------------------------------Begin Profile
 function populateProfile() {
@@ -1495,7 +1364,15 @@ function title_update(title) {
 }
 
 //////----------------------------------Begin comments
-function getCommentsByCodesnippetId(clistId = 0) {
+function setTargetPage(current_page) {
+  //let current_page = $(this).attr("data-pn");
+  console.log("target page is => ", parseInt(current_page));
+  persistence("cur_page", parseInt(current_page));
+  getCommentsByCodesnippetId();
+}
+
+function getCommentsByCodesnippetId() {
+  console.log("get comments method was called");
   let current_loc = currentLoc();
 
   let code_id;
@@ -1511,35 +1388,21 @@ function getCommentsByCodesnippetId(clistId = 0) {
     comment_author = current_loc.user.uid;
   }
 
-  //let li = $(`#${clistId}`);
+  //determining comments load offset;
   let cur_page;
-  if (document.getElementById(`${clistId}`)) {
-    let li = document.getElementById(`${clistId}`);
-    //console.log("Unfiltered list value => ", li);
-    li = (li.textContent || li.innerText).trim();
-    if (li.length > 1) {
-      cur_page = li[0];
-    }
-    if (li.length == 1) {
-      cur_page = li;
-    }
-    persistence("cur_page", li);
+  if (current_loc && current_loc.cur_page) {
+    cur_page = current_loc.cur_page;
   } else {
-    let current_loc = currentLoc();
-    if (current_loc && current_loc.cur_page) {
-      cur_page = current_loc.cur_page;
-    } else {
-      cur_page = 1;
-    }
+    cur_page = 1;
   }
-  cur_page--; //decrement by one to align with db offsets multiples
+  let cur_page_ = cur_page - 1; //decrement by one to align with db offsets multiples
   let rpp = 5;
   let where_ = `cmt.code_snippet_id = ${code_id} AND cmt.replying_to = 0 AND cmt.status = 1`;
   let orderby = "cmt.uid"; //cmt denote an alias for pr_comments table
   let dir = "DESC";
-  let offset = cur_page;
-  if (cur_page > 0) {
-    offset = cur_page * rpp;
+  let offset = cur_page_;
+  if (cur_page_ > 0) {
+    offset = cur_page_ * rpp;
   }
 
   let query =
@@ -1684,8 +1547,26 @@ function getCommentsByCodesnippetId(clistId = 0) {
       $("#outer-c").html(row);
     }
 
-    paginateComments(total_records);
-    paginationRefactor(); //refactor pagination
+    //update comment counter view
+    let commentCountView;
+    if (total_records == 1) {
+      commentCountView = `${total_records} comment`;
+    } else {
+      commentCountView = `${total_records} comments`;
+    }
+    $(`#total-comments`).html(commentCountView);
+
+    //pagination
+    if (total_records > 5) {
+      let paginationResult = Paging(
+        cur_page,
+        rpp,
+        total_records,
+        "myClass",
+        "myDisableClass"
+      );
+      $("#pagingDiv").html(paginationResult);
+    }
   });
 }
 
@@ -1897,113 +1778,6 @@ function toggleCommentForm(
   }
 }
 
-function nextPageBtn() {
-  let current_loc = currentLoc();
-  let current_page;
-  if (current_loc && current_loc.cur_page) {
-    current_page = current_loc.cur_page;
-    current_page++; //increment current page by 1;
-
-    persistence("cur_page", current_page);
-
-    getCommentsByCodesnippetId(); //load comments for the requested page
-  }
-}
-
-function prevPageBtn() {
-  let current_loc = currentLoc();
-  let current_page;
-  if (current_loc && current_loc.cur_page) {
-    current_page = current_loc.cur_page;
-    current_page--; //decrement current page by 1;
-
-    persistence("cur_page", current_page);
-
-    getCommentsByCodesnippetId(); //load comments for the requested page
-  }
-}
-
-function paginationRefactor() {
-  let current_page;
-  let last_page;
-  let current_loc = currentLoc();
-  if (current_loc && current_loc.cur_page && current_loc.last_page) {
-    current_page = current_loc.cur_page;
-    last_page = current_loc.last_page;
-    current_page = current_loc.cur_page;
-
-    if (last_page == 1) {
-      $("#next-btn").addClass("disable-list-elem");
-      //or document.getElementById("next-btn").style.pointerEvents = "none";
-    }
-
-    if (current_page == 1) {
-      $("#prev-btn").addClass("disable-list-elem");
-      //or document.getElementById("prev-btn").style.pointerEvents = "none";
-    }
-
-    if (current_page == last_page && current_page > 1 && last_page > 1) {
-      $("#next-btn").addClass("disable-list-elem");
-      //or document.getElementById("next-btn").style.pointerEvents = "none";
-    }
-  }
-}
-
-function paginateComments(records) {
-  let current_loc = currentLoc();
-  //let records = current_loc.code_comments_total;
-  //update the value for the total comments displayed
-
-  let commentCountView;
-  if (records == 1) {
-    commentCountView = `${records} comment`;
-  } else {
-    commentCountView = `${records} comments`;
-  }
-  $(`#total-comments`).html(commentCountView);
-
-  let row = "";
-
-  if (records > 0) {
-    let rpp = 5;
-    let current_page;
-    if (current_loc.cur_page) {
-      //console.log("current page => ", current_loc.cur_page);
-      current_page = current_loc.cur_page;
-    }
-
-    let num_of_pages = Math.ceil(records / rpp);
-    persistence("last_page", num_of_pages);
-    row += `
-        <nav aria-label="...">
-          <ul class="pagination">
-            <li class="page-item" id="prev-btn" onclick="prevPageBtn()">
-                <a class="page-link" href="javascript:void(0)" tabindex="-1">Previous</a>
-            </li>
-  `;
-    for (let i = 1; i <= num_of_pages; i++) {
-      if (i == current_page) {
-        row += `<li class="page-item active" aria-current="page" id="clist-item${i}">
-                  <span class="page-link">
-                      ${i}
-                      <span class="sr-only">(current)</span>
-                  </span>
-                </li>`;
-      } else {
-        row += `<li class="page-item" onclick="getCommentsByCodesnippetId('clist-item${i}')" id="clist-item${i}"><a class="page-link" href="javascript:void(0)">${i}</a></li>`;
-      }
-    }
-    row += `<li class="page-item" id="next-btn" onclick="nextPageBtn()">
-                <a class="page-link" href="javascript:void(0)">Next</a>
-            </li>
-        </ul>
-      </nav>`;
-    $("#pag-comments").html(row);
-  } else {
-    $("#pag-comments").html(row);
-  }
-}
-
 function saveComment(comment_id = 0) {
   //first check if user is logged in before saving the comment
   let added_by;
@@ -2057,11 +1831,12 @@ function saveComment(comment_id = 0) {
 
   //console.log("Comment Details => ", jso);
   crudaction(jso, url, method, (feed) => {
-    //console.log("comment save feedback => ", feed);
+    console.log("comment save feedback => ", feed);
     if (feed.success) {
       toggleCommentForm(comment_id);
       if (action == "add comment" && replying_to == 0) {
-        load_codesnippetById(code_snippet_id);
+        persistence("cur_page", 1); //will ensure the user sees newly posted comment as it appears on the first page
+        getCommentsByCodesnippetId();
       } else if (action == "reply" && replying_to > 0) {
         getCommentReplies(replying_to); //re-render comment replies list;
       } else {
