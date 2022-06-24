@@ -1,4 +1,73 @@
-RewriteEngine on 
+RewriteEngine On 
 RewriteCond %{REQUEST_FILENAME} !-d 
 RewriteCond %{REQUEST_FILENAME}\.php -f 
 RewriteRule ^(.*)$ $1.php
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ /backgen/zidi/index?ctitle=$1&cid=$2 [NC]
+#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/$ index.php?ctitle=$1&cid=$2 [NC]
+
+
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# RewriteEngine on
+# RewriteCond %{HTTP_HOST} ^(www\.)?localhost\.com$ [NC]
+# RewriteRule ^ http://www.example1.com%{REQUEST_URI} [L,NE,P]
+# RewriteRule ^([a-zA-Z_-]+)/([0-9]+)$ /backgen/zidi/index?ctitle=$1&cid=$2 [L]
+
+# RewriteEngine on
+# RewriteBase / 
+# RewriteCond %{REQUEST_FILENAME} !-d 
+# RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^([^/]*)/([^/]*)$ /backgen/zidi/index.php?ctitle=$1&cid=$2 [L]
+#RewriteRule ^([a-zA-Z_-]+)/([0-9]+)$ /backgen/zidi/index.php?ctitle=$1&cid=$2 [L]
+#RewriteRule ^([a-zA-Z0-9_-]+)$ /backgen/zidi/index.php?q=$1 [NC]
+#RewriteRule ^([a-zA-Z0-9_-]+)/$ /backgen/zidi/index.php?q=$1 [NC]
+
+#RewriteRule ^([^/]*)/([^/]*)$ /index.php?category=$1&page=$2 [L]
+#RewriteRule ^([0-9]+)/(.+)/?$ index.php?p=$1&t=$2 [NC]
+
+
+
+
+# RewriteEngine On
+
+# RewriteRule ^index\.php$ - [L]
+
+# RewriteRule ^([^/]+)/?$ /backgen/zidi/index.php?title=$1 [L,QSA]
+
+# RewriteRule ^([a-z]{2})/([^/]+)/?$ /backgen/zidi/index.php?title=$2&lang=$1 [L,QSA]
+
+# RewriteRule ^([a-z]{2})/([^/]+)/([0-9]+)/?$ /backgen/zidi/index.php?title=$2&lang=$1&code-id=$3 [L,QSA]
+
+#RewriteRule ^([^/]+)/([0-9]+)/?$ /index.php?page=$1&article=$2 [L,QSA]
+
+
+# RewriteEngine On
+# RewriteBase /
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^([a-zA-Z0-9_-]+)$ backgen/zidi/index.php?title=$1"&code-id=".$2
+# RewriteRule ^([a-zA-Z0-9_-]+)/$ backgen/zidi/index.php?response=$1"&code-id=".$2
+
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-l
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule (?:.*?)\\/?([0-9]+)\\-[\\d\\w\\s\\-]+\\/([0-9]+)\\-[\\d\\w\\s\\-]+\\/? products.php?catid=$1&productid=$2 [NC,L]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-l
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule (?:.*?)\\/?([0-9]+)\\-[\\d\\w\\s\\-]+\\/? articles.php?artid=$1 [NC,L]
+
+#The next line handles products, as it expects two sections.
+#mydomain.com/temporary/##-category-name/##-product-name/ 1 (acceptable, where ## is the category/product id respectively)
+#mydomain.com/temporary/##-category-name/##-product-name (acceptable, where ## is the category/product id respectively)
+#mydomain.com/##-category-name/##-product-name/ (acceptable, where ## is the category/product id respectively)
+#mydomain.com/##-category-name/##-product-name (acceptable, where ## is the category/product id respectively)

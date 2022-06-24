@@ -51,7 +51,7 @@ function showLoader(htmlId) {
   $(htmlId).html(
     '<div class="row pt-5 pb-5">' +
       '<div class="col-md-6 d-flex justify-content-center align-items-center">' +
-      '<div class="spinner-border" role="status">' +
+      '<div class="spinner-border text-muted" role="status">' +
       '<span class="sr-only">Loading...</span>' +
       "</div>" +
       "</div>" +
@@ -60,11 +60,11 @@ function showLoader(htmlId) {
 }
 
 //spinner
-function codeLoading(id) {
+function codeLoading(id, classSize = "") {
   $(id).html(
-    '<div class="spinner-border" role="status">\n' +
-      '<span class="sr-only">Loading...</span>\n' +
-      "</div>"
+    `<div class="spinner-border text-muted ${classSize}" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`
   );
 }
 
@@ -296,6 +296,7 @@ function currentLoc() {
 }
 
 function hyphenateTitle(str) {
+  str = str.toLowerCase();
   return str.replace(/ /gi, "-");
 }
 

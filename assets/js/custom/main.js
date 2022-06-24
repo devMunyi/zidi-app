@@ -55,7 +55,7 @@ function functions_load() {
 
           fun += `<li class="outer_list"> 
             <a id="func-item-${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
+            onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -87,7 +87,7 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_">
                 <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); persistence_remove('codeId'); loadCodesnippetsLink()">
                  <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
                 </a>
                 </li>`;
@@ -212,12 +212,8 @@ function load_languages() {
         let uid = data[i].uid;
         let title = data[i].name;
         let icon = data[i].icon;
-        if (
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.language_id > 0
-        ) {
-          language_sel = current_loc.code_sel.language_id;
+        if (current_loc && current_loc.language > 0) {
+          language_sel = current_loc.language;
           if (uid == language_sel) {
             active_language = "active-two";
           } else {
@@ -226,7 +222,7 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
         <a class="lang-item ${active_language}" href="javascript:void(0)"
-        onclick="getFramsByLang(${uid}); persistence_remove('framework'); persistence('language', ${uid}); loadCodesnippetsLink();">
+        onclick="getFramsByLang(${uid}); persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); persistence_remove('codeId'); loadCodesnippetsLink();">
         <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
@@ -300,8 +296,8 @@ function getAllFrams() {
     rpp;
 
   crudaction({}, "/frameworks" + query, "GET", function (feed) {
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFramework()'>
-    <option value = "">--Select Framework</option>
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>
+    <option value = ""> All Frameworks</option>
     `;
 
     if (feed && feed.data && feed.data.length > 0) {
@@ -312,7 +308,6 @@ function getAllFrams() {
         return o.uid == 0;
       });
 
-      console.log("The framework with uid of 0 is at index => ", index);
       if (index !== -1) data.splice(index, 1);
 
       //append the framework data with uid as the first object within the array
@@ -329,12 +324,8 @@ function getAllFrams() {
       let current_loc = currentLoc();
       let active_fram;
 
-      if (
-        current_loc &&
-        current_loc.code_sel &&
-        current_loc.code_sel.framework_id >= 0
-      ) {
-        active_fram = current_loc.code_sel.framework_id;
+      if (current_loc && current_loc.framework >= 0) {
+        active_fram = current_loc.framework;
       }
       //console.log("data size => ", arr_size);
       for (let i = 0; i < arr_size; i++) {
@@ -353,7 +344,7 @@ function getAllFrams() {
       //persist the data for later use
       persistence("allFrams", data);
 
-      persistFramework(); //persist selected framework
+      //persistFramework(); //persist selected framework
     } else {
       row = `
       <select>
@@ -368,20 +359,16 @@ function getAllFrams() {
 
 function getFramsByLang(lang_id) {
   let current_loc = currentLoc();
-  let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFramework()'>
-  <option value = "">--Select Framework</option>
+  let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>
+  <option value = "">All Frameworks</option>
   `;
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let fram_arr_size = data.length;
 
     let active_fram;
-    if (
-      current_loc &&
-      current_loc.code_sel &&
-      current_loc.code_sel.framework_id >= 0
-    ) {
-      active_fram = current_loc.code_sel.framework_id;
+    if (current_loc && current_loc.framework >= 0) {
+      active_fram = current_loc.framework;
     }
 
     for (let i = 0; i < fram_arr_size; i++) {
@@ -399,7 +386,7 @@ function getFramsByLang(lang_id) {
     //display framework select box with frameworks for the selected language
     $("#framework-dropdown").html(row + "</select>");
 
-    persistFramework(); //persist selected framework
+    //persistFramework(); //persist selected framework
   } else {
     row = `
       <select>
@@ -822,11 +809,6 @@ function select_code(
   title
 ) {
   console.log("selected code id language => ", language);
-  // persistence("func", func);
-  // persistence("subfunc", subfunc);
-  // persistence("language", language);
-  // persistence("framework", framework);
-  // persistence("offset", 0);
   $("#search_box").val(title);
 
   //load the selected code using the code uid
@@ -846,18 +828,15 @@ function codeStyles() {
     { uid: 3, name: "Class Based" },
     { uid: 4, name: "API Based" },
   ]; //static code style data
+
   let current_loc = currentLoc(); //access persisted localstorage key values
   //check for the previously loaded code and if avilable grab the codestyle_id
   let active_codestyle;
-  if (
-    current_loc &&
-    current_loc.code_sel &&
-    current_loc.code_sel.codestyle_id
-  ) {
-    active_codestyle = current_loc.code_sel.codestyle_id;
+  if (current_loc && current_loc.codestyle > 0) {
+    active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='loadCodesnippetsLink()'>`;
+  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>`;
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
@@ -886,23 +865,19 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function persistFramework() {
-  let sel_framework = parseInt($("#sel_framework").val());
-  persistence("framework", sel_framework);
-}
-
 function loadCodesnippetsLink() {
   //show a loader
   codeLoading("#available-solns");
   $("#links-title").html("Available Solutions");
-  let sel_codestyle = parseInt($("#sel_codestyle").val());
-  persistence("codestyle", sel_codestyle);
-  //persistence("language", $("#sel_language").val());
+
+  let sel_framework_ = parseInt($("#sel_framework").val());
+  let sel_codestyle_ = parseInt($("#sel_codestyle").val());
   let current_loc = currentLoc();
   let sel_func;
   let sel_subfunc;
   let sel_language;
   let sel_framework;
+  let sel_codestyle;
 
   if (current_loc && current_loc.func > 0) {
     sel_func = current_loc.func;
@@ -916,11 +891,19 @@ function loadCodesnippetsLink() {
   }
 
   if (current_loc && current_loc.framework >= 0) {
-    sel_framework = current_loc.framework;
+    if (current_loc.framework != sel_framework_) {
+      sel_framework = sel_framework_;
+    }
+  } else {
+    sel_framework = sel_framework_;
   }
 
   if (current_loc && current_loc.codestyle > 0) {
-    sel_codestyle = current_loc.codestyle;
+    if (current_loc.framework != sel_codestyle_) {
+      sel_codestyle = sel_codestyle_;
+    }
+  } else {
+    sel_codestyle = sel_codestyle_;
   }
 
   let rpp = 25;
@@ -938,13 +921,24 @@ function loadCodesnippetsLink() {
     sel_language = "";
   }
 
-  if (!sel_framework && sel_framework !== 0 && !sel_framework >= 0) {
+  console.log("selected framework => ", sel_framework);
+  if (sel_framework >= 0) {
+    console.log("framework selected is greater than or equal to zero");
+  } else {
     sel_framework = "";
+    console.log("framework selected is not greater than or equal to zero");
   }
 
-  if (!sel_codestyle || sel_codestyle === 0) {
+  if (!sel_codestyle) {
     sel_codestyle = "";
   }
+
+  //persist user selections before sending the request to server, so that they will remain intact even on page refresh
+  persistence("func", sel_func);
+  persistence("subfunc", sel_subfunc);
+  persistence("language", sel_language);
+  persistence("framework", sel_framework);
+  persistence("codestyle", sel_codestyle);
 
   let where_ = "c.status = 1 ";
   let orderby = "c.uid";
@@ -996,6 +990,7 @@ function loadCodesnippetsLink() {
         framework = data[i].framework;
         language_id = data[i].language_id;
         codesnippet_id = data[i].uid;
+        let title = data[i].title;
 
         if (data[i].framework_id == 0) {
           framework = "";
@@ -1024,9 +1019,18 @@ function loadCodesnippetsLink() {
           }
         }
 
-        solns += `<a href="javascript:void(0)"  onclick="load_codesnippetById('${codesnippet_id}', '${language_name}')" class="list-group-item list-group-item-action">
+        let displayed_soln =
+          "<b class=''><i>" +
+          title +
+          " - " +
+          language_name +
+          " - " +
+          data[i].user_implementation_type +
+          "</i></b>";
+
+        solns += `<a href="javascript:void(0)"  onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}')" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-        ${data[i].title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+        ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
 
       $("#available-solns").html(solns);
@@ -1043,9 +1047,49 @@ function loadCodesnippetsLink() {
   });
 }
 
+function appendCodeUrl(
+  code_id,
+  code_title,
+  func_id,
+  subfunc_id,
+  language_id,
+  language_name,
+  framework_id,
+  codestyle_id,
+  codestyle_title
+) {
+  const url = getCurrentUrl();
+  let hyphenatedTitle = hyphenateTitle(code_title);
+  language_name = language_name.toLowerCase();
+  //let code_uid = data.uid;
+
+  const host = url.host;
+  let origin = "https://zidiapp.com";
+  if (host == "localhost") {
+    origin = "http://localhost/backgen/zidi";
+  } else {
+  }
+
+  let myUrl = `${origin}?cid=${code_id}&ctitle=${hyphenatedTitle}`;
+
+  persistence("codeId", parseInt(code_id));
+  persistence("code_title", code_title);
+  persistence("func", parseInt(func_id));
+  persistence("subfunc", parseInt(subfunc_id));
+  persistence("language", parseInt(language_id));
+  persistence("language_name", language_name);
+  persistence("framework", parseInt(framework_id));
+  persistence("codestyle", parseInt(codestyle_id));
+  persistence("codestyle_title", codestyle_title);
+
+  //let myUrl = origin + hyphenatedTitle + "/" + code_id;
+  console.log("url to append => ", myUrl);
+  gotourl(myUrl);
+}
+
 function load_codesnippetById(codeId, language_name = "java") {
   //codeLoading("#codeimp-title");
-  codeLoading("#imptype-and-contributor");
+  codeLoading("#imptype-and-contributor", "spinner-border-sm");
 
   //Set default code
   let jso = {};
@@ -1141,21 +1185,6 @@ function load_codesnippetById(codeId, language_name = "java") {
           }
 
           //append url to the current page
-          const url = getCurrentUrl();
-          let hyphenatedTitle = hyphenateTitle(title);
-          let language_name = data.language_name;
-          language_name = language_name.toLowerCase();
-          let code_uid = data.uid;
-
-          const host = url.host;
-          let origin = "https://zidiapp.com/";
-          if (host == "localhost") {
-            origin = "http://localhost/backgen/zidi/";
-          } else {
-          }
-
-          let myUrl = `${origin}?${hyphenatedTitle}&language=${language_name}&code-id=${code_uid}`;
-          goTo(myUrl);
 
           //display the codesnippet
           codeEditor.setValue(data.row_code);
@@ -1177,8 +1206,9 @@ function load_codesnippetById(codeId, language_name = "java") {
           persistence("func", data.func_id);
           persistence("subfunc", data.subfunc_id);
           persistence("language", data.language_id);
+          persistence("language_name", data.language_name);
           persistence("framework", data.framework_id);
-          persistence("codestyle", data.codestyle_id);
+          persistence("codestyle", codestyle_id);
 
           //retrieve comments for the loaded codesnippet
           //let ctotals = getCommentsByCodesnippetId();
@@ -1226,7 +1256,7 @@ function load_codesnippetById(codeId, language_name = "java") {
   editorLib.init();
 }
 
-// function formatCode(language) {
+// function resetCodeEditor() {
 //   let codeEditor = ace.edit("editor");
 //   let editorLib = {
 //     init() {
@@ -1242,11 +1272,33 @@ function load_codesnippetById(codeId, language_name = "java") {
 //         enableBasicAutocompletion: true,
 //         autoScrollEditorIntoView: true,
 //       };
-//       codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
+//       codeEditor.setValue("");
 //     },
 //   };
 //   editorLib.init();
 // }
+
+function formatCode(language) {
+  let codeEditor = ace.edit("editor");
+  let editorLib = {
+    init() {
+      //let modelist = ace.require("ace/ext/modelist");
+      //Configure Ace
+      //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
+      codeEditor.setTheme("ace/theme/monokai");
+      codeEditor.session.setMode("ace/mode/" + language);
+      //Set Options
+      let setOptions = {
+        //fontFamily: "Inconsolata",
+        fontSize: "12pt",
+        enableBasicAutocompletion: true,
+        autoScrollEditorIntoView: true,
+      };
+      codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
+    },
+  };
+  editorLib.init();
+}
 
 function langAddEdit() {
   let sel_lang = $("#language_sel").val();

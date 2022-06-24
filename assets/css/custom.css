@@ -626,7 +626,7 @@ span.subfun_ {
     cursor: pointer;
     background: blue;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#616161));
-    background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #616161);
+    background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #edeff3);
 }
 
 #pagingDiv a.active {

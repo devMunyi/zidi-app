@@ -435,6 +435,16 @@ include_once("configs/conn.inc");
                 </div>
             </div>
 
+            <?php
+
+            if($_GET['ctitle']){
+                echo "CODE TITLE => ".$_GET['ctitle'];
+            }
+
+            if($_GET['cid']){
+                echo "CODE ID => ".$_GET['cid'];
+            }
+            ?>
 
         </div>
 
@@ -459,6 +469,12 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             let current_loc = currentLoc();
+            if (current_loc && current_loc.language) {
+                getFramsByLang(current_loc.language)
+            } else {
+                getAllFrams();
+            }
+            
             footer_date(); //load footer
             functions_load() //load all functions
             load_languages(); //Load all the languages
@@ -466,28 +482,20 @@ include_once("configs/conn.inc");
             persistence("last_page", 1); //reset default comment page to 1
             codeStyles();
 
-            if (current_loc && current_loc.language) {
-                getFramsByLang(current_loc.language)
-            } else {
-                getAllFrams();
-            }
+           
 
-            if (current_loc && current_loc.code_sel) {
-                persistence("func", current_loc.code_sel.func_id);
-                persistence("subfunc", current_loc.code_sel.subfunc_id)
-                persistence("language", current_loc.code_sel.language_id)
-                persistence("framework", current_loc.code_sel.framework_id)
-                persistence("codestyle", current_loc.code_sel.codestyle_id)
-                loadCodesnippetsLink(); //load code links with previously loaded code params
-                $("#links-title").html("Your Previous Solution")
+            if (current_loc && current_loc.codeId > 0 && current_loc.language_name) {
+                load_codesnippetById(current_loc.codeId, current_loc.language_name); //load code links with previously loaded code params
+                $("#links-title").html("Your Solution")
+                $("#available-solns").html(`<div class="card p-2"><b><i>${current_loc.code_title} in ${current_loc.language_name} - ${current_loc.codestyle_title}</i></b></div>`);
             } else {
                 loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
             }
 
             //check if user had previously selcted a code
-            if (current_loc && current_loc.code_sel && current_loc.code_sel.uid) {
-                load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
-            }
+            // if (current_loc && current_loc.code_sel && current_loc.code_sel.uid) {
+            //     load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
+            // }
 
             //pagination click even listener
             $("#pagingDiv").on("click", "a", function() {
@@ -589,6 +597,7 @@ include_once("configs/conn.inc");
 
 
             const url = getCurrentUrl();
+            console.log("current url => ", url);
             const codeId = url.searchParams.get("code-id");
             const language = url.searchParams.get("language");
             if (codeId > 0 && language.length) {
