@@ -434,18 +434,6 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
             </div>
-
-            <?php
-
-            if($_GET['ctitle']){
-                echo "CODE TITLE => ".$_GET['ctitle'];
-            }
-
-            if($_GET['cid']){
-                echo "CODE ID => ".$_GET['cid'];
-            }
-            ?>
-
         </div>
 
         <!-- Start page footer -->
