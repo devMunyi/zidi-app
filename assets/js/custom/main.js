@@ -1306,32 +1306,32 @@ function langAddEdit() {
   persistence("langAddEdit", sel_lang);
 }
 
-function codeAddEdit() {
-  let current_loc = currentLoc();
-  let language = current_loc.langAddEdit;
+// function codeAddEdit() {
+//   let current_loc = currentLoc();
+//   let language = current_loc.langAddEdit;
 
-  let codeEditor = ace.edit("code-editor");
-  let editorLib = {
-    init() {
-      //Configure Ace
-      //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
-      codeEditor.resize();
-      codeEditor.setTheme("ace/theme/monokai");
-      codeEditor.session.setMode("ace/mode/" + language);
+//   let codeEditor = ace.edit("code-editor");
+//   let editorLib = {
+//     init() {
+//       //Configure Ace
+//       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
+//       codeEditor.resize();
+//       codeEditor.setTheme("ace/theme/monokai");
+//       codeEditor.session.setMode("ace/mode/" + language);
 
-      //Set Options
-      let setOptions = {
-        //fontFamily: "Inconsolata",
-        fontSize: "12pt",
-        enableBasicAutocompletion: true,
-        autoScrollEditorIntoView: true,
-        setTabSize: 4,
-      };
-      codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
-    },
-  };
-  editorLib.init();
-}
+//       //Set Options
+//       let setOptions = {
+//         //fontFamily: "Inconsolata",
+//         fontSize: "12pt",
+//         enableBasicAutocompletion: true,
+//         autoScrollEditorIntoView: true,
+//         setTabSize: 4,
+//       };
+//       codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
+//     },
+//   };
+//   editorLib.init();
+// }
 
 function highlightSelCodeParams(
   func_id,

@@ -250,7 +250,6 @@ if ($code_id > 0) {
             //     logout() //call logout function                
             // }, false);
             footer_date(); //load footer
-            codeAddEdit();
         })
     </script>
 
@@ -266,6 +265,4 @@ if ($code_id > 0) {
         })(jQuery);
     </script>
 </body>
-<input type="hidden" name="code_edit_id" id="code_edit_id" value="<?php echo $code_id; ?>">
-
 </html>
