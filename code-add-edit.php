@@ -265,4 +265,8 @@ if ($code_id > 0) {
         })(jQuery);
     </script>
 </body>
+
+<!--Pass a code to edit id to be used in making codesnippet update -->
+<input type="hidden" name="code_edit_id" id="code_edit_id" value="<?php echo $code_id; ?>">
+
 </html>
