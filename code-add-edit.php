@@ -204,17 +204,9 @@ if ($code_id > 0) {
                     </div>
 
                     <div class="form-group">
-                        <div id="code-editor">
-                        function langAddEdit() {
-  let sel_lang = $("#language_sel").val();
-  console.log("selected language => ", sel_lang);
-  persistence("langAddEdit", sel_lang);
-}
-                        </div>
-                        <div class="error" id="codeErr"></div>
-                        <!-- <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
+                        <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
                         <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
-                        <div class="error" id="codeErr"></div> -->
+                        <div class="error" id="codeErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="file_extension">*Code File Extension:</label>
