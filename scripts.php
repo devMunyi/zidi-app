@@ -33,11 +33,11 @@
 <script src="assets/plugins/ace/ace-editor/src-min/ace.js"></script>
 <script src="assets/plugins/ace/ace-editor/src-min/mode-javascript.js"></script>
 <script src="assets/plugins/ace/ace-editor/src-min/ext-language_tools.js"></script>
-<!-- <script src="assets/plugins/ace/ace-editor/src-min/ext-beautify.js"></script> -->
+<!-- <script src=assets/plugins/ace/ace-editor/src-min/ext-beautify.js"></script> -->
 
 <!--Require Highlight js Library-->
-<!-- <script src="assets/plugins/highlightjs/highlight.min.js"></script>
-<script src="assets/plugins/highlightjs/highlightjs-line-numbers.min.js"></script>
+<!-- <script src=assets/plugins/highlightjs/highlight.min.js"></script>
+<script src=assets/plugins/highlightjs/highlightjs-line-numbers.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>hljs.initLineNumbersOnLoad();</script> -->
 

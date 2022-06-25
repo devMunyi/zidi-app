@@ -1053,14 +1053,14 @@ function appendCodeUrl(
   func_id,
   subfunc_id,
   language_id,
-  language_name,
+  language_name_,
   framework_id,
   codestyle_id,
   codestyle_title
 ) {
   const url = getCurrentUrl();
   let hyphenatedTitle = hyphenateTitle(code_title);
-  language_name = language_name.toLowerCase();
+  let language_name = language_name_.toLowerCase();
   //let code_uid = data.uid;
 
   const host = url.host;
@@ -1070,7 +1070,7 @@ function appendCodeUrl(
   } else {
   }
 
-  let myUrl = `${origin}?cid=${code_id}&ctitle=${hyphenatedTitle}`;
+  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name_}`;
 
   persistence("codeId", parseInt(code_id));
   persistence("code_title", code_title);
@@ -1082,9 +1082,8 @@ function appendCodeUrl(
   persistence("codestyle", parseInt(codestyle_id));
   persistence("codestyle_title", codestyle_title);
 
-  //let myUrl = origin + hyphenatedTitle + "/" + code_id;
   console.log("url to append => ", myUrl);
-  gotourl(myUrl);
+  goTo(myUrl);
 }
 
 function load_codesnippetById(codeId, language_name = "java") {

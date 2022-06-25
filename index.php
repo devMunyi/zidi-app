@@ -434,6 +434,12 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
             </div>
+
+            <?php
+                if($_GET['cid']){
+                    echo "code id is => ".$_GET['cid'];
+                }
+            ?>
         </div>
 
         <!-- Start page footer -->
@@ -456,13 +462,27 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
+            //check for query paramss from the url 
+            let codeId = 0;
+            let language_name = "";
+            if ("<?php echo $_GET['cid']; ?>") {
+                codeId = parseInt("<?php echo $_GET['cid']; ?>");
+                language_name = "Python";
+            }
+            
+            persistence_remove("func");
+            persistence_remove("subfunc");
+            persistence_remove("language");
+            persistence_remove("framework");
+            persistence_remove("codestyle");
+
             let current_loc = currentLoc();
             if (current_loc && current_loc.language) {
                 getFramsByLang(current_loc.language)
             } else {
                 getAllFrams();
             }
-            
+
             footer_date(); //load footer
             functions_load() //load all functions
             load_languages(); //Load all the languages
@@ -470,13 +490,18 @@ include_once("configs/conn.inc");
             persistence("last_page", 1); //reset default comment page to 1
             codeStyles();
 
-           
 
-            if (current_loc && current_loc.codeId > 0 && current_loc.language_name) {
-                load_codesnippetById(current_loc.codeId, current_loc.language_name); //load code links with previously loaded code params
+
+            //these values should come from the url
+
+
+
+            if (codeId > 0 && language_name) {
+                load_codesnippetById(codeId, language_name); //load code links with previously loaded code params
                 $("#links-title").html("Your Solution")
                 $("#available-solns").html(`<div class="card p-2"><b><i>${current_loc.code_title} in ${current_loc.language_name} - ${current_loc.codestyle_title}</i></b></div>`);
             } else {
+
                 loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
             }
 
