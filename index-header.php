@@ -10,7 +10,7 @@
            <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
                <a class="navbar-brand" href="index">
                    <h3 class="masthead-heading text-uppercase">
-                       <img src="assets/images/logo.png" height="35px" />
+                       <img src="/assets/images/logo.png" height="35px" />
                    </h3>
                </a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
