@@ -1028,7 +1028,8 @@ function loadCodesnippetsLink() {
           data[i].user_implementation_type +
           "</i></b>";
 
-        solns += `<a href="javascript:void(0)"  onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}')" class="list-group-item list-group-item-action">
+        solns += `<a href="javascript:void(0)"  
+        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}'); load_codesnippetById('${codesnippet_id}', '${language_name}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
