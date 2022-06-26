@@ -434,6 +434,20 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
             </div>
+            <?php
+                if($_GET["cid"]){
+                    echo "code id => ". $_GET["cid"];
+                }else{
+                    echo "Can't find code variable cid from GET glabal variable";
+                }
+            ?>
+            <?php
+                if($_GET["ctitle"]){
+                    echo "code title is => ". $_GET["ctitle"];
+                }else{
+                    echo "Can't find code variable ctitle from GET glabal variable";
+                }
+            ?>
         </div>
 
         <!-- Start page footer -->
