@@ -477,18 +477,12 @@ include_once("configs/conn.inc");
              
             let current_loc = currentLoc();
             let codeId = 0;
-            let language_name = "";
             if ("<?php echo $_GET['cid']; ?>") {
-                if("<?php echo $_GET['ctitle']; ?>"){
-                    ctitle = "<?php echo $_GET['ctitle']; ?>";
-                    let ctitle_words = ctitle.split("-");
-                    language_name = ctitle_words.pop();
-                }
                 codeId = parseInt("<?php echo $_GET['cid']; ?>");
             }
 
-            if (codeId > 0 && language_name) {
-                load_codesnippetById(codeId, language_name); //load code links with previously loaded code params
+            if (codeId > 0) {
+                load_codesnippetById(codeId); //load code links with previously loaded code params
                 $("#links-title").html("Your Solution")
                 $("#available-solns").html(`<div class="card p-2"><b><i>${current_loc.code_title} in ${current_loc.language_name} - ${current_loc.codestyle_title}</i></b></div>`);
             } else {
@@ -610,16 +604,6 @@ include_once("configs/conn.inc");
                 $('#available-solns a').removeClass('active-two');
                 $(this).addClass('active-two');
             });
-
-
-            const url = getCurrentUrl();
-            console.log("current url => ", url);
-            const codeId = url.searchParams.get("code-id");
-            const language = url.searchParams.get("language");
-            if (codeId > 0 && language.length) {
-                load_codesnippetById(codeId, language);
-                persistence("language", language);
-            }
 
         });
     </script>

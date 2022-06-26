@@ -822,11 +822,10 @@ function select_code(
   framework,
   title
 ) {
-  console.log("selected code id language => ", language);
   $("#search_box").val(title);
 
   //load the selected code using the code uid
-  load_codesnippetById(code_id, language);
+  load_codesnippetById(code_id);
   // $("#code_id_").val(uid);
   $("#code_results").fadeOut("fast");
 }
@@ -1043,7 +1042,7 @@ function loadCodesnippetsLink() {
           "</i></b>";
 
         solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}'); load_codesnippetById('${codesnippet_id}', '${language_name}');" class="list-group-item list-group-item-action">
+        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
@@ -1101,7 +1100,7 @@ function appendCodeUrl(
   goTo(myUrl);
 }
 
-function load_codesnippetById(codeId, language_name = "java") {
+function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor", "spinner-border-sm");
 
@@ -1111,32 +1110,6 @@ function load_codesnippetById(codeId, language_name = "java") {
   let codeEditor = ace.edit("editor");
   let editorLib = {
     init() {
-      //Configure Ace
-      codeEditor.setTheme("ace/theme/monokai");
-
-      //Set Languages
-      language = language_name.toLowerCase();
-      if (language == "nodejs") {
-        language = "javascript";
-      }
-      if (language == "c#") {
-        language = "csharp";
-      }
-
-      if (language == "c" || language == "c++") {
-        language = "c_cpp";
-      }
-      codeEditor.session.setMode("ace/mode/" + language);
-
-      //Set Options
-      codeEditor.setOptions({
-        //fontFamily: "Inconsolata",
-        fontSize: "12pt",
-        enableBasicAutocompletion: true,
-        autoScrollEditorIntoView: true,
-        //enableLiveAutocompletion: true,
-      });
-
       //Set default code
       let jso = {};
       query = "?codesnippet_id=" + codeId;
@@ -1198,11 +1171,36 @@ function load_codesnippetById(codeId, language_name = "java") {
             $("#edit-code").html("");
           }
 
-          //append url to the current page
+          //---------Begin ace configuration
+          codeEditor.setTheme("ace/theme/monokai");
+
+          //Set Languages
+          lang = data.language_name;
+          language = lang.toLowerCase();
+          if (language == "nodejs") {
+            language = "javascript";
+          }
+          if (language == "c#") {
+            language = "csharp";
+          }
+
+          if (language == "c" || language == "c++") {
+            language = "c_cpp";
+          }
+          codeEditor.session.setMode("ace/mode/" + language);
+
+          //Set Options
+          codeEditor.setOptions({
+            //fontFamily: "Inconsolata",
+            fontSize: "12pt",
+            enableBasicAutocompletion: true,
+            autoScrollEditorIntoView: true,
+            //enableLiveAutocompletion: true,
+          });
 
           //display the codesnippet
           codeEditor.setValue(data.row_code);
-
+          ///---------End ace configuration
           //diplay instructions if any
           if (data.instructions) {
             $("#code-instructions").html(data.instructions);
