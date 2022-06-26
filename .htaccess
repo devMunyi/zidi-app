@@ -6,4 +6,5 @@ RewriteRule ^(.*)$ $1.php
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d 
-RewriteRule ^([a-zA-Z_-]+)/([0-9]+)/([a-zA-Z_-]+)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]
+RewriteRule ^(.*)/(.*)/(.*)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]
+#RewriteRule ^(.*)/(.*)/([a-zA-Z_-]+)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]

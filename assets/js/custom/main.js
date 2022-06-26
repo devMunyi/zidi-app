@@ -297,7 +297,6 @@ function getAllFrams() {
 
   crudaction({}, "/frameworks" + query, "GET", function (feed) {
     let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>
-    <option value = ""> All Frameworks</option>
     `;
 
     if (feed && feed.data && feed.data.length > 0) {
@@ -313,7 +312,7 @@ function getAllFrams() {
       //append the framework data with uid as the first object within the array
       data.unshift({
         description: "",
-        icon: 0,
+        icon: "",
         language: "",
         language_id: 0,
         name: "No Framework",
@@ -321,10 +320,25 @@ function getAllFrams() {
         uid: 0,
       });
 
+      data.unshift({
+        description: "",
+        icon: "",
+        language: "",
+        language_id: 0,
+        name: "All Frameworks",
+        status: 1,
+        uid: "",
+      });
+
       let current_loc = currentLoc();
       let active_fram;
 
-      if (current_loc && current_loc.framework >= 0) {
+      if (
+        current_loc &&
+        current_loc.framework >= 0 &&
+        current_loc.framework != ""
+      ) {
+        console.log("active frameowk => ", current_loc.framework);
         active_fram = current_loc.framework;
       }
       //console.log("data size => ", arr_size);
@@ -1209,6 +1223,12 @@ function load_codesnippetById(codeId, language_name = "java") {
           persistence("language_name", data.language_name);
           persistence("framework", data.framework_id);
           persistence("codestyle", codestyle_id);
+
+          //call framework by language
+          getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
+          codeStyles(); //re-load codestyle to update loaded code codestyle
+          functions_load(); //re-load functions to update the loaded code function and subfunction
+          load_languages(); //re-load languages to update loaded code language
 
           //retrieve comments for the loaded codesnippet
           //let ctotals = getCommentsByCodesnippetId();

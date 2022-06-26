@@ -456,7 +456,11 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
-            //check for query paramss from the url 
+            //check for query paramss from the url
+            footer_date(); //load footer
+            persistence("cur_page", 1); //reset default comment page to 1
+            persistence("last_page", 1); //reset default comment page to 1
+             
             let current_loc = currentLoc();
             let codeId = 0;
             let language_name = "";
@@ -467,7 +471,6 @@ include_once("configs/conn.inc");
                     language_name = ctitle_words.pop();
                 }
                 codeId = parseInt("<?php echo $_GET['cid']; ?>");
-                //language_name = "Python";
             }
 
             if (codeId > 0 && language_name) {
@@ -482,22 +485,11 @@ include_once("configs/conn.inc");
                 persistence_remove("codestyle");
 
                 loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
-            }
-            
-            
-            if (current_loc && current_loc.language) {
-                getFramsByLang(current_loc.language)
-            } else {
                 getAllFrams();
+                functions_load() //load all functions
+                load_languages(); //Load all the languages
+                codeStyles();
             }
-
-            footer_date(); //load footer
-            functions_load() //load all functions
-            load_languages(); //Load all the languages
-            persistence("cur_page", 1); //reset default comment page to 1
-            persistence("last_page", 1); //reset default comment page to 1
-            codeStyles();
-
 
 
             //these values should come from the url
