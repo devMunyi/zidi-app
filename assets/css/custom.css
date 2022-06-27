@@ -642,4 +642,8 @@ span.subfun_ {
     background: #2c0aec;
 }
 
+.text-bold{
+    font-weight: bold !important;
+}
+
 /******************End of pagination css************************/

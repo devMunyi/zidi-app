@@ -296,13 +296,11 @@ function getAllFrams() {
     rpp;
 
   crudaction({}, "/frameworks" + query, "GET", function (feed) {
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
     `;
 
     if (feed && feed.data && feed.data.length > 0) {
       let { data } = feed;
-      let arr_size = data.length;
-
       let index = data.findIndex(function (o) {
         return o.uid == 0;
       });
@@ -333,15 +331,10 @@ function getAllFrams() {
       let current_loc = currentLoc();
       let active_fram;
 
-      if (
-        current_loc &&
-        current_loc.framework >= 0 &&
-        current_loc.framework != ""
-      ) {
-        console.log("active frameowk => ", current_loc.framework);
+      if (current_loc && parseInt(current_loc.framework) != NaN) {
         active_fram = current_loc.framework;
       }
-      //console.log("data size => ", arr_size);
+      let arr_size = data.length;
       for (let i = 0; i < arr_size; i++) {
         let fram_id = data[i].uid;
         let fram_name = data[i].name;
@@ -362,7 +355,7 @@ function getAllFrams() {
     } else {
       row = `
       <select>
-        <option>No Loaded framework</option>
+        <option value = "0">No Framework</option>>
       </select>
       `;
 
@@ -372,21 +365,67 @@ function getAllFrams() {
 }
 
 function getFramsByLang(lang_id) {
-  let current_loc = currentLoc();
-  let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>
-  <option value = "">All Frameworks</option>
-  `;
-  if (current_loc && current_loc.allFrams) {
-    let data = current_loc.allFrams;
-    let fram_arr_size = data.length;
+  let offset = 0;
+  let rpp = 100;
+  let where_ = "f.status = 1";
+  let orderby = "f.name";
+  let dir = "ASC";
 
-    let active_fram;
-    if (current_loc && current_loc.framework >= 0) {
-      active_fram = current_loc.framework;
-    }
+  let query =
+    "?language_id=" +
+    lang_id +
+    "&where_=" +
+    where_ +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
 
-    for (let i = 0; i < fram_arr_size; i++) {
-      if (data[i].language_id == lang_id || data[i].name == "No Framework") {
+  crudaction({}, "/frameworks" + query, "GET", function (feed) {
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+    `;
+
+    if (feed && feed.data && feed.data.length > 0) {
+      let { data } = feed;
+      let index = data.findIndex(function (o) {
+        return o.uid == 0;
+      });
+
+      if (index !== -1) data.splice(index, 1);
+
+      //append the framework data with uid as the first object within the array
+      data.unshift({
+        description: "",
+        icon: "",
+        language: "",
+        language_id: 0,
+        name: "No Framework",
+        status: 1,
+        uid: 0,
+      });
+
+      data.unshift({
+        description: "",
+        icon: "",
+        language: "",
+        language_id: 0,
+        name: "All Frameworks",
+        status: 1,
+        uid: "",
+      });
+
+      let current_loc = currentLoc();
+      let active_fram;
+
+      if (current_loc && parseInt(current_loc.framework) != NaN) {
+        active_fram = current_loc.framework;
+      }
+      let arr_size = data.length;
+      for (let i = 0; i < arr_size; i++) {
         let fram_id = data[i].uid;
         let fram_name = data[i].name;
 
@@ -396,20 +435,19 @@ function getFramsByLang(lang_id) {
           row += `<option value="${fram_id}">${fram_name}</option>`;
         }
       }
-    }
-    //display framework select box with frameworks for the selected language
-    $("#framework-dropdown").html(row + "</select>");
-
-    //persistFramework(); //persist selected framework
-  } else {
-    row = `
+      //display framework select box
+      $("#framework-dropdown").html(row + "</select>");
+      //persistFramework(); //persist selected framework
+    } else {
+      row = `
       <select>
-        <option>No Loaded framework</option>
+        <option value = "0">No Framework</option>
       </select>
       `;
 
-    $("#framework-dropdown").html(row); ////display framework select box indicating no framework loaded
-  }
+      $("#framework-dropdown").html(row); ////display framework select box indicating no framework loaded
+    }
+  });
   // if (language_id_) {
   //   let query =
   //     "?language_id=" +
@@ -938,11 +976,6 @@ function loadCodesnippetsLink() {
   }
 
   //persist user selections before sending the request to server, so that they will remain intact even on page refresh
-  persistence("func", sel_func);
-  persistence("subfunc", sel_subfunc);
-  persistence("language", sel_language);
-  persistence("framework", sel_framework);
-  persistence("codestyle", sel_codestyle);
 
   let where_ = "c.status = 1 ";
   let orderby = "c.uid";
@@ -1052,6 +1085,51 @@ function loadCodesnippetsLink() {
   });
 }
 
+function solnSelections() {
+  let current_loc = currentLoc();
+  $("#links-title").html("<span text-center>Solution Selections<span>");
+  $("#available-solns").html(`<div class="card p-2 text-center">
+        Title : <span class="text-bold">${
+          current_loc && current_loc.code_sel && current_loc.code_sel.title
+            ? current_loc.code_sel.title
+            : ""
+        }</span><br>
+        Function : <span class="text-bold">${
+          current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
+            ? current_loc.code_sel.fun_name
+            : ""
+        }</span><br>
+        Subfunction : <span class="text-bold">${
+          current_loc &&
+          current_loc.code_sel &&
+          current_loc.code_sel.subfun_name
+            ? current_loc.code_sel.subfun_name
+            : ""
+        }</span><br>
+        Language : <span class="text-bold">${
+          current_loc &&
+          current_loc.code_sel &&
+          current_loc.code_sel.language_name
+            ? current_loc.code_sel.language_name
+            : ""
+        }</span><br>
+        Framework : <span class="text-bold">${
+          current_loc &&
+          current_loc.code_sel &&
+          current_loc.code_sel.framework_name
+            ? current_loc.code_sel.framework_name
+            : ""
+        }</span><br>
+        Code Style : <span class="text-bold">${
+          current_loc &&
+          current_loc.code_sel &&
+          current_loc.code_sel.codestyle_name
+            ? current_loc.code_sel.codestyle_name
+            : ""
+        }</span>
+        </div>`);
+}
+
 function appendCodeUrl(code_id, code_title, language_name) {
   const url = getCurrentUrl();
   let hyphenatedTitle = hyphenateTitle(code_title);
@@ -1064,8 +1142,6 @@ function appendCodeUrl(code_id, code_title, language_name) {
   }
 
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name}`;
-
-  console.log("url to append => ", myUrl);
   goTo(myUrl);
 }
 
@@ -1191,7 +1267,8 @@ function load_codesnippetById(codeId) {
           persistence("framework", data.framework_id);
           persistence("codestyle", codestyle_id);
 
-          //call framework by language
+          solnSelections(); //populate solution selections
+
           getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
           codeStyles(); //re-load codestyle to update loaded code codestyle
           functions_load(); //re-load functions to update the loaded code function and subfunction

@@ -3,8 +3,17 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f 
 RewriteRule ^(.*)$ $1.php
 
+
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d 
-RewriteRule ^(.*)/(.*)/(.*)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^solutions/([0-9]+)/login$ /backgen/zidi/login [NC]
+
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/(.+)/(.+)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]
+
+#RewriteRule ^/nginx-tutorial?$ /somePage.html
 #RewriteRule ^(.*)/(.*)/([a-zA-Z_-]+)$ /backgen/zidi?dir=$1&cid=$2&ctitle=$3 [NC]

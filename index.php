@@ -426,7 +426,7 @@ include_once("configs/conn.inc");
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
                         <div class="card transcard">
                             <div class="card-header pt-3">
-                                <h3 class="card-title"><i class="fe fe-eye"></i> <span id="links-title"> Available Solutions</span></h3>
+                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title"> Available Solutions</span></h3>
                             </div>
                             <div class="card-body pt-0" style="padding: 20px 0px;">
                                 <div class="list-group" id="available-solns">
@@ -486,8 +486,7 @@ include_once("configs/conn.inc");
 
             if (codeId > 0) {
                 load_codesnippetById(codeId); //load code links with previously loaded code params
-                $("#links-title").html("Your Solution")
-                $("#available-solns").html(`<div class="card p-2"><b><i>${current_loc.code_title} in ${current_loc.language_name} - ${current_loc.codestyle_title}</i></b></div>`);
+                solnSelections(); //populate solution selections
             } else {
                 persistence_remove("func");
                 persistence_remove("subfunc");
