@@ -70,7 +70,9 @@ include_once("configs/conn.inc");
                             <nav class="sidebar-nav">
                                 <div class="card-body scrolli" style="padding: 10px 10px;">
                                     <ul class="metismenu func_" id="functions_">
-                                        Loading ...
+                                        <div class="spinner-border text-muted" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
                                     </ul>
                                 </div>
                             </nav>
@@ -109,7 +111,11 @@ include_once("configs/conn.inc");
                                     </div>
                                     <div class="card-body p-0">
                                         <ul class="metismenu ci-effect-1 prominent lang_" id="language_">
-                                            <li class="font-weight-normal font-14 font-italic">Loading...</li>
+                                            <li class="font-weight-normal font-14 font-italic">
+                                                <div class="spinner-border text-muted" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -434,13 +440,6 @@ include_once("configs/conn.inc");
                     </div>
                 </div>
             </div>
-            <?php
-                if($_GET["dir"]){
-                    echo "code url => ". $_GET["dir"];
-                }else{
-                    echo "Can't find code url from GET glabal variable";
-                }
-            ?>
         </div>
 
         <!-- Start page footer -->
@@ -467,14 +466,22 @@ include_once("configs/conn.inc");
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
-             
+
             let current_loc = currentLoc();
             let codeId = 0;
-            if ("<?php echo $_GET['dir']; ?>") {
-                let codeUrl = "<?php echo $_GET['dir']; ?>";
-                let codeUrlArr = codeUrl.split("/");
-                codeId = parseInt(codeUrlArr.pop());
-                //codeId = parseInt("<?php //echo $_GET['cid']; ?>");
+            const url = getCurrentUrl(); //grab the current to determine whether the site is live or local
+            const host = url.host;
+            if (host == "localhost") {
+                if ("<?php echo $_GET['cid']; ?>") {
+                    codeId = parseInt("<?php echo $_GET['cid']; ?>");
+                }
+            } else {
+                if ("<?php echo $_GET['dir']; ?>") {
+                    let codeUrl = "<?php echo $_GET['dir']; ?>";
+                    let codeUrlArr = codeUrl.split("/");
+                    codeId = parseInt(codeUrlArr.pop());
+                }
+
             }
 
             if (codeId > 0) {
@@ -494,15 +501,6 @@ include_once("configs/conn.inc");
                 load_languages(); //Load all the languages
                 codeStyles();
             }
-
-
-            //these values should come from the url
-
-            //check if user had previously selcted a code
-            // if (current_loc && current_loc.code_sel && current_loc.code_sel.uid) {
-            //     load_codesnippetById(current_loc.code_sel.uid, current_loc.code_sel.language_name);
-            // }
-
             //pagination click even listener
             $("#pagingDiv").on("click", "a", function() {
                 setTargetPage($(this).attr("data-pn"))

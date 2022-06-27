@@ -877,14 +877,16 @@ function loadCodesnippetsLink() {
   codeLoading("#available-solns");
   $("#links-title").html("Available Solutions");
 
-  let sel_framework_ = parseInt($("#sel_framework").val());
-  let sel_codestyle_ = parseInt($("#sel_codestyle").val());
+  let sel_framework = parseInt($("#sel_framework").val());
+  persistence("framework", sel_framework);
+  let sel_codestyle = parseInt($("#sel_codestyle").val());
+  persistence("codestyle", sel_codestyle);
   let current_loc = currentLoc();
   let sel_func;
   let sel_subfunc;
   let sel_language;
-  let sel_framework;
-  let sel_codestyle;
+  //let sel_framework;
+  //let sel_codestyle;
 
   if (current_loc && current_loc.func > 0) {
     sel_func = current_loc.func;
@@ -897,20 +899,18 @@ function loadCodesnippetsLink() {
     sel_language = current_loc.language;
   }
 
-  if (current_loc && current_loc.framework >= 0) {
-    if (current_loc.framework != sel_framework_) {
-      sel_framework = sel_framework_;
-    }
+  if (
+    current_loc &&
+    current_loc.framework >= 0 &&
+    current_loc.framework != null &&
+    current_loc.framework != NaN
+  ) {
+    sel_framework = current_loc.framework;
   } else {
-    sel_framework = sel_framework_;
   }
 
   if (current_loc && current_loc.codestyle > 0) {
-    if (current_loc.framework != sel_codestyle_) {
-      sel_codestyle = sel_codestyle_;
-    }
-  } else {
-    sel_codestyle = sel_codestyle_;
+    sel_codestyle = current_loc.codestyle;
   }
 
   let rpp = 25;
@@ -928,12 +928,9 @@ function loadCodesnippetsLink() {
     sel_language = "";
   }
 
-  console.log("selected framework => ", sel_framework);
-  if (sel_framework >= 0) {
-    console.log("framework selected is greater than or equal to zero");
+  if (sel_framework >= 0 && sel_framework != null && sel_framework != NaN) {
   } else {
     sel_framework = "";
-    console.log("framework selected is not greater than or equal to zero");
   }
 
   if (!sel_codestyle) {
@@ -1330,18 +1327,6 @@ function highlightSelCodeParams(
   fram_id,
   codestyle_id
 ) {
-  console.log(
-    "func id => ",
-    func_id,
-    ", subfunc id => ",
-    subfunc_id,
-    ", language id => ",
-    lang_id,
-    ", framework id => ",
-    fram_id,
-    "code style id => ",
-    codestyle_id
-  );
   //highlight the function for the code loaded
   let targetFuncId = "#func-item" + func_id;
   let targetFuncElem = $(`${targetFuncId}`);
@@ -1407,14 +1392,11 @@ function title_update(title) {
 
 //////----------------------------------Begin comments
 function setTargetPage(current_page) {
-  //let current_page = $(this).attr("data-pn");
-  console.log("target page is => ", parseInt(current_page));
   persistence("cur_page", parseInt(current_page));
   getCommentsByCodesnippetId();
 }
 
 function getCommentsByCodesnippetId() {
-  console.log("get comments method was called");
   let current_loc = currentLoc();
 
   let code_id;
