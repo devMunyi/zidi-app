@@ -785,7 +785,7 @@ function search_codeSnippet() {
           let tableSearch = `<table class='table table-dark childClass stack-top table-striped table-condensed'>`;
           for (let i = 0; i < data.length; i++) {
             tableSearch += `<tr><td><a href="javascript:void(0)" style='color:white;' class='pointer' 
-            onclick=\"select_code(${data[i].uid}, '${data[i].func_id}', '${data[i].subfunc_id}', '${data[i].language_name}',  '${data[i].framework_id}', '${data[i].title}')">
+            onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
             <span class='a-override a-alt'>${data[i].title}</span> <br/>
             Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
           }
@@ -814,17 +814,11 @@ function search_codeSnippet() {
   }
 }
 
-function select_code(
-  code_id,
-  func,
-  subfunc,
-  language = "java",
-  framework,
-  title
-) {
+function select_code(code_id, title, language) {
   $("#search_box").val(title);
 
   //load the selected code using the code uid
+  appendCodeUrl(code_id, title, language);
   load_codesnippetById(code_id);
   // $("#code_id_").val(uid);
   $("#code_results").fadeOut("fast");
@@ -1042,7 +1036,7 @@ function loadCodesnippetsLink() {
           "</i></b>";
 
         solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${data[i].func_id}', '${data[i].subfunc_id}',  ${language_id}, '${language_name}', '${data[i].framework_id}', '${data[i].codestyle_id}', '${data[i].user_implementation_type}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${language_name}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
@@ -1061,21 +1055,9 @@ function loadCodesnippetsLink() {
   });
 }
 
-function appendCodeUrl(
-  code_id,
-  code_title,
-  func_id,
-  subfunc_id,
-  language_id,
-  language_name_,
-  framework_id,
-  codestyle_id,
-  codestyle_title
-) {
+function appendCodeUrl(code_id, code_title, language_name) {
   const url = getCurrentUrl();
   let hyphenatedTitle = hyphenateTitle(code_title);
-  let language_name = language_name_.toLowerCase();
-  //let code_uid = data.uid;
 
   const host = url.host;
   let origin = "https://zidiapp.com";
@@ -1084,17 +1066,7 @@ function appendCodeUrl(
   } else {
   }
 
-  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name_}`;
-
-  persistence("codeId", parseInt(code_id));
-  persistence("code_title", code_title);
-  persistence("func", parseInt(func_id));
-  persistence("subfunc", parseInt(subfunc_id));
-  persistence("language", parseInt(language_id));
-  persistence("language_name", language_name);
-  persistence("framework", parseInt(framework_id));
-  persistence("codestyle", parseInt(codestyle_id));
-  persistence("codestyle_title", codestyle_title);
+  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name}`;
 
   console.log("url to append => ", myUrl);
   goTo(myUrl);

@@ -435,17 +435,10 @@ include_once("configs/conn.inc");
                 </div>
             </div>
             <?php
-                if($_GET["cid"]){
-                    echo "code id => ". $_GET["cid"];
+                if($_GET["dir"]){
+                    echo "code url => ". $_GET["dir"];
                 }else{
-                    echo "Can't find code variable cid from GET glabal variable";
-                }
-            ?>
-            <?php
-                if($_GET["ctitle"]){
-                    echo "code title is => ". $_GET["ctitle"];
-                }else{
-                    echo "Can't find code variable ctitle from GET glabal variable";
+                    echo "Can't find code url from GET glabal variable";
                 }
             ?>
         </div>
@@ -477,8 +470,11 @@ include_once("configs/conn.inc");
              
             let current_loc = currentLoc();
             let codeId = 0;
-            if ("<?php echo $_GET['cid']; ?>") {
-                codeId = parseInt("<?php echo $_GET['cid']; ?>");
+            if ("<?php echo $_GET['dir']; ?>") {
+                let codeUrl = "<?php echo $_GET['dir']; ?>";
+                let codeUrlArr = codeUrl.split("/");
+                codeId = parseInt(codeUrlArr.pop());
+                //codeId = parseInt("<?php //echo $_GET['cid']; ?>");
             }
 
             if (codeId > 0) {
