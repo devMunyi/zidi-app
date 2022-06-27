@@ -95,7 +95,7 @@ include_once("configs/conn.inc");
                         <div class="col-sm-2" id="codestyle-dropdown">
                         </div>
                         <div class="col-sm-1"><span id=edit-code></span></div>
-                        <div class="col-sm-3"><a class="a-override" href="code-add-edit" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a></div>
+                        <div class="col-sm-3" id="contribute-code"></div>
                     </div>
                 </div>
                 <div class="row" style="min-height: 400px;">
@@ -463,6 +463,7 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             //check for query paramss from the url
+            contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1

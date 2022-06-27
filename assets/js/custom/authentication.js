@@ -411,6 +411,44 @@ function githubSignup() {
 
 //verify logged-in user by sending cookie token/session id to server side
 function updateHeader(pageId) {
+  //-----Begin home, login, register navs update based on env
+  let host = getCurrentHost();
+  if (host == "localhost") {
+    $(".home-nav").html(
+      `
+      <a class="navbar-brand" href="http://localhost/backgen/zidi/index">
+          <h3 class="masthead-heading text-uppercase">
+            <img src="assets/images/logo.png" height="35px" />
+          </h3>
+      </a>
+      `
+    );
+    $(".sign-in-up-navs").html(
+      `
+     <a class="dropdown-item text-dark" href="http://localhost/backgen/zidi/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+      <a class="dropdown-item text-dark" href="http://localhost/backgen/zidi/register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+     `
+    );
+  } else {
+    $(".home-nav").html(
+      `
+      <a class="navbar-brand" href="https://zidiapp.com/index">
+          <h3 class="masthead-heading text-uppercase">
+            <img src="/assets/images/logo.png" height="35px" />
+          </h3>
+      </a>
+      `
+    );
+
+    $(".sign-in-up-navs").html(
+      `
+     <a class="dropdown-item text-dark" href="https://zidiapp.com/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+      <a class="dropdown-item text-dark" href="https://zidiapp.com/register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+     `
+    );
+  }
+  //---------------End login, register navs update based on env
+
   //keep account/user profile navigation hidden by default
   $("#account-1").hide();
   $(`#${pageId}`).hide();
@@ -578,7 +616,13 @@ function signedUserMenu(currentPage) {
     const user = current_loc.user;
     const { uid } = user;
 
-    let navLink = "profile?uid=" + uid;
+    let navLink = "";
+    let host = getCurrentHost();
+    let origin = getCurrentUrl().origin;
+    host == "localhost"
+      ? (navLink = `${origin}/backgen/zidi/profile?uid=${uid}`)
+      : (navLink = `${origin}/profile?uid=${uid}`);
+
     //console.log("NAVLINK WITH USER ID => ", navLink);
     if (menuItem === "Home") {
       navLink = "index";

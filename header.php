@@ -12,9 +12,9 @@
         <div class="col-sm-11">
             <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
                 <a class="navbar-brand" href="index">
-                    <h3 class="masthead-heading text-uppercase pl-3">
-                        <img src="/assets/images/logo.png" height="35px" />
-                    </h3>
+                    <div class="home-nav">
+
+                    </div>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -45,9 +45,8 @@
                         </li>
                         <li class="dropdown" id="account-0">
                             <div class="nav-link dropdown-toggle bg-white btn text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
-                            <div class="dropdown-menu mr-3">
-                                <a class="dropdown-item text-dark" href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
-                                <a class="dropdown-item text-dark" href="register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+                            <div class="dropdown-menu mr-3 sign-in-up-navs">
+                                
                             </div>
                         </li>
                         <li class="dropdown" id="account-1" style="outline: none;">

@@ -399,4 +399,9 @@ function Paging(
 
   return ReturnValue;
 }
+
+function getCurrentHost() {
+  const url = getCurrentUrl(); //grab the current to determine whether the site is live or local
+  return url.host;
+}
 ///////--------------End common reusable functions

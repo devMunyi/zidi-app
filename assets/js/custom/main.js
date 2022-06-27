@@ -810,6 +810,19 @@ function saveCodeSnippet(data) {
   });
 }
 
+function contributeCodeNav() {
+  let host = getCurrentHost();
+  let navLink = "";
+  let origin = getCurrentUrl().origin;
+  host == "localhost"
+    ? (navLink = `${origin}/backgen/zidi/code-add-edit`)
+    : (navLink = `${origin}/code-add-edit`);
+
+  $("#contribute-code").html(`
+  <a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+  `);
+}
+
 function search_codeSnippet() {
   let code_search = $("#search_box").val().trim();
   if (code_search) {
@@ -1205,9 +1218,17 @@ function load_codesnippetById(codeId) {
           //toggle edit code button based on whether the logged in user is the same as the author of the displayed code
           if (current_loc.user && current_loc.user.uid) {
             let user_id = current_loc.user.uid;
+
             if (user_id === data.added_by) {
+              let navLink = "";
+              let host = getCurrentHost();
+              let origin = getCurrentUrl().origin;
+              host == "localhost"
+                ? (navLink = `${origin}/backgen/zidi/code-add-edit?cid=${data.uid}`)
+                : (navLink = `${origin}/code-add-edit?cid=${data.uid}`);
+
               $("#edit-code").html(
-                `|<a class="a-override" href="code-add-edit?cid=${data.uid}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+                `|<a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
               );
             } else {
               $("#edit-code").html("");
