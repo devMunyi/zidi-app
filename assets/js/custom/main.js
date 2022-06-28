@@ -868,8 +868,13 @@ function search_codeSnippet() {
 function select_code(code_id, title, language) {
   $("#search_box").val(title);
 
+  //pass the values to hidden parameters to append on url
+  $("#code_id_").val(code_id);
+  $("#code_title_").val(title);
+  $("#code_lang_name").val(language);
+
   //load the selected code using the code uid
-  appendCodeUrl(code_id, title, language);
+  appendCodeUrl();
   load_codesnippetById(code_id);
   // $("#code_id_").val(uid);
   $("#code_results").fadeOut("fast");
@@ -1078,8 +1083,13 @@ function loadCodesnippetsLink() {
           data[i].user_implementation_type +
           "</i></b>";
 
+        //pass the values to hidden parameters to append on url
+        $("#code_id_").val(codesnippet_id);
+        $("#code_title_").val(title);
+        $("#code_lang_name").val(language_name);
+
         solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl('${codesnippet_id}',  '${title}', '${language_name}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+        onclick="appendCodeUrl(); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
@@ -1143,16 +1153,19 @@ function solnSelections() {
         </div>`);
 }
 
-function appendCodeUrl(code_id, code_title, language_name) {
+function appendCodeUrl() {
   const url = getCurrentUrl();
-  let hyphenatedTitle = hyphenateTitle(code_title);
-
   const host = url.host;
   let origin = "https://zidiapp.com";
   if (host == "localhost") {
     origin = "http://localhost/backgen/zidi";
   } else {
   }
+
+  let code_id = $("#code_id_").val();
+  let code_title = $("#code_title_").val();
+  let language_name = $("#code_lang_name").val();
+  let hyphenatedTitle = hyphenateTitle(code_title);
 
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name}`;
   goTo(myUrl);

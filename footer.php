@@ -23,9 +23,12 @@
 <!-- <input type="hidden" id="server_" value="http://localhost:5000/back"> -->
 <input type="hidden" id="auth_" value="Basic dGVzdDp0ZXN0">
 
-<input type="hidden" id="sel_cid_" value="0">
+
 <input type="hidden" id="sel_func_" value="0">
 <input type="hidden" id="sel_subfunc_" value="0">
 <input type="hidden" id="sel_language_" value="">
 <input type="hidden" id="sel_framework_" value="0">
 <input type="hidden" id="sel_codestyle_" value="0">
+<input type="text" id="code_id_" value="0">
+<input type="text" id="code_title_" value="">
+<input type="text" id="code_lang_name" value="">
