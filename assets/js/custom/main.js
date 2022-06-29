@@ -789,11 +789,11 @@ function codesnippetValidate() {
   if (title == "") {
     printError("titleErr", "Please add a user friendly code title");
   } else {
-    let regex = /^[a-zA-Z0-9.',?@&]+$/;
+    let regex = /^[a-zA-Z0-9.',?@&#]+$/;
     if (regex.test(title) === false) {
       printError(
         "titleErr",
-        "Title should not contain some special characters like /, <, >, and #. We recommend using aplhabets for the title."
+        "Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title."
       );
     } else {
       printError("titleErr", "");
