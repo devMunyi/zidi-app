@@ -32,3 +32,4 @@
 <input type="hidden" id="code_id_" value="0">
 <input type="hidden" id="code_title_" value="">
 <input type="hidden" id="code_lang_name" value="">
+<input type="hidden" id="codesnippet_" value="">

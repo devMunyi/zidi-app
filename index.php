@@ -92,7 +92,8 @@ include_once("configs/conn.inc");
                     <div class="row">
                         <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
                         <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
-                        <div class="col-sm-2" id="codestyle-dropdown">
+                        <div class="col-sm-2" id="codestyle-dropdown"> <i class="fe fe-code"></i>
+                            Codestyle List
                         </div>
                         <div class="col-sm-1"><span id=edit-code></span></div>
                         <div class="col-sm-3" id="contribute-code"></div>
