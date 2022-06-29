@@ -70,9 +70,10 @@ include_once("configs/conn.inc");
                             <nav class="sidebar-nav">
                                 <div class="card-body scrolli" style="padding: 10px 10px;">
                                     <ul class="metismenu func_" id="functions_">
-                                        <div class="spinner-border text-muted" role="status">
+                                        <i class="fe fe-list"></i> Language List
+                                        <!-- <div class="spinner-border text-muted" role="status">
                                             <span class="sr-only">Loading...</span>
-                                        </div>
+                                        </div> -->
                                     </ul>
                                 </div>
                             </nav>

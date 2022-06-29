@@ -367,10 +367,6 @@ function load_languages() {
 function filterFramsByLang() {
   //meant for the code-add-edit form page
   let current_loc = currentLoc();
-  console.log(
-    "Framework retrieval from the localstorage => ",
-    current_loc.allFrams
-  );
   if (current_loc && current_loc.allFrams) {
     let frams = current_loc.allFrams;
 
@@ -789,11 +785,20 @@ function codesnippetValidate() {
   }
 
   // Validate title
+  console.log("Title => ", title);
   if (title == "") {
     printError("titleErr", "Please add a user friendly code title");
   } else {
-    printError("titleErr", "");
-    titleErr = false;
+    let regex = /^[a-zA-Z0-9.',?@&]+$/;
+    if (regex.test(title) === false) {
+      printError(
+        "titleErr",
+        "Title should not contain some special characters like /, <, >, and #. We recommend using aplhabets for the title."
+      );
+    } else {
+      printError("titleErr", "");
+      titleErr = false;
+    }
   }
 
   // Validate code
@@ -1389,10 +1394,10 @@ function load_codesnippetById(codeId) {
       persistence("framework", data.framework_id);
       persistence("codestyle", codestyle_id);
 
-      getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
-      codeStyles(); //re-render codestyle to update loaded code codestyle
-      functions_load(); //re-render functions to update the loaded code function and subfunction
-      load_languages(); //re-render languages to update loaded code language
+      getFramsByLang(data.language_id); //render frameworks and highlight displayed codesnippet framework
+      codeStyles(); ////render codestyles and highlight displayed codesnippet codestyle
+      functions_load(); //render functions and subsfunctions as well as highlight displayed codesnippet function and subfunction
+      load_languages(); //render languages and highlight displayed codesnippet language
 
       solnSelections(); //populate the card with codesnippet/solution selections
 
@@ -1408,21 +1413,12 @@ function load_codesnippetById(codeId) {
       $(`#total-comments`).html(commentCountView);
 
       getCommentsByCodesnippetId();
-
-      //highlight the
-      //function=id(func), subfunction, language, framework, code_style, selected solution
-      highlightSelCodeParams(
-        func_id,
-        subfunc_id,
-        language_id,
-        framework_id,
-        codestyle_id
-      );
-
-      // setTimeout(() => {
-      //   formatCode(language_name); //format the codesnippet
-      // }, 500);
     } else {
+      getAllFrams(); //render all frameworks
+      codeStyles(); //render codestyle
+      functions_load(); //render functions and subfunctions
+      load_languages(); //render languages
+
       //set code implementation title to initialized default value
       $("#codeimp-title").html(codeImpTitle);
 
@@ -1433,48 +1429,52 @@ function load_codesnippetById(codeId) {
       $("#edit-code").html("");
 
       /////-------Display that no codesnippet found
-      codeEditor.setValue("No Code Loaded.");
+      configureAceEditor();
     }
   });
 }
 
-function configureAceEditor(lang) {
+function configureAceEditor(lang = "") {
   let codeEditor = ace.edit("editor");
-  //--reset code editor to empty string
-  codeEditor.setValue("Code Loading....");
-  let codesnippet = $("#codesnippet_").val();
-  let editorLib = {
-    init() {
-      codeEditor.setTheme("ace/theme/monokai");
+  if (!lang) {
+    codeEditor.setValue("No Code Loaded.");
+  } else {
+    //--reset code editor to empty string
+    codeEditor.setValue("Code Loading....");
+    let codesnippet = $("#codesnippet_").val();
+    let editorLib = {
+      init() {
+        codeEditor.setTheme("ace/theme/monokai");
 
-      //Set Languages
-      language = lang.toLowerCase();
-      if (language == "nodejs") {
-        language = "javascript";
-      }
-      if (language == "c#") {
-        language = "csharp";
-      }
+        //Set Languages
+        language = lang.toLowerCase();
+        if (language == "nodejs") {
+          language = "javascript";
+        }
+        if (language == "c#") {
+          language = "csharp";
+        }
 
-      if (language == "c" || language == "c++") {
-        language = "c_cpp";
-      }
-      codeEditor.session.setMode("ace/mode/" + language);
+        if (language == "c" || language == "c++") {
+          language = "c_cpp";
+        }
+        codeEditor.session.setMode("ace/mode/" + language);
 
-      //Set Options
-      codeEditor.setOptions({
-        //fontFamily: "Inconsolata",
-        fontSize: "12pt",
-        enableBasicAutocompletion: true,
-        autoScrollEditorIntoView: true,
-        //enableLiveAutocompletion: true,
-      });
+        //Set Options
+        codeEditor.setOptions({
+          //fontFamily: "Inconsolata",
+          fontSize: "12pt",
+          enableBasicAutocompletion: true,
+          autoScrollEditorIntoView: true,
+          //enableLiveAutocompletion: true,
+        });
 
-      //display the codesnippet
-      codeEditor.setValue(codesnippet);
-    },
-  };
-  editorLib.init();
+        //display the codesnippet
+        codeEditor.setValue(codesnippet);
+      },
+    };
+    editorLib.init();
+  }
 }
 
 // function resetCodeEditor() {

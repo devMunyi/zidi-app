@@ -104,7 +104,7 @@ if ($code_id > 0) {
 
                         <div class="form-group col-sm-3">
                             <label for="language_sel">*Language:</label>
-                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit(); codeAddEdit()" required>
+                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
