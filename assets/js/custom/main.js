@@ -1389,15 +1389,14 @@ function load_codesnippetById(codeId) {
       persistence("framework", data.framework_id);
       persistence("codestyle", codestyle_id);
 
+      getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
+      codeStyles(); //re-render codestyle to update loaded code codestyle
+      functions_load(); //re-render functions to update the loaded code function and subfunction
+      load_languages(); //re-render languages to update loaded code language
+
       solnSelections(); //populate the card with codesnippet/solution selections
 
-      getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
-      codeStyles(); //re-load codestyle to update loaded code codestyle
-      functions_load(); //re-load functions to update the loaded code function and subfunction
-      load_languages(); //re-load languages to update loaded code language
-
       //retrieve comments for the loaded codesnippet
-      //let ctotals = getCommentsByCodesnippetId();
       let ctotal = data.total_comments;
       persistence("total_comments", ctotal);
       let commentCountView;
