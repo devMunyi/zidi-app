@@ -788,18 +788,20 @@ function codesnippetValidate() {
   if (title == "") {
     printError("titleErr", "Please add a user friendly code title");
   } else {
-    printError("titleErr", "");
-    titleErr = false;
-    // let regex = /^[a-zA-Z0-9.',?@&#]+$/;
-    // if (regex.test(title) === false) {
-    //   printError(
-    //     "titleErr",
-    //     "Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title."
-    //   );
-    // } else {
-    //   printError("titleErr", "");
-    //   titleErr = false;
-    // }
+    // printError("titleErr", "");
+    // titleErr = false;
+    // let unsafeChar = "";
+
+    let regex = /^[a-zA-Z0-9.',?@&#\s]+$/;
+    if (regex.test(title) === false) {
+      printError(
+        "titleErr",
+        "Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title."
+      );
+    } else {
+      printError("titleErr", "");
+      titleErr = false;
+    }
   }
 
   // Validate code
