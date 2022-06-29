@@ -22,10 +22,13 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="col-lg-6">
-                        <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control" placeholder="Search code snippets">
-                        <input type="hidden" id="code_id_">
-                        <div id="code_results" class="">
+                        <div style="display: none;">
+                            <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control" placeholder="Search code snippets">
+                            <input type="hidden" id="code_id_">
+                            <div id="code_results" class="">
+                            </div>
                         </div>
+
                     </div>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -46,7 +49,7 @@
                         <li class="dropdown" id="account-0">
                             <div class="nav-link dropdown-toggle bg-white btn text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
                             <div class="dropdown-menu mr-3 sign-in-up-navs">
-                                
+
                             </div>
                         </li>
                         <li class="dropdown" id="account-1" style="outline: none;">

@@ -1389,7 +1389,7 @@ function load_codesnippetById(codeId) {
       persistence("framework", data.framework_id);
       persistence("codestyle", codestyle_id);
 
-      solnSelections(); //populate solution selections
+      solnSelections(); //populate the card with codesnippet/solution selections
 
       getFramsByLang(data.language_id); //re-load frameworks to update loaded code framework
       codeStyles(); //re-load codestyle to update loaded code codestyle

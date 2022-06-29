@@ -167,6 +167,10 @@ function logout(currentPage = "other") {
   //remove user and token from localstorage
   persistence_remove("user");
   persistence_remove("token");
+  // persistence_remove("allFrams");
+  // persistence_remove("allFuns");
+  // persistence_remove("allLangs");
+  // persistence_remove("allSubfuns");
 
   if (currentPage == "index") {
     updateHeader();
