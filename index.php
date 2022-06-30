@@ -127,7 +127,7 @@ include_once("configs/conn.inc");
                     <div class="col-lg-7 col-md-7 pl-0 pr-0">
                         <div class="card transcard ">
                             <div class="card-header pb-2 pt-2">
-                                <table style="width: 100%">
+                                <table style="width: 60%">
                                     <tr>
                                         <td>
                                             <h3 title="code" class="card-title"><i class="fe fe-code"></i>
@@ -147,6 +147,7 @@ include_once("configs/conn.inc");
                                         </td>
                                     </tr>
                                 </table>
+                                <div class="hidden" id="code-selections">Code Selections</div>
                                 <div class="card-options">
                                     <!--
                                 <input type="checkbox" id="checkbox" class="checkbox">
@@ -158,6 +159,7 @@ include_once("configs/conn.inc");
                                     </div>
                                 </label>
                                 `-->
+                                    
                                     <label class="custom-switch m-0">
                                         <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
                                         <span class="custom-switch-indicator"></span>

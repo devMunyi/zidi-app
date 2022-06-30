@@ -646,4 +646,8 @@ span.subfun_ {
     font-weight: bold !important;
 }
 
+.hidden{
+    display: none;
+}
+
 /******************End of pagination css************************/

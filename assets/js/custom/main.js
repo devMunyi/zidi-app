@@ -959,9 +959,9 @@ function search_codeSnippet() {
   if (code_search) {
     let query = "?search_=" + code_search;
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
+      persistence("searched_c_snippets", result.data);
       if (result.success) {
         let totalSearches = result.search_totals;
-        //console.log("SEARCH RESULTS =>", totalSearches);
         let data = result["data"];
         if (totalSearches > 0) {
           let tableSearch = `<table class='table table-dark childClass stack-top table-striped table-condensed'>`;
@@ -999,13 +999,8 @@ function search_codeSnippet() {
 function select_code(code_id, title, language) {
   $("#search_box").val(title);
 
-  //pass the values to hidden parameters to append on url
-  $("#code_id_").val(code_id);
-  $("#code_title_").val(title);
-  $("#code_lang_name").val(language);
-
   //load the selected code using the code uid
-  appendCodeUrl();
+  appendCodeUrl(code_id, "search");
   load_codesnippetById(code_id);
   // $("#code_id_").val(uid);
   $("#code_results").fadeOut("fast");
@@ -1214,27 +1209,22 @@ function loadCodesnippetsLink() {
           data[i].user_implementation_type +
           "</i></b>";
 
-        //pass the values to hidden parameters to append on url
-        $("#code_id_").val(codesnippet_id);
-        $("#code_title_").val(title);
-        $("#code_lang_name").val(language_name);
-
         solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl(); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+        onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
         ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
       }
 
       $("#available-solns").html(solns);
 
-      persistence("code", feed);
+      persistence("c_snippets", feed.data);
     } else {
       //add code version drop down
       $("#available-solns").html(
         `<p class="list-group-item list-group-item-action">No record found</p>`
       );
 
-      persistence_remove("code");
+      persistence_remove("c_snippets");
     }
   });
 }
@@ -1242,7 +1232,8 @@ function loadCodesnippetsLink() {
 function solnSelections() {
   let current_loc = currentLoc();
   $("#links-title").html("<span text-center>Solution Selections<span>");
-  $("#available-solns").html(`<div class="card p-2 text-center">
+  $("#available-solns")
+    .html(`<span class="dropdown-item"><div class="card p-2 text-center">
         Title : <span class="text-bold">${
           current_loc && current_loc.code_sel && current_loc.code_sel.title
             ? current_loc.code_sel.title
@@ -1281,24 +1272,59 @@ function solnSelections() {
             ? current_loc.code_sel.codestyle_name
             : ""
         }</span>
-        </div>`);
+        </div></span`);
 }
 
-function appendCodeUrl() {
+function appendCodeUrl(code_id, action = "") {
+  const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
   let origin = "https://zidiapp.com";
   if (host == "localhost") {
     origin = "http://localhost/backgen/zidi";
+  }
+  let c_snippet_title = "";
+  let c_snippet_lang_name = "";
+  if (action == "search") {
+    if (
+      current_loc &&
+      current_loc.searched_c_snippets &&
+      current_loc.searched_c_snippets.length > 0
+    ) {
+      let searched_c_snippets = current_loc.searched_c_snippets;
+      let searched_c_snippets_arr_size = searched_c_snippets.length;
+
+      for (let i = 0; i < searched_c_snippets_arr_size; i++) {
+        if (searched_c_snippets[i].uid == code_id) {
+          c_snippet_title = searched_c_snippets[i].title;
+          c_snippet_lang_name = searched_c_snippets[i].language_name;
+        }
+      }
+    }
   } else {
+    if (
+      current_loc &&
+      current_loc.c_snippets &&
+      current_loc.c_snippets.length > 0
+    ) {
+      let c_snippets = current_loc.c_snippets;
+      let c_snippets_arr_size = c_snippets.length;
+
+      for (let i = 0; i < c_snippets_arr_size; i++) {
+        if (c_snippets[i].uid == code_id) {
+          c_snippet_title = c_snippets[i].title;
+          c_snippet_lang_name = c_snippets[i].language_name;
+        }
+      }
+
+      let hyphenatedTitle = hyphenateTitle(c_snippet_title);
+      let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
+      goTo(myUrl);
+    }
   }
 
-  let code_id = $("#code_id_").val();
-  let code_title = $("#code_title_").val();
-  let language_name = $("#code_lang_name").val();
-  let hyphenatedTitle = hyphenateTitle(code_title);
-
-  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${language_name}`;
+  let hyphenatedTitle = hyphenateTitle(c_snippet_title);
+  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
   goTo(myUrl);
 }
 
@@ -1402,7 +1428,7 @@ function load_codesnippetById(codeId) {
       functions_load(); //render functions and subsfunctions as well as highlight displayed codesnippet function and subfunction
       load_languages(); //render languages and highlight displayed codesnippet language
 
-      solnSelections(); //populate the card with codesnippet/solution selections
+      //solnSelections(); //populate the card with codesnippet/solution selections
 
       //retrieve comments for the loaded codesnippet
       let ctotal = data.total_comments;
