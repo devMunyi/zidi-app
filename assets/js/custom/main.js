@@ -294,7 +294,7 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="getFramsByLang(${uid}); persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); persistence_remove('codeId'); loadCodesnippetsLink();">
+          onclick="persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
@@ -349,7 +349,7 @@ function load_languages() {
           }
           lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="getFramsByLang(${uid}); persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); persistence_remove('codeId'); loadCodesnippetsLink();">
+          onclick="persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
         }
         $("#language_").html(lang);
@@ -1494,8 +1494,6 @@ function appendCodeUrl(code_id, action = "") {
       goTo(myUrl);
     }
   }
-
-  console.log("language to append to url => ", c_snippet_lang_name);
 
   let hyphenatedTitle = hyphenateTitle(c_snippet_title);
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
