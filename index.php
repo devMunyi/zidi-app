@@ -527,10 +527,11 @@ include_once("configs/conn.inc");
                 persistence_remove("language");
                 persistence_remove("framework");
                 persistence_remove("codestyle");
+                persistence_remove("allFrams");
 
                 loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
                 getAllFrams();
-                functions_load() //load all functions
+                functions_load() //load all functions and subfunctions
                 load_languages(); //Load all the languages
                 codeStyles();
             }

@@ -294,7 +294,7 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
+          onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
@@ -349,7 +349,7 @@ function load_languages() {
           }
           lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="persistence_remove('framework'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
+          onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
         }
         $("#language_").html(lang);
