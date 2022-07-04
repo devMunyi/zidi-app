@@ -1506,6 +1506,9 @@ function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor", "spinner-border-sm");
 
+  //show a loader
+  codeLoading("#available-solns");
+
   let jso = {};
   query = "?codesnippet_id=" + codeId;
 
