@@ -410,32 +410,6 @@ function getAllFrams() {
     let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
     `;
     if (frams_arr_size > 0) {
-      let index = data.findIndex(function (o) {
-        return o.uid == 0;
-      });
-
-      if (index !== -1) data.splice(index, 1);
-
-      //append the framework data with uid as the first object within the array
-      data.unshift({
-        description: "",
-        icon: "",
-        language: "",
-        language_id: 0,
-        name: "No Framework",
-        status: 1,
-        uid: 0,
-      });
-
-      data.unshift({
-        description: "",
-        icon: "",
-        language: "",
-        language_id: 0,
-        name: "All Frameworks",
-        status: 1,
-        uid: "",
-      });
       let active_fram;
 
       if (current_loc && parseInt(current_loc.framework) != NaN) {
@@ -538,7 +512,7 @@ function getAllFrams() {
       } else {
         row = `
       <select>
-        <option value = "0">No Framework</option>>
+        <option value = "0">No Framework</option>
       </select>
       `;
         $("#framework-dropdown").html(row); ////no framework
@@ -558,33 +532,6 @@ function getFramsByLang(lang_id) {
     `;
 
     if (frams_arr_size > 0) {
-      let index = data.findIndex(function (o) {
-        return o.uid == 0;
-      });
-
-      if (index !== -1) data.splice(index, 1);
-
-      //append the framework data with uid as the first object within the array
-      data.unshift({
-        description: "",
-        icon: "",
-        language: "",
-        language_id: 0,
-        name: "No Framework",
-        status: 1,
-        uid: 0,
-      });
-
-      data.unshift({
-        description: "",
-        icon: "",
-        language: "",
-        language_id: 0,
-        name: "All Frameworks",
-        status: 1,
-        uid: "",
-      });
-
       let active_fram;
       if (current_loc && parseInt(current_loc.framework) != NaN) {
         active_fram = current_loc.framework;
@@ -1054,10 +1001,10 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function loadCodesnippetsLink() {
+function loadCodesnippetsLink(targetSolutions = "") {
   //show a loader
   codeLoading("#available-solns");
-  $("#links-title").html("Available Solutions");
+  $("#links-title").html("Solutions");
 
   let sel_framework = parseInt($("#sel_framework").val());
   persistence("framework", sel_framework);
@@ -1067,8 +1014,6 @@ function loadCodesnippetsLink() {
   let sel_func;
   let sel_subfunc;
   let sel_language;
-  //let sel_framework;
-  //let sel_codestyle;
 
   if (current_loc && current_loc.func > 0) {
     sel_func = current_loc.func;
@@ -1120,7 +1065,6 @@ function loadCodesnippetsLink() {
   }
 
   //persist user selections before sending the request to server, so that they will remain intact even on page refresh
-
   let where_ = "c.status = 1 ";
   let orderby = "c.uid";
   let dir = "DESC";
@@ -1161,9 +1105,6 @@ function loadCodesnippetsLink() {
       let framework;
       let codesnippet_id;
 
-      //check for previously selected code implementation
-      let current_loc = currentLoc();
-      let active_code_link;
       let solns = "";
       for (let i = 0; i < data.length; i++) {
         language_implementation_type = data[i].language_implementation_type;
@@ -1185,19 +1126,6 @@ function loadCodesnippetsLink() {
           language_implementation_type = "";
         } else {
           language_implementation_type = ` ${language_implementation_type}`;
-        }
-
-        if (
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.uid > 0
-        ) {
-          let impl_sel_ = current_loc.code_sel.uid;
-          if (impl_sel_ == i) {
-            active_code_link = "active";
-          } else {
-            active_code_link = "";
-          }
         }
 
         let displayed_soln =
@@ -1229,53 +1157,296 @@ function loadCodesnippetsLink() {
   });
 }
 
-function solnSelections() {
+function otherSolutions() {
+  //show a loader
+  codeLoading("#available-solns");
+
+  let rpp = 25;
+  let offset = 0;
+  let sel_func = "";
+  let sel_subfunc = "";
+  let sel_language = "";
+  let sel_framework = "";
+  let sel_codestyle = "";
+
+  //persist user selections before sending the request to server, so that they will remain intact even on page refresh
+  let where_ = "c.status = 1 ";
+  let orderby = "c.uid";
+  let dir = "DESC";
+
+  let jso = {};
+
+  let query =
+    "?where_=" +
+    where_ +
+    "&orderby=" +
+    orderby +
+    "&dir=" +
+    dir +
+    "&func_id=" +
+    sel_func +
+    "&subfunc_id=" +
+    sel_subfunc +
+    "&language_id=" +
+    sel_language +
+    "&framework_id=" +
+    sel_framework +
+    "&user_impl_type_id=" +
+    sel_codestyle +
+    "&offset=" +
+    offset +
+    "&rpp=" +
+    rpp;
+
+  crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+    //console.log(feed);
+    let total_ = feed.all_totals;
+    if (total_ > 0) {
+      let data = feed["data"];
+
+      let language_implementation_type;
+      let firstChar;
+      let language_name;
+      let framework;
+      let codesnippet_id;
+
+      let solns = "";
+      for (let i = 0; i < data.length; i++) {
+        language_implementation_type = data[i].language_implementation_type;
+        language_name = data[i].language_name;
+        framework = data[i].framework;
+        language_id = data[i].language_id;
+        codesnippet_id = data[i].uid;
+        let title = data[i].title;
+
+        if (data[i].framework_id == 0) {
+          framework = "";
+        } else {
+          framework = ` with ${framework} framework`;
+        }
+
+        firstChar = language_implementation_type[0];
+
+        if (firstChar == "D") {
+          language_implementation_type = "";
+        } else {
+          language_implementation_type = ` ${language_implementation_type}`;
+        }
+
+        let displayed_soln =
+          "<b class=''><i>" +
+          title +
+          " - " +
+          language_name +
+          " - " +
+          data[i].user_implementation_type +
+          "</i></b>";
+
+        solns += `<a href="javascript:void(0)"  
+        onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+<span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
+        ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+      }
+
+      $("#available-solns").html(solns);
+
+      persistence("c_snippets", feed.data);
+    } else {
+      //add code version drop down
+      $("#available-solns").html(
+        `<p class="list-group-item list-group-item-action">No record found</p>`
+      );
+
+      persistence_remove("c_snippets");
+    }
+  });
+}
+
+function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
+  let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}`;
+
+  crudaction({}, "/related-solns" + query, "GET", (feed) => {
+    console.log("related solutions feedback => ", feed);
+    if (feed && feed.data) {
+      $("#links-title").html("<span text-center>Current Solution<span>");
+      let current_loc = currentLoc();
+      //display the current solution as single card on top of the related solutions
+      let curSoln = "";
+      if (current_loc && current_loc.code_sel) {
+        let data = current_loc.code_sel;
+        let codesnippet_id = data.uid;
+        let {
+          framework_name,
+          language_name,
+          framework_id,
+          language_implementation_type,
+          language_id,
+          title,
+        } = data;
+        let framework_view = "";
+
+        if (framework_id == 0) {
+          framework_view = "";
+        } else {
+          framework_view = ` with ${framework_name} framework`;
+        }
+
+        firstChar = language_implementation_type[0];
+
+        if (firstChar == "D") {
+          language_implementation_type = "";
+        } else {
+          language_implementation_type = ` ${language_implementation_type}`;
+        }
+
+        curSoln = `<a href="javascript:void(0)" class="list-group-item list-group-item-action cur-soln">
+<span class="badge badge-secondary"></span>
+        ${title} - (<i>${language_name} ${language_implementation_type} ${framework_view}</i>) </a>`;
+
+        $("#available-solns").html(curSoln);
+      }
+
+      //display related solutions
+      $(".related-soln-container").show(); //show the related solutions container
+      let { data } = feed;
+      let solns_arr_size = data.length;
+      let solns = "";
+      solns_arr_size == 1
+        ? $("#related-soln-title").html("Related Solution")
+        : $("#related-soln-title").html("Related Solutions");
+
+      if (solns_arr_size > 0) {
+        for (let i = 0; i < solns_arr_size; i++) {
+          language_implementation_type = data[i].language_implementation_type;
+          language_name = data[i].language_name;
+          framework = data[i].framework;
+          language_id = data[i].language_id;
+          codesnippet_id = data[i].uid;
+          let title = data[i].title;
+
+          if (data[i].framework_id == 0) {
+            framework = "";
+          } else {
+            framework = ` with ${framework} framework`;
+          }
+
+          firstChar = language_implementation_type[0];
+
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
+
+          solns += `<a href="javascript:void(0)"  
+          onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+  <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
+          ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+        }
+
+        $("#related-solns").html(solns);
+        persistence("c_snippets", data);
+      } else {
+        //add code version drop down
+        $("#related-solns").html(
+          `<p class="list-group-item list-group-item-action">No related solution(s)</p>`
+        );
+      }
+    } else {
+      console.log(feed);
+      //persistence_remove("c_snippets");
+    }
+  });
+}
+
+function codeComposition() {
   let current_loc = currentLoc();
-  $("#links-title").html("<span text-center>Solution Selections<span>");
-  $("#available-solns")
-    .html(`<span class="dropdown-item"><div class="card p-2 text-center">
-        Title : <span class="text-bold">${
-          current_loc && current_loc.code_sel && current_loc.code_sel.title
-            ? current_loc.code_sel.title
-            : ""
-        }</span><br>
-        Function : <span class="text-bold">${
-          current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
-            ? current_loc.code_sel.fun_name
-            : ""
-        }</span><br>
-        Subfunction : <span class="text-bold">${
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.subfun_name
-            ? current_loc.code_sel.subfun_name
-            : ""
-        }</span><br>
-        Language : <span class="text-bold">${
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.language_name
-            ? current_loc.code_sel.language_name
-            : ""
-        }</span><br>
-        Framework : <span class="text-bold">${
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.framework_name
-            ? current_loc.code_sel.framework_name
-            : ""
-        }</span><br>
-        Code Style : <span class="text-bold">${
-          current_loc &&
-          current_loc.code_sel &&
-          current_loc.code_sel.codestyle_name
-            ? current_loc.code_sel.codestyle_name
-            : ""
-        }</span>
-        </div></span`);
+  $("#code-composition").html(`
+  <li class="dropdown" id="account-0">
+    <div
+      class="nav-link dropdown-toggle bg-white btn text-black"
+      style="border: none; background-color: #edeff3 !important;"
+      data-toggle="dropdown"
+      aria-expanded="false"
+    >
+    <i class="fe fe-code"></i>&nbsp;Composition
+    </div>
+    <div class="dropdown-menu mt-1" id="code-composition">
+    <div class="dropdown-item code-comp text-center card">
+    Function<i class="fe fe-arrow-down"></i><span class="text-bold">${
+      current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
+        ? current_loc.code_sel.fun_name
+        : ""
+    }</span><br>
+    Subfunction<i class="fe fe-arrow-down"></i><span class="text-bold">${
+      current_loc && current_loc.code_sel && current_loc.code_sel.subfun_name
+        ? current_loc.code_sel.subfun_name
+        : ""
+    }</span><br>
+    Language<i class="fe fe-arrow-down"></i><span class="text-bold">${
+      current_loc && current_loc.code_sel && current_loc.code_sel.language_name
+        ? current_loc.code_sel.language_name
+        : ""
+    }</span><br>
+    Framework<i class="fe fe-arrow-down"></i><span class="text-bold">${
+      current_loc && current_loc.code_sel && current_loc.code_sel.framework_name
+        ? current_loc.code_sel.framework_name
+        : ""
+    }</span><br>
+    Codestyle<i class="fe fe-arrow-down"></i><span class="text-bold">${
+      current_loc && current_loc.code_sel && current_loc.code_sel.codestyle_name
+        ? current_loc.code_sel.codestyle_name
+        : ""
+    }</span>
+    </div>
+    </div>
+  </li>`);
+
+  // $("#code-composition")
+  //   .html(`<span class="dropdown-item"><div class="card p-2 text-center">
+  //       Title : <span class="text-bold">${
+  //         current_loc && current_loc.code_sel && current_loc.code_sel.title
+  //           ? current_loc.code_sel.title
+  //           : ""
+  //       }</span><br>
+  //       Function : <span class="text-bold">${
+  //         current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
+  //           ? current_loc.code_sel.fun_name
+  //           : ""
+  //       }</span><br>
+  //       Subfunction : <span class="text-bold">${
+  //         current_loc &&
+  //         current_loc.code_sel &&
+  //         current_loc.code_sel.subfun_name
+  //           ? current_loc.code_sel.subfun_name
+  //           : ""
+  //       }</span><br>
+  //       Language : <span class="text-bold">${
+  //         current_loc &&
+  //         current_loc.code_sel &&
+  //         current_loc.code_sel.language_name
+  //           ? current_loc.code_sel.language_name
+  //           : ""
+  //       }</span><br>
+  //       Framework : <span class="text-bold">${
+  //         current_loc &&
+  //         current_loc.code_sel &&
+  //         current_loc.code_sel.framework_name
+  //           ? current_loc.code_sel.framework_name
+  //           : ""
+  //       }</span><br>
+  //       Code Style : <span class="text-bold">${
+  //         current_loc &&
+  //         current_loc.code_sel &&
+  //         current_loc.code_sel.codestyle_name
+  //           ? current_loc.code_sel.codestyle_name
+  //           : ""
+  //       }</span>
+  //       </div></span`);
 }
 
 function appendCodeUrl(code_id, action = "") {
+  console.log("code id to append url => ", code_id);
   const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
@@ -1323,6 +1494,8 @@ function appendCodeUrl(code_id, action = "") {
     }
   }
 
+  console.log("language to append to url => ", c_snippet_lang_name);
+
   let hyphenatedTitle = hyphenateTitle(c_snippet_title);
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
   goTo(myUrl);
@@ -1347,8 +1520,14 @@ function load_codesnippetById(codeId) {
       let data = feed["data"];
       let { title } = data;
       //console.log("loaded code details => ", data);
-      let { func_id, subfunc_id, language_id, framework_id, codestyle_id } =
-        data;
+      let {
+        uid,
+        func_id,
+        subfunc_id,
+        language_id,
+        framework_id,
+        codestyle_id,
+      } = data;
 
       //update code implementation title
       codeImpTitle = title;
@@ -1378,8 +1557,9 @@ function load_codesnippetById(codeId) {
       //toggle edit code button based on whether the logged in user is the same as the author of the displayed code
       if (current_loc.user && current_loc.user.uid) {
         let user_id = current_loc.user.uid;
+        let isAdmin = current_loc.user.isAdmin;
 
-        if (user_id === data.added_by) {
+        if (user_id === data.added_by || isAdmin === "true") {
           let navLink = "";
           let host = getCurrentHost();
           let origin = getCurrentUrl().origin;
@@ -1416,8 +1596,8 @@ function load_codesnippetById(codeId) {
 
       //persist code Id to be referenced later
       persistence("code_sel", data);
-      persistence("func", data.func_id);
-      persistence("subfunc", data.subfunc_id);
+      persistence("func", func_id);
+      persistence("subfunc", subfunc_id);
       persistence("language", data.language_id);
       persistence("language_name", data.language_name);
       persistence("framework", data.framework_id);
@@ -1428,7 +1608,10 @@ function load_codesnippetById(codeId) {
       functions_load(); //render functions and subsfunctions as well as highlight displayed codesnippet function and subfunction
       load_languages(); //render languages and highlight displayed codesnippet language
 
-      //solnSelections(); //populate the card with codesnippet/solution selections
+      codeComposition(); //populate the card with codesnippet/solution composition
+
+      //load the current codesnippet related solutions
+      getRelatedSolns(func_id, subfunc_id, uid);
 
       //retrieve comments for the loaded codesnippet
       let ctotal = data.total_comments;
@@ -1500,6 +1683,10 @@ function configureAceEditor(lang = "") {
 
         //display the codesnippet
         codeEditor.setValue(codesnippet);
+
+        // setTimeout(() => {
+        //   formatCode(language);
+        // }, 50);
       },
     };
     editorLib.init();
@@ -1707,6 +1894,7 @@ function getCommentsByCodesnippetId() {
   crudaction({}, "/comments-by-codeid" + query, "GET", function (result) {
     //comment loading indicator
     $("#outer-c").html("<i>Loading...</i>");
+    console.log("comments loaded => ", result);
 
     let row = "";
     let total_records = 0;
@@ -1853,6 +2041,8 @@ function getCommentsByCodesnippetId() {
         "myDisableClass"
       );
       $("#pagingDiv").html(paginationResult);
+    } else {
+      $("#pagingDiv").html("");
     }
   });
 }
@@ -2253,3 +2443,9 @@ function momentDatetime(targetdt) {
 }
 
 ///////----------------------------------End Comments
+
+/*
+1) ov2 1.236
+2
+
+*/

@@ -129,11 +129,11 @@ include_once("configs/conn.inc");
                             <div class="card-header pb-2 pt-2">
                                 <table style="width: 60%">
                                     <tr>
-                                        <td>
+                                        <!-- <td>
                                             <h3 title="code" class="card-title"><i class="fe fe-code"></i>
-                                                <!--Code Snippet-->
+                                               
                                             </h3>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
                                                 <!--Copy-->
@@ -147,7 +147,9 @@ include_once("configs/conn.inc");
                                         </td>
                                     </tr>
                                 </table>
-                                <div class="hidden" id="code-selections">Code Selections</div>
+                                <div id="code-composition">
+
+                                </div>
                                 <div class="card-options">
                                     <!--
                                 <input type="checkbox" id="checkbox" class="checkbox">
@@ -159,7 +161,7 @@ include_once("configs/conn.inc");
                                     </div>
                                 </label>
                                 `-->
-                                    
+
                                     <label class="custom-switch m-0">
                                         <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
                                         <span class="custom-switch-indicator"></span>
@@ -428,11 +430,11 @@ include_once("configs/conn.inc");
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
-                        <div class="card transcard">
+                        <div class="card transcard mb-0 pb-0">
                             <div class="card-header pt-3">
-                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title"> Available Solutions</span></h3>
+                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">Popular Solutions</span></h3>
                             </div>
-                            <div class="card-body pt-0" style="padding: 20px 0px;">
+                            <div class="card-body pt-0" style="padding: 10px 0px;">
                                 <div class="list-group" id="available-solns">
                                 </div>
                             </div>
@@ -441,6 +443,34 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
                         </div>
+                        <div class="card transcard mt-0 pt-0 related-soln-container hidden">
+                            <div class="card-header mt-0 pt-0">
+                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h3>
+                            </div>
+                            <div class="card-body pt-0" style="padding: 10px 0px;">
+                                <div class="list-group" id="related-solns">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="card transcard mt-0 pt-0 other-soln-container">
+                            <div class="card-header mt-0 pt-0">
+                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="other-soln-title"> Other Solutions</span></h3>
+                            </div>
+                            <div class="card-body pt-0" style="padding: 10px 0px;">
+                                <div class="list-group" id="other-solns">
+                                    other
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -491,7 +521,6 @@ include_once("configs/conn.inc");
 
             if (codeId > 0) {
                 load_codesnippetById(codeId); //load code links with previously loaded code params
-                solnSelections(); //populate solution selections
             } else {
                 persistence_remove("func");
                 persistence_remove("subfunc");

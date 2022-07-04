@@ -344,13 +344,17 @@ input#search_box {
     /*margin: 20px;*/
 }
 
-.active-two {
+.active-two, .cur-soln {
     background-color: #babcd380 !important;
     color: black !important;
     font-weight: bold;
     border-right: 2px solid darkblue !important;
     border-radius: 5px !important;
 
+}
+
+.cur-soln:hover{
+    cursor: default;
 }
 
 
@@ -481,8 +485,20 @@ div#title-bar {
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
-    margin-right: 30px !important;
+    /*margin-right: 30px !important;*/
 }
+
+.code-comp{
+    /* float: left !important;
+    margin: auto !important;
+    word-wrap: break-word !important;
+    width: inherit !important; */
+}
+
+.code-comp:hover{
+    background-color: inherit !important;
+}
+
 
 
 .search-dropdown-noresults {
