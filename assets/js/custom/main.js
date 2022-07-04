@@ -1685,7 +1685,7 @@ function configureAceEditor(lang = "") {
         //display the codesnippet
         codeEditor.setValue(codesnippet);
 
-        if (language == "Java") {
+        if (language === "java") {
           setTimeout(() => {
             formatCode(language);
           }, 50);
