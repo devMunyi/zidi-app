@@ -1001,9 +1001,10 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function loadCodesnippetsLink(targetSolutions = "") {
+function loadCodesnippetsLink() {
   //show a loader
   codeLoading("#available-solns");
+  $(".related-soln-container").hide(); //hide related solutions container
   $("#links-title").html("Solutions");
 
   let sel_framework = parseInt($("#sel_framework").val());
