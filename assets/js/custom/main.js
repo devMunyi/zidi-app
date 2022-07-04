@@ -1685,9 +1685,11 @@ function configureAceEditor(lang = "") {
         //display the codesnippet
         codeEditor.setValue(codesnippet);
 
-        // setTimeout(() => {
-        //   formatCode(language);
-        // }, 50);
+        if (language == "Java") {
+          setTimeout(() => {
+            formatCode(language);
+          }, 50);
+        }
       },
     };
     editorLib.init();
