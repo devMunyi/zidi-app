@@ -430,8 +430,9 @@ function getAllFrams() {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select>
-        <option value = "0">No Framework</option>>
+      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+        <option value = "">All Frameworks</option>
+        <option value = "0">No Framework</option>
       </select>
       `;
       $("#framework-dropdown").html(row); ////no framework
@@ -511,9 +512,10 @@ function getAllFrams() {
         persistence("allFrams", data);
       } else {
         row = `
-      <select>
-        <option value = "0">No Framework</option>
-      </select>
+        <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+          <option value = "">All Frameworks</option>
+          <option value = "0">No Framework</option>
+        </select>
       `;
         $("#framework-dropdown").html(row); ////no framework
       }
@@ -551,7 +553,8 @@ function getFramsByLang(lang_id) {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select>
+      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+        <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -632,7 +635,8 @@ function getFramsByLang(lang_id) {
         $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select>
+      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+        <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
