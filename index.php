@@ -416,7 +416,7 @@ include_once("configs/conn.inc");
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; min-height: 500px;">
                         <div class="card transcard mb-0 pb-0 all-solns hidden">
                             <div class="card-header pt-3">
-                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">Solutions</span></h3>
+                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">All Solutions</span></h3>
                             </div>
                             <div class="card-body pt-0" style="padding: 10px 0px;">
                                 <div class="list-group" id="available-solns">

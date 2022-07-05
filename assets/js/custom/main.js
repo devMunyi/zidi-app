@@ -1016,7 +1016,7 @@ function loadCodesnippetsLink(action = "") {
   //show a loader
   codeLoading("#available-solns");
   $(".related-soln-container").hide(); //hide related solutions container
-  $("#links-title").html("Solutions");
+  $("#links-title").html("All Solutions");
 
   let current_loc = currentLoc();
   if (action == "all_back") {
