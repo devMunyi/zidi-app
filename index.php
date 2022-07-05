@@ -444,10 +444,10 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                         <div class="card transcard related-soln-container hidden">
-                            <div class="card-header mt-0 pt-0">
+                            <div class="card-header">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h3>
                             </div>
-                            <div class="card-body pt-0" style="padding: 10px 0px;">
+                            <div class="card-body" style="padding: 10px 0px;">
                                 <div class="list-group" id="related-solns">
                                 </div>
                             </div>
