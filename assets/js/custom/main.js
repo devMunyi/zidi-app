@@ -1273,43 +1273,43 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     console.log("related solutions feedback => ", feed);
     if (feed && feed.data) {
-      $("#links-title").html("<span text-center>Current Solution<span>");
-      let current_loc = currentLoc();
-      //display the current solution as single card on top of the related solutions
-      let curSoln = "";
-      if (current_loc && current_loc.code_sel) {
-        let data = current_loc.code_sel;
-        let codesnippet_id = data.uid;
-        let {
-          framework_name,
-          language_name,
-          framework_id,
-          language_implementation_type,
-          language_id,
-          title,
-        } = data;
-        let framework_view = "";
+      //       $("#links-title").html("<span text-center>Current Solution<span>");
+      //       let current_loc = currentLoc();
+      //       //display the current solution as single card on top of the related solutions
+      //       let curSoln = "";
+      //       if (current_loc && current_loc.code_sel) {
+      //         let data = current_loc.code_sel;
+      //         let codesnippet_id = data.uid;
+      //         let {
+      //           framework_name,
+      //           language_name,
+      //           framework_id,
+      //           language_implementation_type,
+      //           language_id,
+      //           title,
+      //         } = data;
+      //         let framework_view = "";
 
-        if (framework_id == 0) {
-          framework_view = "";
-        } else {
-          framework_view = ` with ${framework_name} framework`;
-        }
+      //         if (framework_id == 0) {
+      //           framework_view = "";
+      //         } else {
+      //           framework_view = ` with ${framework_name} framework`;
+      //         }
 
-        firstChar = language_implementation_type[0];
+      //         firstChar = language_implementation_type[0];
 
-        if (firstChar == "D") {
-          language_implementation_type = "";
-        } else {
-          language_implementation_type = ` ${language_implementation_type}`;
-        }
+      //         if (firstChar == "D") {
+      //           language_implementation_type = "";
+      //         } else {
+      //           language_implementation_type = ` ${language_implementation_type}`;
+      //         }
 
-        curSoln = `<a href="javascript:void(0)" class="list-group-item list-group-item-action cur-soln">
-<span class="badge badge-secondary"></span>
-        ${title} - (<i>${language_name} ${language_implementation_type} ${framework_view}</i>) </a>`;
+      //         curSoln = `<a href="javascript:void(0)" class="list-group-item list-group-item-action cur-soln">
+      // <span class="badge badge-secondary"></span>
+      //         ${title} - (<i>${language_name} ${language_implementation_type} ${framework_view}</i>) </a>`;
 
-        $("#available-solns").html(curSoln);
-      }
+      //         $("#available-solns").html(curSoln);
+      //       }
 
       //display related solutions
       $(".related-soln-container").show(); //show the related solutions container
