@@ -430,7 +430,7 @@ include_once("configs/conn.inc");
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
-                        <div class="card transcard mb-0 pb-0">
+                        <div class="card transcard mb-0 pb-0" id="avai-solns">
                             <div class="card-header pt-3">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">Solutions</span></h3>
                             </div>

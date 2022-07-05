@@ -1273,7 +1273,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     console.log("related solutions feedback => ", feed);
     if (feed && feed.data) {
-      $("#available-solns").html("");
+      $("#avai-solns").html("");
       //$("#links-title").html("<span text-center>Current Solution<span>");
       //       $("#links-title").html("<span text-center>Current Solution<span>");
       //       let current_loc = currentLoc();
