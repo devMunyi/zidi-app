@@ -443,7 +443,7 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
                         </div>
-                        <div class="card transcard mt-0 pt-0 related-soln-container hidden">
+                        <div class="card transcard related-soln-container hidden">
                             <div class="card-header mt-0 pt-0">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h3>
                             </div>
