@@ -1894,7 +1894,7 @@ function configureAceEditor(lang = "") {
           enableBasicAutocompletion: true,
           autoScrollEditorIntoView: true,
           copyWithEmptySelection: true,
-          maxLines: numOfLines, //allows the editor to grow based on content size
+          maxLines: numOfLines + 3, //allows the editor to grow based on content size
           //enableLiveAutocompletion: true,
         });
 
