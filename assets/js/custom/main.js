@@ -1273,6 +1273,8 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     console.log("related solutions feedback => ", feed);
     if (feed && feed.data) {
+      $("#available-solns").html("");
+      //$("#links-title").html("<span text-center>Current Solution<span>");
       //       $("#links-title").html("<span text-center>Current Solution<span>");
       //       let current_loc = currentLoc();
       //       //display the current solution as single card on top of the related solutions
