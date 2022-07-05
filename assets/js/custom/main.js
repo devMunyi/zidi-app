@@ -1012,7 +1012,7 @@ function safe_tags_replace(str) {
 }
 
 function loadCodesnippetsLink(action = "") {
-  $(".all-solns").toggle();
+  $(".all-solns").show();
   //show a loader
   codeLoading("#available-solns");
   $(".related-soln-container").hide(); //hide related solutions container
