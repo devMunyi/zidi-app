@@ -1506,7 +1506,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
 
       $("#all-solns-nav").html(
         `
-        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All Solutions" class="a-alt"  class="text-blue font-weight-bold text-center"><span class="badge badge-secondary"><i class="fe fe-corner-up-left"></i></span></a>
+        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All Solutions" class="a-alt"  class="text-blue font-weight-bold text-center"><span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span></a>
         `
       );
 
