@@ -1860,7 +1860,28 @@ function load_codesnippetById(codeId) {
   });
 }
 
+function toggleEditorTheme() {
+  let current_loc = currentLoc();
+  let editorTheme = current_loc.editorTheme;
+  let lang = current_loc.code_sel.language_name;
+  if (editorTheme == "monokai") {
+    persistence("editorTheme", "eclipse");
+  } else {
+    persistence("editorTheme", "monokai");
+  }
+
+  configureAceEditor(lang);
+}
+
 function configureAceEditor(lang = "") {
+  let current_loc = currentLoc();
+  let editorTheme = current_loc.editorTheme;
+  if (editorTheme == "monokai") {
+    $("#editor").addClass("dark-screen");
+  } else {
+    $("#editor").removeClass("dark-screen");
+  }
+
   let codeEditor = ace.edit("editor");
   if (!lang) {
     codeEditor.setValue("No Code Loaded.");
@@ -1871,7 +1892,7 @@ function configureAceEditor(lang = "") {
     let numOfLines = (codesnippet.match(/\n/g) || []).length; //get the number of lines contained in the codesnippet
     let editorLib = {
       init() {
-        codeEditor.setTheme("ace/theme/monokai");
+        codeEditor.setTheme("ace/theme/" + editorTheme);
 
         //Set Languages
         language = lang.toLowerCase();
@@ -1936,13 +1957,16 @@ function configureAceEditor(lang = "") {
 // }
 
 function formatCode(language) {
+  let current_loc = currentLoc();
+  let editorTheme = current_loc.editorTheme;
+
   let codeEditor = ace.edit("editor");
   let editorLib = {
     init() {
       //let modelist = ace.require("ace/ext/modelist");
       //Configure Ace
       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
-      codeEditor.setTheme("ace/theme/monokai");
+      codeEditor.setTheme("ace/theme/" + editorTheme);
       codeEditor.session.setMode("ace/mode/" + language);
       //Set Options
       let setOptions = {

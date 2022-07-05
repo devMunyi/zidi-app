@@ -148,7 +148,7 @@ include_once("configs/conn.inc");
                                 <div class="card-options">
                                     <label class="custom-switch m-0">
                                         <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
-                                        <span class="custom-switch-indicator"></span>
+                                        <span onclick="toggleEditorTheme()" class="custom-switch-indicator"></span>
                                     </label>
                                 </div>
                             </div>
@@ -488,6 +488,7 @@ include_once("configs/conn.inc");
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
+            persistence("editorTheme", "monokai") //default editor theme;
 
             let current_loc = currentLoc();
             let codeId = 0;
