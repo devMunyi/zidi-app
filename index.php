@@ -129,11 +129,6 @@ include_once("configs/conn.inc");
                             <div class="card-header pb-2 pt-2">
                                 <table style="width: 60%">
                                     <tr>
-                                        <!-- <td>
-                                            <h3 title="code" class="card-title"><i class="fe fe-code"></i>
-                                               
-                                            </h3>
-                                        </td> -->
                                         <td>
                                             <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
                                                 <!--Copy-->
@@ -151,17 +146,6 @@ include_once("configs/conn.inc");
 
                                 </div>
                                 <div class="card-options">
-                                    <!--
-                                <input type="checkbox" id="checkbox" class="checkbox">
-                                <label for="checkbox" class="label">
-                                    <i class="fas fa-moon"></i>
-                                    <i class="fas fa-sun"></i>
-                                    <div class="ball">
-
-                                    </div>
-                                </label>
-                                `-->
-
                                     <label class="custom-switch m-0">
                                         <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
                                         <span class="custom-switch-indicator"></span>
@@ -429,8 +413,8 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; overflow-y: scroll; max-height: 500px;">
-                        <div class="card transcard mb-0 pb-0" id="avai-solns">
+                    <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; min-height: 500px;">
+                        <div class="card transcard mb-0 pb-0 all-solns hidden">
                             <div class="card-header pt-3">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">Solutions</span></h3>
                             </div>
@@ -445,7 +429,10 @@ include_once("configs/conn.inc");
                         </div>
                         <div class="card transcard related-soln-container hidden">
                             <div class="card-header">
-                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h3>
+                                <h4 class="card-title"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h4>
+                                <div class="ml-3 pull-right" id="all-solns-nav">
+                                    
+                                </div>
                             </div>
                             <div class="card-body" style="padding: 10px 0px;">
                                 <div class="list-group" id="related-solns">
@@ -548,11 +535,11 @@ include_once("configs/conn.inc");
                 $('#logo_home').css('display', 'none');
                 $(".scrolli").mCustomScrollbar({
                     theme: "inset-2-dark",
-                    autoHideScrollbar: true
+                    // autoHideScrollbar: true
                 });
                 $(".scrollk").mCustomScrollbar({
                     theme: "inset-2-dark",
-                    autoHideScrollbar: true
+                    // autoHideScrollbar: true
                 });
             });
         })(jQuery);
@@ -571,42 +558,42 @@ include_once("configs/conn.inc");
                 $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
             })
 
-            /* $('#search_functionality').keyup(function() {
-                //grabbing user search keys/terms
+            //  $('#search_functionality').keyup(function() {
+            //     //grabbing user search keys/terms
 
-                let k_ = $('#search_functionality').val().trim();
-                let fk;
-                if (k_) {
-                    //capitalizing first letter for search keys/terms
-                    const ks_ = k_.split(" ");
+            //     let k_ = $('#search_functionality').val().trim();
+            //     let fk;
+            //     if (k_) {
+            //         //capitalizing first letter for search keys/terms
+            //         const ks_ = k_.split(" ");
 
-                    for (let i = 0; i < ks_.length; i++) {
-                        ks_[i] = ks_[i][0].toUpperCase() + ks_[i].substr(1).toLowerCase();
-                    }
+            //         for (let i = 0; i < ks_.length; i++) {
+            //             ks_[i] = ks_[i][0].toUpperCase() + ks_[i].substr(1).toLowerCase();
+            //         }
 
-                    fk = ks_.join(" ");
-
-
-                    console.log("Search key terms =>", fk);
-                }
+            //         fk = ks_.join(" ");
 
 
-                if (fk) {
-                    // var matches = $('ul#functions_').find('li:contains(' + $(this).val() + ') ');
-                    var matches = $('ul#functions_').find('li:contains(' + fk + ') ');
-                    console.log("Found matches =>", matches);
-                    $('li', 'ul#functions_').not(matches).slideUp();
-                    matches.slideDown();
-                    $('.inner_list').fadeIn('fast');
-                } else {
-                    ///-----Restore
-                    $('.inner_list').fadeOut('fast');
-                    $('.outer_list').slideDown();
+            //         console.log("Search key terms =>", fk);
+            //     }
 
-                    //functions_load()
 
-                }
-            }); */
+            //     if (fk) {
+            //         // var matches = $('ul#functions_').find('li:contains(' + $(this).val() + ') ');
+            //         var matches = $('ul#functions_').find('li:contains(' + fk + ') ');
+            //         console.log("Found matches =>", matches);
+            //         $('li', 'ul#functions_').not(matches).slideUp();
+            //         matches.slideDown();
+            //         $('.inner_list').fadeIn('fast');
+            //     } else {
+            //         ///-----Restore
+            //         $('.inner_list').fadeOut('fast');
+            //         $('.outer_list').slideDown();
+
+            //         //functions_load()
+
+            //     }
+            // }); 
 
             //toggle active function
             $('.func_').on('click', '.func-item', function() {
@@ -615,7 +602,6 @@ include_once("configs/conn.inc");
             });
 
             //toggle active subfunction
-            //city, state, postal code, country
             $('.subfunc_').on('click', '.subfunc_', function() {
                 $('a.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');

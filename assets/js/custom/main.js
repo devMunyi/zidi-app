@@ -34,7 +34,7 @@ function functions_load() {
 
           fun += `<li class="outer_list"> 
           <a id="func-item-${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+          onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -186,6 +186,12 @@ function functions_load() {
 }
 
 function subfun() {}
+
+//function and subfunction menu toggler
+function submenu(id) {
+  console.log("I was clicked");
+  $(id).toggle();
+}
 
 /////------End Functionalities
 
@@ -910,7 +916,7 @@ function search_codeSnippet() {
   if (code_search) {
     let query = "?search_=" + code_search;
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
-      persistence("searched_c_snippets", result.data);
+      persistence("searched_solns", result.data);
       if (result.success) {
         let totalSearches = result.search_totals;
         let data = result["data"];
@@ -1005,162 +1011,338 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function loadCodesnippetsLink() {
+function loadCodesnippetsLink(action = "") {
+  $(".all-solns").toggle();
   //show a loader
   codeLoading("#available-solns");
   $(".related-soln-container").hide(); //hide related solutions container
   $("#links-title").html("Solutions");
 
-  let sel_framework = parseInt($("#sel_framework").val());
-  persistence("framework", sel_framework);
-  let sel_codestyle = parseInt($("#sel_codestyle").val());
-  persistence("codestyle", sel_codestyle);
   let current_loc = currentLoc();
-  let sel_func;
-  let sel_subfunc;
-  let sel_language;
+  if (action == "all_back") {
+    if (current_loc && current_loc.all_solns.length) {
+      let total_ = current_loc.all_solns.length;
+      if (total_ > 0) {
+        let data = current_loc.all_solns;
+        let language_implementation_type;
+        let firstChar;
+        let language_name;
+        let framework;
+        let codesnippet_id;
 
-  if (current_loc && current_loc.func > 0) {
-    sel_func = current_loc.func;
-  }
-  if (current_loc && current_loc.subfunc > 0) {
-    sel_subfunc = current_loc.subfunc;
-  }
+        let solns = "";
+        for (let i = 0; i < data.length; i++) {
+          language_implementation_type = data[i].language_implementation_type;
+          language_name = data[i].language_name;
+          framework = data[i].framework;
+          language_id = data[i].language_id;
+          codesnippet_id = data[i].uid;
+          let title = data[i].title;
 
-  if (current_loc && current_loc.language > 0) {
-    sel_language = current_loc.language;
-  }
+          if (data[i].framework_id == 0) {
+            framework = "";
+          } else {
+            framework = ` with ${framework} framework`;
+          }
 
-  if (
-    current_loc &&
-    current_loc.framework >= 0 &&
-    current_loc.framework != null &&
-    current_loc.framework != NaN
-  ) {
-    sel_framework = current_loc.framework;
-  } else {
-  }
+          firstChar = language_implementation_type[0];
 
-  if (current_loc && current_loc.codestyle > 0) {
-    sel_codestyle = current_loc.codestyle;
-  }
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
 
-  let rpp = 25;
-  let offset = 0;
+          let displayed_soln =
+            "<b class=''><i>" +
+            title +
+            " - " +
+            language_name +
+            " - " +
+            data[i].user_implementation_type +
+            "</i></b>";
 
-  if (!sel_func) {
-    sel_func = "";
-  }
+          let activeClass = "";
+          let curSoln =
+            current_loc && current_loc.code_sel && current_loc.code_sel.uid
+              ? current_loc.code_sel.uid
+              : "";
+          curSoln == codesnippet_id
+            ? (activeClass = "active-two")
+            : (activeClass = "");
 
-  if (!sel_subfunc) {
-    sel_subfunc = "";
-  }
-
-  if (!sel_language) {
-    sel_language = "";
-  }
-
-  if (sel_framework >= 0 && sel_framework != null && sel_framework != NaN) {
-  } else {
-    sel_framework = "";
-  }
-
-  if (!sel_codestyle) {
-    sel_codestyle = "";
-  }
-
-  //persist user selections before sending the request to server, so that they will remain intact even on page refresh
-  let where_ = "c.status = 1 ";
-  let orderby = "c.uid";
-  let dir = "DESC";
-
-  let jso = {};
-
-  let query =
-    "?where_=" +
-    where_ +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&func_id=" +
-    sel_func +
-    "&subfunc_id=" +
-    sel_subfunc +
-    "&language_id=" +
-    sel_language +
-    "&framework_id=" +
-    sel_framework +
-    "&user_impl_type_id=" +
-    sel_codestyle +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp;
-
-  crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
-    //console.log(feed);
-    let total_ = feed.all_totals;
-    if (total_ > 0) {
-      let data = feed["data"];
-
-      let language_implementation_type;
-      let firstChar;
-      let language_name;
-      let framework;
-      let codesnippet_id;
-
-      let solns = "";
-      for (let i = 0; i < data.length; i++) {
-        language_implementation_type = data[i].language_implementation_type;
-        language_name = data[i].language_name;
-        framework = data[i].framework;
-        language_id = data[i].language_id;
-        codesnippet_id = data[i].uid;
-        let title = data[i].title;
-
-        if (data[i].framework_id == 0) {
-          framework = "";
-        } else {
-          framework = ` with ${framework} framework`;
+          solns += `<a href="javascript:void(0)"  
+                onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
+            <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
+            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
 
-        firstChar = language_implementation_type[0];
+        $("#available-solns").html(solns);
+      } else {
+        //add code version drop down
+        $("#available-solns").html(
+          `<p class="list-group-item list-group-item-action">No record found</p>`
+        );
 
-        if (firstChar == "D") {
-          language_implementation_type = "";
-        } else {
-          language_implementation_type = ` ${language_implementation_type}`;
-        }
-
-        let displayed_soln =
-          "<b class=''><i>" +
-          title +
-          " - " +
-          language_name +
-          " - " +
-          data[i].user_implementation_type +
-          "</i></b>";
-
-        solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
-<span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-        ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+        persistence_remove("all_solns");
       }
-
-      $("#available-solns").html(solns);
-
-      persistence("c_snippets", feed.data);
     } else {
-      //add code version drop down
-      $("#available-solns").html(
-        `<p class="list-group-item list-group-item-action">No record found</p>`
-      );
+      //get resource from the server
+      let rpp = 25;
+      let offset = 0;
+      let sel_func = "";
+      let sel_subfunc = "";
+      let sel_language = "";
+      let sel_framework = "";
+      let sel_codestyle = "";
 
-      persistence_remove("c_snippets");
+      //persist user selections before sending the request to server, so that they will remain intact even on page refresh
+      let where_ = "c.status = 1 ";
+      let orderby = "c.uid";
+      let dir = "DESC";
+
+      let jso = {};
+
+      let query =
+        "?where_=" +
+        where_ +
+        "&orderby=" +
+        orderby +
+        "&dir=" +
+        dir +
+        "&func_id=" +
+        sel_func +
+        "&subfunc_id=" +
+        sel_subfunc +
+        "&language_id=" +
+        sel_language +
+        "&framework_id=" +
+        sel_framework +
+        "&user_impl_type_id=" +
+        sel_codestyle +
+        "&offset=" +
+        offset +
+        "&rpp=" +
+        rpp;
+
+      crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+        //console.log(feed);
+        let total_ = feed.all_totals;
+        if (total_ > 0) {
+          let data = feed["data"];
+
+          let language_implementation_type;
+          let firstChar;
+          let language_name;
+          let framework;
+          let codesnippet_id;
+
+          let solns = "";
+          for (let i = 0; i < data.length; i++) {
+            language_implementation_type = data[i].language_implementation_type;
+            language_name = data[i].language_name;
+            framework = data[i].framework;
+            language_id = data[i].language_id;
+            codesnippet_id = data[i].uid;
+            let title = data[i].title;
+
+            if (data[i].framework_id == 0) {
+              framework = "";
+            } else {
+              framework = ` with ${framework} framework`;
+            }
+
+            firstChar = language_implementation_type[0];
+
+            if (firstChar == "D") {
+              language_implementation_type = "";
+            } else {
+              language_implementation_type = ` ${language_implementation_type}`;
+            }
+
+            let displayed_soln =
+              "<b class=''><i>" +
+              title +
+              " - " +
+              language_name +
+              " - " +
+              data[i].user_implementation_type +
+              "</i></b>";
+
+            solns += `<a href="javascript:void(0)"  
+                onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+            <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
+            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+          }
+
+          $("#available-solns").html(solns);
+
+          persistence("all_solns", feed.data);
+        } else {
+          //add code version drop down
+          $("#available-solns").html(
+            `<p class="list-group-item list-group-item-action">No record found</p>`
+          );
+
+          persistence_remove("all_solns");
+        }
+      });
     }
-  });
+  } else {
+    //get reource from server
+    let sel_framework = parseInt($("#sel_framework").val());
+    persistence("framework", sel_framework);
+    let sel_codestyle = parseInt($("#sel_codestyle").val());
+    persistence("codestyle", sel_codestyle);
+
+    let sel_func;
+    let sel_subfunc;
+    let sel_language;
+
+    if (current_loc && current_loc.func > 0) {
+      sel_func = current_loc.func;
+    }
+    if (current_loc && current_loc.subfunc > 0) {
+      sel_subfunc = current_loc.subfunc;
+    }
+
+    if (current_loc && current_loc.language > 0) {
+      sel_language = current_loc.language;
+    }
+
+    if (
+      current_loc &&
+      current_loc.framework >= 0 &&
+      current_loc.framework != null &&
+      current_loc.framework != NaN
+    ) {
+      sel_framework = current_loc.framework;
+    } else {
+    }
+
+    if (current_loc && current_loc.codestyle > 0) {
+      sel_codestyle = current_loc.codestyle;
+    }
+
+    let rpp = 25;
+    let offset = 0;
+
+    if (!sel_func) {
+      sel_func = "";
+    }
+
+    if (!sel_subfunc) {
+      sel_subfunc = "";
+    }
+
+    if (!sel_language) {
+      sel_language = "";
+    }
+
+    if (sel_framework >= 0 && sel_framework != null && sel_framework != NaN) {
+    } else {
+      sel_framework = "";
+    }
+
+    if (!sel_codestyle) {
+      sel_codestyle = "";
+    }
+
+    //persist user selections before sending the request to server, so that they will remain intact even on page refresh
+    let where_ = "c.status = 1 ";
+    let orderby = "c.uid";
+    let dir = "DESC";
+
+    let jso = {};
+
+    let query =
+      "?where_=" +
+      where_ +
+      "&orderby=" +
+      orderby +
+      "&dir=" +
+      dir +
+      "&func_id=" +
+      sel_func +
+      "&subfunc_id=" +
+      sel_subfunc +
+      "&language_id=" +
+      sel_language +
+      "&framework_id=" +
+      sel_framework +
+      "&user_impl_type_id=" +
+      sel_codestyle +
+      "&offset=" +
+      offset +
+      "&rpp=" +
+      rpp;
+
+    crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+      //console.log(feed);
+      let total_ = feed.all_totals;
+      if (total_ > 0) {
+        let data = feed["data"];
+
+        let language_implementation_type;
+        let firstChar;
+        let language_name;
+        let framework;
+        let codesnippet_id;
+
+        let solns = "";
+        for (let i = 0; i < data.length; i++) {
+          language_implementation_type = data[i].language_implementation_type;
+          language_name = data[i].language_name;
+          framework = data[i].framework;
+          language_id = data[i].language_id;
+          codesnippet_id = data[i].uid;
+          let title = data[i].title;
+
+          if (data[i].framework_id == 0) {
+            framework = "";
+          } else {
+            framework = ` with ${framework} framework`;
+          }
+
+          firstChar = language_implementation_type[0];
+
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
+
+          let displayed_soln =
+            "<b class=''><i>" +
+            title +
+            " - " +
+            language_name +
+            " - " +
+            data[i].user_implementation_type +
+            "</i></b>";
+
+          solns += `<a href="javascript:void(0)"  
+      onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+<span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
+      ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+        }
+
+        $("#available-solns").html(solns);
+
+        persistence("all_solns", feed.data);
+      } else {
+        //add code version drop down
+        $("#available-solns").html(
+          `<p class="list-group-item list-group-item-action">No record found</p>`
+        );
+
+        persistence_remove("all_solns");
+      }
+    });
+  }
 }
+
+function getSolnsFromServer() {}
 
 function otherSolutions() {
   //show a loader
@@ -1255,25 +1437,25 @@ function otherSolutions() {
 
       $("#available-solns").html(solns);
 
-      persistence("c_snippets", feed.data);
+      persistence("all_solns", feed.data);
     } else {
       //add code version drop down
       $("#available-solns").html(
         `<p class="list-group-item list-group-item-action">No record found</p>`
       );
 
-      persistence_remove("c_snippets");
+      persistence_remove("all_solns");
     }
   });
 }
 
 function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
+  console.log("get related solutions called");
   let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}`;
 
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
-    console.log("related solutions feedback => ", feed);
     if (feed && feed.data) {
-      $("#avai-solns").html("");
+      $(".all-solns").hide();
       //$("#links-title").html("<span text-center>Current Solution<span>");
       //       $("#links-title").html("<span text-center>Current Solution<span>");
       //       let current_loc = currentLoc();
@@ -1322,6 +1504,12 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
         ? $("#related-soln-title").html("Related Solution")
         : $("#related-soln-title").html("Related Solutions");
 
+      $("#all-solns-nav").html(
+        `
+        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All Solutions" class="a-alt"  class="text-blue font-weight-bold text-center"><span class="badge badge-secondary"><i class="fe fe-corner-up-left"></i></span></a>
+        `
+      );
+
       if (solns_arr_size > 0) {
         for (let i = 0; i < solns_arr_size; i++) {
           language_implementation_type = data[i].language_implementation_type;
@@ -1346,13 +1534,13 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
           }
 
           solns += `<a href="javascript:void(0)"  
-          onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+          onclick="appendCodeUrl('${codesnippet_id}', 'related-solns'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
   <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
           ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
 
         $("#related-solns").html(solns);
-        persistence("c_snippets", data);
+        persistence("related_solns", data);
       } else {
         //add code version drop down
         $("#related-solns").html(
@@ -1361,7 +1549,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
       }
     } else {
       console.log(feed);
-      //persistence_remove("c_snippets");
+      //persistence_remove("all_solns");
     }
   });
 }
@@ -1376,9 +1564,9 @@ function codeComposition() {
       data-toggle="dropdown"
       aria-expanded="false"
     >
-    <i class="fe fe-code"></i>&nbsp;Composition
+    <i class="fe fe-code"></i>&nbsp;Code Details
     </div>
-    <div class="dropdown-menu mt-1" id="code-composition">
+    <div class="dropdown-menu" id="code-composition">
     <div class="dropdown-item code-comp text-center card">
     Function<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
@@ -1453,7 +1641,10 @@ function codeComposition() {
 }
 
 function appendCodeUrl(code_id, action = "") {
-  console.log("code id to append url => ", code_id);
+  console.log("append url called");
+  console.log("code id => ", code_id);
+  console.log("action => ", action);
+
   const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
@@ -1466,38 +1657,53 @@ function appendCodeUrl(code_id, action = "") {
   if (action == "search") {
     if (
       current_loc &&
-      current_loc.searched_c_snippets &&
-      current_loc.searched_c_snippets.length > 0
+      current_loc.searched_solns &&
+      current_loc.searched_solns.length > 0
     ) {
-      let searched_c_snippets = current_loc.searched_c_snippets;
-      let searched_c_snippets_arr_size = searched_c_snippets.length;
+      let searched_solns = current_loc.searched_solns;
+      let searched_solns_arr_size = searched_solns.length;
 
-      for (let i = 0; i < searched_c_snippets_arr_size; i++) {
-        if (searched_c_snippets[i].uid == code_id) {
-          c_snippet_title = searched_c_snippets[i].title;
-          c_snippet_lang_name = searched_c_snippets[i].language_name;
+      for (let i = 0; i < searched_solns_arr_size; i++) {
+        if (searched_solns[i].uid == code_id) {
+          c_snippet_title = searched_solns[i].title;
+          c_snippet_lang_name = searched_solns[i].language_name;
         }
       }
     }
+  } else if (action == "related-solns") {
+    if (
+      current_loc &&
+      current_loc.related_solns &&
+      current_loc.related_solns.length > 0
+    ) {
+      console.log("append url for related solutions");
+      let related_solns = current_loc.related_solns;
+      let related_solns_arr_size = related_solns.length;
+
+      for (let i = 0; i < related_solns_arr_size; i++) {
+        if (related_solns[i].uid == code_id) {
+          c_snippet_title = related_solns[i].title;
+          c_snippet_lang_name = related_solns[i].language_name;
+        }
+      }
+    }
+    console.log("related code title => ", c_snippet_title);
+    console.log("related code language => ", c_snippet_lang_name);
   } else {
     if (
       current_loc &&
-      current_loc.c_snippets &&
-      current_loc.c_snippets.length > 0
+      current_loc.all_solns &&
+      current_loc.all_solns.length > 0
     ) {
-      let c_snippets = current_loc.c_snippets;
-      let c_snippets_arr_size = c_snippets.length;
+      let all_solns = current_loc.all_solns;
+      let all_solns_arr_size = all_solns.length;
 
-      for (let i = 0; i < c_snippets_arr_size; i++) {
-        if (c_snippets[i].uid == code_id) {
-          c_snippet_title = c_snippets[i].title;
-          c_snippet_lang_name = c_snippets[i].language_name;
+      for (let i = 0; i < all_solns_arr_size; i++) {
+        if (all_solns[i].uid == code_id) {
+          c_snippet_title = all_solns[i].title;
+          c_snippet_lang_name = all_solns[i].language_name;
         }
       }
-
-      let hyphenatedTitle = hyphenateTitle(c_snippet_title);
-      let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
-      goTo(myUrl);
     }
   }
 
@@ -1662,6 +1868,7 @@ function configureAceEditor(lang = "") {
     //--reset code editor to empty string
     codeEditor.setValue("Code Loading....");
     let codesnippet = $("#codesnippet_").val();
+    let numOfLines = (codesnippet.match(/\n/g) || []).length; //get the number of lines contained in the codesnippet
     let editorLib = {
       init() {
         codeEditor.setTheme("ace/theme/monokai");
@@ -1686,11 +1893,14 @@ function configureAceEditor(lang = "") {
           fontSize: "12pt",
           enableBasicAutocompletion: true,
           autoScrollEditorIntoView: true,
+          copyWithEmptySelection: true,
+          maxLines: numOfLines, //allows the editor to grow based on content size
           //enableLiveAutocompletion: true,
         });
 
         //display the codesnippet
         codeEditor.setValue(codesnippet);
+        codeEditor.clearSelection(); //will ensure editor does not keep the code selected making it greyish
 
         if (language === "java") {
           setTimeout(() => {
@@ -1740,8 +1950,10 @@ function formatCode(language) {
         fontSize: "12pt",
         enableBasicAutocompletion: true,
         autoScrollEditorIntoView: true,
+        copyWithEmptySelection: true,
       };
       codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
+      codeEditor.clearSelection(); //will ensure the editor does not keep the code selected making it greyish
     },
   };
   editorLib.init();
@@ -1904,7 +2116,6 @@ function getCommentsByCodesnippetId() {
   crudaction({}, "/comments-by-codeid" + query, "GET", function (result) {
     //comment loading indicator
     $("#outer-c").html("<i>Loading...</i>");
-    console.log("comments loaded => ", result);
 
     let row = "";
     let total_records = 0;

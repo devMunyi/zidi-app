@@ -177,11 +177,6 @@ function errorToast(message) {
   toastr.error(message);
 }
 
-//function and subfunction menu toggler
-function submenu(id) {
-  $(id).toggle();
-}
-
 //reusable redirect function
 function gotourl(url) {
   window.location.href = url;

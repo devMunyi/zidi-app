@@ -160,9 +160,12 @@ select.fancy-select {
 
 div#editor {
     min-height: 500px;
-    max-height: 1000px;
-    overflow-y: auto;
+    max-height: auto;
+    /*overflow-y: auto;*/ 
 }
+.auto-height{
+    max-height: auto;
+} 
 
 .dark-screen {
     background-color: #0d0d0f;
