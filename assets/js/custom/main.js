@@ -1712,6 +1712,39 @@ function appendCodeUrl(code_id, action = "") {
   goTo(myUrl);
 }
 
+function copyCodesnippet() {
+  let codeEditor = ace.edit("editor");
+  let codesnippet = codeEditor.getValue();
+  let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
+    ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
+    : 0;
+
+  if (codeLen > 0) {
+    navigator.clipboard.writeText(codesnippet); //copy code to clipboard
+    successToast("Copied to clipboard"); //toast a success message
+  } else {
+    errorToast("No valid code to copy");
+  }
+}
+
+function shareCodesnippet() {
+  let codeEditor = ace.edit("editor");
+  let codesnippet = codeEditor.getValue();
+  let url = getCurrentUrl();
+  let solnLink = url.href;
+
+  let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
+    ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
+    : 0;
+
+  if (codeLen > 0) {
+    navigator.clipboard.writeText(solnLink); //copy code to clipboard
+    successToast("Share link copied to clipboard"); //toast a success message
+  } else {
+    errorToast("No valid code to share");
+  }
+}
+
 function load_codesnippetById(codeId) {
   //codeLoading("#codeimp-title");
   codeLoading("#imptype-and-contributor", "spinner-border-sm");
@@ -1936,28 +1969,6 @@ function configureAceEditor(lang = "") {
   };
   editorLib.init();
 }
-
-// function resetCodeEditor() {
-//   let codeEditor = ace.edit("editor");
-//   let editorLib = {
-//     init() {
-//       //let modelist = ace.require("ace/ext/modelist");
-//       //Configure Ace
-//       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
-//       codeEditor.setTheme("ace/theme/monokai");
-//       codeEditor.session.setMode("ace/mode/" + language);
-//       //Set Options
-//       let setOptions = {
-//         //fontFamily: "Inconsolata",
-//         fontSize: "12pt",
-//         enableBasicAutocompletion: true,
-//         autoScrollEditorIntoView: true,
-//       };
-//       codeEditor.setValue("");
-//     },
-//   };
-//   editorLib.init();
-// }
 
 function formatCode(language) {
   let current_loc = currentLoc();
@@ -2468,9 +2479,9 @@ function toggleCommentForm(
     }
     $(`#replyHicon${comment_id}`).html(replyHicon);
   } else {
-    alert(`Please sign in to ${action}`);
+    let message = `Please sign in to ${action}`;
+    errorToast(message);
     return;
-    //gotourl("login");
   }
 
   //toggle form visibility on function call

@@ -130,13 +130,13 @@ include_once("configs/conn.inc");
                                 <table style="width: 60%">
                                     <tr>
                                         <td>
-                                            <button title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
+                                            <button onclick="copyCodesnippet()" title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
                                                 <!--Copy-->
                                             </button>
                                             <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
                                                 <!--Download-->
                                             </button>
-                                            <button title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
+                                            <button onclick="shareCodesnippet()" title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
                                                 <!--Share-->
                                             </button>
                                         </td>
