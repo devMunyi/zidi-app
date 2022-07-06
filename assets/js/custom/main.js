@@ -1863,38 +1863,40 @@ function load_codesnippetById(codeId) {
 function toggleEditorTheme() {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
-  let lang = current_loc.code_sel.language_name;
   if (editorTheme == "monokai") {
     persistence("editorTheme", "eclipse");
   } else {
     persistence("editorTheme", "monokai");
   }
 
-  configureAceEditor(lang);
+  let lang = current_loc.code_sel.language_name;
+  lang ? configureAceEditor(lang) : configureAceEditor();
 }
 
 function configureAceEditor(lang = "") {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
+  let language = undefined;
+
   if (editorTheme == "monokai") {
+    $("#editor").removeClass("light-screen");
     $("#editor").addClass("dark-screen");
   } else {
     $("#editor").removeClass("dark-screen");
+    $("#editor").addClass("light-screen");
   }
 
   let codeEditor = ace.edit("editor");
-  if (!lang) {
-    codeEditor.setValue("No Code Loaded.");
-  } else {
-    //--reset code editor to empty string
-    codeEditor.setValue("Code Loading....");
-    let codesnippet = $("#codesnippet_").val();
-    let numOfLines = (codesnippet.match(/\n/g) || []).length; //get the number of lines contained in the codesnippet
-    let editorLib = {
-      init() {
-        codeEditor.setTheme("ace/theme/" + editorTheme);
+  //--reset code editor to empty string
+  codeEditor.setValue("Code Loading....");
+  let codesnippet = $("#codesnippet_").val();
+  let numOfLines = (codesnippet.match(/\n/g) || []).length; //get the number of lines contained in the codesnippet
+  let editorLib = {
+    init() {
+      codeEditor.setTheme("ace/theme/" + editorTheme);
 
-        //Set Languages
+      //Set Languages
+      if (lang) {
         language = lang.toLowerCase();
         if (language == "nodejs") {
           language = "javascript";
@@ -1906,32 +1908,33 @@ function configureAceEditor(lang = "") {
         if (language == "c" || language == "c++") {
           language = "c_cpp";
         }
-        codeEditor.session.setMode("ace/mode/" + language);
+      }
 
-        //Set Options
-        codeEditor.setOptions({
-          //fontFamily: "Inconsolata",
-          fontSize: "12pt",
-          enableBasicAutocompletion: true,
-          autoScrollEditorIntoView: true,
-          copyWithEmptySelection: true,
-          maxLines: numOfLines + 3, //allows the editor to grow based on content size
-          //enableLiveAutocompletion: true,
-        });
+      codeEditor.session.setMode("ace/mode/" + language);
 
-        //display the codesnippet
-        codeEditor.setValue(codesnippet);
-        codeEditor.clearSelection(); //will ensure editor does not keep the code selected making it greyish
+      //Set Options
+      codeEditor.setOptions({
+        //fontFamily: "Inconsolata",
+        fontSize: "12pt",
+        enableBasicAutocompletion: true,
+        autoScrollEditorIntoView: true,
+        copyWithEmptySelection: true,
+        maxLines: numOfLines + 3, //allows the editor to grow based on content size
+        //enableLiveAutocompletion: true,
+      });
 
-        if (language === "java") {
-          setTimeout(() => {
-            formatCode(language);
-          }, 50);
-        }
-      },
-    };
-    editorLib.init();
-  }
+      //display the codesnippet
+      codeEditor.setValue(codesnippet);
+      codeEditor.clearSelection(); //will ensure editor does not keep the code selected making it greyish
+
+      if (language === "java") {
+        setTimeout(() => {
+          formatCode(language);
+        }, 50);
+      }
+    },
+  };
+  editorLib.init();
 }
 
 // function resetCodeEditor() {

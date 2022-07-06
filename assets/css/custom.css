@@ -158,6 +158,12 @@ select.fancy-select {
     margin-bottom: 15px;
 }
 
+/* #editor{
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+} */
+
 div#editor {
     min-height: 500px;
     max-height: auto;
@@ -169,13 +175,13 @@ div#editor {
 
 .dark-screen {
     background-color: #0d0d0f;
-    color: #edeff3;
+    color: #f8f9fa;
 }
 
 
 .light-screen {
     color: #0d0d0f;
-    background-color: #edeff3;
+    background-color: #f8f9fa !important;
 }
 
 /* Editor console*/

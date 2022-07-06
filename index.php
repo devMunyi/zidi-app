@@ -147,7 +147,7 @@ include_once("configs/conn.inc");
                                 </div>
                                 <div class="card-options">
                                     <label class="custom-switch m-0">
-                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked="">
+                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input">
                                         <span onclick="toggleEditorTheme()" class="custom-switch-indicator"></span>
                                     </label>
                                 </div>
@@ -431,7 +431,7 @@ include_once("configs/conn.inc");
                             <div class="card-header">
                                 <h4 class="card-title"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h4>
                                 <div class="ml-3 pull-right" id="all-solns-nav">
-                                    
+
                                 </div>
                             </div>
                             <div class="card-body" style="padding: 10px 0px;">
@@ -483,14 +483,28 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
-            //check for query paramss from the url
+            let current_loc = currentLoc();
+            //check for query params from the url
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
-            persistence("last_page", 1); //reset default comment page to 1
-            persistence("editorTheme", "monokai") //default editor theme;
+            persistence("last_page", 1); //reset default comment page to 1\
 
-            let current_loc = currentLoc();
+            //if theme editor is not set, set it else return empty string
+            !current_loc.editorTheme ? persistence("editorTheme", "monokai") : "";
+            //toggle the theme switch indicator based on the theme set
+
+            if (current_loc && current_loc.editorTheme == "monokai") {
+                $('#custom-switch-input').prop('checked', true);
+                $("#editor").removeClass("light-screen");
+                $("#editor").addClass("dark-screen");
+            } else {
+                $('#custom-switch-input').prop('checked', false);
+                $("#editor").removeClass("dark-screen");
+                $("#editor").addClass("light-screen");
+            }
+
+
             let codeId = 0;
             const url = getCurrentUrl(); //grab the current to determine whether the site is live or local
             const host = url.host;
