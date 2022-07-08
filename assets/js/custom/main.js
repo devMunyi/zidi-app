@@ -35,7 +35,7 @@ function functions_load() {
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="slideUpList(); submenu('#fun${function_id}'); highlightFunc(${function_id}); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="parseInnerListId('#fun${function_id}'); slideUpList(); submenu('#fun${function_id}'); highlightFunc(${function_id}); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -141,7 +141,7 @@ function functions_load() {
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="slideUpList(); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+            onclick="parseInnerListId('#fun${function_id}'); slideUpList(); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -195,6 +195,10 @@ function functions_load() {
       }
     });
   }
+}
+
+function parseInnerListId(innerListId) {
+  $("#inner-list-dom-id").val(innerListId);
 }
 
 function subfun() {}

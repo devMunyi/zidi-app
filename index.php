@@ -574,7 +574,7 @@ include_once("configs/conn.inc");
                     $('ul#functions_ li').hide();
                     $('ul#functions_ .inner_list').fadeIn('fast');
                     $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
-                    //$('ul#functions_ li:Contains(' + $(this).val() + ')').show();
+                    $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
                 } else {
                     //-----Restore
                     $('.inner_list').fadeOut('fast');
@@ -624,13 +624,26 @@ include_once("configs/conn.inc");
                 $('.func_ .func-item').removeClass('active-two');
                 $(this).addClass('active-two');
 
-                $('.func_ .func-item .inner_list').slideUp();
-                $(this).closest('.inner_list').slideDown();
+                let cur_inner_list = $("#inner-list-dom-id").val();
+                if (cur_inner_list) {
+                    lastChar = cur_inner_list.charAt(cur_inner_list.length - 1);
+                    //console.log("we found excluded inner list");
+                    // $(`subfunc-${lastChar}`).show();
+                    $('.inner_list:not('+cur_inner_list+')').fadeOut('fast');
+                } else {
+                    $('.inner_list').fadeOut('fast');
+                }
+
+                // $('.inner_list').fadeOut('fast');
+                // $('.outer_list').slideDown();
+
+                // $('.func_ .func-item .inner_list').slideUp();
+                // $(this).closest('.inner_list').slideDown();
             });
 
             //toggle active subfunction
             $('.subfunc_').on('click', '.subfunc_', function() {
-                $('a.subfunc-item').removeClass('active-two');
+                // $('a.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');
             });
 

@@ -33,3 +33,4 @@
 <input type="hidden" id="code_title_" value="">
 <input type="hidden" id="code_lang_name" value="">
 <input type="hidden" id="codesnippet_" value="">
+<input type="text" id="inner-list-dom-id" value="">
