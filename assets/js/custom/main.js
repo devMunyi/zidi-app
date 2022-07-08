@@ -35,7 +35,7 @@ function functions_load() {
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="parseInnerListId('#fun${function_id}'); slideUpList(); submenu('#fun${function_id}'); highlightFunc(${function_id}); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="parseInnerListId('#fun${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -66,7 +66,7 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_ subfunc-${function_id}" id="subfunc-item-${subfunction_id}">
               <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); highlightSubfunc(); loadCodesnippetsLink()">
+              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); highlightSubfunc('#subfunc-item-${subfunction_id}'); loadCodesnippetsLink()">
                <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
               </a>
               </li>`;
@@ -141,7 +141,7 @@ function functions_load() {
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="parseInnerListId('#fun${function_id}'); slideUpList(); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+            onclick="parseInnerListId('#fun${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -203,10 +203,10 @@ function parseInnerListId(innerListId) {
 
 function subfun() {}
 
-function slideUpList() {
-  console.log("slide up called");
-  $(".outer-list").slideUp();
-}
+// function slideUpList() {
+//   // console.log("slide up called");
+//   $(".outer-list").slideUp();
+// }
 
 function scrollElementIntoView2(fId, sfId) {
   let fnLastChar = "0";
@@ -224,8 +224,12 @@ function scrollElementIntoView2(fId, sfId) {
 
 //function and subfunction menu toggler
 function submenu(id) {
-  // console.log("I was clicked");
   $(id).toggle();
+
+  lastChar = id.charAt(id.length - 1);
+  // let first_elem = $(`${id}:first-child`).html();
+  // console.log("First child in the ul => ", first_elem);
+  $(`.subfunc-${lastChar}`).show();
 }
 
 function highlightFunc() {
@@ -234,9 +238,9 @@ function highlightFunc() {
   $(this).addClass("active-two");
 }
 
-function highlightSubfunc() {
+function highlightSubfunc(id) {
   $(".subfunc-item").removeClass("active-two");
-  $(this).addClass("active-two");
+  //$(id).addClass("active-two");
 }
 
 /////------End Functionalities
@@ -351,11 +355,8 @@ function load_languages() {
       }
       $("#language_").html(lang);
 
-      console.log("selected language => ", language_sel);
       if (language_sel) {
         scrollElementIntoView(`lang-item-${language_sel}`);
-      } else {
-        console.log("We don't have a selected language");
       }
     } else {
       //////-------No Languages found
@@ -413,11 +414,8 @@ function load_languages() {
         }
         $("#language_").html(lang);
 
-        console.log("selected language => ", language_sel);
         if (language_sel) {
           scrollElementIntoView(`lang-item-${language_sel}`);
-        } else {
-          console.log("We don't have a selected language");
         }
       } else {
         //////-------No Languages found

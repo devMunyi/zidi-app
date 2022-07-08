@@ -574,12 +574,13 @@ include_once("configs/conn.inc");
                     $('ul#functions_ li').hide();
                     $('ul#functions_ .inner_list').fadeIn('fast');
                     $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
-                    $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
+                    // $('ul#functions_ li.outer_list ul.inner_list').show();
+                    // $('ul#functions_ .inner_list.subfunc-)').hide();
                 } else {
                     //-----Restore
                     $('.inner_list').fadeOut('fast');
                     $('.outer_list').slideDown();
-                    $('ul#functions_ li').show();
+                    //$('ul#functions_ li').show();
                 }
             })
 
