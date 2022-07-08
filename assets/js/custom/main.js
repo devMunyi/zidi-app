@@ -15,8 +15,9 @@ function functions_load() {
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
         let fun = "";
-        let func_sel;
+        let func_sel = 0;
         let active_func = "";
+        let subfunc_sel = 0;
 
         for (let i = 0; i < funs_arr_size; i++) {
           let function_id = data[i].uid;
@@ -32,9 +33,9 @@ function functions_load() {
             }
           }
 
-          fun += `<li class="outer_list"> 
-          <a id="func-item-${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          fun += `<li class="outer_list" id="func-item-${function_id}"> 
+          <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
+          onclick="slideUpList(); submenu('#fun${function_id}'); highlightFunc(${function_id}); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -43,7 +44,6 @@ function functions_load() {
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
-            let subfunc_sel;
             let active_subfunc = "";
 
             fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
@@ -64,9 +64,9 @@ function functions_load() {
                     active_subfunc = "";
                   }
                 }
-                fun += `<li class="subfunc_">
+                fun += `<li class="subfunc_ subfunc-${function_id}" id="subfunc-item-${subfunction_id}">
               <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); persistence_remove('codeId'); loadCodesnippetsLink()">
+              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); highlightSubfunc(); loadCodesnippetsLink()">
                <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
               </a>
               </li>`;
@@ -77,6 +77,12 @@ function functions_load() {
           fun += "</li>";
         }
         $("#functions_").html(fun);
+
+        //call the auto scroller
+        scrollElementIntoView2(
+          `func-item-${func_sel}`,
+          `subfunc-item-${subfunc_sel}`
+        );
       });
     } else {
       $("#functions_").html("No record found");
@@ -115,7 +121,8 @@ function functions_load() {
         apiSubfunLoad(function (sub_result) {
           //////////-----Loop functions while injecting subfunctions
           let fun = "";
-          let func_sel;
+          let func_sel = 0;
+          let subfunc_sel = 0;
           let active_func = "";
 
           for (let i = 0; i < data_length; i++) {
@@ -132,9 +139,9 @@ function functions_load() {
               }
             }
 
-            fun += `<li class="outer_list"> 
-            <a id="func-item-${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+            fun += `<li class="outer_list" id="func-item-${function_id}"> 
+            <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
+            onclick="slideUpList(); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -143,7 +150,6 @@ function functions_load() {
             let sub_data_length = sub_data.length;
 
             if (sub_data_length > 0) {
-              let subfunc_sel;
               let active_subfunc = "";
 
               fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
@@ -164,7 +170,7 @@ function functions_load() {
                       active_subfunc = "";
                     }
                   }
-                  fun += `<li class="subfunc_">
+                  fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
                 <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
                 onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); persistence_remove('codeId'); loadCodesnippetsLink()">
                  <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
@@ -177,6 +183,12 @@ function functions_load() {
             fun += "</li>";
           }
           $("#functions_").html(fun);
+
+          //call the auto scroller
+          scrollElementIntoView2(
+            `func-item-${func_sel}`,
+            `subfunc-item-${subfunc_sel}`
+          );
         });
       } else {
         $("#functions_").html("No record found");
@@ -187,10 +199,40 @@ function functions_load() {
 
 function subfun() {}
 
+function slideUpList() {
+  console.log("slide up called");
+  $(".outer-list").slideUp();
+}
+
+function scrollElementIntoView2(fId, sfId) {
+  let fnLastChar = "0";
+  fnLastChar = fId.charAt(fId.length - 1);
+  submenu(`#fun${fnLastChar}`);
+  setTimeout(() => {
+    const element = document.getElementById(fId);
+    if (fnLastChar != "0") {
+      element.scrollIntoView({
+        block: "nearest",
+      });
+    }
+  }, 500);
+}
+
 //function and subfunction menu toggler
 function submenu(id) {
-  console.log("I was clicked");
+  // console.log("I was clicked");
   $(id).toggle();
+}
+
+function highlightFunc() {
+  console.log("I was clicked");
+  $(".func-item").removeClass("active-two");
+  $(this).addClass("active-two");
+}
+
+function highlightSubfunc() {
+  $(".subfunc-item").removeClass("active-two");
+  $(this).addClass("active-two");
 }
 
 /////------End Functionalities
@@ -298,12 +340,19 @@ function load_languages() {
             active_language = "";
           }
         }
-        lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
+        lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
           onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
+
+      console.log("selected language => ", language_sel);
+      if (language_sel) {
+        scrollElementIntoView(`lang-item-${language_sel}`);
+      } else {
+        console.log("We don't have a selected language");
+      }
     } else {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
@@ -353,18 +402,38 @@ function load_languages() {
               active_language = "";
             }
           }
-          lang += `<li class="hover-lang" style="margin: 0px; padding: 0px;">
+          lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
           onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
         }
         $("#language_").html(lang);
+
+        console.log("selected language => ", language_sel);
+        if (language_sel) {
+          scrollElementIntoView(`lang-item-${language_sel}`);
+        } else {
+          console.log("We don't have a selected language");
+        }
       } else {
         //////-------No Languages found
         $("#language_").html("<li>No Languages</li>");
       }
     });
   }
+}
+
+function scrollElementIntoView(listId) {
+  //console.log("active language item => ", listId);
+  setTimeout(() => {
+    const lastChar = listId.charAt(listId.length - 1);
+    const element = document.getElementById(listId);
+    if (lastChar != "0") {
+      element.scrollIntoView({
+        block: "nearest",
+      });
+    }
+  }, 100);
 }
 
 //////---------------------End Languages
@@ -1020,7 +1089,7 @@ function loadCodesnippetsLink(action = "") {
 
   let current_loc = currentLoc();
   if (action == "all_back") {
-    if (current_loc && current_loc.all_solns.length) {
+    if (current_loc && current_loc.all_solns && current_loc.all_solns.length) {
       let total_ = current_loc.all_solns.length;
       if (total_ > 0) {
         let data = current_loc.all_solns;

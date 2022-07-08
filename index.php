@@ -147,7 +147,7 @@ include_once("configs/conn.inc");
                                 </div>
                                 <div class="card-options">
                                     <label class="custom-switch m-0">
-                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input">
+                                        <input type="checkbox" value="1" class="custom-switch-input" id="custom-switch-input" checked>
                                         <span onclick="toggleEditorTheme()" class="custom-switch-indicator"></span>
                                     </label>
                                 </div>
@@ -561,6 +561,7 @@ include_once("configs/conn.inc");
 
         //////-------Search functions/subfunctions
         $(function() {
+            //following code makes jquery contains case insensitive
             jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
                 return function(elem) {
                     return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
@@ -568,12 +569,22 @@ include_once("configs/conn.inc");
             });
 
             $('#search_functionality').keyup(function() {
-                $('ul#functions_ li').hide();
-                $('ul#functions_ .inner_list').fadeIn('fast');
-                $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
+                let k_ = $('#search_functionality').val().trim();
+                if (k_) {
+                    $('ul#functions_ li').hide();
+                    $('ul#functions_ .inner_list').fadeIn('fast');
+                    $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
+                    //$('ul#functions_ li:Contains(' + $(this).val() + ')').show();
+                } else {
+                    //-----Restore
+                    $('.inner_list').fadeOut('fast');
+                    $('.outer_list').slideDown();
+                    $('ul#functions_ li').show();
+                }
             })
 
-            //  $('#search_functionality').keyup(function() {
+
+            // $('#search_functionality').keyup(function() {
             //     //grabbing user search keys/terms
 
             //     let k_ = $('#search_functionality').val().trim();
@@ -591,8 +602,6 @@ include_once("configs/conn.inc");
 
             //         console.log("Search key terms =>", fk);
             //     }
-
-
             //     if (fk) {
             //         // var matches = $('ul#functions_').find('li:contains(' + $(this).val() + ') ');
             //         var matches = $('ul#functions_').find('li:contains(' + fk + ') ');
@@ -608,12 +617,15 @@ include_once("configs/conn.inc");
             //         //functions_load()
 
             //     }
-            // }); 
+            // });
 
             //toggle active function
             $('.func_').on('click', '.func-item', function() {
                 $('.func_ .func-item').removeClass('active-two');
                 $(this).addClass('active-two');
+
+                $('.func_ .func-item .inner_list').slideUp();
+                $(this).closest('.inner_list').slideDown();
             });
 
             //toggle active subfunction
