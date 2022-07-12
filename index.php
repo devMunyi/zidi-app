@@ -547,7 +547,7 @@ include_once("configs/conn.inc");
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
             persistence("last_page", 1); //reset default comment page to 1
-            //persistence_remove("gotourl");
+            persistence_remove("gotourl");
 
             //if theme editor is not set, set it else return empty string
             !current_loc.editorTheme ? persistence("editorTheme", "monokai") : "";
