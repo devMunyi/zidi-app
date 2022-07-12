@@ -607,10 +607,10 @@ span.subfun_ {
 .bold {
     font-weight: bold;
 }
-
+/* 
 .show {
     display: block;
-}
+} */
 
 .hide {
     display: none;
@@ -680,4 +680,18 @@ span.subfun_ {
     display: none;
 }
 
+.cpointer:hover{
+    cursor: pointer;
+}
+
 /******************End of pagination css************************/
+
+
+/*********************Begin modal css ***************************/
+/* The Modal (background) */
+/* .fade_{
+    opacity: 0.5;
+} */
+
+
+/***********************End Modal css ***************************/

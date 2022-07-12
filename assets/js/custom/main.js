@@ -66,8 +66,8 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_ subfunc-${function_id}" id="subfunc-item-${subfunction_id}">
               <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); highlightSubfunc('#subfunc-item-${subfunction_id}'); loadCodesnippetsLink()">
-               <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
+              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+               <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
               </a>
               </li>`;
               }
@@ -172,8 +172,8 @@ function functions_load() {
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
                 <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); persistence_remove('codeId'); loadCodesnippetsLink()">
-                 <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i> ${subfunction_name}</span>
+                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                 <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
                 </a>
                 </li>`;
                 }
@@ -238,10 +238,10 @@ function highlightFunc() {
   $(this).addClass("active-two");
 }
 
-function highlightSubfunc(id) {
-  $(".subfunc-item").removeClass("active-two");
-  //$(id).addClass("active-two");
-}
+// function highlightSubfunc(id) {
+//   $(".subfunc-item").removeClass("active-two");
+//   //$(id).addClass("active-two");
+// }
 
 /////------End Functionalities
 
@@ -969,6 +969,17 @@ function saveCodeSnippet(data) {
   });
 }
 
+function getNavLink(page) {
+  let host = getCurrentHost();
+  let navLink = "";
+  let origin = getCurrentUrl().origin;
+  host == "localhost"
+    ? (navLink = `${origin}/backgen/zidi/${page}`)
+    : (navLink = `${origin}/$page`);
+
+  return navLink;
+}
+
 function contributeCodeNav() {
   let host = getCurrentHost();
   let navLink = "";
@@ -978,7 +989,7 @@ function contributeCodeNav() {
     : (navLink = `${origin}/code-add-edit`);
 
   $("#contribute-code").html(`
-  <a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+  <a class="a-override" onclick="persistence("gotourl", ${navLink});" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
   `);
 }
 
@@ -1577,7 +1588,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
 
       $("#all-solns-nav").html(
         `
-        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All Solutions" class="a-alt"  class="text-blue font-weight-bold text-center"><span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span></a>
+        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All" class="text-blue font-weight-bold text-center"><span class="badge badge-secondary">All <i class="fe fe-corner-up-left"></i></span></a>
         `
       );
 
@@ -1712,10 +1723,6 @@ function codeComposition() {
 }
 
 function appendCodeUrl(code_id, action = "") {
-  console.log("append url called");
-  console.log("code id => ", code_id);
-  console.log("action => ", action);
-
   const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
@@ -1781,6 +1788,8 @@ function appendCodeUrl(code_id, action = "") {
   let hyphenatedTitle = hyphenateTitle(c_snippet_title);
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
   goTo(myUrl);
+
+  persistence("gotourl", myUrl);
 }
 
 function copyCodesnippet() {
@@ -1908,9 +1917,30 @@ function load_codesnippetById(codeId) {
       }
 
       //add comment button
-      $("#add-comment").html(
-        `<a class="a-alt" onclick="toggleCommentForm()" href="javascript:void(0)" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
-      );
+      if (current_loc.user && current_loc.user.uid) {
+        $("#add-comment").html(
+          `<a class="a-alt" onclick="toggleCommentForm()" href="javascript:void(0)" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
+        );
+      } else {
+        $("#add-comment").html(
+          `<a class="a-alt" onclick="showModal()" href="javascript:void(0)" class="cpointer text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
+        );
+        let navLink = "";
+        let host = getCurrentHost();
+        let origin = getCurrentUrl().origin;
+        host == "localhost"
+          ? (navLink = `${origin}/backgen/zidi/login`)
+          : (navLink = `${origin}/login`);
+
+        $("#modal-title").html(
+          `Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="${navLink}">Login</a> to add a comment`
+        );
+        // $("#add-comment").html(
+        //   `<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        //   Add Comment
+        // </button>`
+        // );
+      }
 
       //persist code Id to be referenced later
       persistence("code_sel", data);
@@ -2550,9 +2580,10 @@ function toggleCommentForm(
     }
     $(`#replyHicon${comment_id}`).html(replyHicon);
   } else {
-    let message = `Please sign in to ${action}`;
-    errorToast(message);
-    return;
+    //let message = `Please sign in to ${action}`;
+    //errorToast(message);
+    //<!-- Modal -->
+    //return;
   }
 
   //toggle form visibility on function call
@@ -2592,7 +2623,8 @@ function saveComment(comment_id = 0) {
   if (current_loc.user && current_loc.user.uid) {
     added_by = current_loc.user.uid;
   } else {
-    gotourl("login");
+    let navLink = getNavLink("login");
+    gotourl(navLink);
   }
 
   let code_snippet_id = parseInt(current_loc.code_sel.uid);
@@ -2774,8 +2806,26 @@ function momentDatetime(targetdt) {
 
 ///////----------------------------------End Comments
 
-/*
-1) ov2 1.236
-2
+///////////////------------------------begin modal js
+// Get the modal
+let modal = document.getElementById("myModal");
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (e) {
+  if (e.target == modal) {
+    $("#myModal").hide();
+  }
+};
 
-*/
+function showModal() {
+  $("body").addClass("fade_");
+  $("#myModal").show();
+  //modal.style.display = "block";
+}
+
+function dismissModal() {
+  $("body").removeClass("fade_");
+  $("#myModal").hide();
+  //modal.style.display = "none";
+}
+
+////////------------------------------End modal

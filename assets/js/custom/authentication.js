@@ -281,8 +281,12 @@ function login(data) {
         //show success notification
         successToast(feed.message);
 
+        //access the next nav url
+        let current_loc = currentLoc();
+        let nextNav =
+          current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
         setTimeout(() => {
-          gotourl("index");
+          gotourl(nextNav);
         }, 2550);
       }
     }
@@ -322,7 +326,11 @@ function googleSignin() {
       } else {
         persistence("token", "Bearer " + token);
       }
-      gotourl("index");
+
+      //access the next nav url
+      let nextNav =
+        current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
+      gotourl(nextNav);
     }, 2550);
   } else if (success === "false") {
     const message = url.searchParams.get("message");
@@ -384,7 +392,10 @@ function githubSignin() {
         persistence("token", "Bearer " + token);
       }
 
-      gotourl("index");
+      //access the next nav url
+      let nextNav =
+        current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
+      gotourl(nextNav);
     }, 2550);
   } else if (success === "false") {
     const message = url.searchParams.get("message");

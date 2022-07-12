@@ -46,6 +46,39 @@ function index() {
   gotourl("index");
 }
 
+function modal_view(title = "Details") {
+  $("#mainModal").modal("toggle");
+  let feedback = "feedback";
+
+  $("#mainModal").html(
+    '<div class="modal-dialog">\n' +
+      "\n" +
+      "    <!-- Modal content-->\n" +
+      '    <div class="modal-content">\n' +
+      '        <div class="modal-header">\n' +
+      '            <button type="button" onclick="modalClose();" class="close" data-dismiss="modal">&times;</button>\n' +
+      '            <h3 class="modal-title">' +
+      title +
+      "</h3>\n" +
+      "        </div>\n" +
+      '        <div class="modal-body">\n' +
+      feedback +
+      "</div>\n" +
+      '        <div class="modal-footer">\n' +
+      '            <button type="button" class="btn btn-default" onclick="modalClose()"; data-dismiss="modal">Close</button>\n' +
+      "        </div>\n" +
+      "    </div>\n" +
+      "\n" +
+      "</div>"
+  );
+}
+
+function modalClose() {
+  $(".modal-dialog").hide();
+
+  document.querySelector(".modal-backdrop.show").style.opacity = "0";
+}
+
 //loading spinner
 function showLoader(htmlId) {
   $(htmlId).html(

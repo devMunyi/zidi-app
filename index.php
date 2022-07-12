@@ -130,13 +130,13 @@ include_once("configs/conn.inc");
                                 <table style="width: 60%">
                                     <tr>
                                         <td>
-                                            <button onclick="copyCodesnippet()" title="copy" class="btn text-white btn-sm text-sm bg-indigo mr-3"> <i class="fe fe-copy"></i>
+                                            <button onclick="copyCodesnippet()" class="btn text-white btn-sm text-sm bg-indigo mr-3" title="copy code"> <i class="fe fe-copy"></i>
                                                 <!--Copy-->
                                             </button>
-                                            <button title="download" class="btn text-white btn-sm text-sm mr-3" style="background: forestgreen;"> <i class="fe fe-download"></i>
+                                            <button class="btn text-white btn-sm text-sm mr-3" title="download code" style="background: forestgreen;"> <i class="fe fe-download"></i>
                                                 <!--Download-->
                                             </button>
-                                            <button onclick="shareCodesnippet()" title="share" class="btn btn-dark btn-sm text-sm"> <i class="fe fe-share-2"></i>
+                                            <button onclick="shareCodesnippet()" class="tooltip-test btn btn-dark btn-sm text-sm" title="share code"> <i class="fe fe-share-2"></i>
                                                 <!--Share-->
                                             </button>
                                         </td>
@@ -200,8 +200,64 @@ include_once("configs/conn.inc");
 
 
                             </div>
+                            <!-- Trigger/Open The Modal -->
+                            <!-- <button id="myBtn" onclick="showModal()">Open Modal</button> -->
+
+                            <div id="myModal" class="modal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 id="modal-title" class="modal-title">Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="login">Login</a> to add a comment</h5>
+                                            <button type="button" onclick="dismissModal()" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <!-- <div class="modal-body">
+                                            <p class="text-center">Login</p>
+                                        </div> -->
+                                        <!-- <div class="modal-footer">
+                                            <button type="button" onclick="dismissModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close_">&times;</span>
+                                    <p>Some text in the Modal..</p>
+                                </div>
+
+                            </div> -->
+                            <!-- Button trigger modal -->
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                    Launch demo modal
+                                </button> -->
+
+                            <!-- Modal -->
+                            <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
 
                             <div class="comments_wrapper">
+
                                 <div class="comment_area hide" id="cform0">
                                     <div class="row">
                                         <div class="col-sm-1">
@@ -210,6 +266,8 @@ include_once("configs/conn.inc");
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
                                         <div class="offset-sm-1 col-sm-11 error" id="comment0Err"></div>
+
+
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-2"></div>
@@ -430,7 +488,7 @@ include_once("configs/conn.inc");
                         <div class="card transcard related-soln-container hidden">
                             <div class="card-header">
                                 <h4 class="card-title"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h4>
-                                <div class="ml-3 pull-right" id="all-solns-nav">
+                                <div class="pl-4 pr-0 mr-0 pull-right" id="all-solns-nav">
 
                                 </div>
                             </div>
@@ -488,7 +546,8 @@ include_once("configs/conn.inc");
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
             persistence("cur_page", 1); //reset default comment page to 1
-            persistence("last_page", 1); //reset default comment page to 1\
+            persistence("last_page", 1); //reset default comment page to 1
+            persistence_remove("gotourl");
 
             //if theme editor is not set, set it else return empty string
             !current_loc.editorTheme ? persistence("editorTheme", "monokai") : "";
@@ -571,7 +630,7 @@ include_once("configs/conn.inc");
             $('#search_functionality').keyup(function() {
                 let k_ = $('#search_functionality').val().trim();
                 if (k_) {
-                    $('ul#functions_ li').hide();
+                    $('ul#functions_ li.outer_list').hide();
                     $('ul#functions_ .inner_list').fadeIn('fast');
                     $('ul#functions_ li:Contains(' + $(this).val() + ')').show();
                     // $('ul#functions_ li.outer_list ul.inner_list').show();
@@ -630,23 +689,23 @@ include_once("configs/conn.inc");
                     lastChar = cur_inner_list.charAt(cur_inner_list.length - 1);
                     //console.log("we found excluded inner list");
                     // $(`subfunc-${lastChar}`).show();
-                    $('.inner_list:not('+cur_inner_list+')').fadeOut('fast');
+                    $('.inner_list:not(' + cur_inner_list + ')').fadeOut('fast');
                 } else {
                     $('.inner_list').fadeOut('fast');
                 }
-
-                // $('.inner_list').fadeOut('fast');
-                // $('.outer_list').slideDown();
-
-                // $('.func_ .func-item .inner_list').slideUp();
-                // $(this).closest('.inner_list').slideDown();
             });
 
             //toggle active subfunction
-            $('.subfunc_').on('click', '.subfunc_', function() {
-                // $('a.subfunc-item').removeClass('active-two');
+            // $('.subfunc_.subfunc-item').on('click', '.subfunc_.subfunc-item', function() {
+            //     $('.subfunc_.subfunc-item').removeClass('active-two');
+            //     $(this).addClass('active-two');
+            // });
+
+            $('.subfunc-item').on('click', '.subfunc-item', function() {
+                $('.subfunc-item').removeClass('active-two');
                 $(this).addClass('active-two');
             });
+
 
             //toggle active language
             $('.lang_').on('click', '.lang-item', function() {
