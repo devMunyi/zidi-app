@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6 text-md-left">
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
+                    <li clasassetss="list-inline-item">
                         Copyright &copy;<span id="footer-date"></span> ZIDI <a onclick="persistence('x',1)">Test</a> <a onclick="persistence('y','jf')">Test</a>
                     </li>
                 </ul>
@@ -34,3 +34,4 @@
 <input type="hidden" id="code_lang_name" value="">
 <input type="hidden" id="codesnippet_" value="">
 <input type="hidden" id="inner-list-dom-id" value="">
+<input type="hidden" id="inner-list-dom-class" value="">

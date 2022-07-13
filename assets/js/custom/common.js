@@ -93,11 +93,11 @@ function showLoader(htmlId) {
 }
 
 //spinner
-function codeLoading(id, classSize = "") {
+function spinner(id, classSize = "", alignContent = "") {
   $(id).html(
-    `<div class="spinner-border text-muted ${classSize}" role="status">
+    `<div class="${alignContent}"><div class="spinner-border text-muted ${classSize}" role="status">
       <span class="sr-only">Loading...</span>
-      </div>`
+      </div></div>`
   );
 }
 

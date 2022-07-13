@@ -30,7 +30,7 @@ include_once("configs/conn.inc");
     <!-- start main body part-->
     <div class="container-fluid pt-4" id="login-page">
         <div class="row">
-            <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
+            <div class="col-md-4 offset-md-4 card pt-3 pb-3 mb-3 border border-info">
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
                 <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;">
                     <div class="form-group">
@@ -55,13 +55,13 @@ include_once("configs/conn.inc");
                     </div>
 
                     <div class="row pt-1 pb-1">
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <hr>
                         </div>
-                        <div class="col-sm-2 text-center">
+                        <div class="col-md-2 text-center">
                             OR
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <hr>
                         </div>
                     </div>

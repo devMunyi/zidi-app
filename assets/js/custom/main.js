@@ -1,7 +1,7 @@
 ///////////-------Begin Functionalities
 function functions_load() {
   //display a spinner
-  codeLoading("#functions_");
+  spinner("#functions_");
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
   let server = $("#server_").val(); //get the server url for the image retrieval
@@ -35,7 +35,7 @@ function functions_load() {
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="parseInnerListId('#fun${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -64,9 +64,9 @@ function functions_load() {
                     active_subfunc = "";
                   }
                 }
-                fun += `<li class="subfunc_ subfunc-${function_id}" id="subfunc-item-${subfunction_id}">
-              <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
+              <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
+              onclick="highlightSubfun(); subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
                <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
               </a>
               </li>`;
@@ -141,7 +141,7 @@ function functions_load() {
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="parseInnerListId('#fun${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -171,8 +171,8 @@ function functions_load() {
                     }
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
-                <a class="subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
+                onclick="highlightSubfun(); subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
                  <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
                 </a>
                 </li>`;
@@ -197,8 +197,9 @@ function functions_load() {
   }
 }
 
-function parseInnerListId(innerListId) {
-  $("#inner-list-dom-id").val(innerListId);
+function parseInnerListId(id) {
+  $("#inner-list-dom-id").val(`#fun${id}`);
+  $("#inner-list-dom-class").val(`.subfunc${id}`);
 }
 
 function subfun() {}
@@ -227,21 +228,33 @@ function submenu(id) {
   $(id).toggle();
 
   lastChar = id.charAt(id.length - 1);
-  // let first_elem = $(`${id}:first-child`).html();
-  // console.log("First child in the ul => ", first_elem);
   $(`.subfunc-${lastChar}`).show();
 }
 
-function highlightFunc() {
-  console.log("I was clicked");
-  $(".func-item").removeClass("active-two");
-  $(this).addClass("active-two");
+function highlightSubfun() {
+  let inner_list_id = $("#inner-list-dom-id").val();
+  let inner_list_class = $("#inner-list-dom-class").val();
+  $(`.func_ ${inner_list_id}`).on("click", inner_list_class, function () {
+    $(`${inner_list_class}`).removeClass("active-two");
+    $(this).addClass("active-two");
+  });
 }
 
-// function highlightSubfunc(id) {
-//   $(".subfunc-item").removeClass("active-two");
-//   //$(id).addClass("active-two");
-// }
+function highlightFun() {
+  $(".func_").on("click", ".func-item", function () {
+    console.log("fun item was clicked");
+    $(".func_ .func-item").removeClass("active-two");
+    $(this).addClass("active-two");
+
+    let cur_inner_list = $("#inner-list-dom-id").val();
+    if (cur_inner_list) {
+      lastChar = cur_inner_list.charAt(cur_inner_list.length - 1);
+      $(".inner_list:not(" + cur_inner_list + ")").fadeOut("fast");
+    } else {
+      $(".inner_list").fadeOut("fast");
+    }
+  });
+}
 
 /////------End Functionalities
 
@@ -320,7 +333,7 @@ function filterSubFuncByFunc() {
 //////------Begin Languages
 function load_languages() {
   //display a loader
-  codeLoading("#language_");
+  spinner("#language_");
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
   let server = $("#server_").val(); //get the server url for the image retrieval
@@ -350,7 +363,7 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
       }
       $("#language_").html(lang);
@@ -409,7 +422,7 @@ function load_languages() {
           }
           lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
         }
         $("#language_").html(lang);
@@ -423,6 +436,13 @@ function load_languages() {
       }
     });
   }
+}
+
+function highlightLang() {
+  $(".lang_").on("click", ".lang-item", function () {
+    $(".lang_ .lang-item").removeClass("active-two");
+    $(this).addClass("active-two");
+  });
 }
 
 function scrollElementIntoView(listId) {
@@ -959,37 +979,36 @@ function saveCodeSnippet(data) {
       let message = feed["message"];
       successToast(message);
 
-      //redirect user to index page on successful update
-      setTimeout(() => {
-        if (method == "PUT") {
-          gotourl("index");
-        }
-      }, 2500);
+      //redirect user to edited codesnippet on successful update
+      if (method == "PUT") {
+        //access the next nav url
+        let current_loc = currentLoc();
+        let nextNav =
+          current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
+        setTimeout(() => {
+          gotourl(nextNav);
+        }, 2500);
+      }
     }
   });
 }
 
-function getNavLink(page) {
+function getNavLink(page, query = "qs=") {
   let host = getCurrentHost();
   let navLink = "";
   let origin = getCurrentUrl().origin;
   host == "localhost"
-    ? (navLink = `${origin}/backgen/zidi/${page}`)
-    : (navLink = `${origin}/$page`);
+    ? (navLink = `${origin}/backgen/zidi/${page}?${query}`)
+    : (navLink = `${origin}/${page}?${query}`);
 
+  $("#nav_link").val(navLink);
   return navLink;
 }
 
 function contributeCodeNav() {
-  let host = getCurrentHost();
-  let navLink = "";
-  let origin = getCurrentUrl().origin;
-  host == "localhost"
-    ? (navLink = `${origin}/backgen/zidi/code-add-edit`)
-    : (navLink = `${origin}/code-add-edit`);
-
+  let navLink = getNavLink("code-add-edit", "cid=");
   $("#contribute-code").html(`
-  <a class="a-override" onclick="persistence("gotourl", ${navLink});" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+  <a class="a-override" onclick='persistence("gotourl", "${navLink}");' href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
   `);
 }
 
@@ -1064,7 +1083,7 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='persistence_remove("codeId"); loadCodesnippetsLink()'>`;
+  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='loadCodesnippetsLink()'>`;
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
@@ -1096,7 +1115,11 @@ function safe_tags_replace(str) {
 function loadCodesnippetsLink(action = "") {
   $(".all-solns").show();
   //show a loader
-  codeLoading("#available-solns");
+  spinner(
+    "#available-solns",
+    "spinner-border-sm",
+    "d-flex justify-content-center"
+  );
   $(".related-soln-container").hide(); //hide related solutions container
   $("#links-title").html("All Solutions");
 
@@ -1428,7 +1451,7 @@ function getSolnsFromServer() {}
 
 function otherSolutions() {
   //show a loader
-  codeLoading("#available-solns");
+  spinner("#available-solns");
 
   let rpp = 25;
   let offset = 0;
@@ -1532,12 +1555,19 @@ function otherSolutions() {
 }
 
 function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
-  console.log("get related solutions called");
+  $(".all-solns").hide();
+  $(".related-soln-container").show(); //show the related solutions container
+  spinner(
+    "#related-solns",
+    "spinner-border-sm",
+    "d-flex justify-content-center"
+  );
+  //show a loader
+
   let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}`;
 
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     if (feed && feed.data) {
-      $(".all-solns").hide();
       //$("#links-title").html("<span text-center>Current Solution<span>");
       //       $("#links-title").html("<span text-center>Current Solution<span>");
       //       let current_loc = currentLoc();
@@ -1578,7 +1608,6 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
       //       }
 
       //display related solutions
-      $(".related-soln-container").show(); //show the related solutions container
       let { data } = feed;
       let solns_arr_size = data.length;
       let solns = "";
@@ -1826,11 +1855,11 @@ function shareCodesnippet() {
 }
 
 function load_codesnippetById(codeId) {
-  //codeLoading("#codeimp-title");
-  codeLoading("#imptype-and-contributor", "spinner-border-sm");
+  //spinner("#codeimp-title");
+  spinner("#imptype-and-contributor", "spinner-border-sm");
 
   //show a loader
-  codeLoading("#available-solns");
+  spinner("#availables-solns", "spinner-border-sm");
 
   let jso = {};
   query = "?codesnippet_id=" + codeId;
@@ -1887,12 +1916,7 @@ function load_codesnippetById(codeId) {
         let isAdmin = current_loc.user.isAdmin;
 
         if (user_id === data.added_by || isAdmin === "true") {
-          let navLink = "";
-          let host = getCurrentHost();
-          let origin = getCurrentUrl().origin;
-          host == "localhost"
-            ? (navLink = `${origin}/backgen/zidi/code-add-edit?cid=${data.uid}`)
-            : (navLink = `${origin}/code-add-edit?cid=${data.uid}`);
+          let navLink = getNavLink("code-add-edit", `cid=${data.uid}`);
 
           $("#edit-code").html(
             `|<a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
@@ -1908,6 +1932,10 @@ function load_codesnippetById(codeId) {
       let { language_name } = data;
       $("#codesnippet_").val(data.row_code); //parse codesnippet via hidden instead as a parameter to avoid js problems incase the contains special characters
       configureAceEditor(language_name); //populate codesnippet to the ace editor
+
+      //store inner list id to hidden field
+      $("#inner-list-dom-id").val(`#fun${func_id}`);
+      $("#inner-list-dom-class").val(`.subfunc${func_id}`);
 
       //diplay instructions if any
       if (data.instructions) {
@@ -1925,12 +1953,8 @@ function load_codesnippetById(codeId) {
         $("#add-comment").html(
           `<a class="a-alt" onclick="showModal()" href="javascript:void(0)" class="cpointer text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
         );
-        let navLink = "";
-        let host = getCurrentHost();
-        let origin = getCurrentUrl().origin;
-        host == "localhost"
-          ? (navLink = `${origin}/backgen/zidi/login`)
-          : (navLink = `${origin}/login`);
+
+        let navLink = getNavLink("login");
 
         $("#modal-title").html(
           `Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="${navLink}">Login</a> to add a comment`

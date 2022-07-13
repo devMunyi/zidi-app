@@ -551,8 +551,8 @@ include_once("configs/conn.inc");
 
             //if theme editor is not set, set it else return empty string
             !current_loc.editorTheme ? persistence("editorTheme", "monokai") : "";
-            //toggle the theme switch indicator based on the theme set
 
+            //toggle the theme switch indicator based on the theme set
             if (current_loc && current_loc.editorTheme == "monokai") {
                 $('#custom-switch-input').prop('checked', true);
                 $("#editor").removeClass("light-screen");
@@ -596,6 +596,8 @@ include_once("configs/conn.inc");
                 load_languages(); //Load all the languages
                 codeStyles();
             }
+
+
             //pagination click even listener
             $("#pagingDiv").on("click", "a", function() {
                 setTargetPage($(this).attr("data-pn"))
@@ -642,76 +644,6 @@ include_once("configs/conn.inc");
                     //$('ul#functions_ li').show();
                 }
             })
-
-
-            // $('#search_functionality').keyup(function() {
-            //     //grabbing user search keys/terms
-
-            //     let k_ = $('#search_functionality').val().trim();
-            //     let fk;
-            //     if (k_) {
-            //         //capitalizing first letter for search keys/terms
-            //         const ks_ = k_.split(" ");
-
-            //         for (let i = 0; i < ks_.length; i++) {
-            //             ks_[i] = ks_[i][0].toUpperCase() + ks_[i].substr(1).toLowerCase();
-            //         }
-
-            //         fk = ks_.join(" ");
-
-
-            //         console.log("Search key terms =>", fk);
-            //     }
-            //     if (fk) {
-            //         // var matches = $('ul#functions_').find('li:contains(' + $(this).val() + ') ');
-            //         var matches = $('ul#functions_').find('li:contains(' + fk + ') ');
-            //         console.log("Found matches =>", matches);
-            //         $('li', 'ul#functions_').not(matches).slideUp();
-            //         matches.slideDown();
-            //         $('.inner_list').fadeIn('fast');
-            //     } else {
-            //         ///-----Restore
-            //         $('.inner_list').fadeOut('fast');
-            //         $('.outer_list').slideDown();
-
-            //         //functions_load()
-
-            //     }
-            // });
-
-            //toggle active function
-            $('.func_').on('click', '.func-item', function() {
-                $('.func_ .func-item').removeClass('active-two');
-                $(this).addClass('active-two');
-
-                let cur_inner_list = $("#inner-list-dom-id").val();
-                if (cur_inner_list) {
-                    lastChar = cur_inner_list.charAt(cur_inner_list.length - 1);
-                    //console.log("we found excluded inner list");
-                    // $(`subfunc-${lastChar}`).show();
-                    $('.inner_list:not(' + cur_inner_list + ')').fadeOut('fast');
-                } else {
-                    $('.inner_list').fadeOut('fast');
-                }
-            });
-
-            //toggle active subfunction
-            // $('.subfunc_.subfunc-item').on('click', '.subfunc_.subfunc-item', function() {
-            //     $('.subfunc_.subfunc-item').removeClass('active-two');
-            //     $(this).addClass('active-two');
-            // });
-
-            $('.subfunc-item').on('click', '.subfunc-item', function() {
-                $('.subfunc-item').removeClass('active-two');
-                $(this).addClass('active-two');
-            });
-
-
-            //toggle active language
-            $('.lang_').on('click', '.lang-item', function() {
-                $('.lang_ .lang-item').removeClass('active-two');
-                $(this).addClass('active-two');
-            });
 
             //toggle active code link
             $('#available-solns').on('click', 'a', function() {
