@@ -2720,9 +2720,9 @@ function saveComment(comment_id = 0) {
       } else {
         reRenderEditedCommentBody(comment_id); //re-render the comment body
       }
-      successToast(feed.message);
+      successToast(feed.message, "toast-top-right");
     } else {
-      errorToast(feed.message);
+      errorToast(feed.message, "toast-top-right");
     }
   });
 }
@@ -2746,9 +2746,9 @@ function deleteComment(comment_id = 0, replying_to) {
       if (replying_to > 0) {
         getCommentReplies(replying_to);
       }
-      successToast(feed.message);
+      successToast(feed.message, "toast-top-right");
     } else {
-      errorToast(feed.message);
+      errorToast(feed.message, "toast-top-right");
     }
   });
 }
@@ -2789,11 +2789,11 @@ function upvoteComment(comment_id, action = "upvote comment") {
     }
     if (feed && feed.success == true) {
       $(`#comment${comment_id}-votes`).html(feed.votes);
-      return successToast(feed.message);
+      return successToast(feed.message, "toast-top-right");
     }
 
     if (feed && feed.success == false) {
-      return errorToast(feed.message);
+      return errorToast(feed.message, "toast-top-right");
     }
   });
 }
@@ -2822,11 +2822,11 @@ function downvoteComment(comment_id, action = "downvote comment") {
     }
     if (feed && feed.success == true) {
       $(`#comment${comment_id}-votes`).html(feed.votes);
-      return successToast(feed.message);
+      return successToast(feed.message, "toast-top-right");
     }
 
     if (feed && feed.success == false) {
-      return errorToast(feed.message);
+      return errorToast(feed.message, "toast-top-right");
     }
   });
 }

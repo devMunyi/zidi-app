@@ -139,7 +139,7 @@ function footer_date() {
 }
 
 //resusable success toast notification
-function successToast(message) {
+function successToast(message, position = "toast-top-center") {
   // var Toast = Swal.mixin({
   //   toast: true,
   //   position: "top",
@@ -159,7 +159,7 @@ function successToast(message) {
     debug: false,
     newestOnTop: false,
     progressBar: true,
-    positionClass: "toast-top-center", //toast-top-center, toast-top-left, toast-top-right
+    positionClass: position, //toast-top-center, toast-top-left, toast-top-right
     preventDuplicates: true,
     onclick: null,
     showDuration: "300",
@@ -175,7 +175,7 @@ function successToast(message) {
 }
 
 //reusable failure toast notification
-function errorToast(message) {
+function errorToast(message, position = "toast-top-center") {
   // var Toast = Swal.mixin({
   //   toast: true,
   //   position: "top",
@@ -195,7 +195,7 @@ function errorToast(message) {
     debug: false,
     newestOnTop: false,
     progressBar: true,
-    positionClass: "toast-top-center", //toast-top-center, toast-top-left, toast-top-right
+    positionClass: position, //toast-top-center, toast-top-left, toast-top-right
     preventDuplicates: true,
     onclick: null,
     showDuration: "300",
