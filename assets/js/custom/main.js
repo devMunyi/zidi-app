@@ -231,15 +231,20 @@ function submenu(id) {
   $(`.subfunc-${lastChar}`).show();
 }
 
-function highlightSubfun(funId, subfunId) {
+function highlightSubfun(funId) {
+  $(`.func-item`).removeClass("active-two"); //ensures all functions in the list are not highlighted
+
+  $(`.subfunc-item`).removeClass("active-two"); ////ensures all subfunctions in the list are not highlighted
+
   $(`#funcitem${funId}`).addClass("active-two"); //allow function highlighting onclicking subfunction after searching
+
   $("#inner-list-dom-id").val(`#fun${funId}`);
   $("#inner-list-dom-class").val(`.subfunc${funId}`);
 
   //enures no other subfunction is highlited
-  $(".subfunc_").on("click", ".subfunc-item", function () {
-    $(".subfunc-item").removeClass("active-two");
-  });
+  // $(".subfunc_").on("click", ".subfunc-item", function () {
+  //   $(".subfunc-item").removeClass("active-two");
+  // });
 
   let inner_list_id = $("#inner-list-dom-id").val();
   let inner_list_class = $("#inner-list-dom-class").val();
@@ -253,8 +258,7 @@ function highlightSubfun(funId, subfunId) {
 
 function highlightFun() {
   $(".func_").on("click", ".func-item", function () {
-    console.log("fun item was clicked");
-    $(".func_ .func-item").removeClass("active-two");
+    $(".func_ .func-item").removeClass("active-two"); //ensures no other function in the list is highlighted
     $(this).addClass("active-two");
 
     let cur_inner_list = $("#inner-list-dom-id").val();
