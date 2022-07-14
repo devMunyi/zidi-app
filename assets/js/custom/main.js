@@ -34,7 +34,7 @@ function functions_load() {
           }
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
-          <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
+          <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
           onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
@@ -66,7 +66,7 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
               <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="highlightSubfun(); subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); loadCodesnippetsLink();">
                <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
               </a>
               </li>`;
@@ -140,8 +140,8 @@ function functions_load() {
             }
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
-            <a class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); persistence_remove('codeId'); loadCodesnippetsLink()">
+            <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
+            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -172,7 +172,7 @@ function functions_load() {
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
                 <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="highlightSubfun(); subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('subfunc', ${subfunction_id}); loadCodesnippetsLink()">
+                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); loadCodesnippetsLink()">
                  <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
                 </a>
                 </li>`;
@@ -231,11 +231,22 @@ function submenu(id) {
   $(`.subfunc-${lastChar}`).show();
 }
 
-function highlightSubfun() {
+function highlightSubfun(funId, subfunId) {
+  $(`#funcitem${funId}`).addClass("active-two"); //allow function highlighting onclicking subfunction after searching
+  $("#inner-list-dom-id").val(`#fun${funId}`);
+  $("#inner-list-dom-class").val(`.subfunc${funId}`);
+
+  //enures no other subfunction is highlited
+  $(".subfunc_").on("click", ".subfunc-item", function () {
+    $(".subfunc-item").removeClass("active-two");
+  });
+
   let inner_list_id = $("#inner-list-dom-id").val();
   let inner_list_class = $("#inner-list-dom-class").val();
+
+  //highlights the clicked subfunction
   $(`.func_ ${inner_list_id}`).on("click", inner_list_class, function () {
-    $(`${inner_list_class}`).removeClass("active-two");
+    // $(`${inner_list_class}`).removeClass("active-two");
     $(this).addClass("active-two");
   });
 }
