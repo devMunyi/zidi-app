@@ -59,7 +59,7 @@ include_once("configs/conn.inc");
                     </div>
                     <div class="form-group">
                         <label for="country_input" class="col-form-label">*Country:</label>
-                        <select class="form-control" name="country_input" name="country_input" id="country_input" required>
+                        <select class="" name="country_input" name="country_input" id="country_input" style="width: 100%;" required>
                             <option value="">--Select--</option>
                             <?php
                             $recs = fetchtable('pr_countries', "status > 0", "name", "asc", "255", "uid ,name");
@@ -155,9 +155,9 @@ include_once("configs/conn.inc");
 
 
             // Initialize select2
-            var placeholder = "&#xf002 Select a place";
             $("#country_input").select2({
                     placeholder: 'Search...',
+                    width: 'resolve'
                 }
 
             );
