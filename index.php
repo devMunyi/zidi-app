@@ -50,7 +50,7 @@ include_once("configs/conn.inc");
 
 
         <!-- start main body part-->
-        <div class="row">
+        <div id="body-wrapper" class="row">
             <!-- start body header -->
             <div class="col-lg-1"></div>
             <div class="col-lg-2" style="border-right: 3px solid #dfdfdf;">
@@ -471,8 +471,9 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; min-height: 500px;">
-                        <div class="card transcard mb-0 pb-0 all-solns hidden">
+                        <div id="solns-box" class="card scrollh transcard mb-0 pb-0 all-solns hidden">
                             <div class="card-header pt-3">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">All Solutions</span></h3>
                             </div>
@@ -485,7 +486,7 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
                         </div>
-                        <div class="card transcard related-soln-container hidden">
+                        <div id="solns-box2" class="card transcard scrollh related-soln-container hidden">
                             <div class="card-header">
                                 <h4 class="card-title"><i class="fe fe-eye"></i> <span id="related-soln-title"> Related Solutions</span></h4>
                                 <div class="pl-4 pr-0 mr-0 pull-right" id="all-solns-nav">
@@ -614,6 +615,11 @@ include_once("configs/conn.inc");
                     // autoHideScrollbar: true
                 });
                 $(".scrollk").mCustomScrollbar({
+                    theme: "inset-2-dark",
+                    // autoHideScrollbar: true
+                });
+
+                $(".scrollh").mCustomScrollbar({
                     theme: "inset-2-dark",
                     // autoHideScrollbar: true
                 });

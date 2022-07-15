@@ -167,11 +167,12 @@ select.fancy-select {
 div#editor {
     min-height: 500px;
     max-height: auto;
-    /*overflow-y: auto;*/ 
+    /*overflow-y: auto;*/
 }
-.auto-height{
+
+.auto-height {
     max-height: auto;
-} 
+}
 
 .dark-screen {
     background-color: #0d0d0f;
@@ -293,7 +294,8 @@ input#search_box {
 }
 
 .scrollk,
-.scrolli {
+.scrolli,
+.scrollh {
     display: block;
     width: 100%;
     overflow-y: scroll;
@@ -358,7 +360,8 @@ input#search_box {
     /*margin: 20px;*/
 }
 
-.active-two, .cur-soln {
+.active-two,
+.cur-soln {
     background-color: #babcd380 !important;
     color: black !important;
     font-weight: bold;
@@ -367,7 +370,7 @@ input#search_box {
 
 }
 
-.cur-soln:hover{
+.cur-soln:hover {
     cursor: default;
 }
 
@@ -502,14 +505,14 @@ div#title-bar {
     /*margin-right: 30px !important;*/
 }
 
-.code-comp{
+.code-comp {
     /* float: left !important;
     margin: auto !important;
     word-wrap: break-word !important;
     width: inherit !important; */
 }
 
-.code-comp:hover{
+.code-comp:hover {
     background-color: inherit !important;
 }
 
@@ -607,6 +610,7 @@ span.subfun_ {
 .bold {
     font-weight: bold;
 }
+
 /* 
 .show {
     display: block;
@@ -672,26 +676,34 @@ span.subfun_ {
     background: #2c0aec;
 }
 
-.text-bold{
+.text-bold {
     font-weight: bold !important;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.cpointer:hover{
+.cpointer:hover {
     cursor: pointer;
 }
 
 /******************End of pagination css************************/
 
 
-/*********************Begin modal css ***************************/
-/* The Modal (background) */
-/* .fade_{
-    opacity: 0.5;
-} */
 
+#funct_box,
+#lang_box,
+#solns-box,
+#solns-box2 {
+    position: sticky;
+    top: 0;
+}
 
-/***********************End Modal css ***************************/
+.mCSB_inside>.mCSB_container {
+    margin-right: 15px !important;
+}
+
+div#body-wrapper {
+    width: 100%;
+}

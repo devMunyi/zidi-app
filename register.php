@@ -126,8 +126,8 @@ include_once("configs/conn.inc");
     </div>
 
     <?php
-        include_once 'footer.php';
-        ?>
+    include_once 'footer.php';
+    ?>
 
     <!-- jQuery and bootstrtap js -->
     <?php
@@ -145,13 +145,22 @@ include_once("configs/conn.inc");
             const url = new URL(url_string);
             const success = url.searchParams.get("success");
             const provider = url.searchParams.get("provider");
-            if((success === 'true' || success === 'false') && provider === "Google"){
+            if ((success === 'true' || success === 'false') && provider === "Google") {
                 googleSignup()
             }
 
-            if((success === 'true' || success === 'false') && provider === "Github"){
+            if ((success === 'true' || success === 'false') && provider === "Github") {
                 githubSignup()
             }
+
+
+            // Initialize select2
+            var placeholder = "&#xf002 Select a place";
+            $("#country_input").select2({
+                    placeholder: 'Search...',
+                }
+
+            );
         });
     </script>
 </body>
