@@ -47,7 +47,7 @@
 <!-- Moment plugin script -->
 <script src="/assets/plugins/moment/moment.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify.js"></script>
+<script src="/assets/plugins/beautify.js"></script>
 
 <!-- Select2 JS --> 
 <script src="/assets/js/select2.min.js"></script>

@@ -2042,14 +2042,17 @@ function toggleEditorTheme() {
     persistence("editorTheme", "monokai");
   }
 
-  let lang = current_loc.code_sel.language_name;
+  let lang =
+    current_loc && current_loc.code_sel && current_loc.code_sel.language_name
+      ? current_loc.code_sel.language_name
+      : "";
   lang ? configureAceEditor(lang) : configureAceEditor();
 }
 
 function configureAceEditor(lang = "") {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
-  let language = undefined;
+  let language = lang;
 
   if (editorTheme == "monokai") {
     $("#editor").removeClass("light-screen");

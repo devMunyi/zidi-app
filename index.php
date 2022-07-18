@@ -257,7 +257,6 @@ include_once("configs/conn.inc");
                                 </div> -->
 
                             <div class="comments_wrapper">
-
                                 <div class="comment_area hide" id="cform0">
                                     <div class="row">
                                         <div class="col-sm-1">
@@ -266,8 +265,6 @@ include_once("configs/conn.inc");
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
                                         <div class="offset-sm-1 col-sm-11 error" id="comment0Err"></div>
-
-
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-2"></div>
@@ -275,8 +272,6 @@ include_once("configs/conn.inc");
                                         <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                                     </div>
                                 </div>
-
-
                                 <!-- <div class="comment_box">
                                     <div class="row">
                                         <div class="col-sm-1">
@@ -543,19 +538,37 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             let current_loc = currentLoc();
-            //check for query params from the url
+
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
-            persistence("cur_page", 1); //reset default comment page to 1
-            persistence("last_page", 1); //reset default comment page to 1
             persistence_remove("gotourl");
 
+            if (current_loc && current_loc.cur_page) {
+
+            } else {
+                persistence("cur_page", 1); //set default comment first page to 1
+            }
+
+            if (current_loc && current_loc.last_page) {
+
+            } else {
+                persistence("last_page", 1); //set default comment last page to 1
+            }
+
+
             //if theme editor is not set, set it else return empty string
-            !current_loc.editorTheme ? persistence("editorTheme", "monokai") : "";
+            let editorTheme = "";
+            if (current_loc && current_loc.editorTheme) {
+                editorTheme = current_loc.editorTheme;
+            } else {
+                editorTheme = "monokai";
+                persistence("editorTheme", "monokai");
+
+            }
 
             //toggle the theme switch indicator based on the theme set
-            if (current_loc && current_loc.editorTheme == "monokai") {
-                $('#custom-switch-input').prop('checked', true);
+            if (editorTheme == "monokai") {
+                //$('#custom-switch-input').prop('checked', true);
                 $("#editor").removeClass("light-screen");
                 $("#editor").addClass("dark-screen");
             } else {
