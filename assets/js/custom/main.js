@@ -512,6 +512,14 @@ function filterFramsByLang() {
   }
 }
 
+function persistFram() {
+  persistence("framework", parseInt($("#sel_framework").val()));
+}
+
+function persistCodestyle() {
+  persistence("codestyle", parseInt($("#sel_codestyle").val()));
+}
+
 function getAllFrams() {
   let current_loc = currentLoc(); //get access to the data available in the localstorage
 
@@ -519,7 +527,7 @@ function getAllFrams() {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
     if (frams_arr_size > 0) {
       let active_fram;
@@ -542,7 +550,7 @@ function getAllFrams() {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -570,7 +578,7 @@ function getAllFrams() {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -624,7 +632,7 @@ function getAllFrams() {
         persistence("allFrams", data);
       } else {
         row = `
-        <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+        <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
           <option value = "">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
@@ -642,7 +650,7 @@ function getFramsByLang(lang_id) {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
     if (frams_arr_size > 0) {
@@ -665,7 +673,7 @@ function getFramsByLang(lang_id) {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -696,7 +704,7 @@ function getFramsByLang(lang_id) {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -747,7 +755,7 @@ function getFramsByLang(lang_id) {
         $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='loadCodesnippetsLink();'>
+      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -1098,7 +1106,7 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='loadCodesnippetsLink()'>`;
+  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'>`;
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
@@ -1173,15 +1181,6 @@ function loadCodesnippetsLink(action = "") {
             language_implementation_type = ` ${language_implementation_type}`;
           }
 
-          let displayed_soln =
-            "<b class=''><i>" +
-            title +
-            " - " +
-            language_name +
-            " - " +
-            data[i].user_implementation_type +
-            "</i></b>";
-
           let activeClass = "";
           let curSoln =
             current_loc && current_loc.code_sel && current_loc.code_sel.uid
@@ -1203,7 +1202,6 @@ function loadCodesnippetsLink(action = "") {
         $("#available-solns").html(
           `<p class="list-group-item list-group-item-action">No record found</p>`
         );
-
         persistence_remove("all_solns");
       }
     } else {
@@ -1280,15 +1278,6 @@ function loadCodesnippetsLink(action = "") {
               language_implementation_type = ` ${language_implementation_type}`;
             }
 
-            let displayed_soln =
-              "<b class=''><i>" +
-              title +
-              " - " +
-              language_name +
-              " - " +
-              data[i].user_implementation_type +
-              "</i></b>";
-
             solns += `<a href="javascript:void(0)"  
                 onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
@@ -1303,72 +1292,25 @@ function loadCodesnippetsLink(action = "") {
           $("#available-solns").html(
             `<p class="list-group-item list-group-item-action">No record found</p>`
           );
-
           persistence_remove("all_solns");
         }
       });
     }
   } else {
-    //get reource from server
-    let sel_framework = parseInt($("#sel_framework").val());
-    persistence("framework", sel_framework);
-    let sel_codestyle = parseInt($("#sel_codestyle").val());
-    persistence("codestyle", sel_codestyle);
-
-    let sel_func;
-    let sel_subfunc;
-    let sel_language;
-
-    if (current_loc && current_loc.func > 0) {
-      sel_func = current_loc.func;
-    }
-    if (current_loc && current_loc.subfunc > 0) {
-      sel_subfunc = current_loc.subfunc;
-    }
-
-    if (current_loc && current_loc.language > 0) {
-      sel_language = current_loc.language;
-    }
-
-    if (
-      current_loc &&
-      current_loc.framework >= 0 &&
-      current_loc.framework != null &&
-      current_loc.framework != NaN
-    ) {
-      sel_framework = current_loc.framework;
-    } else {
-    }
-
-    if (current_loc && current_loc.codestyle > 0) {
-      sel_codestyle = current_loc.codestyle;
-    }
-
+    //------get reource from server
     let rpp = 25;
     let offset = 0;
+    let sel_func = current_loc && current_loc.func ? current_loc.func : "";
+    let sel_subfunc =
+      current_loc && current_loc.subfunc ? current_loc.subfunc : "";
+    let sel_language =
+      current_loc && current_loc.language ? current_loc.language : "";
+    let sel_codestyle =
+      current_loc && current_loc.codestyle ? current_loc.codestyle : "";
 
-    if (!sel_func) {
-      sel_func = "";
-    }
+    let sel_framework = current_loc.framework;
+    sel_framework = Number.isFinite(sel_framework) ? sel_framework : "";
 
-    if (!sel_subfunc) {
-      sel_subfunc = "";
-    }
-
-    if (!sel_language) {
-      sel_language = "";
-    }
-
-    if (sel_framework >= 0 && sel_framework != null && sel_framework != NaN) {
-    } else {
-      sel_framework = "";
-    }
-
-    if (!sel_codestyle) {
-      sel_codestyle = "";
-    }
-
-    //persist user selections before sending the request to server, so that they will remain intact even on page refresh
     let where_ = "c.status = 1 ";
     let orderby = "c.uid";
     let dir = "DESC";
@@ -1432,15 +1374,6 @@ function loadCodesnippetsLink(action = "") {
             language_implementation_type = ` ${language_implementation_type}`;
           }
 
-          let displayed_soln =
-            "<b class=''><i>" +
-            title +
-            " - " +
-            language_name +
-            " - " +
-            data[i].user_implementation_type +
-            "</i></b>";
-
           solns += `<a href="javascript:void(0)"  
       onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
@@ -1463,111 +1396,6 @@ function loadCodesnippetsLink(action = "") {
 }
 
 function getSolnsFromServer() {}
-
-function otherSolutions() {
-  //show a loader
-  spinner("#available-solns");
-
-  let rpp = 25;
-  let offset = 0;
-  let sel_func = "";
-  let sel_subfunc = "";
-  let sel_language = "";
-  let sel_framework = "";
-  let sel_codestyle = "";
-
-  //persist user selections before sending the request to server, so that they will remain intact even on page refresh
-  let where_ = "c.status = 1 ";
-  let orderby = "c.uid";
-  let dir = "DESC";
-
-  let jso = {};
-
-  let query =
-    "?where_=" +
-    where_ +
-    "&orderby=" +
-    orderby +
-    "&dir=" +
-    dir +
-    "&func_id=" +
-    sel_func +
-    "&subfunc_id=" +
-    sel_subfunc +
-    "&language_id=" +
-    sel_language +
-    "&framework_id=" +
-    sel_framework +
-    "&user_impl_type_id=" +
-    sel_codestyle +
-    "&offset=" +
-    offset +
-    "&rpp=" +
-    rpp;
-
-  crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
-    //console.log(feed);
-    let total_ = feed.all_totals;
-    if (total_ > 0) {
-      let data = feed["data"];
-
-      let language_implementation_type;
-      let firstChar;
-      let language_name;
-      let framework;
-      let codesnippet_id;
-
-      let solns = "";
-      for (let i = 0; i < data.length; i++) {
-        language_implementation_type = data[i].language_implementation_type;
-        language_name = data[i].language_name;
-        framework = data[i].framework;
-        language_id = data[i].language_id;
-        codesnippet_id = data[i].uid;
-        let title = data[i].title;
-
-        if (data[i].framework_id == 0) {
-          framework = "";
-        } else {
-          framework = ` with ${framework} framework`;
-        }
-
-        firstChar = language_implementation_type[0];
-
-        if (firstChar == "D") {
-          language_implementation_type = "";
-        } else {
-          language_implementation_type = ` ${language_implementation_type}`;
-        }
-
-        let displayed_soln =
-          "<b class=''><i>" +
-          title +
-          " - " +
-          language_name +
-          " - " +
-          data[i].user_implementation_type +
-          "</i></b>";
-
-        solns += `<a href="javascript:void(0)"  
-        onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
-<span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-        ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
-      }
-
-      $("#available-solns").html(solns);
-
-      persistence("all_solns", feed.data);
-    } else {
-      //add code version drop down
-      $("#available-solns").html(
-        `<p class="list-group-item list-group-item-action">No record found</p>`
-      );
-
-      persistence_remove("all_solns");
-    }
-  });
-}
 
 function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   $(".all-solns").hide();
