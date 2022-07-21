@@ -33,7 +33,7 @@ include_once("configs/conn.inc");
     <!-- start main body part-->
     <div class="container-fluid pt-4" id="register-page">
         <div class="row">
-            <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3 border border-info">
+            <div class="col-sm-4 offset-sm-4 card pt-3 pb-3 mb-3">
                 <div class="d-flex justify-content-center">
 
                 </div>
@@ -42,24 +42,24 @@ include_once("configs/conn.inc");
                 <form name="registerForm" class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                     <div class="form-group">
                         <label for="username_input" class="col-form-label">*Username:</label>
-                        <input type="text" class="form-control" name="username_input" id="username_input" placeholder="Username" required />
+                        <input type="text" class="form-control biginput" name="username_input" id="username_input" placeholder="Username" required />
                         <div class="error" id="usernameErr"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="fullname_input" class="col-form-label">*Fullname:</label>
-                        <input type="text" class="form-control" name="fullname_input" id="fullname_input" placeholder="Firstname Lastname" minlength="5" required>
+                        <input type="text" class="form-control biginput" name="fullname_input" id="fullname_input" placeholder="Firstname Lastname" minlength="5" required>
                         <div class="error" id="fullnameErr"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="email_input" class="col-form-label">*Email:</label>
-                        <input type="email" class="form-control" name="email_input" id="email_input" placeholder="Email" required>
+                        <input type="email" class="form-control biginput" name="email_input" id="email_input" placeholder="Email" required>
                         <div class="error" id="emailErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="country_input" class="col-form-label">*Country:</label>
-                        <select class="" name="country_input" name="country_input" id="country_input" style="width: 100%;" required>
+                        <select class="form-control biginput" name="country_input" name="country_input" id="country_input" style="width: 100%;" required>
                             <option value="">--Select--</option>
                             <?php
                             $recs = fetchtable('pr_countries', "status > 0", "name", "asc", "255", "uid ,name");
@@ -74,12 +74,12 @@ include_once("configs/conn.inc");
                     </div>
                     <div class="form-group">
                         <label for="password_input" class="col-form-label">*Password:</label>
-                        <input type="password" class="form-control" name="password_input" id="password_input" placeholder="Password" minlength="6" required>
+                        <input type="password" class="form-control biginput" name="password_input" id="password_input" placeholder="Password" minlength="6" required>
                         <div class="error" id="passwordErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="cpassword_input" class="col-form-label">*Confirm Password:</label>
-                        <input type="password" class="form-control" name="cpassword_input" id="cpassword_input" placeholder="Confirm Password" minlength="6" required>
+                        <input type="password" class="form-control biginput" name="cpassword_input" id="cpassword_input" placeholder="Confirm Password" minlength="6" required>
                         <div class="error" id="cpasswordErr"></div>
                     </div>
                     <div class="form-group">

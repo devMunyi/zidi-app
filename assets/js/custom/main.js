@@ -527,7 +527,7 @@ function getAllFrams() {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
     if (frams_arr_size > 0) {
       let active_fram;
@@ -550,7 +550,7 @@ function getAllFrams() {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -578,7 +578,7 @@ function getAllFrams() {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -632,7 +632,7 @@ function getAllFrams() {
         persistence("allFrams", data);
       } else {
         row = `
-        <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
           <option value = "">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
@@ -650,7 +650,7 @@ function getFramsByLang(lang_id) {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
     if (frams_arr_size > 0) {
@@ -673,7 +673,7 @@ function getFramsByLang(lang_id) {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -704,7 +704,7 @@ function getFramsByLang(lang_id) {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -755,7 +755,7 @@ function getFramsByLang(lang_id) {
         $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select class='fancy-select' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
         <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -1045,11 +1045,11 @@ function search_codeSnippet() {
         let totalSearches = result.search_totals;
         let data = result["data"];
         if (totalSearches > 0) {
-          let tableSearch = `<table class='table table-dark childClass stack-top table-striped table-condensed'>`;
+          let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white  table-condensed'>`;
           for (let i = 0; i < data.length; i++) {
-            tableSearch += `<tr><td><a href="javascript:void(0)" style='color:white;' class='pointer' 
+            tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
             onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
-            <span class='a-override a-alt'>${data[i].title}</span> <br/>
+            <span class="font-16 text-bold">${data[i].title}</span> <br/>
             Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
           }
           tableSearch += `</table>`;
@@ -1106,7 +1106,7 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'>`;
+  let row = `<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'>`;
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
@@ -1790,11 +1790,11 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="a-alt" onclick="toggleCommentForm()" href="javascript:void(0)" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
+          `<a class="btn btn-primary btn-block  font-weight-bold text-center" onclick="toggleCommentForm()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
-          `<a class="a-alt" onclick="showModal()" href="javascript:void(0)" class="cpointer text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>Add Comment</a>`
+          `<a class="btn btn-primary btn-block cpointer  font-weight-bold text-center" onclick="showModal()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
 
         let navLink = getNavLink("login");

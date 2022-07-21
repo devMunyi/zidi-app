@@ -30,18 +30,18 @@ include_once("configs/conn.inc");
     <!-- start main body part-->
     <div class="container-fluid pt-4" id="login-page">
         <div class="row">
-            <div class="col-md-4 offset-md-4 card pt-3 pb-3 mb-3 border border-info">
+            <div class="col-md-4 offset-md-4 card pt-3 pb-3 mb-3">
                 <h4 class="text-center pt-2 pb-2 ">Sign in</h4>
                 <form class="pl-5 pr-3 form_" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="emailOrUsername_input">*Email|Username: </label>
-                        <input type="text" class="form-control" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
+                        <input type="text" class="form-control biginput" minlength="3" id="emailOrUsername_input" placeholder="Email or username">
                         <div class="error" id="usernameErr"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password_input">*Password: </label>
-                        <input type="password" minlength="6" class="form-control" id="password_input" placeholder="Password">
+                        <input type="password" minlength="6" class="form-control biginput" id="password_input" placeholder="Password">
                         <div class="error" id="passwordErr"></div>
                     </div>
 

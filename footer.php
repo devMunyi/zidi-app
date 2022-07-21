@@ -4,15 +4,16 @@
             <div class="col-md-6 text-md-left">
                 <ul class="list-inline mb-0">
                     <li clasassetss="list-inline-item">
-                        Copyright &copy;<span id="footer-date"></span> ZIDI <a onclick="persistence('x',1)">Test</a> <a onclick="persistence('y','jf')">Test</a>
+                        All Rights Reserved &copy; <span id="footer-date"></span> Zidi
                     </li>
                 </ul>
             </div> 
             <div class="col-md-6 text-md-right">
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><a href="https://themeforest.net/user/puffintheme/portfolio">Help</a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)">Community</a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-outline-primary btn-sm">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href=""><i class="fa fa-facebook"></i></a> <a href=""><i class="fa fa-twitter"></i></a>  <a href=""><i class="fa fa-telegram"></i></a></li>
+                    <li class="list-inline-item"><a href="http://zidiapp.com/help">Help</a></li>
+                    <li class="list-inline-item"><a href="http://zidiapp.com/community">Community</a></li>
+                    <li class="list-inline-item"><a href="http://zidiapp.com/privacy" class="btn btn-outline-primary btn-sm">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>

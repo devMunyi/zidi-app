@@ -42,7 +42,7 @@
     <!-- Start main html -->
     <div id="main_content">
        <?php
-        include_once 'header.php';
+        include_once 'index-header.php';
         ?>
         <!-- Small icon top menu -->
 
@@ -54,69 +54,31 @@
 
 
         <!-- start Main menu -->
-        <div id="left-sidebar" class="sidebar">
 
-            <div class="">
-                <div class="tab-content">
-                <div class="tab-pane fade active show" id="all-tab">
-                    <nav class="sidebar-nav">
-                        <div class="card-body scrolli"  style="padding: 10px 20px;">
-                            <ul class="metismenu" id="functions_">
-                                <li><a href="components/typography.html"><i class="fe fe-type"></i><span>Typography</span></a></li>
-                                <li><a href="components/colors.html"><i class="fe fe-feather"></i><span>Colors</span></a></li>
-                                <li><a href="components/alerts.html"><i class="fe fe-alert-triangle"></i><span>Alerts</span></a></li>
-                                <li><a href="components/avatars.html"><i class="fe fe-user"></i><span>Avatars</span></a></li>
-                                <li><a href="components/buttons.html"><i class="fe fe-toggle-right"></i><span>Buttons</span></a></li>
-                                <li><a href="components/breadcrumb.html"><i class="fe fe-link-2"></i><span>Breadcrumb</span></a></li>
-                                <li><a href="components/forms.html"><i class="fe fe-layers"></i><span>Input group</span></a></li>
-                                <li><a href="components/list-group.html"><i class="fe fe-list"></i><span>List group</span></a></li>
-                                <li><a href="components/modal.html"><i class="fe fe-square"></i><span>Modal</span></a></li>
-                                <li><a href="components/pagination.html"><i class="fe fe-file-text"></i><span>Pagination</span></a></li>
-                                <li><a href="components/cards.html"><i class="fe fe-image"></i><span>Cards</span></a></li>
-                                <li><a href="components/charts.html"><i class="fe fe-pie-chart"></i><span>Charts</span></a></li>
-                                <li><a href="components/form-components.html"><i class="fe fe-check-square"></i><span>Form</span></a></li>
-                                <li><a href="components/tags.html"><i class="fe fe-tag"></i><span>Tags</span></a></li>
-                                <li><a href="javascript:void(0)"><i class="fe fe-help-circle"></i><span>Documentation</span></a></li>
-                                <li><a href="javascript:void(0)"><i class="fe fe-life-buoy"></i><span>Changelog</span></a></li>
 
-                            </ul>
-
-                        </div>
-                    </nav>
-                </div>
-
-            </div>
-            </div>
-        </div>
 
         <!-- start main body part-->
-        <div class="page">
+        <div class="container">
 
             <!-- start body header -->
 
             <div class="section-body">
                 <div class="container-fluid">
-                    <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="row">
-                                <div class="col-lg-5 col-md-5 mb-4">
-                                    <h4>This is a title</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row clearfix row-deck" style="min-height: 600px;">
-
-                        <div class="col-lg-10">
-                            <div class="card">
-
-
-
-                            </div>
-                        </div>
                         <div class="col-lg-2 col-md-2">
 
                         </div>
+                        <div class="col-lg-10">
+                            <div class="container card container-fluid">
+                               <div class="card-body">
+                                <h4>About this Platform</h4>
+                               </div>
+
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -136,6 +98,36 @@
     <?php
     include_once('scripts.php');
     ?>
+    <script>
+        $(document).ready(function() {
+            updateHeader("register-page"); //check for logged in user so as to update the header accordingly
+            //authCheck('register-page', 'register') //check for avilable session, if so redirect to home page
+            footer_date(); //load footer
+            //call submitBtn() and parse register() as a parameter and on hover hint title
+            submitBtn('#regBtn', 'validateRegForm()', "Click to register");
+
+            const url_string = window.location.href;
+            const url = new URL(url_string);
+            const success = url.searchParams.get("success");
+            const provider = url.searchParams.get("provider");
+            if ((success === 'true' || success === 'false') && provider === "Google") {
+                googleSignup()
+            }
+
+            if ((success === 'true' || success === 'false') && provider === "Github") {
+                githubSignup()
+            }
+
+
+            // Initialize select2
+            $("#country_input").select2({
+                    placeholder: 'Search...',
+                    width: 'resolve'
+                }
+
+            );
+        });
+    </script>
 
 
 </body>

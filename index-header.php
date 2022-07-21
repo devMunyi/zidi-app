@@ -18,9 +18,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="col-lg-6">
-                        <input type="search" id="search_box" autocomplete="off" onkeyup="search_codeSnippet()" class="form-control" placeholder="Search code snippets">
+                        <input type="search" id="search_box"  autocomplete="off" onkeyup="search_codeSnippet()" class="form-control" placeholder="Search code snippets">
                         <input type="hidden" id="code_id_">
-                        <div id="code_results" class="">
+                        <div id="code_results">
                         </div>
                     </div>
                     <ul class="navbar-nav mr-auto">
@@ -28,16 +28,16 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="https://zidiapp.com">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">About</a>
+                            <a class="nav-link" href="https://zidiapp.com/about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Community</a>
+                            <a class="nav-link" href="https://zidiapp.com/community">Community</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Contribute</a>
+                            <a class="nav-link" href="https://zidiapp.com/contribute">Contribute</a>
                         </li>
                         <li class="nav-item dropdown" id="account-0">
                             <div class="nav-link dropdown-toggle bg-white btn text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>

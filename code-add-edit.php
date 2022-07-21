@@ -45,20 +45,25 @@ if ($code_id > 0) {
     ?>
 
     <!-- Start main html -->
-    <div class="container-fluid mb-5 pt-4" id="addeditcode-page">
+    <div class="container-fluid mb-5 pt-4">
         <div class="row">
-            <div class="col-md-8 offset-md-2 card pt-3 pb-2 mb-3 border border-info">
+            <div class="col-md-8 font-16 offset-md-2  pt-3 pb-2 mb-3 card">
                 <!-- <div class="d-flex justify-content-center">
                     <h3 class="masthead-heading text-uppercase mb-0">
                         <a href="index"><img src="assets/images/logo.png" height="35px" alt="ZIDI" /></a>
                     </h3>
                 </div> -->
-                <h4 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h4>
-                <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
+                <h3 class="text-center pb-2 pb-2"><?php echo $act; ?> Codesnippet</h3>
+                <div class="alert alert-icon alert-primary" role="alert">
+                    <i class="fe fe-heart" aria-hidden="true"></i> Your contribution will help thousands 'maybe millions' of developers around the world save time and effort. You are a legend!
+                </div>
+                <div class="row">
+                    <div class="col-sm-7">
+                  <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                     <div class="form-row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-12">
                             <label for="func_sel">*Function:</label>
-                            <select class="form-control" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required>
+                            <select class="form-control biginput" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
@@ -78,9 +83,9 @@ if ($code_id > 0) {
                             </select>
                             <div class="error" id="funErr"></div>
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-12">
                             <label for="subfunc_sel">*Subfunction:</label>
-                            <select class="form-control" name="subfunc_sel" id="subfunc_sel" required>
+                            <select class="form-control biginput" name="subfunc_sel" id="subfunc_sel" required>
                                 <option value="">--Select One</option>
                                 <option value="0">No subfunction</option>
                                 <?php
@@ -102,9 +107,9 @@ if ($code_id > 0) {
                             <div class="error" id="subfunErr"></div>
                         </div>
 
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-12">
                             <label for="language_sel">*Language:</label>
-                            <select class="form-control" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit()" required>
+                            <select class="form-control biginput" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit()" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
@@ -125,9 +130,9 @@ if ($code_id > 0) {
                             <div class="error" id="langErr"></div>
                         </div>
 
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-12">
                             <label for="framework_sel">*Language Framework:</label>
-                            <select class="form-control" name="framework_sel" id="framework_sel" required>
+                            <select class="form-control biginput" name="framework_sel" id="framework_sel" required>
                                 <option value="">--Select One</option>
                                 <option value="0"> No framework</option>
                                 <?php
@@ -150,9 +155,9 @@ if ($code_id > 0) {
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label for="impl_sel">*Language Implementation Type:</label>
-                            <select class="form-control" name="sel_lang_impl" id="sel_lang_impl" required>
+                            <select class="form-control biginput" name="sel_lang_impl" id="sel_lang_impl" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_language_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
@@ -172,9 +177,9 @@ if ($code_id > 0) {
                             </select>
                             <div class="error" id="langImplErr"></div>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label for="impl_sel">*Your Implementation Type:</label>
-                            <select class="form-control" name="sel_user_impl" id="sel_user_impl" required>
+                            <select class="form-control biginput" name="sel_user_impl" id="sel_user_impl" required>
                                 <option value="">--Select One</option>
                                 <?php
                                 $recs = fetchtable('pr_user_implementation_type', "status > 0", "uid", "asc", "25", "uid ,title");
@@ -199,23 +204,23 @@ if ($code_id > 0) {
 
                     <div class="form-group">
                         <label for="codeimpl_title">*Write User Friendly Code Title:</label>
-                        <input type="text" class="form-control" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
+                        <input type="text" class="form-control biginput" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
                         <div class="error" id="titleErr"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
-                        <textarea class="form-control" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
+                        <textarea class="form-control biginput" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
                         <div class="error" id="codeErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="file_extension">*Code File Extension:</label>
-                        <input type="text" class="form-control" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
+                        <input type="text" class="form-control biginput" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
                         <div class="error" id="fileExtErr"></div>
                     </div>
                     <div class="form-group">
                         <label for="instructions_input">Instructions/description of Code Use (if any):</label>
-                        <textarea class="form-control" rows="3" id="instructions_input" name="instructions_input"><?php echo $code_arr['instructions']; ?></textarea>
+                        <textarea class="form-control biginput" rows="3" id="instructions_input" name="instructions_input"><?php echo $code_arr['instructions']; ?></textarea>
                     </div>
 
                     <div class="form-row pt-2 pb-2">
@@ -224,6 +229,24 @@ if ($code_id > 0) {
                         </div>
                     </div>
                 </form>
+                    </div>
+                    <div class="col-sm-5 well font-13 container container-fluid ">
+                        <div class="instructions">
+                        <h5 class="font-weight-bold">Instructions</h5>
+                            <span class="font-14"><u>We aim to assist developers get solutions quickly and effortless. Please adhere to the rules below </u></span>
+                        <div>
+                            <ol>
+                                <li>Make sure your solution has been added in the right categories and tagged correctly</li>
+                                <li>Make sure your solution is well formatted, structured and commented. Please don't assume that something is obvious since your code will be assisting users with different experience levels</li>
+                                <li>Avoid opinionated or highly specific solutions and instead make them widely acceptable and usable </li>
+                                <li>Please specify any libraries, frameworks and external resources used in your solution</li>
+                                <li>Quote official documentation where necessary</li>
+                            </ol>
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <?php
@@ -255,14 +278,7 @@ if ($code_id > 0) {
 
     <script>
         //custom scroll to enable form scrolling for content overflow
-        (function($) {
-            $(window).on("load", function() {
-                $(".form_").mCustomScrollbar({
-                    theme: "inset-2-dark",
-                    autoHideScrollbar: true
-                });
-            });
-        })(jQuery);
+
     </script>
 </body>
 

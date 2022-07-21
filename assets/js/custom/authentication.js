@@ -431,7 +431,7 @@ function updateHeader(pageId) {
   if (host == "localhost") {
     $(".home-nav").html(
       `
-      <a class="navbar-brand" href="http://localhost/backgen/zidi/index">
+      <a class="navbar-brand" href="http://localhost/zidi-app">
           <h3 class="masthead-heading text-uppercase">
             <img src="assets/images/logo.png" height="35px" />
           </h3>
@@ -440,8 +440,8 @@ function updateHeader(pageId) {
     );
     $(".sign-in-up-navs").html(
       `
-     <a class="dropdown-item text-dark" href="http://localhost/backgen/zidi/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
-      <a class="dropdown-item text-dark" href="http://localhost/backgen/zidi/register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
+     <a class="dropdown-item text-dark" href="http://localhost/zidi-app/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign in</a>
+      <a class="dropdown-item text-dark" href="http://localhost/zidi-app/register"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign up</a>
      `
     );
   } else {

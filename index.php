@@ -90,7 +90,7 @@ include_once("configs/conn.inc");
                             <h4> Select a functionality to get started...</h4>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="about_list">
                         <div class="col-sm-4" id="imptype-and-contributor"><i class="fe fe-users"></i> Contributor Details</div>
                         <div class="col-sm-2" id="framework-dropdown"><i class="fa fa-cubes"></i> Framework List</div>
                         <div class="col-sm-2" id="codestyle-dropdown"> <i class="fe fe-code"></i>
@@ -106,7 +106,7 @@ include_once("configs/conn.inc");
                             <i class="fe fe-chevrons-down"></i> Show Languages List
                         </button>
                         <div class="collapse dont-collapse-sm" id="lang_box">
-                            <div class="scrollk">
+                            <div class="scrollk mt-10sides">
                                 <div class="transcard">
                                     <div class="card-header pl-0 pt-3 pb-1 pr-0">
                                         <h4 class="card-title text-orange"><i class="fe fe-droplet"></i> Language</h4>
@@ -154,6 +154,14 @@ include_once("configs/conn.inc");
                             </div>
 
                             <div id="editor" class="card-body dark-screen">
+                                <div id="nocode" class="text-muted-dark text-center">
+                                    <div class="font-24 text-bold  align-middle"><i class="fa fa-info-circle"></i> Get Started</div>
+
+                                    <div class="font-14 mt-3"> <i class="fa fa-hand-o-left"></i> Use the left panel to filter through functionalities.<br/> <i class="fa fa-hand-o-up"></i> The top bar to search for snippets. <br/> The right section to find implementations <i class="fa fa-hand-o-right"></i> <br/>
+                                    <i class="fa fa-heart"></i> Contribute new code and help other developers worldwide
+                                    </div>
+
+                                </div>
 
                             </div>
 
@@ -169,12 +177,12 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
 
-                        <div class="foot_">
+                        <div class="foot_ mt-10sides">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-7">
                                     <h5 id="total-comments"></h5>
                                 </div>
-                                <div class="col-md-3" id="add-comment"></div>
+                                <div class="col-md-5" id="add-comment"></div>
                                 <!-- <nav aria-label="...">
                                     <ul class="pagination">
                                         <li class="page-item disabled">
@@ -532,7 +540,8 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("index"); //check for logged in user so as to update the header accordingly 
+            updateHeader("index"); //check for logged in user so as to update the header accordingly
+            $('#search_box').css('display','block');
         })
     </script>
     <script>
