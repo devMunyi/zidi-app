@@ -1511,6 +1511,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
 function codeComposition() {
   let current_loc = currentLoc();
   $("#code-composition").html(`
+  <input type="hidden" id="copy-status" value="yes"/>
   <li class="dropdown" id="account-0">
     <div
       class="nav-link dropdown-toggle bg-white btn text-black"
@@ -1665,33 +1666,41 @@ function appendCodeUrl(code_id, action = "") {
 }
 
 function copyCodesnippet() {
-  let codeEditor = ace.edit("editor");
-  let codesnippet = codeEditor.getValue();
-  let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
-    ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
-    : 0;
+  let copy_status = $("#copy-status").val();
+  if (copy_status == "yes") {
+    let codeEditor = ace.edit("editor");
+    let codesnippet = codeEditor.getValue();
+    let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
+      ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
+      : 0;
 
-  if (codeLen > 0) {
-    navigator.clipboard.writeText(codesnippet); //copy code to clipboard
-    successToast("Copied to clipboard"); //toast a success message
+    if (codeLen > 0) {
+      navigator.clipboard.writeText(codesnippet); //copy code to clipboard
+      successToast("Code copied to clipboard"); //toast a success message
+    } else {
+    }
   } else {
     errorToast("No valid code to copy");
   }
 }
 
 function shareCodesnippet() {
-  let codeEditor = ace.edit("editor");
-  let codesnippet = codeEditor.getValue();
-  let url = getCurrentUrl();
-  let solnLink = url.href;
+  let copy_status = $("#copy-status").val();
+  if (copy_status == "yes") {
+    let codeEditor = ace.edit("editor");
+    let codesnippet = codeEditor.getValue();
+    let url = getCurrentUrl();
+    let solnLink = url.href;
 
-  let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
-    ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
-    : 0;
+    let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
+      ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
+      : 0;
 
-  if (codeLen > 0) {
-    navigator.clipboard.writeText(solnLink); //copy code to clipboard
-    successToast("Share link copied to clipboard"); //toast a success message
+    if (codeLen > 0) {
+      navigator.clipboard.writeText(solnLink); //copy code to clipboard
+      successToast("Share link copied to clipboard"); //toast a success message
+    } else {
+    }
   } else {
     errorToast("No valid code to share");
   }
@@ -1862,6 +1871,7 @@ function load_codesnippetById(codeId) {
 }
 
 function toggleEditorTheme() {
+  let copy_status = $("#copy-status").val();
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
   if (editorTheme == "monokai") {
@@ -1874,7 +1884,24 @@ function toggleEditorTheme() {
     current_loc && current_loc.code_sel && current_loc.code_sel.language_name
       ? current_loc.code_sel.language_name
       : "";
-  lang ? configureAceEditor(lang) : configureAceEditor();
+  //lang ? configureAceEditor(lang) : configureAceEditor();
+
+  copy_status == "yes" ? configureAceEditor(lang) : change_theme();
+  // if (copy_status == "yes") {
+  // }
+}
+
+function change_theme() {
+  let current_loc = currentLoc();
+  let editorTheme = current_loc.editorTheme;
+
+  if (editorTheme == "monokai") {
+    $("#editor").removeClass("light-screen");
+    $("#editor").addClass("dark-screen");
+  } else {
+    $("#editor").removeClass("dark-screen");
+    $("#editor").addClass("light-screen");
+  }
 }
 
 function configureAceEditor(lang = "") {
