@@ -1215,15 +1215,15 @@ function loadCodesnippetsLink(action = "") {
       let sel_codestyle = "";
 
       //persist user selections before sending the request to server, so that they will remain intact even on page refresh
-      let where_ = "c.status = 1 ";
+      let status = 1;
       let orderby = "c.uid";
       let dir = "DESC";
 
       let jso = {};
 
       let query =
-        "?where_=" +
-        where_ +
+        "?status=" +
+        status +
         "&orderby=" +
         orderby +
         "&dir=" +
@@ -1311,15 +1311,15 @@ function loadCodesnippetsLink(action = "") {
     let sel_framework = current_loc.framework;
     sel_framework = Number.isFinite(sel_framework) ? sel_framework : "";
 
-    let where_ = "c.status = 1 ";
+    let status = 1;
     let orderby = "c.uid";
     let dir = "DESC";
 
     let jso = {};
 
     let query =
-      "?where_=" +
-      where_ +
+      "?status=" +
+      status +
       "&orderby=" +
       orderby +
       "&dir=" +
@@ -1395,8 +1395,6 @@ function loadCodesnippetsLink(action = "") {
   }
 }
 
-function getSolnsFromServer() {}
-
 function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   $(".all-solns").hide();
   $(".related-soln-container").show(); //show the related solutions container
@@ -1407,49 +1405,10 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   );
   //show a loader
 
-  let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}`;
+  let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}&status=1`;
 
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     if (feed && feed.data) {
-      //$("#links-title").html("<span text-center>Current Solution<span>");
-      //       $("#links-title").html("<span text-center>Current Solution<span>");
-      //       let current_loc = currentLoc();
-      //       //display the current solution as single card on top of the related solutions
-      //       let curSoln = "";
-      //       if (current_loc && current_loc.code_sel) {
-      //         let data = current_loc.code_sel;
-      //         let codesnippet_id = data.uid;
-      //         let {
-      //           framework_name,
-      //           language_name,
-      //           framework_id,
-      //           language_implementation_type,
-      //           language_id,
-      //           title,
-      //         } = data;
-      //         let framework_view = "";
-
-      //         if (framework_id == 0) {
-      //           framework_view = "";
-      //         } else {
-      //           framework_view = ` with ${framework_name} framework`;
-      //         }
-
-      //         firstChar = language_implementation_type[0];
-
-      //         if (firstChar == "D") {
-      //           language_implementation_type = "";
-      //         } else {
-      //           language_implementation_type = ` ${language_implementation_type}`;
-      //         }
-
-      //         curSoln = `<a href="javascript:void(0)" class="list-group-item list-group-item-action cur-soln">
-      // <span class="badge badge-secondary"></span>
-      //         ${title} - (<i>${language_name} ${language_implementation_type} ${framework_view}</i>) </a>`;
-
-      //         $("#available-solns").html(curSoln);
-      //       }
-
       //display related solutions
       let { data } = feed;
       let solns_arr_size = data.length;
@@ -1714,7 +1673,7 @@ function load_codesnippetById(codeId) {
   spinner("#availables-solns", "spinner-border-sm");
 
   let jso = {};
-  query = "?codesnippet_id=" + codeId;
+  query = `?codesnippet_id=${codeId}&status=1`;
 
   crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
     //console.log("loaded codesnippet info => ", feed);
