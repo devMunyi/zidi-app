@@ -16,9 +16,9 @@
 
 <!-- Start core js and page js -->
 <script src="/assets/js/core.js"></script>
-<script src="/assets/js/custom/common.js"></script>
-<script src="/assets/js/custom/authentication.js"></script>
-<script src="/assets/js/custom/main.js"></script>
+<script src="/assets/js/custom/common.js?v1"></script>
+<script src="/assets/js/custom/authentication.js?v1"></script>
+<script src="/assets/js/custom/main.js?v1"></script>
 <script src="/assets/js/page/index.js"></script>
 
 
