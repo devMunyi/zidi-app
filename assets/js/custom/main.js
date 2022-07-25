@@ -204,11 +204,6 @@ function parseInnerListId(id) {
 
 function subfun() {}
 
-// function slideUpList() {
-//   // console.log("slide up called");
-//   $(".outer-list").slideUp();
-// }
-
 function scrollElementIntoView2(fId, sfId) {
   let fnLastChar = "0";
   fnLastChar = fId.charAt(fId.length - 1);
@@ -240,11 +235,6 @@ function highlightSubfun(funId) {
 
   $("#inner-list-dom-id").val(`#fun${funId}`);
   $("#inner-list-dom-class").val(`.subfunc${funId}`);
-
-  //enures no other subfunction is highlited
-  // $(".subfunc_").on("click", ".subfunc-item", function () {
-  //   $(".subfunc-item").removeClass("active-two");
-  // });
 
   let inner_list_id = $("#inner-list-dom-id").val();
   let inner_list_class = $("#inner-list-dom-class").val();
@@ -309,7 +299,6 @@ function apiSubfunLoad(callback) {
 
 function filterSubFuncByFunc() {
   let current_loc = currentLoc();
-
   if (current_loc && current_loc.allSubfuns) {
     let subfuns = current_loc.allSubfuns.data;
 
@@ -1037,21 +1026,28 @@ function contributeCodeNav() {
 
 function search_codeSnippet() {
   let code_search = $("#search_box").val().trim();
+  let status = 1;
+  let offset = 0;
+  let rpp = 7;
+  let orderby = "uid";
+  let dir = "DESC";
+
   if (code_search) {
-    let query = "?search_=" + code_search;
+    let query = `?search_=${code_search}&status=${status}&offset=${offset}&rpp=${rpp}&orderby=${orderby}&dir=${dir}`;
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
       persistence("searched_solns", result.data);
       if (result.success) {
         let totalSearches = result.search_totals;
         let data = result["data"];
         if (totalSearches > 0) {
-          let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white  table-condensed'>`;
+          let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white table-condensed'>`;
           for (let i = 0; i < data.length; i++) {
             tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
             onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
             <span class="font-16 text-bold">${data[i].title}</span> <br/>
             Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
           }
+
           tableSearch += `</table>`;
           $("#code_results").slideDown("fast");
           $("#code_results").html(tableSearch);
@@ -1216,7 +1212,7 @@ function loadCodesnippetsLink(action = "") {
 
       //persist user selections before sending the request to server, so that they will remain intact even on page refresh
       let status = 1;
-      let orderby = "c.uid";
+      let orderby = "uid";
       let dir = "DESC";
 
       let jso = {};
@@ -1312,7 +1308,7 @@ function loadCodesnippetsLink(action = "") {
     sel_framework = Number.isFinite(sel_framework) ? sel_framework : "";
 
     let status = 1;
-    let orderby = "c.uid";
+    let orderby = "uid";
     let dir = "DESC";
 
     let jso = {};
@@ -1395,7 +1391,7 @@ function loadCodesnippetsLink(action = "") {
   }
 }
 
-function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
+function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
   $(".all-solns").hide();
   $(".related-soln-container").show(); //show the related solutions container
   spinner(
@@ -1403,10 +1399,8 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
     "spinner-border-sm",
     "d-flex justify-content-center"
   );
-  //show a loader
 
-  let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}&status=1`;
-
+  let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}&status=1&language_id=${language_id}`;
   crudaction({}, "/related-solns" + query, "GET", (feed) => {
     if (feed && feed.data) {
       //display related solutions
@@ -1467,7 +1461,7 @@ function getRelatedSolns(func_id, subfunc_id, codesnippet_id) {
   });
 }
 
-function codeComposition() {
+function codeDetails() {
   let current_loc = currentLoc();
   $("#code-composition").html(`
   <input type="hidden" id="copy-status" value="yes"/>
@@ -1510,54 +1504,16 @@ function codeComposition() {
     </div>
     </div>
   </li>`);
-
-  // $("#code-composition")
-  //   .html(`<span class="dropdown-item"><div class="card p-2 text-center">
-  //       Title : <span class="text-bold">${
-  //         current_loc && current_loc.code_sel && current_loc.code_sel.title
-  //           ? current_loc.code_sel.title
-  //           : ""
-  //       }</span><br>
-  //       Function : <span class="text-bold">${
-  //         current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
-  //           ? current_loc.code_sel.fun_name
-  //           : ""
-  //       }</span><br>
-  //       Subfunction : <span class="text-bold">${
-  //         current_loc &&
-  //         current_loc.code_sel &&
-  //         current_loc.code_sel.subfun_name
-  //           ? current_loc.code_sel.subfun_name
-  //           : ""
-  //       }</span><br>
-  //       Language : <span class="text-bold">${
-  //         current_loc &&
-  //         current_loc.code_sel &&
-  //         current_loc.code_sel.language_name
-  //           ? current_loc.code_sel.language_name
-  //           : ""
-  //       }</span><br>
-  //       Framework : <span class="text-bold">${
-  //         current_loc &&
-  //         current_loc.code_sel &&
-  //         current_loc.code_sel.framework_name
-  //           ? current_loc.code_sel.framework_name
-  //           : ""
-  //       }</span><br>
-  //       Code Style : <span class="text-bold">${
-  //         current_loc &&
-  //         current_loc.code_sel &&
-  //         current_loc.code_sel.codestyle_name
-  //           ? current_loc.code_sel.codestyle_name
-  //           : ""
-  //       }</span>
-  //       </div></span`);
 }
 
 function appendCodeUrl(code_id, action = "") {
   const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
+  const domsection =
+    current_loc && current_loc.domsection_id
+      ? `#${current_loc.domsection_id}`
+      : "";
   let origin = "https://zidiapp.com";
   if (host == "localhost") {
     origin = "http://localhost/backgen/zidi";
@@ -1618,7 +1574,7 @@ function appendCodeUrl(code_id, action = "") {
   }
 
   let hyphenatedTitle = hyphenateTitle(c_snippet_title);
-  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}`;
+  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}${domsection}`;
   goTo(myUrl);
 
   persistence("gotourl", myUrl);
@@ -1676,17 +1632,15 @@ function load_codesnippetById(codeId) {
   query = `?codesnippet_id=${codeId}&status=1`;
 
   crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
-    //console.log("loaded codesnippet info => ", feed);
     let codeImpTitle = ""; //intial default value
     let imptypeAndContributor = ""; //initial default value
     let current_loc = currentLoc();
 
     //let codeVersions = "";
-    if (feed.data && feed.data.uid > 0 && feed.data.uid == codeId) {
+    if (feed && feed.data && feed.data.uid && feed.data.uid == codeId) {
       //clear load framework dropdown
       let data = feed["data"];
-      let { title } = data;
-      //console.log("loaded code details => ", data);
+      //distructuring variables
       let {
         uid,
         func_id,
@@ -1694,6 +1648,15 @@ function load_codesnippetById(codeId) {
         language_id,
         framework_id,
         codestyle_id,
+        language_name,
+        row_code,
+        title,
+        instructions,
+        added_by,
+        provider,
+        fullname,
+        username,
+        total_comments,
       } = data;
 
       //update code implementation title
@@ -1703,14 +1666,14 @@ function load_codesnippetById(codeId) {
       );
 
       let displayName = "";
-      if (data.provider === "Local" || data.provider === "Google") {
-        displayName = data.fullname;
-      } else if (data.provider == "Github") {
-        displayName = data.username;
-      } else if (data.provider == "Facebook") {
+      if (provider === "Local" || provider === "Google") {
+        displayName = fullname;
+      } else if (provider == "Github") {
+        displayName = username;
+      } else if (provider == "Facebook") {
         displayName += displayName;
-      } else if (data.provider == "Twitter") {
-        displayName = data.fullname;
+      } else if (provider == "Twitter") {
+        displayName = fullname;
       }
 
       imptypeAndContributor =
@@ -1722,12 +1685,12 @@ function load_codesnippetById(codeId) {
       $("#imptype-and-contributor").html(imptypeAndContributor);
 
       //toggle edit code button based on whether the logged in user is the same as the author of the displayed code
-      if (current_loc.user && current_loc.user.uid) {
+      if (current_loc && current_loc.user && current_loc.user.uid) {
         let user_id = current_loc.user.uid;
         let isAdmin = current_loc.user.isAdmin;
 
-        if (user_id === data.added_by || isAdmin === "true") {
-          let navLink = getNavLink("code-add-edit", `cid=${data.uid}`);
+        if (user_id === added_by || isAdmin === "true") {
+          let navLink = getNavLink("code-add-edit", `cid=${uid}`);
 
           $("#edit-code").html(
             `|<a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
@@ -1740,8 +1703,7 @@ function load_codesnippetById(codeId) {
       }
 
       ///---------call ace configuration function
-      let { language_name } = data;
-      $("#codesnippet_").val(data.row_code); //parse codesnippet via hidden instead as a parameter to avoid js problems incase the contains special characters
+      $("#codesnippet_").val(row_code); //parse codesnippet via hidden instead as a parameter to avoid js problems incase the contains special characters
       configureAceEditor(language_name); //populate codesnippet to the ace editor
 
       //store inner list id to hidden field
@@ -1749,65 +1711,60 @@ function load_codesnippetById(codeId) {
       $("#inner-list-dom-class").val(`.subfunc${func_id}`);
 
       //diplay instructions if any
-      if (data.instructions) {
-        $("#code-instructions").html(data.instructions);
+      if (instructions) {
+        $("#code-instructions").html(instructions);
       } else {
         $("#code-instructions").html("No Instructions");
       }
 
       //add comment button
-      if (current_loc.user && current_loc.user.uid) {
+      if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block  font-weight-bold text-center" onclick="toggleCommentForm()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="toggleCommentForm()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block cpointer  font-weight-bold text-center" onclick="showModal()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal(); persistence('dom_sect','add-comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
 
         let navLink = getNavLink("login");
-
         $("#modal-title").html(
           `Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="${navLink}">Login</a> to add a comment`
         );
-        // $("#add-comment").html(
-        //   `<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        //   Add Comment
-        // </button>`
-        // );
       }
 
       //persist code Id to be referenced later
       persistence("code_sel", data);
       persistence("func", func_id);
       persistence("subfunc", subfunc_id);
-      persistence("language", data.language_id);
-      persistence("language_name", data.language_name);
-      persistence("framework", data.framework_id);
+      persistence("language", language_id);
+      persistence("language_name", language_name);
+      persistence("framework", framework_id);
       persistence("codestyle", codestyle_id);
 
-      getFramsByLang(data.language_id); //render frameworks and highlight displayed codesnippet framework
+      getFramsByLang(language_id); //render frameworks and highlight displayed codesnippet framework
       codeStyles(); ////render codestyles and highlight displayed codesnippet codestyle
       functions_load(); //render functions and subsfunctions as well as highlight displayed codesnippet function and subfunction
       load_languages(); //render languages and highlight displayed codesnippet language
 
-      codeComposition(); //populate the card with codesnippet/solution composition
+      codeDetails(); //populate the card with codesnippet/solution details
 
       //load the current codesnippet related solutions
-      getRelatedSolns(func_id, subfunc_id, uid);
+      getRelatedSolns(uid, func_id, subfunc_id, language_id);
 
       //retrieve comments for the loaded codesnippet
-      let ctotal = data.total_comments;
-      persistence("total_comments", ctotal);
-      let commentCountView;
-      if (ctotal == 1) {
-        commentCountView = `${ctotal} comment`;
-      } else {
-        commentCountView = `${ctotal} comments`;
-      }
+      let commentCountView =
+        total_comments == 1
+          ? `${total_comments} comment`
+          : `${total_comments} comments`;
       $(`#total-comments`).html(commentCountView);
+      persistence("total_comments", total_comments);
 
       getCommentsByCodesnippetId();
+      let dom_sect =
+        current_loc && current_loc.dom_sect ? current_loc.dom_sect : "";
+      dom_sect ? scrollCommentSection(dom_sect) : "";
+      persistence_remove("dom_sect");
     } else {
       getAllFrams(); //render all frameworks
       codeStyles(); //render codestyle
@@ -1826,6 +1783,12 @@ function load_codesnippetById(codeId) {
       /////-------Display that no codesnippet found
       configureAceEditor();
     }
+  });
+}
+function scrollCommentSection(fId) {
+  const element = document.getElementById(fId);
+  element.scrollIntoView({
+    block: "center",
   });
 }
 

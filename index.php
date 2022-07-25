@@ -547,7 +547,6 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             let current_loc = currentLoc();
-
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
             persistence_remove("gotourl");
