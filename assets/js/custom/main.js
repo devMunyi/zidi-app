@@ -2579,6 +2579,9 @@ function saveComment() {
 }
 
 function deleteComment(comment_id = 0, replying_to) {
+  const answer = window.confirm("Are you sure?");
+  if (!answer) return;
+
   //console.log("comment id => ", comment_id, ", replying to => ", replying_to);
   let current_loc = currentLoc();
   let code_snippet_id;
