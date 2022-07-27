@@ -12,12 +12,10 @@ function crudaction(jsonbody, url, method = "POST", callback) {
     url: server_ + url,
     type: method,
     timeout: 0,
-    xhrFields: { withCredentials: true },
     headers: {
       Authorization: token,
       accept: "application/json",
       "Content-Type": "application/json",
-      "Access-Control-Allow-Credentials": true,
     },
     data: cleanJson,
     beforeSend: function () {
