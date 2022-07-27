@@ -52,7 +52,7 @@
 <script src="/assets/js/select2.min.js"></script>
 
 <!--cke editor js -->
-<script src="/assets/plugins/ckeditor5/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/classic/ckeditor.js"></script>
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/inline/ckeditor.js"></script> -->
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> -->
 <!-- <script src="/assets/plugins/ckeditor/js/ckeditor.js"></script>
