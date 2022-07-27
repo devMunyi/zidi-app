@@ -693,6 +693,10 @@ span.subfun_ {
     display: none;
 }
 
+.show{
+    display: block;
+}
+
 .cpointer:hover {
     cursor: pointer;
 }
@@ -736,4 +740,9 @@ div#body-wrapper {
 #nocode{
     margin: 15% 10%;
     line-height: 2em;
+}
+
+.modal-nav{
+    color: blue !important;
+    text-decoration: underline !important;
 }

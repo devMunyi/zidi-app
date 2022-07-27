@@ -771,7 +771,8 @@ function codesnippetValidate() {
   let title = $("#codeimpl_title").val().trim();
   let row_code = $("#code_input").val().trim();
   let file_extension = $("#file_extension").val().trim();
-  let instructions = $("#instructions_input").val().trim();
+  let instructions = $("#instructions_input_").val().trim();
+
   let added_by;
   //grab the current logged in user
   let current_loc = currentLoc();
@@ -929,59 +930,27 @@ function codesnippetValidate() {
 function saveCodeSnippet(data) {
   //show disabled/processing button
   disabledBtn("#addEditCodeBtn");
-
-  // let func_id = $("#func_sel").val();
-  // let subfunc_id = $("#subfunc_sel").val();
-  // let language_id = $("#language_sel").val();
-  // let framework_id = $("#framework_sel").val();
-  // let implementation_id = $("#impl_sel").val();
-  // let title = $("#codeimpl_title").val().trim();
-  // let row_code = $("#code_input").val().trim();
-  // let file_extension = $("#file_extension").val().trim();
-  // let instructions = $("#instructions_input").val().trim();
-
   let codesnippet_id = $("#code_edit_id").val();
   let method = "POST";
   let url = "/add-codesnippet";
   let jso = data;
-  // let jso = {
-  //   func_id,
-  //   subfunc_id,
-  //   language_id,
-  //   framework_id,
-  //   implementation_id,
-  //   title,
-  //   row_code,
-  //   file_extension,
-  //   instructions,
-  //   added_by,
-  // };
 
   if (codesnippet_id > 0) {
     method = "PUT";
     url = "/edit-codesnippet";
     data.codesnippet_id = codesnippet_id;
     jso = data;
-    // jso = {
-    //   func_id,
-    //   subfunc_id,
-    //   language_id,
-    //   framework_id,
-    //   implementation_id,
-    //   title,
-    //   row_code,
-    //   file_extension,
-    //   instructions,
-    //   added_by,
-    //   codesnippet_id,
-    // };
   }
 
   //make api request
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn("#addEditCodeBtn", "codesnippetValidate()", "Click to submit");
+      submitBtn(
+        "#addEditCodeBtn",
+        "getckeditorData('#instructions_input_'); codesnippetValidate();",
+        "Click to submit"
+      );
     }
 
     if (feed["success"] === false) {
@@ -1511,9 +1480,7 @@ function appendCodeUrl(code_id, action = "") {
   const url = getCurrentUrl();
   const host = url.host;
   const domsection =
-    current_loc && current_loc.domsection_id
-      ? `#${current_loc.domsection_id}`
-      : "";
+    current_loc && current_loc.dom_sect ? `#${current_loc.dom_sect}` : "";
   let origin = "https://zidiapp.com";
   if (host == "localhost") {
     origin = "http://localhost/backgen/zidi";
@@ -1720,16 +1687,17 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="toggleCommentForm()" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment', 0);" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
           `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal(); persistence('dom_sect','add-comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
 
-        let navLink = getNavLink("login");
+        let loginLink = getNavLink("login");
+        let signupLink = getNavLink("register");
         $("#modal-title").html(
-          `Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="${navLink}">Login</a> to add a comment`
+          `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to add a comment`
         );
       }
 
@@ -1923,33 +1891,6 @@ function langAddEdit() {
   persistence("langAddEdit", sel_lang);
 }
 
-// function codeAddEdit() {
-//   let current_loc = currentLoc();
-//   let language = current_loc.langAddEdit;
-
-//   let codeEditor = ace.edit("code-editor");
-//   let editorLib = {
-//     init() {
-//       //Configure Ace
-//       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
-//       codeEditor.resize();
-//       codeEditor.setTheme("ace/theme/monokai");
-//       codeEditor.session.setMode("ace/mode/" + language);
-
-//       //Set Options
-//       let setOptions = {
-//         //fontFamily: "Inconsolata",
-//         fontSize: "12pt",
-//         enableBasicAutocompletion: true,
-//         autoScrollEditorIntoView: true,
-//         setTabSize: 4,
-//       };
-//       codeEditor.setValue(js_beautify(codeEditor.getValue(), setOptions));
-//     },
-//   };
-//   editorLib.init();
-// }
-
 function highlightSelCodeParams(
   func_id,
   subfunc_id,
@@ -2084,7 +2025,6 @@ function getCommentsByCodesnippetId() {
       total_records = result.total_records;
 
       //persistence("code_comments_total", total_records);
-
       for (let i = 0; i < count; i++) {
         //console.log(data[i].comment_body);
         let author_name = data[i].author_name;
@@ -2100,6 +2040,7 @@ function getCommentsByCodesnippetId() {
         let comment_id = (commentReplyId = data[i].uid);
         let replying_to = data[i].replying_to;
         let author_id = data[i].author_id;
+        let current_loc = currentLoc();
         let repliesView = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> 0 Replies </a>`;
 
         if (replies == 0) {
@@ -2114,21 +2055,52 @@ function getCommentsByCodesnippetId() {
           repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${commentReplyId}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
         }
 
+        //dynamic reply action
+        let replyAction = "";
+        let user_id =
+          current_loc && current_loc.user && current_loc.user.uid
+            ? current_loc.user.uid
+            : "";
+        if (user_id) {
+          replyAction = `<a
+              title="reply"
+              class="font-weight-bold btn-sm btn-outline-primary"
+              href="javascript:void(0)"
+              onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
+            >
+              <i class="fa fa-mail-reply"></i> Reply
+            </a>`;
+        } else {
+          replyAction = `<a
+            title="reply"
+            class="font-weight-bold btn-sm btn-outline-primary"
+            href="javascript:void(0)"
+            onclick="showModal()"
+          >
+            <i class="fa fa-mail-reply"></i> Reply
+          </a>`;
+
+          let loginLink = getNavLink("login");
+          let signupLink = getNavLink("register");
+          $("#modal-title").html(
+            `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to reply a comment`
+          );
+        }
+
         let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
             <div class="col-sm-3" id="load-cmt${comment_id}">
             ${repliesView}
             </div>
-
             <div class="col-sm-5">
-                <a title="reply" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)" onclick="toggleCommentForm('${comment_id}', 'reply')"><i class="fa fa-mail-reply"></i> Reply</a>
+                ${replyAction}
                 <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
                 <span id="comment${comment_id}-votes"> ${votes} </span>
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2141,7 +2113,7 @@ function getCommentsByCodesnippetId() {
             <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
           <div class="col-sm-4 pull-right">
-            <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
+            ${replyAction}
             <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
             <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
           </div>
@@ -2165,8 +2137,10 @@ function getCommentsByCodesnippetId() {
                        ${comment_body}
                     </div>
                 </div>
+            
                 <div class="row cfoot">
                    ${toggleActionsView}
+                   <!--
                     <div class="mt-2 col-sm-12">
                         <div class="comment_area hide" id="cform${comment_id}">
                           <div class="row">
@@ -2174,16 +2148,17 @@ function getCommentsByCodesnippetId() {
 
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
+                              <input type="hidden" id="cke-init-${comment_id}" value="">
                               <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
                               <div class="offset-sm-1 col-sm-11 error" id="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                            <div class="col-sm-2"><button onclick="saveComment('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                           </div>
                       </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -2284,6 +2259,38 @@ function getCommentReplies(commentReplyId) {
           repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Replies </a>`;
         }
 
+        //dynamic reply action
+        let replyAction = "";
+        let user_id =
+          current_loc && current_loc.user && current_loc.user.uid
+            ? current_loc.user.uid
+            : "";
+        if (user_id) {
+          replyAction = `<a
+              title="reply"
+              class="font-weight-bold btn-sm btn-outline-primary"
+              href="javascript:void(0)"
+              onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
+            >
+              <i class="fa fa-mail-reply"></i> Reply
+            </a>`;
+        } else {
+          replyAction = `<a
+            title="reply"
+            class="font-weight-bold btn-sm btn-outline-primary"
+            href="javascript:void(0)"
+            onclick="showModal()"
+          >
+            <i class="fa fa-mail-reply"></i> Reply
+          </a>`;
+
+          let loginLink = getNavLink("login");
+          let signupLink = getNavLink("register");
+          $("#modal-title").html(
+            `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to reply a comment`
+          );
+        }
+
         let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
@@ -2292,13 +2299,13 @@ function getCommentReplies(commentReplyId) {
             </div>
 
             <div class="col-sm-5">
-                <a title="reply" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)" onclick="toggleCommentForm('${comment_id}', 'reply')"><i class="fa fa-mail-reply"></i> Reply</a>
+                ${replyAction}
                 <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
                 <span id="comment${comment_id}-votes"> ${votes} </span>
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="toggleCommentForm(${comment_id}, 'edit comment', ${replying_to})" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2311,7 +2318,7 @@ function getCommentReplies(commentReplyId) {
           <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
           <div class="col-sm-4 pull-right">
-            <a title="reply" onclick="toggleCommentForm('${comment_id}', 'reply')" class="font-weight-bold btn-sm btn-outline-primary" href="javascript:void(0)"><i class="fa fa-mail-reply"></i> Reply</a>
+            ${replyAction}
             <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
             <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
           </div>
@@ -2337,6 +2344,7 @@ function getCommentReplies(commentReplyId) {
                 </div>
                 <div class="row cfoot">
                     ${toggleActionsView}
+                    <!--
                     <div class="mt-2 col-sm-12">
                         <div class="comment_area hide" id="cform${comment_id}">
                           <div class="row">
@@ -2344,16 +2352,17 @@ function getCommentReplies(commentReplyId) {
 
                               </div>
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
-                              <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                              <input type="hidden" id="cke-init-${comment_id}" value="">
+                              <div class="col-sm-11"><textarea name="content" placeholder="Leave a comment..." id="fcbody${comment_id}">This is some sample content.</textarea></div>
                               <div class="offset-sm-1 col-sm-11 error" id ="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                            <div class="col-sm-2"><button onclick="saveComment('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                           </div>
                       </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -2385,8 +2394,41 @@ function getCommentReplies(commentReplyId) {
   });
 }
 
+function init_ckeditor(cId) {
+  let ckeditor_id = $("#ckeditor_id").val().trim(); //will be used to intilize first and only ckeditor to the current comment
+  let cke_init_id = $(`#cke-init-${cId}`).val().trim(); //will prevent intializing multiple ckeditors for the same comment
+
+  if (cke_init_id) {
+    let ckeditorInstance = document.querySelector(ckeditor_id).ckeditorInstance;
+    ckeditorInstance ? ckeditorInstance.destroy() : ""; //destroy the previous instance before creating a new one
+  }
+  window.myClassicEditor = "";
+  // console.log("cke init id => ", cke_init_id);
+  // if (!cke_init_id) {
+  ClassicEditor.create(document.querySelector(ckeditor_id))
+    .then((newEditor) => {
+      myClassicEditor = newEditor;
+      //console.log(newEditor);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  $(`#cke-init-${cId}`).val(ckeditor_id); //use it as indicator that ckeditor already initialized, to avoid mulitple ini`tiaization
+  //}
+
+  //return ckeditor;
+}
+
+function parseEditorId(domId, commentId, action, replying_to = 0) {
+  $("#ckeditor_id").val(domId);
+  $("#comment_id_").val(commentId);
+  $(`#comment-edit-id0`).val(action);
+  toggleCommentForm(commentId, action, replying_to);
+}
+
 function toggleCommentForm(
-  comment_id = 0,
+  comment_id,
   action = "add comment",
   replying_to = 0
 ) {
@@ -2397,7 +2439,7 @@ function toggleCommentForm(
     if (current_loc.user && current_loc.user.fullname) {
       replyHicon = `<div class="hicon">${current_loc.user.fullname[0]}</div>`;
     }
-    $(`#replyHicon${comment_id}`).html(replyHicon);
+    $(`#replyHicon0`).html(replyHicon);
   } else {
     //let message = `Please sign in to ${action}`;
     //errorToast(message);
@@ -2406,13 +2448,26 @@ function toggleCommentForm(
   }
 
   //toggle form visibility on function call
-  $(`#cform${comment_id}`).toggle();
+  if (action == "cancel") {
+    $(`#cform0`).hide();
+  } else {
+    $(`#cform0`).show();
+    const element = document.getElementById("cform0");
+    element.scrollIntoView({
+      block: "center",
+    });
+    // const element = document.getElementById("cform0");
+    // element.scrollIntoView();
+  }
+  // $(`#cform0`).hasClass("hide")
+  //   ? $(`#cform0`).addClass("show")
+  //   : $(`#cform0`).addClass("hide");
 
-  //update the comment edit id value with the targeted comment action, the input is hidden type above the textarea
-  $(`#comment-edit-id${comment_id}`).val(action);
+  //$(`#cform${comment_id}`).toggle();
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
   if (action === "edit comment") {
+    printError(`comment0Err`, "");
     //retrieve the comments from local storage from the key comments
     let comments = [];
     let comment_to_edit = {};
@@ -2425,21 +2480,30 @@ function toggleCommentForm(
         }
       }
       //load the previous content to the form for editing
-      $(`#fcbody${comment_id}`).val(comment_to_edit.comment_body);
+      myClassicEditor.setData(comment_to_edit.comment_body);
+      //$(`#fcbody${comment_id}`).val(comment_to_edit.comment_body);
     }
   } else {
     //clear the form incase it was loaded with content by edit action
-    if ($(`#fcbody${comment_id}`).val().trim().length > 1) {
-      $(`#fcbody${comment_id}`).val("");
-    }
+    printError(`comment0Err`, "");
+    myClassicEditor.setData("");
+    // if ($(`#fcbody0`).val().trim().length > 1) {
+    //   $(`#fcbody0`).val("");
+    // }
+    // if ($(`#fcbody${comment_id}`).val().trim().length > 1) {
+    //   $(`#fcbody${comment_id}`).val("");
+    // }
   }
+
+  //init_ckeditor(comment_id); //initialize ckeditor
 }
 
-function saveComment(comment_id = 0) {
+function saveComment() {
   //first check if user is logged in before saving the comment
   let added_by;
   let current_loc = currentLoc();
-  if (current_loc.user && current_loc.user.uid) {
+  let comment_id = parseInt($("#comment_id_").val());
+  if (current_loc && current_loc.user && current_loc.user.uid) {
     added_by = current_loc.user.uid;
   } else {
     let navLink = getNavLink("login");
@@ -2449,16 +2513,19 @@ function saveComment(comment_id = 0) {
   let code_snippet_id = parseInt(current_loc.code_sel.uid);
   let replying_to = parseInt(comment_id);
   let tag = 1; //Author
-  let comment_body = $(`#fcbody${comment_id}`).val().trim();
+
+  let comment_body = $(`#fcbody_input_`).val().trim();
 
   //----checking if there is content in the comment body;
   //Defining error variables with a default value
   let commentErr = true;
   // Validate username
   if (comment_body == "") {
-    printError(`comment${comment_id}Err`, "Comment content required");
+    printError(`comment0Err`, "Comment content required");
+    //printError(`comment${comment_id}Err`, "Comment content required");
   } else {
-    printError(`comment${comment_id}Err`, "");
+    printError(`comment0Err`, "");
+    //printError(`comment${comment_id}Err`, "");
     commentErr = false;
   }
 
@@ -2477,7 +2544,7 @@ function saveComment(comment_id = 0) {
     added_by,
   };
   //grab edit-comment-id from the hidden input
-  let action = $(`#comment-edit-id${comment_id}`).val();
+  let action = $(`#comment-edit-id0`).val();
   if (action == "edit comment" && comment_id > 0) {
     url = "/edit-comment";
     method = "PUT";
@@ -2487,11 +2554,15 @@ function saveComment(comment_id = 0) {
     };
   }
 
-  //console.log("Comment Details => ", jso);
+  //$("#cform0").removeClass("show"); //hide the form after submission
+  $("#cform0").hide();
   crudaction(jso, url, method, (feed) => {
-    console.log("comment save feedback => ", feed);
-    if (feed.success) {
-      toggleCommentForm(comment_id);
+    if (feed && feed.success) {
+      clearCkeditorData(); //clear ckeditor content after successful submission
+      // $("#cform0").removeClass("show"); //hide the form after submission
+      //$("#cform0").addClass("hide");
+
+      //toggleCommentForm(comment_id);
       if (action == "add comment" && replying_to == 0) {
         persistence("cur_page", 1); //will ensure the user sees newly posted comment as it appears on the first page
         getCommentsByCodesnippetId();
@@ -2552,7 +2623,13 @@ function upvoteComment(comment_id, action = "upvote comment") {
   if (current_loc && current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    return alert(`Please sign in to ${action}`);
+    showModal();
+    let loginLink = getNavLink("login");
+    let signupLink = getNavLink("register");
+    $("#modal-title").html(
+      `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to ${action}`
+    );
+    return; // alert(`Please sign in to ${action}`);
   }
 
   let jso = {
@@ -2585,7 +2662,14 @@ function downvoteComment(comment_id, action = "downvote comment") {
   if (current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    return alert(`Please sign in to ${action}`);
+    showModal();
+    let loginLink = getNavLink("login");
+    let signupLink = getNavLink("register");
+    $("#modal-title").html(
+      `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to ${action}`
+    );
+    return;
+    //return alert(`Please sign in to ${action}`);
   }
 
   let jso = {
@@ -2648,3 +2732,146 @@ function dismissModal() {
 }
 
 ////////------------------------------End modal
+
+///////--------------------------Begin ckeditor
+class MyUploadAdapter {
+  constructor(loader) {
+    // The file loader instance to use during the upload.
+    this.loader = loader;
+  }
+
+  // Starts the upload process.
+  upload() {
+    return this.loader.file.then(
+      (file) =>
+        new Promise((resolve, reject) => {
+          this._initRequest();
+          this._initListeners(resolve, reject, file);
+          this._sendRequest(file);
+        })
+    );
+  }
+
+  // Aborts the upload process.
+  abort() {
+    if (this.xhr) {
+      this.xhr.abort();
+    }
+  }
+
+  // Initializes the XMLHttpRequest object using the URL passed to the constructor.
+  _initRequest() {
+    const xhr = (this.xhr = new XMLHttpRequest());
+
+    // Note that your request may look different. It is up to you and your editor
+    // integration to choose the right communication channel. This example uses
+    // a POST request with JSON as a data structure but your configuration
+    // could be different.
+    let server_ = $("#server_").val();
+    let url = `${server_}/upload-img`;
+    xhr.open("POST", url, true);
+    xhr.responseType = "json";
+  }
+
+  // Initializes XMLHttpRequest listeners.
+  _initListeners(resolve, reject, file) {
+    const xhr = this.xhr;
+    const loader = this.loader;
+    const genericErrorText = `Couldn't upload file: ${file.name}.`;
+
+    xhr.addEventListener("error", () => reject(genericErrorText));
+    xhr.addEventListener("abort", () => reject());
+    xhr.addEventListener("load", () => {
+      const response = xhr.response;
+
+      // This example assumes the XHR server's "response" object will come with
+      // an "error" which has its own "message" that can be passed to reject()
+      // in the upload promise.
+      //
+      // Your integration may handle upload errors in a different way so make sure
+      // it is done properly. The reject() function must be called when the upload fails.
+      if (!response || response.error) {
+        return reject(
+          response && response.error ? response.error.message : genericErrorText
+        );
+      }
+
+      // If the upload is successful, resolve the upload promise with an object containing
+      // at least the "default" URL, pointing to the image on the server.
+      // This URL will be used to display the image in the content. Learn more in the
+      // UploadAdapter#upload documentation.
+      resolve({
+        default: response.url,
+      });
+    });
+
+    // Upload progress when it is supported. The file loader has the #uploadTotal and #uploaded
+    // properties which are used e.g. to display the upload progress bar in the editor
+    // user interface.
+    if (xhr.upload) {
+      xhr.upload.addEventListener("progress", (evt) => {
+        if (evt.lengthComputable) {
+          loader.uploadTotal = evt.total;
+          loader.uploaded = evt.loaded;
+        }
+      });
+    }
+  }
+
+  // Prepares the data and sends the request.
+  _sendRequest(file) {
+    // Prepare the form data.
+    const data = new FormData();
+
+    data.append("upload", file);
+
+    // Important note: This is the right place to implement security mechanisms
+    // like authentication and CSRF protection. For instance, you can use
+    // XMLHttpRequest.setRequestHeader() to set the request headers containing
+    // the CSRF token generated earlier by your application.
+
+    // Send the request.
+    this.xhr.send(data);
+  }
+}
+
+// ...
+
+function MyCustomUploadAdapterPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    // Configure the URL to the upload script in your back-end here!
+    return new MyUploadAdapter(loader);
+  };
+}
+
+//get the content from the editor
+function getckeditorData(parseDomId) {
+  let data = myClassicEditor.getData();
+  //console.log("form data => ", data);
+  $(parseDomId).val(data);
+}
+
+//clear editor content after form submission
+function clearCkeditorData() {
+  myClassicEditor.setData("");
+}
+
+function initCkeditor(page) {
+  let ckeditor_id = "";
+  page == "index"
+    ? (ckeditor_id = $("#ckeditor_id").val())
+    : (ckeditor_id = "#instructions_input");
+
+  window.myClassicEditor;
+  ClassicEditor.create(document.querySelector(ckeditor_id), {
+    extraPlugins: [MyCustomUploadAdapterPlugin],
+  })
+    .then((newEditor) => {
+      console.log(newEditor);
+      myClassicEditor = newEditor;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+///////--------------------------End ckeditor

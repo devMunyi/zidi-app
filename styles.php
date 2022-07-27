@@ -10,7 +10,7 @@
 <!-- Core css -->
 <link rel="stylesheet" href="/assets/css/main.css"/>
 <link rel="stylesheet" href="/assets/css/theme1.css" id="stylesheet"/>
-<link rel="stylesheet" href="/assets/css/custom.css" />
+<link rel="stylesheet" href="/assets/css/custom.css?v1" />
 <link rel="stylesheet" href="/assets/css/dark.css" />
 
 <!-- SweetAlert2 -->
@@ -32,3 +32,7 @@
 
 <!--  Select2 CSS  -->
 <link href="/assets/css/select2.min.css" rel="stylesheet" /> 
+
+<!-- ckeditor -->
+<!-- <link rel="stylesheet" href="/assets/plugins/ckeditor/css/samples.css">
+<link rel="stylesheet" href="/assets/plugins/ckeditor/css/neo.css"> -->

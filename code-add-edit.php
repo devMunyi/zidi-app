@@ -59,191 +59,191 @@ if ($code_id > 0) {
                 </div>
                 <div class="row">
                     <div class="col-sm-7">
-                  <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
-                    <div class="form-row">
-                        <div class="form-group col-sm-12">
-                            <label for="func_sel">*Function:</label>
-                            <select class="form-control biginput" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required>
-                                <option value="">--Select One</option>
-                                <?php
-                                $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $name = $r['name'];
+                        <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-sm-12">
+                                    <label for="func_sel">*Function:</label>
+                                    <select class="form-control biginput" name="func_sel" id="func_sel" onchange="filterSubFuncByFunc()" required>
+                                        <option value="">--Select One</option>
+                                        <?php
+                                        $recs = fetchtable('pr_functionalities', "status > 0", "name", "asc", "100", "uid ,name");
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $name = $r['name'];
 
-                                    if ($uid == $code_arr["func_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
+                                            if ($uid == $code_arr["func_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
 
-                                    echo "<option $selected value=\"$uid\">$name</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="funErr"></div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label for="subfunc_sel">*Subfunction:</label>
-                            <select class="form-control biginput" name="subfunc_sel" id="subfunc_sel" required>
-                                <option value="">--Select One</option>
-                                <option value="0">No subfunction</option>
-                                <?php
-                                $recs = fetchtable('pr_subfunctions', "status > 0", "name", "asc", "300", "uid ,name");
+                                            echo "<option $selected value=\"$uid\">$name</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="funErr"></div>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="subfunc_sel">*Subfunction:</label>
+                                    <select class="form-control biginput" name="subfunc_sel" id="subfunc_sel" required>
+                                        <option value="">--Select One</option>
+                                        <option value="0">No subfunction</option>
+                                        <?php
+                                        $recs = fetchtable('pr_subfunctions', "status > 0", "name", "asc", "300", "uid ,name");
 
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $name = $r['name'];
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $name = $r['name'];
 
-                                    if ($uid == $code_arr["subfunc_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
-                                    echo "<option $selected value=\"$uid\">$name</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="subfunErr"></div>
-                        </div>
+                                            if ($uid == $code_arr["subfunc_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
+                                            echo "<option $selected value=\"$uid\">$name</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="subfunErr"></div>
+                                </div>
 
-                        <div class="form-group col-sm-12">
-                            <label for="language_sel">*Language:</label>
-                            <select class="form-control biginput" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit()" required>
-                                <option value="">--Select One</option>
-                                <?php
-                                $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $name = $r['name'];
+                                <div class="form-group col-sm-12">
+                                    <label for="language_sel">*Language:</label>
+                                    <select class="form-control biginput" name="language_sel" id="language_sel" onchange="filterFramsByLang(); langAddEdit()" required>
+                                        <option value="">--Select One</option>
+                                        <?php
+                                        $recs = fetchtable('pr_languages', "status > 0", "name", "asc", "40", "uid ,name");
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $name = $r['name'];
 
-                                    if ($uid == $code_arr["language_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
+                                            if ($uid == $code_arr["language_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
 
-                                    echo "<option $selected value=\"$uid\">$name</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="langErr"></div>
-                        </div>
+                                            echo "<option $selected value=\"$uid\">$name</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="langErr"></div>
+                                </div>
 
-                        <div class="form-group col-sm-12">
-                            <label for="framework_sel">*Language Framework:</label>
-                            <select class="form-control biginput" name="framework_sel" id="framework_sel" required>
-                                <option value="">--Select One</option>
-                                <option value="0"> No framework</option>
-                                <?php
-                                $recs = fetchtable('pr_frameworks', "status > 0", "name", "asc", "100", "uid ,name");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $name = $r['name'];
+                                <div class="form-group col-sm-12">
+                                    <label for="framework_sel">*Language Framework:</label>
+                                    <select class="form-control biginput" name="framework_sel" id="framework_sel" required>
+                                        <option value="">--Select One</option>
+                                        <option value="0"> No framework</option>
+                                        <?php
+                                        $recs = fetchtable('pr_frameworks', "status > 0", "name", "asc", "100", "uid ,name");
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $name = $r['name'];
 
-                                    if ($uid == $code_arr["framework_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
+                                            if ($uid == $code_arr["framework_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
 
-                                    echo "<option $selected value=\"$uid\">$name</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="framErr"></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="impl_sel">*Language Implementation Type:</label>
-                            <select class="form-control biginput" name="sel_lang_impl" id="sel_lang_impl" required>
-                                <option value="">--Select One</option>
-                                <?php
-                                $recs = fetchtable('pr_language_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $title = $r['title'];
+                                            echo "<option $selected value=\"$uid\">$name</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="framErr"></div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="impl_sel">*Language Implementation Type:</label>
+                                    <select class="form-control biginput" name="sel_lang_impl" id="sel_lang_impl" required>
+                                        <option value="">--Select One</option>
+                                        <?php
+                                        $recs = fetchtable('pr_language_implementation_type', "status > 0", "title", "asc", "25", "uid ,title");
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $title = $r['title'];
 
-                                    if ($uid == $code_arr["lang_impl_type_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
+                                            if ($uid == $code_arr["lang_impl_type_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
 
-                                    echo "<option $selected value=\"$uid\">$title</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="langImplErr"></div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="impl_sel">*Your Implementation Type:</label>
-                            <select class="form-control biginput" name="sel_user_impl" id="sel_user_impl" required>
-                                <option value="">--Select One</option>
-                                <?php
-                                $recs = fetchtable('pr_user_implementation_type', "status > 0", "uid", "asc", "25", "uid ,title");
-                                while ($r = mysqli_fetch_array($recs)) {
-                                    $uid = $r['uid'];
-                                    $title = $r['title'];
+                                            echo "<option $selected value=\"$uid\">$title</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="langImplErr"></div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="impl_sel">*Your Implementation Type:</label>
+                                    <select class="form-control biginput" name="sel_user_impl" id="sel_user_impl" required>
+                                        <option value="">--Select One</option>
+                                        <?php
+                                        $recs = fetchtable('pr_user_implementation_type', "status > 0", "uid", "asc", "25", "uid ,title");
+                                        while ($r = mysqli_fetch_array($recs)) {
+                                            $uid = $r['uid'];
+                                            $title = $r['title'];
 
-                                    if ($uid == $code_arr["user_impl_type_id"]) {
-                                        $selected = 'SELECTED';
-                                    } else {
-                                        $selected = '';
-                                    }
+                                            if ($uid == $code_arr["user_impl_type_id"]) {
+                                                $selected = 'SELECTED';
+                                            } else {
+                                                $selected = '';
+                                            }
 
-                                    echo "<option $selected value=\"$uid\">$title</option>";
-                                }
-                                ?>
-                            </select>
-                            <div class="error" id="userImplErr"></div>
-                        </div>
-                    </div>
+                                            echo "<option $selected value=\"$uid\">$title</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="error" id="userImplErr"></div>
+                                </div>
+                            </div>
 
 
-                    <div class="form-group">
-                        <label for="codeimpl_title">*Write User Friendly Code Title:</label>
-                        <input type="text" class="form-control biginput" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
-                        <div class="error" id="titleErr"></div>
-                    </div>
+                            <div class="form-group">
+                                <label for="codeimpl_title">*Write User Friendly Code Title:</label>
+                                <input type="text" class="form-control biginput" id="codeimpl_title" value="<?php echo $code_arr['title']; ?>" placeholder="e.g how to iterate over an object using for loop" maxlength="70" required />
+                                <div class="error" id="titleErr"></div>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
-                        <textarea class="form-control biginput" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
-                        <div class="error" id="codeErr"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="file_extension">*Code File Extension:</label>
-                        <input type="text" class="form-control biginput" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
-                        <div class="error" id="fileExtErr"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="instructions_input">Instructions/description of Code Use (if any):</label>
-                        <textarea class="form-control biginput" rows="3" id="instructions_input" name="instructions_input"><?php echo $code_arr['instructions']; ?></textarea>
-                    </div>
+                            <div class="form-group">
+                                <label for="code_input">*Codesnippet (Write/Paste your code below):</label>
+                                <textarea class="form-control biginput" minlength="10" rows="5" id="code_input" name="code_input" required><?php echo $code_arr['row_code']; ?></textarea>
+                                <div class="error" id="codeErr"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="file_extension">*Code File Extension:</label>
+                                <input type="text" class="form-control biginput" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
+                                <div class="error" id="fileExtErr"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="instructions_input">Instructions/description of Code Use (if any):</label>
+                                <textarea class="form-control biginput" rows="3" id="instructions_input" name="instructions_input"><?php echo $code_arr['instructions']; ?></textarea>
+                            </div>
 
-                    <div class="form-row pt-2 pb-2">
-                        <div class="for-group col-md-4 d-flex justify-content-start" id="addEditCodeBtn">
-                            <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
-                        </div>
-                    </div>
-                </form>
+                            <div class="form-row pt-2 pb-2">
+                                <div class="for-group col-md-4 d-flex justify-content-start" id="addEditCodeBtn">
+                                    <!-- <button type="submit" title="Click to register" onclick="alert('Oops! submit not yet implemented')" class="btn btn-primary">Submit</button> -->
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-sm-5 well font-13 container container-fluid ">
                         <div class="instructions">
-                        <h5 class="font-weight-bold">Instructions</h5>
+                            <h5 class="font-weight-bold">Instructions</h5>
                             <span class="font-14"><u>We aim to assist developers get solutions quickly and effortless. Please adhere to the rules below </u></span>
-                        <div>
-                            <ol>
-                                <li>Make sure your solution has been added in the right categories and tagged correctly</li>
-                                <li>Make sure your solution is well formatted, structured and commented. Please don't assume that something is obvious since your code will be assisting users with different experience levels</li>
-                                <li>Avoid opinionated or highly specific solutions and instead make them widely acceptable and usable </li>
-                                <li>Please specify any libraries, frameworks and external resources used in your solution</li>
-                                <li>Quote official documentation where necessary</li>
-                            </ol>
+                            <div>
+                                <ol>
+                                    <li>Make sure your solution has been added in the right categories and tagged correctly</li>
+                                    <li>Make sure your solution is well formatted, structured and commented. Please don't assume that something is obvious since your code will be assisting users with different experience levels</li>
+                                    <li>Avoid opinionated or highly specific solutions and instead make them widely acceptable and usable </li>
+                                    <li>Please specify any libraries, frameworks and external resources used in your solution</li>
+                                    <li>Quote official documentation where necessary</li>
+                                </ol>
 
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,29 +260,31 @@ if ($code_id > 0) {
     <script>
         $(document).ready(function() {
             updateHeader("addeditcode-page"); //check for logged in user so as to update the header accordingly
-            //signedUserMenu("addeditcode-page") //populate dropdown menu as per current page
-            //authCheck("addeditcode-page", "addeditcode") //check for logged-in user before rendering page
             $("#add-edit-code-page").hide(); //hide this page by default
 
             //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
-            submitBtn('#addEditCodeBtn', 'codesnippetValidate()', "Click to submit");
-            // var sign_out = document.getElementById("sign-out");
-            // sign_out.addEventListener("click", function() {
-            //     //remove user and token from localstorage
-            //     persistence_remove("user");
-            //     logout() //call logout function                
-            // }, false);
+            submitBtn('#addEditCodeBtn', 'getckeditorData("#instructions_input_"); codesnippetValidate()', "Click to submit");
             footer_date(); //load footer
         })
     </script>
 
     <script>
-        //custom scroll to enable form scrolling for content overflow
+        //ckeditor 5 configurations
+        initCkeditor('code-add-edit');
 
+
+        // Initialize select2
+        // $(".select").select2({
+        //         placeholder: 'Select...',
+        //         width: 'resolve',
+        //     }
+
+        // ).maximizeSelect2Height();
     </script>
 </body>
 
 <!--Pass a code to edit id to be used in making codesnippet update -->
 <input type="hidden" name="code_edit_id" id="code_edit_id" value="<?php echo $code_id; ?>">
+<input type="hidden" name="instructions_input_" id="instructions_input_" value="">
 
 </html>

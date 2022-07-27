@@ -16,6 +16,7 @@ include_once("configs/conn.inc");
             color: red;
         }
     </style>
+    <!-- <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script> -->
 
     <!-- Bootstrap Core and vendor -->
     <?php
@@ -34,21 +35,6 @@ include_once("configs/conn.inc");
         <?php
         include_once 'index-header.php';
         ?>
-        <!-- Small icon top menu -->
-        <!-- <div id="header_top" style="display: none;" class="header_top">
-            <div class="container">
-                <div class="hleft">
-                    <div style="margin-top: 15px;" class="text-orange font-10"><b>PLATFORM</b></div>
-                    <div class="dropdown text-black" id="environments_">
-                        <li style="list-style: none; margin-top: 15px;"><i>Loading ...</i></li>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- start Main menu -->
-
-
         <!-- start main body part-->
         <div id="body-wrapper" class="row">
             <!-- start body header -->
@@ -157,8 +143,8 @@ include_once("configs/conn.inc");
                                 <div id="nocode" class="text-muted-dark text-center">
                                     <div class="font-24 text-bold  align-middle"><i class="fa fa-info-circle"></i> Get Started</div>
 
-                                    <div class="font-14 mt-3"> <i class="fa fa-hand-o-left"></i> Use the left panel to filter through functionalities.<br/> <i class="fa fa-hand-o-up"></i> The top bar to search for snippets. <br/> The right section to find implementations <i class="fa fa-hand-o-right"></i> <br/>
-                                    <i class="fa fa-heart"></i> Contribute new code and help other developers worldwide
+                                    <div class="font-14 mt-3"> <i class="fa fa-hand-o-left"></i> Use the left panel to filter through functionalities.<br /> <i class="fa fa-hand-o-up"></i> The top bar to search for snippets. <br /> The right section to find implementations <i class="fa fa-hand-o-right"></i> <br />
+                                        <i class="fa fa-heart"></i> Contribute new code and help other developers worldwide
                                     </div>
 
                                 </div>
@@ -175,6 +161,32 @@ include_once("configs/conn.inc");
                                 </div>
 
                             </div>
+
+                            <!-- Button trigger modal -->
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Launch demo modal
+                            </button> -->
+
+                            <!-- Modal -->
+                            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
 
                         <div class="foot_ mt-10sides">
@@ -183,294 +195,42 @@ include_once("configs/conn.inc");
                                     <h5 id="total-comments"></h5>
                                 </div>
                                 <div class="col-md-5" id="add-comment"></div>
-                                <!-- <nav aria-label="...">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled">
-                                            <span class="page-link">Previous</span>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item active" aria-current="page">
-                                            <span class="page-link">
-                                                2
-                                                <span class="sr-only">(current)</span>
-                                            </span>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav> -->
-
-                                <!-- <ul>
-                                    <li id="myLi">1</li>
-                                </ul> -->
-
-
                             </div>
-                            <!-- Trigger/Open The Modal -->
-                            <!-- <button id="myBtn" onclick="showModal()">Open Modal</button> -->
-
                             <div id="myModal" class="modal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 id="modal-title" class="modal-title">Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="login">Login</a> to add a comment</h5>
+                                            <h5 id="modal-title" class="modal-title">Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="login">register</a> or <a class="cpointer" style="color:blue; text-decoration: underline;" href="register">sign up</a> to add a comment</h5>
                                             <button type="button" onclick="dismissModal()" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <!-- <div class="modal-body">
-                                            <p class="text-center">Login</p>
-                                        </div> -->
-                                        <!-- <div class="modal-footer">
-                                            <button type="button" onclick="dismissModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
 
-
-                            <!-- <div id="myModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close_">&times;</span>
-                                    <p>Some text in the Modal..</p>
-                                </div>
-
-                            </div> -->
-                            <!-- Button trigger modal -->
-                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Launch demo modal
-                                </button> -->
-
-                            <!-- Modal -->
-                            <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
                             <div class="comments_wrapper">
+                                <!-- <textarea name="content" id="editor1">This is some sample content.</textarea> -->
                                 <div class="comment_area hide" id="cform0">
                                     <div class="row">
                                         <div class="col-sm-1">
                                             <div class="hicon" id="replyHicon0"></div>
                                         </div>
+
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
-                                        <div class="col-sm-11"><textarea id="fcbody0" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                                        <input type="hidden" id="cke-init-0" value="#fcbody0">
+                                        <div class="col-sm-11"> <span class='hide'>Replying to...</span> <textarea name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
                                         <div class="offset-sm-1 col-sm-11 error" id="comment0Err"></div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-2"></div>
-                                        <div class="col-sm-8"><button onclick="toggleCommentForm()" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                                        <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                                        <div class="col-sm-8"><button onclick="parseEditorId('#fcbody0', 0, 'cancel', 0);" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                                        <div class="col-sm-2"><button onclick="getckeditorData('#fcbody_input_'); saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                                     </div>
                                 </div>
-                                <!-- <div class="comment_box">
-                                    <div class="row">
-                                        <div class="col-sm-1">
-                                            <div class="hicon">J</div>
-                                        </div>
-                                        <div class="col-sm-11">
-                                            <div class="row chead">
-                                                <div class="col-sm-9 cwho">
-                                                    Jonah Ngarama <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label class="font-12  font-weight-bold"><i class="fe fe-star"></i> Top Comment</label>
-                                                </div>
-                                            </div>
-                                            <div class="row cbody">
-
-                                                <div class="col-sm-12">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                </div>
-                                            </div>
-                                            <div class="row cfoot">
-
-                                                <div class="col-sm-4">
-                                                    <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                </div>
-                                                <div class="col-sm-4 pull-right">
-                                                    <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                    <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                    <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="comment_box inner-box">
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                <div class="hicon">C</div>
-                                            </div>
-                                            <div class="col-sm-11">
-                                                <div class="row chead">
-                                                    <div class="col-sm-9 cwho">
-                                                        Chelsea <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                    </div>
-                                                    <div class="col-sm-3">
-
-                                                    </div>
-                                                </div>
-                                                <div class="row cbody">
-
-                                                    <div class="col-sm-12">
-                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                    </div>
-                                                </div>
-                                                <div class="row cfoot">
-
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                    </div>
-                                                    <div class="col-sm-4 pull-right">
-                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="comment_box inner-box">
-                                            <div class="row">
-                                                <div class="col-sm-1">
-                                                    <div class="hicon">C</div>
-                                                </div>
-                                                <div class="col-sm-11">
-                                                    <div class="row chead">
-                                                        <div class="col-sm-9 cwho">
-                                                            Chelsea <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                        </div>
-                                                        <div class="col-sm-3">
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="row cbody">
-
-                                                        <div class="col-sm-12">
-                                                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                        </div>
-                                                    </div>
-                                                    <div class="row cfoot">
-
-                                                        <div class="col-sm-4">
-                                                            <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                        </div>
-                                                        <div class="col-sm-4 pull-right">
-                                                            <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                            <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                            <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="comment_box">
-                                    <div class="row">
-                                        <div class="col-sm-1">
-                                            <div class="hicon">S</div>
-                                        </div>
-                                        <div class="col-sm-11">
-                                            <div class="row chead">
-                                                <div class="col-sm-9 cwho">
-                                                    Samuel Munyi <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                </div>
-                                                <div class="col-sm-3">
-
-                                                </div>
-                                            </div>
-                                            <div class="row cbody">
-
-                                                <div class="col-sm-12">
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                </div>
-                                            </div>
-                                            <div class="row cfoot">
-
-                                                <div class="col-sm-4">
-                                                    <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                </div>
-                                                <div class="col-sm-4 pull-right">
-                                                    <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                    <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                    <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div id="outer-c">
-                                    <!-- <div class="row">
-                                            <div class="col-sm-1"><div class="hicon">C</div></div>
-                                            <div class="col-sm-11">
-                                                <div class="row chead">
-                                                    <div class="col-sm-9 cwho">
-                                                        Chelsea  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> 1 hour</span>
-                                                    </div>
-                                                    <div class="col-sm-3">
-
-                                                    </div>
-                                                </div>
-                                                <div class="row cbody">
-
-                                                    <div class="col-sm-12">
-                                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                    </div>
-                                                </div>
-                                                <div class="row cfoot">
-
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override"><i class="fe fe-corner-up-left"></i> 5 Replies </a>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> 5 </a>
-                                                    </div>
-                                                    <div class="col-sm-4 pull-right">
-                                                        <a class="font-weight-bold btn-sm btn-outline-primary" href="k"><i class="fa fa-mail-reply"></i> Reply</a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-success" href="k"><i class="fa fa-thumbs-up"></i></a>
-                                                        <a class="font-weight-bold btn-sm btn-outline-danger" href="k"><i class="fa fa-thumbs-down"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-
-
-
                                 </div>
                                 <div id="pagingDiv"></div>
-                                <!-- <div class="row" id="pag-comments">
-
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -505,21 +265,6 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="card transcard mt-0 pt-0 other-soln-container">
-                            <div class="card-header mt-0 pt-0">
-                                <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="other-soln-title"> Other Solutions</span></h3>
-                            </div>
-                            <div class="card-body pt-0" style="padding: 10px 0px;">
-                                <div class="list-group" id="other-solns">
-                                    other
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-flex justify-content-between">
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -541,7 +286,7 @@ include_once("configs/conn.inc");
     <script>
         $(document).ready(function() {
             updateHeader("index"); //check for logged in user so as to update the header accordingly
-            $('#search_box').css('display','block');
+            $('#search_box').css('display', 'block');
         })
     </script>
     <script>
@@ -677,8 +422,12 @@ include_once("configs/conn.inc");
                 $('#available-solns a').removeClass('active-two');
                 $(this).addClass('active-two');
             });
-
         });
+    </script>
+
+    <script>
+        //ckeditor 5 configurations
+        initCkeditor('index');
     </script>
 </body>
 

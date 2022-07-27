@@ -36,3 +36,9 @@
 <input type="hidden" id="codesnippet_" value="">
 <input type="hidden" id="inner-list-dom-id" value="">
 <input type="hidden" id="inner-list-dom-class" value="">
+<input type="hidden" id="ckeditor_id" value="#fcbody0">
+<input type="hidden" id="fcbody_input_" value="">
+<input type="hidden" id="comment_id_" value="0">
+
+
+

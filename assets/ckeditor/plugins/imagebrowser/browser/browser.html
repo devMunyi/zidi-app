@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<base>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="browser.css">
+		<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container_upload" ng-controller="upload_token">
+			<div id="show_upload_images">
+				<img id="blah" src="#" />
+			</div>
+			<form onsubmit="return Validate(this);" method="post" action="/upload" enctype='multipart/form-data'>
+				<input type="file" id="flFileUpload" name="flFileUpload"/>
+				<button id="btnUpload" class="button_template"><i class="fa fa-upload" aria-hidden="true"></i></button>
+			</form>
+		</div>
+
+		<script type="text/x-template-html" id="js-template-image">
+			<div class="show_image_list">
+				<span data-image="%thumbImage%"><i class="fa fa-times" aria-hidden="true"></i></span>
+				<a href="javascript://" class="thumbnail js-image-link" data-url="%imageUrl%">
+					<img src="%thumbUrl%" class="images_list">
+				</a>
+			</div>
+		</script>
+
+		<ul class="folder-switcher" id="js-folder-switcher"></ul>
+
+		<div class="images-container" id="js-images-container">Loading..</div>
+
+		<div id="result"></div>
+
+		<script type="text/javascript" src="browser.js"></script>
+		<script type="text/javascript">
+			CkEditorImageBrowser.init();
+		</script>
+		<script type="text/javascript" src="template_plugin.js"></script>
+	</body>
+</html>
