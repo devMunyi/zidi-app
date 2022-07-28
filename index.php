@@ -172,17 +172,22 @@ include_once("configs/conn.inc");
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <h5 class="modal-title" id="exampleModalLabel">Comment</h5>
+                                            <button type="button" onclick="dismissModal2()" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
+                                            <div class="row">
+                                                <input type="hidden" id="comment-edit-id0" value="add comment">
+                                                <input type="hidden" id="cke-init-0" value="#fcbody0">
+                                                <div class="col-sm-12"> <span class='hide'>Replying to...</span> <textarea name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
+                                                <div class="offset-sm-1 col-sm-11 error" id="comment0Err"></div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button onclick="dismissModal2()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Post</button>
                                         </div>
                                     </div>
                                 </div>
@@ -196,12 +201,13 @@ include_once("configs/conn.inc");
                                 </div>
                                 <div class="col-md-5" id="add-comment"></div>
                             </div>
-                            <div id="myModal" class="modal" tabindex="-1" role="dialog">
+
+                            <div id="loginOrRegisterModal" class="modal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 id="modal-title" class="modal-title">Please <a class="cpointer" style="color:blue; text-decoration: underline;" href="login">register</a> or <a class="cpointer" style="color:blue; text-decoration: underline;" href="register">sign up</a> to add a comment</h5>
-                                            <button type="button" onclick="dismissModal()" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" onclick="dismissModal('#loginOrRegisterModal')" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -211,7 +217,7 @@ include_once("configs/conn.inc");
 
                             <div class="comments_wrapper">
                                 <!-- <textarea name="content" id="editor1">This is some sample content.</textarea> -->
-                                <div class="comment_area hide" id="cform0">
+                                <!-- <div class="comment_area hide" id="cform0">
                                     <div class="row">
                                         <div class="col-sm-1">
                                             <div class="hicon" id="replyHicon0"></div>
@@ -227,7 +233,33 @@ include_once("configs/conn.inc");
                                         <div class="col-sm-8"><button onclick="parseEditorId('#fcbody0', 0, 'cancel', 0);" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
                                         <div class="col-sm-2"><button onclick="getckeditorData('#fcbody_input_'); saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                                     </div>
+                                </div> -->
+
+                                <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="commentModalLabel">Add Comment</h5>
+                                                <button type="button" onclick="dismissModal2('#commentModal')" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <input type="hidden" id="comment-edit-id0" value="add comment">
+                                                    <input type="hidden" id="cke-init-0" value="#fcbody0">
+                                                    <div class="col-sm-12"> <span class='hide'>Replying to...</span> <textarea onkeyup="validateComment('#comment0Err');" name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
+                                                    <div class="col-sm-12 error" id="comment0Err"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button onclick="dismissModal2('#commentModal');" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button onclick="getckeditorData('#fcbody_input_'); saveComment();" type="button" class="btn btn-primary">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div id="outer-c">
                                 </div>
                                 <div id="pagingDiv"></div>

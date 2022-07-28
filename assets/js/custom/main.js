@@ -1687,11 +1687,11 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment', 0);" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0 'add-comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal(); persistence('dom_sect','add-comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add-comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
 
         let loginLink = getNavLink("login");
@@ -1969,9 +1969,8 @@ function setTargetPage(current_page) {
 
 function getCommentsByCodesnippetId() {
   let current_loc = currentLoc();
-
   let code_id;
-  if (current_loc.code_sel) {
+  if (current_loc && current_loc.code_sel) {
     code_id = current_loc.code_sel.uid;
   } else {
     return;
@@ -2017,7 +2016,8 @@ function getCommentsByCodesnippetId() {
     $("#outer-c").html("<i>Loading...</i>");
 
     let row = "";
-    let total_records = 0;
+    let total_records =
+      result && result.total_records ? result.total_records : 0;
     if (result && result.data && result.data.length > 0) {
       //console.log("Comments available", result);
       let { data } = result;
@@ -2040,7 +2040,6 @@ function getCommentsByCodesnippetId() {
         let comment_id = (commentReplyId = data[i].uid);
         let replying_to = data[i].replying_to;
         let author_id = data[i].author_id;
-        let current_loc = currentLoc();
         let repliesView = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> 0 Replies </a>`;
 
         if (replies == 0) {
@@ -2067,6 +2066,7 @@ function getCommentsByCodesnippetId() {
               class="font-weight-bold btn-sm btn-outline-primary"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
+              data-toggle="modal" data-target="#commentModal"
             >
               <i class="fa fa-mail-reply"></i> Reply
             </a>`;
@@ -2075,7 +2075,7 @@ function getCommentsByCodesnippetId() {
             title="reply"
             class="font-weight-bold btn-sm btn-outline-primary"
             href="javascript:void(0)"
-            onclick="showModal()"
+            onclick="showModal('#loginOrRegisterModal')"
           >
             <i class="fa fa-mail-reply"></i> Reply
           </a>`;
@@ -2100,7 +2100,7 @@ function getCommentsByCodesnippetId() {
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" data-toggle="modal" data-target="#commentModal" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2271,6 +2271,7 @@ function getCommentReplies(commentReplyId) {
               class="font-weight-bold btn-sm btn-outline-primary"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
+              data-toggle="modal" data-target="#commentModal"
             >
               <i class="fa fa-mail-reply"></i> Reply
             </a>`;
@@ -2279,7 +2280,7 @@ function getCommentReplies(commentReplyId) {
             title="reply"
             class="font-weight-bold btn-sm btn-outline-primary"
             href="javascript:void(0)"
-            onclick="showModal()"
+            onclick="showModal('#loginOrRegisterModal')"
           >
             <i class="fa fa-mail-reply"></i> Reply
           </a>`;
@@ -2305,7 +2306,7 @@ function getCommentReplies(commentReplyId) {
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" data-toggle="modal" data-target="#commentModal" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2427,13 +2428,44 @@ function parseEditorId(domId, commentId, action, replying_to = 0) {
   toggleCommentForm(commentId, action, replying_to);
 }
 
+function validateComment(domId) {
+  console.log("validate comment was called");
+  $(domId).html("");
+}
+
 function toggleCommentForm(
   comment_id,
   action = "add comment",
   replying_to = 0
 ) {
-  //check if a user is logged in before allowing commenting
   let current_loc = currentLoc();
+  ///---------add action
+  let modal_header = "Add Comment";
+
+  ////--reply action
+  let a_reply_to = "";
+  if (action == "reply" && current_loc && current_loc.comments) {
+    let comments = current_loc.comments;
+    for (let cc = 0; cc < comments.length; cc++) {
+      if (comments[cc].uid == comment_id) {
+        a_reply_to = comments[cc].author_name;
+
+        break; //exit the loop
+      }
+    }
+
+    modal_header = `Replying to <i class='text-muted'>${a_reply_to}<i>`;
+  }
+
+  //edit action
+  if (action == "edit comment") {
+    modal_header = "Edit Comment";
+  }
+
+  ///---insert dynamic title
+  $(".modal-title").html(modal_header);
+
+  //check if a user is logged in before allowing commenting
   if (current_loc.user && current_loc.user.uid && current_loc.user.fullname) {
     let replyHicon;
     if (current_loc.user && current_loc.user.fullname) {
@@ -2446,24 +2478,6 @@ function toggleCommentForm(
     //<!-- Modal -->
     //return;
   }
-
-  //toggle form visibility on function call
-  if (action == "cancel") {
-    $(`#cform0`).hide();
-  } else {
-    $(`#cform0`).show();
-    const element = document.getElementById("cform0");
-    element.scrollIntoView({
-      block: "center",
-    });
-    // const element = document.getElementById("cform0");
-    // element.scrollIntoView();
-  }
-  // $(`#cform0`).hasClass("hide")
-  //   ? $(`#cform0`).addClass("show")
-  //   : $(`#cform0`).addClass("hide");
-
-  //$(`#cform${comment_id}`).toggle();
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
   if (action === "edit comment") {
@@ -2487,12 +2501,6 @@ function toggleCommentForm(
     //clear the form incase it was loaded with content by edit action
     printError(`comment0Err`, "");
     myClassicEditor.setData("");
-    // if ($(`#fcbody0`).val().trim().length > 1) {
-    //   $(`#fcbody0`).val("");
-    // }
-    // if ($(`#fcbody${comment_id}`).val().trim().length > 1) {
-    //   $(`#fcbody${comment_id}`).val("");
-    // }
   }
 
   //init_ckeditor(comment_id); //initialize ckeditor
@@ -2555,12 +2563,16 @@ function saveComment() {
   }
 
   //$("#cform0").removeClass("show"); //hide the form after submission
-  $("#cform0").hide();
+  //$("#cform0").hide();
   crudaction(jso, url, method, (feed) => {
     if (feed && feed.success) {
       clearCkeditorData(); //clear ckeditor content after successful submission
-      // $("#cform0").removeClass("show"); //hide the form after submission
-      //$("#cform0").addClass("hide");
+      //$("#exampleModal").addClass("hide"); //hide the form after submission
+
+      // $("#commentModal").addClass("hide");
+      // $("#commentModal").removeClass("fade");
+      // $(".modal-backdrop").remove();
+      dismissModal2("#commentModal");
 
       //toggleCommentForm(comment_id);
       if (action == "add comment" && replying_to == 0) {
@@ -2579,7 +2591,9 @@ function saveComment() {
 }
 
 function deleteComment(comment_id = 0, replying_to) {
-  const answer = window.confirm("Are you sure?");
+  const answer = window.confirm(
+    "Are you sure you want to delete your comment?"
+  );
   if (!answer) return;
 
   //console.log("comment id => ", comment_id, ", replying to => ", replying_to);
@@ -2607,14 +2621,35 @@ function deleteComment(comment_id = 0, replying_to) {
   });
 }
 
+function focussedInput(input, error_domId) {
+  let hasFocus = $(input).is(":focus");
+  if (hasFocus) {
+    $(error_domId).html("");
+  }
+}
+
 function reRenderEditedCommentBody(comment_id) {
-  //cdisply${comment_id}
-  query = "?comment_id=" + comment_id;
+  let current_loc = currentLoc();
+  let query = "?comment_id=" + comment_id;
 
   crudaction({}, "/comment" + query, "GET", (feed) => {
     //console.log(feed.success, feed.data);
     if (feed && feed.success && feed.data && feed.data.comment_body) {
-      $(`#cdisply${comment_id}`).html(feed.data.comment_body);
+      let comment_body = feed.data.comment_body;
+      $(`#cdisply${comment_id}`).html(comment_body);
+
+      let comments = [];
+      //update the comment within the localstorage
+      if (current_loc && current_loc.comments) {
+        comments = current_loc.comments;
+        for (let cc = 0; cc < comments.length; cc++) {
+          if (comments[cc].uid == comment_id) {
+            comments[cc].comment_body = comment_body;
+            break; //exit the loop
+          }
+        }
+        persistence("comments", comments);
+      }
     }
   });
 }
@@ -2626,7 +2661,7 @@ function upvoteComment(comment_id, action = "upvote comment") {
   if (current_loc && current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    showModal();
+    showModal("#loginOrRegisterModal");
     let loginLink = getNavLink("login");
     let signupLink = getNavLink("register");
     $("#modal-title").html(
@@ -2665,7 +2700,7 @@ function downvoteComment(comment_id, action = "downvote comment") {
   if (current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    showModal();
+    showModal("#loginOrRegisterModal");
     let loginLink = getNavLink("login");
     let signupLink = getNavLink("register");
     $("#modal-title").html(
@@ -2722,17 +2757,53 @@ window.onclick = function (e) {
   }
 };
 
-function showModal() {
+function showModal(domId) {
+  $(domId).show();
   $("body").addClass("fade_");
-  $("#myModal").show();
+  //$("#myModal").show();
   //modal.style.display = "block";
 }
 
-function dismissModal() {
+function dismissModal(domId) {
   $("body").removeClass("fade_");
-  $("#myModal").hide();
+  $(domId).hide();
   //modal.style.display = "none";
 }
+
+function dismissModal2(domId) {
+  $(domId).removeClass("fade");
+  $(".modal-backdrop").remove();
+  $("body").removeClass("modal-open");
+}
+
+function modalView(action, title) {
+  let actionCapitalized = action ? action.toUpperCase() : action;
+  $("#mainModal").html(
+    `
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
+            <button type="button" onclick="dismissModal2()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to ${action} your comment?
+        </div>
+        <div class="modal-footer">
+            <button onclick="dismissModal2()" type="button" class="btn btn-secondary" data-dismiss="modal">Keep</button>
+            <button type="button" onclick="deleteComment(${comment_id} ,${replying_to});" class="btn btn-primary">${actionCapitalized}</button>
+        </div>
+    </div>
+</div>
+    `
+  );
+}
+
+// function modalView() {
+//   return true;
+// }
 
 ////////------------------------------End modal
 

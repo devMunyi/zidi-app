@@ -497,6 +497,10 @@ div#title-bar {
     color: white;
 }
 
+.small-text{
+    font-size: 12px;
+}
+
 #profile-body {
     height: 500px;
     margin-bottom: 90px;
