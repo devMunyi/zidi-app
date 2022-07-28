@@ -2441,6 +2441,7 @@ function toggleCommentForm(
   let current_loc = currentLoc();
   ///---------add action
   let modal_header = "Add Comment";
+  let action_btn = "Add";
 
   ////--reply action
   let a_reply_to = "";
@@ -2455,15 +2456,18 @@ function toggleCommentForm(
     }
 
     modal_header = `Replying to <i class='text-muted'>${a_reply_to}<i>`;
+    action_btn = "Reply";
   }
 
   //edit action
   if (action == "edit comment") {
     modal_header = "Edit Comment";
+    action_btn = "Edit";
   }
 
   ///---insert dynamic title
   $(".modal-title").html(modal_header);
+  $("#btn-action").html(action_btn);
 
   //check if a user is logged in before allowing commenting
   if (current_loc.user && current_loc.user.uid && current_loc.user.fullname) {

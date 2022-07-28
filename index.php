@@ -254,7 +254,7 @@ include_once("configs/conn.inc");
                                             </div>
                                             <div class="modal-footer">
                                                 <button onclick="dismissModal2('#commentModal');" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button onclick="getckeditorData('#fcbody_input_'); saveComment();" type="button" class="btn btn-primary">Post</button>
+                                                <button onclick="getckeditorData('#fcbody_input_'); saveComment();" type="button" class="btn btn-primary"><span id="btn-action">Add</span></button>
                                             </div>
                                         </div>
                                     </div>
