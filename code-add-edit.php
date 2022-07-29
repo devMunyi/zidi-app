@@ -263,15 +263,15 @@ if ($code_id > 0) {
             $("#add-edit-code-page").hide(); //hide this page by default
 
             //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
-            submitBtn('#addEditCodeBtn', 'getckeditorData("#instructions_input_"); codesnippetValidate()', "Click to submit");
+            submitBtn('#addEditCodeBtn', 'codesnippetValidate()', "Click to submit");
             footer_date(); //load footer
         })
     </script>
 
     <script>
-        //ckeditor 5 configurations
-        initCkeditor('code-add-edit');
-
+        //Initialize ckeditor on the instructions input
+        createEditor('instructions_input');
+        //initCkeditor('code-add-edit');
 
         // Initialize select2
         // $(".select").select2({

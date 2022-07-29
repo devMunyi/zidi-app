@@ -771,7 +771,11 @@ function codesnippetValidate() {
   let title = $("#codeimpl_title").val().trim();
   let row_code = $("#code_input").val().trim();
   let file_extension = $("#file_extension").val().trim();
-  let instructions = $("#instructions_input_").val().trim();
+  let editorKey = "instructions_input";
+  let instructions =
+    editors && editors[editorKey]
+      ? editors[editorKey].getData().trim()
+      : $(`#${editorKey}`).val().trim();
 
   let added_by;
   //grab the current logged in user
@@ -946,11 +950,7 @@ function saveCodeSnippet(data) {
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn(
-        "#addEditCodeBtn",
-        "getckeditorData('#instructions_input_'); codesnippetValidate();",
-        "Click to submit"
-      );
+      submitBtn("#addEditCodeBtn", "codesnippetValidate();", "Click to submit");
     }
 
     if (feed["success"] === false) {
@@ -1544,6 +1544,12 @@ function appendCodeUrl(code_id, action = "") {
   persistence("gotourl", myUrl);
 }
 
+function persistUrl() {
+  const url =
+    getCurrentUrl() && getCurrentUrl().href ? getCurrentUrl().href : "";
+  persistence("gotourl", url);
+}
+
 function copyCodesnippet() {
   let copy_status = $("#copy-status").val();
   if (copy_status == "yes") {
@@ -1657,7 +1663,7 @@ function load_codesnippetById(codeId) {
           let navLink = getNavLink("code-add-edit", `cid=${uid}`);
 
           $("#edit-code").html(
-            `|<a class="a-override" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
+            `|<a class="a-override" onclick="persistUrl()" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
           );
         } else {
           $("#edit-code").html("");
@@ -1684,7 +1690,7 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
@@ -1726,10 +1732,10 @@ function load_codesnippetById(codeId) {
       persistence("total_comments", total_comments);
 
       getCommentsByCodesnippetId();
-      let dom_sect =
-        current_loc && current_loc.dom_sect ? current_loc.dom_sect : "";
-      dom_sect ? scrollCommentSection(dom_sect) : "";
-      persistence_remove("dom_sect");
+      // let dom_sect =
+      //   current_loc && current_loc.dom_sect ? current_loc.dom_sect : "";
+      // dom_sect ? scrollCommentSection(dom_sect) : "";
+      // persistence_remove("dom_sect");
     } else {
       getAllFrams(); //render all frameworks
       codeStyles(); //render codestyle
@@ -1750,6 +1756,7 @@ function load_codesnippetById(codeId) {
     }
   });
 }
+
 function scrollCommentSection(fId) {
   const element = document.getElementById(fId);
   element.scrollIntoView({
@@ -1832,8 +1839,8 @@ function configureAceEditor(lang = "") {
 
       //Set Options
       codeEditor.setOptions({
-        //fontFamily: "Inconsolata",
-        fontSize: "12pt",
+        // fontFamily: "tahoma",
+        fontSize: "11pt",
         enableBasicAutocompletion: true,
         autoScrollEditorIntoView: true,
         copyWithEmptySelection: true,
@@ -2063,7 +2070,6 @@ function getCommentsByCodesnippetId() {
               class="font-weight-bold btn-sm btn-outline-primary"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
-              data-toggle="modal" data-target="#commentModal"
             >
               <i class="fa fa-mail-reply"></i> Reply
             </a>`;
@@ -2097,7 +2103,7 @@ function getCommentsByCodesnippetId() {
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" data-toggle="modal" data-target="#commentModal" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2137,25 +2143,26 @@ function getCommentsByCodesnippetId() {
             
                 <div class="row cfoot">
                    ${toggleActionsView}
-                   <!--
                     <div class="mt-2 col-sm-12">
                         <div class="comment_area hide" id="cform${comment_id}">
                           <div class="row">
+                           <!--
                               <div class="col-sm-1" id="replyHicon${comment_id}">
 
                               </div>
+                            -->
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <input type="hidden" id="cke-init-${comment_id}" value="">
-                              <div class="col-sm-11"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
-                              <div class="offset-sm-1 col-sm-11 error" id="comment${comment_id}Err"></div>
+                              <div class="col-sm-12"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                              <div class="col-sm-12 error" id="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                            <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-9"><button onclick="closeForm('#cform${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment('fcbody${comment_id}', ${comment_id})" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                           </div>
                       </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -2268,7 +2275,6 @@ function getCommentReplies(commentReplyId) {
               class="font-weight-bold btn-sm btn-outline-primary"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply', ${replying_to});"
-              data-toggle="modal" data-target="#commentModal"
             >
               <i class="fa fa-mail-reply"></i> Reply
             </a>`;
@@ -2303,7 +2309,7 @@ function getCommentReplies(commentReplyId) {
                 <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" data-toggle="modal" data-target="#commentModal" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
                 <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
             </div>
           `;
@@ -2342,25 +2348,24 @@ function getCommentReplies(commentReplyId) {
                 </div>
                 <div class="row cfoot">
                     ${toggleActionsView}
-                    <!--
                     <div class="mt-2 col-sm-12">
                         <div class="comment_area hide" id="cform${comment_id}">
                           <div class="row">
-                              <div class="col-sm-1" id="replyHicon${comment_id}">
+                              <!--<div class="col-sm-1" id="replyHicon${comment_id}">
 
-                              </div>
+                              </div>-->
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <input type="hidden" id="cke-init-${comment_id}" value="">
-                              <div class="col-sm-11"><textarea name="content" placeholder="Leave a comment..." id="fcbody${comment_id}">This is some sample content.</textarea></div>
-                              <div class="offset-sm-1 col-sm-11 error" id ="comment${comment_id}Err"></div>
+                              <div class="col-sm-12"><textarea name="content" class="form-control" placeholder="Leave a comment..." id="fcbody${comment_id}"></textarea></div>
+                              <div class="col-sm-12 error" id ="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-8"><button onclick="toggleCommentForm('${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                            <div class="col-sm-2"><button onclick="saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-9"><button onclick="closeForm('#cform${comment_id}')" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                            <div class="col-sm-2"><button onclick="saveComment('fcbody${comment_id}', ${comment_id})" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                           </div>
                       </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -2422,13 +2427,16 @@ function parseEditorId(domId, commentId, action, replying_to = 0) {
   $("#ckeditor_id").val(domId);
   $("#comment_id_").val(commentId);
   $("#reply_to_id").val(replying_to);
-  $(`#comment-edit-id0`).val(action);
+  $(`#comment-edit-id${commentId}`).val(action);
   toggleCommentForm(commentId, action, replying_to);
 }
 
 function validateComment(domId) {
-  console.log("validate comment was called");
   $(domId).html("");
+}
+
+function closeForm(domId) {
+  $(domId).toggle();
 }
 
 function toggleCommentForm(
@@ -2436,44 +2444,19 @@ function toggleCommentForm(
   action = "add comment",
   replying_to = 0
 ) {
+  let formId = `#cform${comment_id}`;
+  if ($(formId).hasClass("hide")) {
+    $(formId).show();
+  }
+
   let current_loc = currentLoc();
-  ///---------add action
-  let modal_header = "Add Comment";
-  let action_btn = "Add";
-
-  ////--reply action
-  let a_reply_to = "";
-  if (action == "reply" && current_loc && current_loc.comments) {
-    let comments = current_loc.comments;
-    for (let cc = 0; cc < comments.length; cc++) {
-      if (comments[cc].uid == comment_id) {
-        a_reply_to = comments[cc].author_name;
-
-        break; //exit the loop
-      }
-    }
-
-    modal_header = `Replying to <i class='text-muted'>${a_reply_to}<i>`;
-    action_btn = "Reply";
-  }
-
-  //edit action
-  if (action == "edit comment") {
-    modal_header = "Edit Comment";
-    action_btn = "Edit";
-  }
-
-  ///---insert dynamic title
-  $(".modal-title").html(modal_header);
-  $("#btn-action").html(action_btn);
-
   //check if a user is logged in before allowing commenting
   if (current_loc.user && current_loc.user.uid && current_loc.user.fullname) {
     let replyHicon;
     if (current_loc.user && current_loc.user.fullname) {
       replyHicon = `<div class="hicon">${current_loc.user.fullname[0]}</div>`;
     }
-    $(`#replyHicon0`).html(replyHicon);
+    $(`#replyHicon${comment_id}`).html(replyHicon);
   } else {
     //let message = `Please sign in to ${action}`;
     //errorToast(message);
@@ -2482,8 +2465,11 @@ function toggleCommentForm(
   }
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
+  printError(`comment${comment_id}Err`, "");
+  let editorKey = `fcbody${comment_id}`;
+
   if (action === "edit comment") {
-    printError(`comment0Err`, "");
+    console.log("toggle form action is edit comment");
     //retrieve the comments from local storage from the key comments
     let comments = [];
     let comment_to_edit = {};
@@ -2496,25 +2482,28 @@ function toggleCommentForm(
         }
       }
       //load the previous content to the form for editing
-      myClassicEditor.setData(comment_to_edit.comment_body);
-      //$(`#fcbody${comment_id}`).val(comment_to_edit.comment_body);
+      editors && editors[editorKey]
+        ? editors[editorKey].setData(comment_to_edit.comment_body)
+        : $(`#${editorKey}`).val(comment_to_edit.comment_body);
     }
   } else {
     //clear the form incase it was loaded with content by edit action
-    printError(`comment0Err`, "");
-    myClassicEditor.setData("");
+    // if (action != "reply") {
+    editors && editors[editorKey]
+      ? editors[editorKey].setData("")
+      : $(`#${editorKey}`).val("");
+    //}
   }
-
-  //init_ckeditor(comment_id); //initialize ckeditor
+  createEditor(editorKey);
 }
 
-function saveComment() {
+function saveComment(fcbodyId, comment_id) {
   //first check if user is logged in before saving the comment
   let added_by;
   let current_loc = currentLoc();
-  let comment_id = parseInt($("#comment_id_").val());
+  //let comment_id = parseInt($("#comment_id_").val());
   let replying_to = parseInt($("#reply_to_id").val());
-  let action = $(`#comment-edit-id0`).val();
+  let action = $(`#comment-edit-id${comment_id}`).val();
 
   if (action == "reply") {
     replying_to = comment_id;
@@ -2528,17 +2517,21 @@ function saveComment() {
 
   let code_snippet_id = parseInt(current_loc.code_sel.uid);
   let tag = 1; //Author
-  let comment_body = $(`#fcbody_input_`).val().trim();
+  let editorKey = fcbodyId;
+  let comment_body =
+    editors && editors[editorKey]
+      ? editors[editorKey].getData().trim()
+      : $(`#${editorKey}`).val().trim();
 
   //----checking if there is content in the comment body;
   //Defining error variables with a default value
   let commentErr = true;
   // Validate username
   if (comment_body == "") {
-    printError(`comment0Err`, "Comment content required");
+    printError(`comment${comment_id}Err`, "Comment content required");
     //printError(`comment${comment_id}Err`, "Comment content required");
   } else {
-    printError(`comment0Err`, "");
+    printError(`comment${comment_id}Err`, "");
     //printError(`comment${comment_id}Err`, "");
     commentErr = false;
   }
@@ -2571,17 +2564,10 @@ function saveComment() {
   //$("#cform0").hide();
   crudaction(jso, url, method, (feed) => {
     if (feed && feed.success) {
-      clearCkeditorData(); //clear ckeditor content after successful submission
-      //$("#exampleModal").addClass("hide"); //hide the form after submission
+      //let editorKey = `fcbody${comment_id}`;
+      clearCkeditorData(editorKey); //clear ckeditor content after successful submission
+      closeForm(`#cform${comment_id}`);
 
-      // $("#commentModal").addClass("hide");
-      // $("#commentModal").removeClass("fade");
-      // $(".modal-backdrop").remove();
-      dismissModal2("#commentModal");
-
-      //toggleCommentForm(comment_id);
-      console.log("action => ", action);
-      console.log("replying to => ", replying_to);
       if (action == "add comment" && replying_to == 0) {
         persistence("cur_page", 1); //will ensure the user sees newly posted comment as it appears on the first page
         getCommentsByCodesnippetId();
@@ -2760,7 +2746,10 @@ let modal = document.getElementById("myModal");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (e) {
   if (e.target == modal) {
-    $("#myModal").hide();
+    // $("#myModal").hide();
+    $(".modal").removeClass("fade");
+    $(".modal-backdrop").remove();
+    $("body").removeClass("modal-open");
   }
 };
 
@@ -2807,10 +2796,6 @@ function modalView(action, title) {
     `
   );
 }
-
-// function modalView() {
-//   return true;
-// }
 
 ////////------------------------------End modal
 
@@ -2926,49 +2911,59 @@ function MyCustomUploadAdapterPlugin(editor) {
 }
 
 //get the content from the editor
-function getckeditorData(parseDomId) {
-  let data = myClassicEditor.getData();
-  //console.log("form data => ", data);
-  $(parseDomId).val(data);
+function getckeditorData(domId, editorKey = "fcbody0") {
+  let data =
+    editors && editors[editorKey]
+      ? editors[editorKey].getData().trim()
+      : $(`#${editorKey}`).val().trim();
+
+  $(domId).val(data);
 }
 
 //clear editor content after form submission
-function clearCkeditorData() {
-  myClassicEditor.setData("");
+function clearCkeditorData(editorKey) {
+  editors && editors[editorKey]
+    ? editors[editorKey].setData("")
+    : $(`#${editorKey}`).val("");
 }
 
-function initCkeditor(page) {
-  let ckeditor_id = "";
-  page == "index"
-    ? (ckeditor_id = $("#ckeditor_id").val())
-    : (ckeditor_id = "#instructions_input");
+// function initCkeditor(page) {
+//   let ckeditor_id = "";
+//   page == "index"
+//     ? (ckeditor_id = $("#ckeditor_id").val())
+//     : (ckeditor_id = "#instructions_input");
 
-  window.myClassicEditor;
-  ClassicEditor.create(document.querySelector(ckeditor_id), {
-    extraPlugins: [MyCustomUploadAdapterPlugin],
-    codeBlock: {
-      languages: [
-        { language: "css", label: "CSS" },
-        { language: "html", label: "HTML" },
-      ],
-    },
-  })
-    .then((newEditor) => {
-      console.log(newEditor);
-      myClassicEditor = newEditor;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
+//   window.myClassicEditor;
+//   ClassicEditor.create(document.querySelector(ckeditor_id), {
+//     extraPlugins: [MyCustomUploadAdapterPlugin],
+//     codeBlock: {
+//       languages: [
+//         { language: "css", label: "CSS" },
+//         { language: "html", label: "HTML" },
+//       ],
+//     },
+//   })
+//     .then((newEditor) => {
+//       console.log(newEditor);
+//       myClassicEditor = newEditor;
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// }
 
 var editors = {}; // You can also use new Map() if you use ES6.
 function createEditor(elementId) {
-  return ClassicEditor.create(document.getElementById(elementId))
-    .then((editor) => {
-      editors[elementId] = editor;
+  //check if the editor exist before creating it
+  if (!editors[elementId]) {
+    return ClassicEditor.create(document.getElementById(elementId), {
+      extraPlugins: [MyCustomUploadAdapterPlugin],
     })
-    .catch((err) => console.error(err.stack));
+      .then((editor) => {
+        editors[elementId] = editor;
+      })
+      .catch((err) => console.error(err.stack));
+  }
 }
 
 ///////--------------------------End ckeditor

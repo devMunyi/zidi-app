@@ -217,25 +217,25 @@ include_once("configs/conn.inc");
 
                             <div class="comments_wrapper">
                                 <!-- <textarea name="content" id="editor1">This is some sample content.</textarea> -->
-                                <!-- <div class="comment_area hide" id="cform0">
+                                <div class="comment_area hide" id="cform0">
                                     <div class="row">
-                                        <div class="col-sm-1">
-                                            <div class="hicon" id="replyHicon0"></div>
-                                        </div>
-
                                         <input type="hidden" id="comment-edit-id0" value="add comment">
                                         <input type="hidden" id="cke-init-0" value="#fcbody0">
+                                        <div class="col-sm-1">
+                                            <div class="hicon" id="replyHicon0">S</div>
+                                        </div>
+
                                         <div class="col-sm-11"> <span class='hide'>Replying to...</span> <textarea name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
-                                        <div class="offset-sm-1 col-sm-11 error" id="comment0Err"></div>
+                                        <div class="offset-sm-1 col-sm-10 error" id="comment0Err"></div>
                                     </div>
                                     <div class="row mt-2">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-8"><button onclick="parseEditorId('#fcbody0', 0, 'cancel', 0);" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                                        <div class="col-sm-2"><button onclick="getckeditorData('#fcbody_input_'); saveComment()" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-9"><button onclick="closeForm('#cform0');" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
+                                        <div class="col-sm-2"><button onclick="saveComment('fcbody0', 0)" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
                                     </div>
-                                </div> -->
+                                </div>
 
-                                <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+                                <!-- <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -254,11 +254,11 @@ include_once("configs/conn.inc");
                                             </div>
                                             <div class="modal-footer">
                                                 <button onclick="dismissModal2('#commentModal');" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button onclick="getckeditorData('#fcbody_input_'); saveComment();" type="button" class="btn btn-primary"><span id="btn-action">Add</span></button>
+                                                <button onclick="getckeditorData('#fcbody_input_', 'fcbody0'); saveComment();" type="button" class="btn btn-primary"><span id="btn-action">Add</span></button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div id="outer-c">
                                 </div>
@@ -323,6 +323,8 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
+            persistUrl()//print url string
+            
             let current_loc = currentLoc();
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
@@ -458,8 +460,9 @@ include_once("configs/conn.inc");
     </script>
 
     <script>
-        //ckeditor 5 configurations
-        initCkeditor('index');
+        //initialize ckeditor on the comment form
+        createEditor('fcbody0');
+        //initCkeditor('index');
     </script>
 </body>
 

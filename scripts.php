@@ -18,7 +18,7 @@
 <script src="/assets/js/core.js"></script>
 <script src="/assets/js/custom/common.js?v6"></script>
 <script src="/assets/js/custom/authentication.js?v2"></script>
-<script src="/assets/js/custom/main.js?v10"></script>
+<script src="/assets/js/custom/main.js?v11"></script>
 <script src="/assets/js/page/index.js"></script>
 
 <!-- SweetAlert2 -->
@@ -52,5 +52,6 @@
 <script src="/assets/js/select2.min.js"></script>
 
 <!--cke editor js -->
-<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script src="/assets/plugins/ckeditor5/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> -->
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script> -->

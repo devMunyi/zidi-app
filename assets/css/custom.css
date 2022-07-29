@@ -16,19 +16,23 @@
     .mobile_button {
         display: block !important;
     }
-    #about_list{
+
+    #about_list {
         margin: 0 10px;
     }
-    #about_list div{
+
+    #about_list div {
         margin: 5px 0;
     }
-    .mt-5top{
-        margin-top:5px;
-        margin-bottom:5px;
+
+    .mt-5top {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
-    .mt-10sides{
-        margin-right:10px;
-        margin-left:10px;
+
+    .mt-10sides {
+        margin-right: 10px;
+        margin-left: 10px;
     }
 }
 
@@ -497,7 +501,7 @@ div#title-bar {
     color: white;
 }
 
-.small-text{
+.small-text {
     font-size: 12px;
 }
 
@@ -697,7 +701,7 @@ span.subfun_ {
     display: none;
 }
 
-.show{
+.show {
     display: block;
 }
 
@@ -724,7 +728,8 @@ span.subfun_ {
 div#body-wrapper {
     width: 99.5%;
 }
-.biginput{
+
+.biginput {
     font-size: 16px;
     line-height: 1.2;
     position: relative;
@@ -736,17 +741,33 @@ div#body-wrapper {
     border-radius: 5px;
     padding: 0 35px 0 15px;
 }
-.instructions{
+
+.instructions {
     line-height: 2em;
     padding: 15px;
     border: 2px solid #c8c8c8;
 }
-#nocode{
+
+#nocode {
     margin: 15% 10%;
     line-height: 2em;
 }
 
-.modal-nav{
+.modal-nav {
     color: blue !important;
     text-decoration: underline !important;
+}
+
+.ace_gutter {
+    border-left: none !important;
+}
+
+.ace_gutter-layer {
+    text-align: center !important;
+    contain: none !important;
+}
+
+.ace_gutter-cell {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
 }
