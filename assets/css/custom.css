@@ -646,6 +646,9 @@ span.subfun_ {
 /*****************Begin pagination css**************************/
 #pagingDiv {
     padding-top: 15px;
+    /* display: flex  !important;
+    align-items: center !important; */
+    text-align: center;
 }
 
 #pagingDiv .myDisableClass {
