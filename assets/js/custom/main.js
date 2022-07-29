@@ -2190,18 +2190,15 @@ function getCommentsByCodesnippetId() {
     $(`#total-comments`).html(commentCountView);
 
     //pagination
-    if (total_records > 5) {
-      let paginationResult = Paging(
-        cur_page,
-        rpp,
-        total_records,
-        "myClass",
-        "myDisableClass"
-      );
-      $("#pagingDiv").html(paginationResult);
-    } else {
-      $("#pagingDiv").html("");
-    }
+
+    let paginationResult = Paging(
+      cur_page,
+      rpp,
+      total_records,
+      "myClass",
+      "myDisableClass"
+    );
+    $("#pagingDiv").html(paginationResult);
   });
 }
 
