@@ -39,7 +39,7 @@
 <input type="hidden" id="ckeditor_id" value="#fcbody0">
 <input type="hidden" id="fcbody_input_" value="">
 <input type="hidden" id="comment_id_" value="0">
-<input type="text" id="reply_to_id" value="0">
+<input type="hidden" id="reply_to_id" value="0">
 
 
 
