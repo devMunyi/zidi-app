@@ -1156,7 +1156,7 @@ function loadCodesnippetsLink(action = "") {
             : (activeClass = "");
 
           solns += `<a href="javascript:void(0)"  
-                onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
+                onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
             ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
@@ -1244,7 +1244,7 @@ function loadCodesnippetsLink(action = "") {
             }
 
             solns += `<a href="javascript:void(0)"  
-                onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+                onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
             ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
           }
@@ -1340,7 +1340,7 @@ function loadCodesnippetsLink(action = "") {
           }
 
           solns += `<a href="javascript:void(0)"  
-      onclick="appendCodeUrl('${codesnippet_id}'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
+      onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
       ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
@@ -1509,7 +1509,6 @@ function appendCodeUrl(code_id, action = "") {
       current_loc.related_solns &&
       current_loc.related_solns.length > 0
     ) {
-      console.log("append url for related solutions");
       let related_solns = current_loc.related_solns;
       let related_solns_arr_size = related_solns.length;
 
@@ -1520,8 +1519,6 @@ function appendCodeUrl(code_id, action = "") {
         }
       }
     }
-    console.log("related code title => ", c_snippet_title);
-    console.log("related code language => ", c_snippet_lang_name);
   } else {
     if (
       current_loc &&
@@ -1687,7 +1684,7 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0 'add-comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add-comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
@@ -2443,6 +2440,8 @@ function toggleCommentForm(
   let modal_header = "Add Comment";
   let action_btn = "Add";
 
+  console.log("ckeditor action => ", action);
+
   ////--reply action
   let a_reply_to = "";
   if (action == "reply" && current_loc && current_loc.comments) {
@@ -2943,6 +2942,12 @@ function initCkeditor(page) {
   window.myClassicEditor;
   ClassicEditor.create(document.querySelector(ckeditor_id), {
     extraPlugins: [MyCustomUploadAdapterPlugin],
+    codeBlock: {
+      languages: [
+        { language: "css", label: "CSS" },
+        { language: "html", label: "HTML" },
+      ],
+    },
   })
     .then((newEditor) => {
       console.log(newEditor);
