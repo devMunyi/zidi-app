@@ -1684,11 +1684,11 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add-comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" data-toggle="modal" data-target="#commentModal" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
       } else {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add-comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
         );
 
         let loginLink = getNavLink("login");
@@ -2267,7 +2267,7 @@ function getCommentReplies(commentReplyId) {
               title="reply"
               class="font-weight-bold btn-sm btn-outline-primary"
               href="javascript:void(0)"
-              onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
+              onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply', ${replying_to});"
               data-toggle="modal" data-target="#commentModal"
             >
               <i class="fa fa-mail-reply"></i> Reply
@@ -2421,6 +2421,7 @@ function init_ckeditor(cId) {
 function parseEditorId(domId, commentId, action, replying_to = 0) {
   $("#ckeditor_id").val(domId);
   $("#comment_id_").val(commentId);
+  $("#reply_to_id").val(replying_to);
   $(`#comment-edit-id0`).val(action);
   toggleCommentForm(commentId, action, replying_to);
 }
@@ -2439,8 +2440,6 @@ function toggleCommentForm(
   ///---------add action
   let modal_header = "Add Comment";
   let action_btn = "Add";
-
-  console.log("ckeditor action => ", action);
 
   ////--reply action
   let a_reply_to = "";
@@ -2514,6 +2513,12 @@ function saveComment() {
   let added_by;
   let current_loc = currentLoc();
   let comment_id = parseInt($("#comment_id_").val());
+  let replying_to = parseInt($("#reply_to_id").val());
+  let action = $(`#comment-edit-id0`).val();
+
+  if (action == "reply") {
+    replying_to = comment_id;
+  }
   if (current_loc && current_loc.user && current_loc.user.uid) {
     added_by = current_loc.user.uid;
   } else {
@@ -2522,9 +2527,7 @@ function saveComment() {
   }
 
   let code_snippet_id = parseInt(current_loc.code_sel.uid);
-  let replying_to = parseInt(comment_id);
   let tag = 1; //Author
-
   let comment_body = $(`#fcbody_input_`).val().trim();
 
   //----checking if there is content in the comment body;
@@ -2555,7 +2558,6 @@ function saveComment() {
     added_by,
   };
   //grab edit-comment-id from the hidden input
-  let action = $(`#comment-edit-id0`).val();
   if (action == "edit comment" && comment_id > 0) {
     url = "/edit-comment";
     method = "PUT";
@@ -2578,6 +2580,8 @@ function saveComment() {
       dismissModal2("#commentModal");
 
       //toggleCommentForm(comment_id);
+      console.log("action => ", action);
+      console.log("replying to => ", replying_to);
       if (action == "add comment" && replying_to == 0) {
         persistence("cur_page", 1); //will ensure the user sees newly posted comment as it appears on the first page
         getCommentsByCodesnippetId();
@@ -2957,4 +2961,14 @@ function initCkeditor(page) {
       console.error(error);
     });
 }
+
+var editors = {}; // You can also use new Map() if you use ES6.
+function createEditor(elementId) {
+  return ClassicEditor.create(document.getElementById(elementId))
+    .then((editor) => {
+      editors[elementId] = editor;
+    })
+    .catch((err) => console.error(err.stack));
+}
+
 ///////--------------------------End ckeditor
