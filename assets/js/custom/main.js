@@ -2144,7 +2144,7 @@ function getCommentsByCodesnippetId() {
                 <div class="row cfoot">
                    ${toggleActionsView}
                     <div class="mt-2 col-sm-12">
-                        <div class="comment_area hide" id="cform${comment_id}">
+                        <div class="comment_area hide cform" id="cform${comment_id}">
                           <div class="row">
                            <!--
                               <div class="col-sm-1" id="replyHicon${comment_id}">
@@ -2153,7 +2153,7 @@ function getCommentsByCodesnippetId() {
                             -->
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <input type="hidden" id="cke-init-${comment_id}" value="">
-                              <div class="col-sm-12"><textarea id="fcbody${comment_id}" class="form-control" placeholder="Leave a comment..."></textarea></div>
+                              <div class="col-sm-12"><textarea id="fcbody${comment_id}" class="fcbody form-control" placeholder="Leave a comment..."></textarea></div>
                               <div class="col-sm-12 error" id="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
@@ -2346,14 +2346,14 @@ function getCommentReplies(commentReplyId) {
                 <div class="row cfoot">
                     ${toggleActionsView}
                     <div class="mt-2 col-sm-12">
-                        <div class="comment_area hide" id="cform${comment_id}">
+                        <div class="comment_area hide cform" id="cform${comment_id}">
                           <div class="row">
                               <!--<div class="col-sm-1" id="replyHicon${comment_id}">
 
                               </div>-->
                               <input type="hidden" id="comment-edit-id${comment_id}" value="add comment">
                               <input type="hidden" id="cke-init-${comment_id}" value="">
-                              <div class="col-sm-12"><textarea name="content" class="form-control" placeholder="Leave a comment..." id="fcbody${comment_id}"></textarea></div>
+                              <div class="col-sm-12"><textarea name="content" class="fcbody form-control" placeholder="Leave a comment..." id="fcbody${comment_id}"></textarea></div>
                               <div class="col-sm-12 error" id ="comment${comment_id}Err"></div>
                           </div>
                           <div class="row mt-2">
@@ -2420,14 +2420,6 @@ function init_ckeditor(cId) {
   //return ckeditor;
 }
 
-function parseEditorId(domId, commentId, action, replying_to = 0) {
-  $("#ckeditor_id").val(domId);
-  $("#comment_id_").val(commentId);
-  $("#reply_to_id").val(replying_to);
-  $(`#comment-edit-id${commentId}`).val(action);
-  toggleCommentForm(commentId, action, replying_to);
-}
-
 function validateComment(domId) {
   $(domId).html("");
 }
@@ -2436,15 +2428,37 @@ function closeForm(domId) {
   $(domId).toggle();
 }
 
+function parseEditorId(domId, commentId, action, replying_to = 0) {
+  $("#ckeditor_id").val(domId);
+  $("#comment_id_").val(commentId);
+  $("#reply_to_id").val(replying_to);
+  $(`#comment-edit-id${commentId}`).val(action);
+  toggleCommentForm(commentId, action, replying_to);
+}
+
 function toggleCommentForm(
   comment_id,
   action = "add comment",
   replying_to = 0
 ) {
+  let editorKey = `fcbody${comment_id}`;
   let formId = `#cform${comment_id}`;
-  if ($(formId).hasClass("hide")) {
-    $(formId).show();
-  }
+  $(".comment_area").hide();
+  $(formId).show();
+
+  // if (editorKey != "fcbody0" && editorKey != "instructions_input") {
+  //   //myeditors = {};
+
+  //   if (myeditors[editorKey]) {
+  //     //myeditors[editorKey] = "";
+  //     $(".fcbody").html("");
+  //   }
+  // }
+
+  //$(".cform").hide(); //all opend forms with class cform
+  //if ($(formId).hasClass("hide")) {
+
+  //}
 
   let current_loc = currentLoc();
   //check if a user is logged in before allowing commenting
@@ -2463,9 +2477,7 @@ function toggleCommentForm(
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
   printError(`comment${comment_id}Err`, "");
-  let editorKey = `fcbody${comment_id}`;
-
-  if (action === "edit comment") {
+  if (action == "edit comment") {
     console.log("toggle form action is edit comment");
     //retrieve the comments from local storage from the key comments
     let comments = [];
@@ -2974,6 +2986,7 @@ function createEditor(elementId) {
     })
       .then((editor) => {
         myeditors[elementId] = editor;
+        console.log(myeditors);
       })
       .catch((err) => console.error(err.stack));
   } else {
