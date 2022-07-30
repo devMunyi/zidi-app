@@ -225,7 +225,7 @@ include_once("configs/conn.inc");
                                             <div class="hicon" id="replyHicon0">S</div>
                                         </div>
 
-                                        <div class="col-sm-11"> <span class='hide'>Replying to...</span> <textarea name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
+                                        <div class="col-sm-11"> <span class='hide'>Replying to...</span> <textarea class="form-control" name="content" placeholder="Leave a comment..." id="fcbody0"></textarea></div>
                                         <div class="offset-sm-1 col-sm-10 error" id="comment0Err"></div>
                                     </div>
                                     <div class="row mt-2">
@@ -461,7 +461,7 @@ include_once("configs/conn.inc");
 
     <script>
         //initialize ckeditor on the comment form
-        createEditor('fcbody0');
+        createEditor2('fcbody0');
         //initCkeditor('index');
     </script>
 </body>

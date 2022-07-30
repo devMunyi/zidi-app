@@ -16,9 +16,9 @@
 
 <!-- Start core js and page js -->
 <script src="/assets/js/core.js"></script>
-<script src="/assets/js/custom/common.js?v7"></script>
+<script src="/assets/js/custom/common.js?v8"></script>
 <script src="/assets/js/custom/authentication.js?v2"></script>
-<script src="/assets/js/custom/main.js?v13"></script>
+<script src="/assets/js/custom/main.js?v14"></script>
 <script src="/assets/js/page/index.js"></script>
 
 <!-- SweetAlert2 -->

@@ -773,8 +773,8 @@ function codesnippetValidate() {
   let file_extension = $("#file_extension").val().trim();
   let editorKey = "instructions_input";
   let instructions =
-    myeditors && myeditors[editorKey]
-      ? myeditors[editorKey].getData().trim()
+    myeditors2 && myeditors2[editorKey]
+      ? myeditors2[editorKey].getData().trim()
       : $(`#${editorKey}`).val().trim();
 
   let added_by;
@@ -2485,13 +2485,20 @@ function toggleCommentForm(
     }
   } else {
     //clear the form incase it was loaded with content by edit action
-    // if (action != "reply") {
-    myeditors && myeditors[editorKey]
-      ? myeditors[editorKey].setData("")
-      : $(`#${editorKey}`).val("");
-    //}
+    if (editorKey != "fcbody0" && editorKey != "instructions_input") {
+      myeditors && myeditors[editorKey]
+        ? myeditors[editorKey].setData("")
+        : $(`#${editorKey}`).val("");
+    } else {
+      myeditors2 && myeditors2[editorKey]
+        ? myeditors2[editorKey].setData("")
+        : $(`#${editorKey}`).val("");
+    }
   }
-  createEditor(editorKey);
+  //exclude instructions input and add new comment form since their editors are created on page load.
+  if (editorKey != "fcbody0" && editorKey != "instructions_input") {
+    createEditor(editorKey);
+  }
 }
 
 function saveComment(fcbodyId, comment_id) {
@@ -2515,10 +2522,18 @@ function saveComment(fcbodyId, comment_id) {
   let code_snippet_id = parseInt(current_loc.code_sel.uid);
   let tag = 1; //Author
   let editorKey = fcbodyId;
-  let comment_body =
-    myeditors && myeditors[editorKey]
-      ? myeditors[editorKey].getData().trim()
-      : $(`#${editorKey}`).val().trim();
+  let comment_body;
+  if (editorKey != "fcbody0" && editorKey != "instructions_input") {
+    comment_body =
+      myeditors && myeditors[editorKey]
+        ? myeditors[editorKey].getData().trim()
+        : $(`#${editorKey}`).val().trim();
+  } else {
+    comment_body =
+      myeditors2 && myeditors2[editorKey]
+        ? myeditors2[editorKey].getData().trim()
+        : $(`#${editorKey}`).val().trim();
+  }
 
   //----checking if there is content in the comment body;
   //Defining error variables with a default value
@@ -2949,7 +2964,7 @@ function clearCkeditorData(editorKey) {
 //     });
 // }
 
-// You can also use new Map() if you use ES6.
+// You can also use new Map() if you use ES6. For dynamic editor initializer
 function createEditor(elementId) {
   //check if the editor exist before creating it
   if (!myeditors[elementId]) {
@@ -2959,6 +2974,24 @@ function createEditor(elementId) {
     })
       .then((editor) => {
         myeditors[elementId] = editor;
+      })
+      .catch((err) => console.error(err.stack));
+  } else {
+    // console.log("Editor instance already exist");
+  }
+}
+
+//for static ckeditor initializer
+function createEditor2(elementId) {
+  myeditors2 = {};
+  //check if the editor exist before creating it
+  if (!myeditors2[elementId]) {
+    // console.log("Editor instance does NOT exist");
+    return ClassicEditor.create(document.getElementById(elementId), {
+      extraPlugins: [MyCustomUploadAdapterPlugin],
+    })
+      .then((editor) => {
+        myeditors2[elementId] = editor;
       })
       .catch((err) => console.error(err.stack));
   } else {

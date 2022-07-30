@@ -270,7 +270,7 @@ if ($code_id > 0) {
 
     <script>
         //Initialize ckeditor on the instructions input
-        createEditor('instructions_input');
+        createEditor2('instructions_input');
         //initCkeditor('code-add-edit');
 
         // Initialize select2
