@@ -773,8 +773,8 @@ function codesnippetValidate() {
   let file_extension = $("#file_extension").val().trim();
   let editorKey = "instructions_input";
   let instructions =
-    editors && editors[editorKey]
-      ? editors[editorKey].getData().trim()
+    myeditors && myeditors[editorKey]
+      ? myeditors[editorKey].getData().trim()
       : $(`#${editorKey}`).val().trim();
 
   let added_by;
@@ -2479,15 +2479,15 @@ function toggleCommentForm(
         }
       }
       //load the previous content to the form for editing
-      editors && editors[editorKey]
-        ? editors[editorKey].setData(comment_to_edit.comment_body)
+      myeditors && myeditors[editorKey]
+        ? myeditors[editorKey].setData(comment_to_edit.comment_body)
         : $(`#${editorKey}`).val(comment_to_edit.comment_body);
     }
   } else {
     //clear the form incase it was loaded with content by edit action
     // if (action != "reply") {
-    editors && editors[editorKey]
-      ? editors[editorKey].setData("")
+    myeditors && myeditors[editorKey]
+      ? myeditors[editorKey].setData("")
       : $(`#${editorKey}`).val("");
     //}
   }
@@ -2516,8 +2516,8 @@ function saveComment(fcbodyId, comment_id) {
   let tag = 1; //Author
   let editorKey = fcbodyId;
   let comment_body =
-    editors && editors[editorKey]
-      ? editors[editorKey].getData().trim()
+    myeditors && myeditors[editorKey]
+      ? myeditors[editorKey].getData().trim()
       : $(`#${editorKey}`).val().trim();
 
   //----checking if there is content in the comment body;
@@ -2910,8 +2910,8 @@ function MyCustomUploadAdapterPlugin(editor) {
 //get the content from the editor
 function getckeditorData(domId, editorKey = "fcbody0") {
   let data =
-    editors && editors[editorKey]
-      ? editors[editorKey].getData().trim()
+    myeditors && myeditors[editorKey]
+      ? myeditors[editorKey].getData().trim()
       : $(`#${editorKey}`).val().trim();
 
   $(domId).val(data);
@@ -2919,8 +2919,8 @@ function getckeditorData(domId, editorKey = "fcbody0") {
 
 //clear editor content after form submission
 function clearCkeditorData(editorKey) {
-  editors && editors[editorKey]
-    ? editors[editorKey].setData("")
+  myeditors && myeditors[editorKey]
+    ? myeditors[editorKey].setData("")
     : $(`#${editorKey}`).val("");
 }
 
@@ -2949,17 +2949,20 @@ function clearCkeditorData(editorKey) {
 //     });
 // }
 
-var editors = {}; // You can also use new Map() if you use ES6.
+// You can also use new Map() if you use ES6.
 function createEditor(elementId) {
   //check if the editor exist before creating it
-  if (!editors[elementId]) {
+  if (!myeditors[elementId]) {
+    // console.log("Editor instance does NOT exist");
     return ClassicEditor.create(document.getElementById(elementId), {
       extraPlugins: [MyCustomUploadAdapterPlugin],
     })
       .then((editor) => {
-        editors[elementId] = editor;
+        myeditors[elementId] = editor;
       })
       .catch((err) => console.error(err.stack));
+  } else {
+    // console.log("Editor instance already exist");
   }
 }
 

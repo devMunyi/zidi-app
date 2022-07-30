@@ -349,6 +349,9 @@ function Paging(
   ClassName,
   DisableClassName
 ) {
+  delete window.myeditors; //destroy the object containing editors first
+  myeditors = {}; //create it a fresh to avoid conflicting keys
+
   let commentCountView;
   if (TotalRecords == 1) {
     commentCountView = `${TotalRecords} comment`;

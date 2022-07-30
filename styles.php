@@ -10,7 +10,7 @@
 <!-- Core css -->
 <link rel="stylesheet" href="/assets/css/main.css"/>
 <link rel="stylesheet" href="/assets/css/theme1.css" id="stylesheet"/>
-<link rel="stylesheet" href="/assets/css/custom.css?v4" />
+<link rel="stylesheet" href="/assets/css/custom.css?v5" />
 <link rel="stylesheet" href="/assets/css/dark.css" />
 
 <!-- SweetAlert2 -->
