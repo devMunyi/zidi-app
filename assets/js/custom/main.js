@@ -2051,7 +2051,7 @@ function getCommentsByCodesnippetId() {
         }
 
         if (replies == 1) {
-          repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${comment_id}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Reply </a>`;
+          repliesView = `<a class="a-override" href="javascript:void(0)" onclick="getCommentReplies(${commentReplyId}, ${replies})"><i class="fe fe-corner-up-left"></i> ${replies} Reply </a>`;
         }
 
         if (replies > 1) {

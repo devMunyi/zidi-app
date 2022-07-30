@@ -323,8 +323,8 @@ include_once("configs/conn.inc");
     </script>
     <script>
         $(document).ready(function() {
-            persistUrl()//print url string
-            
+            persistUrl() //print url string
+
             let current_loc = currentLoc();
             contributeCodeNav() //dynamic contribute new code nav
             footer_date(); //load footer
