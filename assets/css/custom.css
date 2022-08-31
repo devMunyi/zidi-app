@@ -10,6 +10,14 @@
     .mobile_button {
         display: none !important;
     }
+    .scrollk,
+.scrolli,
+.scrollh {
+    display: block;
+    width: 100%;
+    overflow-y: scroll;
+    height: 650px;
+}
 }
 
 @media (max-width: 768px) {
@@ -34,6 +42,16 @@
         margin-right: 10px;
         margin-left: 10px;
     }
+    .scrollk,
+.scrolli,
+.scrollh {
+    display: block;
+    width: 85%;
+    overflow-y: scroll;
+    height: 100%;
+    border-right: 2px dashed gray;
+}
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -315,14 +333,7 @@ input#search_box {
     border-radius: 30px;
 }
 
-.scrollk,
-.scrolli,
-.scrollh {
-    display: block;
-    width: 100%;
-    overflow-y: scroll;
-    height: 650px;
-}
+
 
 .emp {
     font-weight: bold;
@@ -580,17 +591,23 @@ span.subfun_ {
 .nav-item {
     padding: 4px;
 }
-
+.equalbox {
+    flex: 1;
+}
 .hicon {
-    font-size: 23px;
+    font-size: 18px;
     border-radius: 100%;
-    background: white;
+    background: #000;
     text-align: center;
     height: 40px;
+    color: white;
     width: 40px;
-    font-family: inherit;
-    font-weight: 200;
+    font-family: monospace;
+    font-weight: normal;
+    line-height: 2;
+    text-shadow: 2px 2px 0px #000;
 }
+
 
 .cbody {
     font-size: 13px;
@@ -603,6 +620,18 @@ span.subfun_ {
 .cwho {
     font-weight: bold;
     font-size: 14px;
+    width: 80%;
+}
+.col-sm-1.icon_ {
+    width: 14%;
+}
+
+.col-sm-11.bod_ {
+    width: 85%;
+}
+
+.col-sm-3.lab_ {
+    width: 10%;
 }
 
 .cfoot {
@@ -610,11 +639,20 @@ span.subfun_ {
     font-size: 13px;
     font-weight: 400;
 }
+div#loginOrRegisterModal {
+    background: #0000005c;
+}
 
 .comment_box {
     margin-bottom: 5px;
-    padding: 15px 0px;
+    padding: 15px 5px;
     border-bottom: 1px solid #c8c8c8;
+    margin-left: 10px;
+    border-radius: 10px;
+    background: #edeff3;
+    margin-right: 10px;
+    
+    margin-top: 10px;
 }
 
 .comment_box.inner-box {
@@ -781,3 +819,51 @@ div#body-wrapper {
     padding-left: 4px !important;
     padding-right: 2px !important;
 }
+.usercontent blockquote {
+    background: #333333;
+    color: aliceblue;
+    padding: 15px 4px 1px 5px;
+    font-family: monospace;
+    border-radius: 5px;
+    font-style: normal;
+}
+.codearea{
+    background-color: ghostwhite;
+}
+.usercontent {
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+
+.btn-round {
+    padding: 10px;
+    border-radius: 45px;
+    min-width: 92px;
+}
+.a, .k, .u{
+    background-color:#f01d52 !important; 
+   }
+   .b, .l, .v{
+     background-color:#55024a !important;
+   }
+   .c, .m, .w{
+    background-color:#0d71bf !important; 
+   }
+   .d, .n, .x{
+     background-color: #026d67 !important;
+   }
+   .e, .o,  .t{
+    background-color:#009e60 !important; 
+   }
+   .f, .p, .z{
+     background-color:#d2ad00 !important; 
+   }
+   .g, .q, .j{
+     background-color: #b64a01 !important; 
+   }
+   .h, .r, .j{
+     background-color: #7f563a !important; 
+   }
+   .i, .s, .y{
+     background-color: #333333 !important; 
+   }

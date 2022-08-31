@@ -9,7 +9,7 @@ include_once("configs/conn.inc");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="<?php echo $assets; ?>assets/plugins/highlightjs/styles/monokai-sublime.min.css">
     <title> Zidi : Home</title>
     <style>
         li.active {
@@ -110,7 +110,7 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-md-7 pl-0 pr-0">
+                    <div class="col-lg-7 col-md-7 pl-0 pr-0 codearea" id="codeareaid">
                         <div class="card transcard ">
                             <div class="card-header pb-2 pt-2">
                                 <table style="width: 60%">
@@ -154,9 +154,11 @@ include_once("configs/conn.inc");
 
                             <div class="card-footer">
 
-                                <div class="row" id="code-instructions">
+                                <div class="row">
 
-                                    <!-- No Instructions -->
+                                  <div class="usercontent col-md-12" id="code-instructions">
+
+                                   </div>
 
                                 </div>
 
@@ -194,13 +196,15 @@ include_once("configs/conn.inc");
                             </div> -->
                         </div>
 
-                        <div class="foot_ mt-10sides">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h5 id="total-comments"></h5>
-                                </div>
-                                <div class="col-md-5" id="add-comment"></div>
-                            </div>
+                        <div class="foot_ mt-10sides usercontent">
+                            <div class="container container-fluid">
+                               <div class="row">
+                                   <div class="col-md-7">
+                                      <h5 id="total-comments"></h5>
+                                    </div>
+                                  <div class="col-md-5" id="add-comment"></div>
+                               </div>
+                          </div>
 
                             <div id="loginOrRegisterModal" class="modal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
@@ -230,8 +234,8 @@ include_once("configs/conn.inc");
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-sm-1"></div>
-                                        <div class="col-sm-9"><button onclick="closeForm('#cform0');" class="btn btn-success btn-sm"><i class=""></i> Cancel</button></div>
-                                        <div class="col-sm-2"><button onclick="saveComment('fcbody0', 0)" class="btn btn-success btn-sm"><i class=""></i> Post</button></div>
+                                        <div class="col-sm-9"><button onclick="closeForm('#cform0');" class="btn btn-outline-secondary  btn-round"><i class=""></i> Cancel</button></div>
+                                        <div class="col-sm-2"><button onclick="saveComment('fcbody0', 0)" class="btn btn-success btn-round"><i class=""></i> Post</button></div>
                                     </div>
                                 </div>
 

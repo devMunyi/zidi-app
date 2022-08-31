@@ -24,6 +24,7 @@ $thismonth=date('m');
 $thismonthname=date('M');
 $thisday=date('d');
 $thisdayname=date('D');
+  $assets = "assets/";
 
 
 ?>
