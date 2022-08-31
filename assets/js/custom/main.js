@@ -979,7 +979,7 @@ function getNavLink(page, query = "qs=") {
   let navLink = "";
   let origin = getCurrentUrl().origin;
   host == "localhost"
-    ? (navLink = `${origin}/backgen/zidi/${page}?${query}`)
+    ? (navLink = `${origin}/zidi-app/${page}?${query}`)
     : (navLink = `${origin}/${page}?${query}`);
 
   $("#nav_link").val(navLink);
@@ -994,16 +994,29 @@ function contributeCodeNav() {
 }
 
 function search_codeSnippet() {
+  setTimeout(function(){
+    localStorage.searching = 0;
+  }, 5000);
   let code_search = $("#search_box").val().trim();
   let status = 1;
   let offset = 0;
   let rpp = 7;
   let orderby = "uid";
   let dir = "DESC";
+  let searching = 0;
+  if((localStorage.searching)){
+     searching = localStorage.searching;
+  }
+  else{
+   localStorage.searching = 1;
+  }
 
   if (code_search) {
     let query = `?search_=${code_search}&status=${status}&offset=${offset}&rpp=${rpp}&orderby=${orderby}&dir=${dir}`;
+    if(searching === '0'){
+      localStorage.searching = 1;
     crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
+      console.log(result);
       persistence("searched_solns", result.data);
       if (result.success) {
         let totalSearches = result.search_totals;
@@ -1013,8 +1026,8 @@ function search_codeSnippet() {
           for (let i = 0; i < data.length; i++) {
             tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
             onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
-            <span class="font-16 text-bold">${data[i].title}</span> <br/>
-            Contributed By: ${data[i].fullname} on ${data[i].added_date}</a></td></tr>`;
+            <span class="font-16 text-bold">${data[i].title} in ${data[i].language_name} </span> <br/>
+            Contributed By: <i> ${data[i].fullname} </i> on <i> ${data[i].added_date} </i></a></td></tr>`;
           }
 
           tableSearch += `</table>`;
@@ -1036,7 +1049,12 @@ function search_codeSnippet() {
           </div>`
         );
       }
+      localStorage.searching = 0;
     });
+  }
+  else{
+
+  }
   } else {
     $("#code_results").fadeOut("fast");
   }
@@ -1483,7 +1501,7 @@ function appendCodeUrl(code_id, action = "") {
     current_loc && current_loc.dom_sect ? `#${current_loc.dom_sect}` : "";
   let origin = "https://zidiapp.com";
   if (host == "localhost") {
-    origin = "http://localhost/backgen/zidi";
+    origin = "http://localhost/zidi-app";
   }
   let c_snippet_title = "";
   let c_snippet_lang_name = "";
@@ -1593,6 +1611,7 @@ function shareCodesnippet() {
 
 function load_codesnippetById(codeId) {
   //spinner("#codeimp-title");
+  
   spinner("#imptype-and-contributor", "spinner-border-sm");
 
   //show a loader
@@ -1632,7 +1651,7 @@ function load_codesnippetById(codeId) {
       //update code implementation title
       codeImpTitle = title;
       $("#codeimp-title").html(
-        "<h4 class='text-left'>" + codeImpTitle + "</h4>"
+        "<h4 class='text-left'>" + codeImpTitle + ' in ' + language_name + "</h4>"
       );
 
       let displayName = "";
@@ -1690,11 +1709,11 @@ function load_codesnippetById(codeId) {
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<button class="btn pointer  font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" ><i class="fa fa-comment-o"></i> Leave a Comment</button>`
         );
       } else {
         $("#add-comment").html(
-          `<a class="btn btn-primary btn-block cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add comment');" href="javascript:void(0)" ><i class="fa fa-comment-o"></i> Leave a Comment</a>`
+          `<button class="btn pointer cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add comment');"  ><i class="fa fa-comment-o"></i> Leave a Comment</button>`
         );
 
         let loginLink = getNavLink("login");
@@ -1755,6 +1774,8 @@ function load_codesnippetById(codeId) {
       configureAceEditor();
     }
   });
+  
+  document.getElementById('codeimp-title').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 }
 
 function scrollCommentSection(fId) {
@@ -2067,20 +2088,20 @@ function getCommentsByCodesnippetId() {
         if (user_id) {
           replyAction = `<a
               title="reply"
-              class="font-weight-bold btn-sm btn-outline-primary"
+              class="font-weight-bold btn-sm btn-outline-dark"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply');"
             >
-              <i class="fa fa-mail-reply"></i> Reply
+              <i class="fe fe-message-square"></i>
             </a>`;
         } else {
           replyAction = `<a
             title="reply"
-            class="font-weight-bold btn-sm btn-outline-primary"
+            class="font-weight-bold btn-sm btn-outline-dark"
             href="javascript:void(0)"
             onclick="showModal('#loginOrRegisterModal')"
           >
-            <i class="fa fa-mail-reply"></i> Reply
+            <i class="fe fe-message-square"></i> 
           </a>`;
 
           let loginLink = getNavLink("login");
@@ -2098,40 +2119,40 @@ function getCommentsByCodesnippetId() {
             </div>
             <div class="col-sm-5">
                 ${replyAction}
-                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-like"></i></a>
                 <span id="comment${comment_id}-votes"> ${votes} </span>
-                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-dislike"></i></a>
             </div>
             <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
-                <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><span><i class="fe fe-edit"></i></span></a>
+                <a onclick="deleteComment(${comment_id} ,${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i></span></a>
             </div>
           `;
         } else {
           toggleActionsView = `
-          <div class="col-sm-4" id="load-cmt${comment_id}">
+          <div class="equalbox" id="load-cmt${comment_id}">
             ${repliesView}
           </div>
-          <div class="col-sm-4">
-            <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
+          <div class="equalbox">
+            <a class="a-override a-alt"><i class="icon-like"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
-          <div class="col-sm-4 pull-right">
+          <div class="equalbox pull-right">
             ${replyAction}
-            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
-            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-like"></i></a>
+            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-dislike"></i></a>
           </div>
           `;
         }
 
         row += `<div class="comment_box">
           <div class="row">
-            <div class="col-sm-1"><div class="hicon">${hicon}</div></div>
-            <div class="col-sm-11">
+            <div class="col-sm-1 icon_"><div class="hicon ${hicon.toLowerCase()}">${hicon}</div></div>
+            <div class="col-sm-11 bod_">
                 <div class="row chead">
                     <div class="col-sm-9 cwho">
                         ${author_name}  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> ${posted_date}</span>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 lab_">
                         <label class="font-12 font-weight-bold ${tag_color}"><i class="${tag_icon}"></i> ${tag_name}</label>
                     </div>
                 </div>
@@ -2269,20 +2290,20 @@ function getCommentReplies(commentReplyId) {
         if (user_id) {
           replyAction = `<a
               title="reply"
-              class="font-weight-bold btn-sm btn-outline-primary"
+              class="font-weight-bold btn-sm btn-outline-dark"
               href="javascript:void(0)"
               onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'reply', ${replying_to});"
             >
-              <i class="fa fa-mail-reply"></i> Reply
+              <i class="fe fe-message-square"></i> 
             </a>`;
         } else {
           replyAction = `<a
             title="reply"
-            class="font-weight-bold btn-sm btn-outline-primary"
+            class="font-weight-bold btn-sm btn-outline-dark"
             href="javascript:void(0)"
             onclick="showModal('#loginOrRegisterModal')"
           >
-            <i class="fa fa-mail-reply"></i> Reply
+            <i class="fe fe-message-square"></i> 
           </a>`;
 
           let loginLink = getNavLink("login");
@@ -2295,46 +2316,46 @@ function getCommentReplies(commentReplyId) {
         let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
-            <div class="col-sm-3" id="load-cmt${comment_id}">
+            <div class="equalbox" id="load-cmt${comment_id}">
             ${repliesView}
             </div>
 
-            <div class="col-sm-5">
+            <div class="equalbox">
                 ${replyAction}
-                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
+                <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" title="Upvote" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-like"></i></a>
                 <span id="comment${comment_id}-votes"> ${votes} </span>
-                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+                <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" title="Downvote" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-dislike"></i></a>
             </div>
-            <div class="col-sm-4">
-                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-warning" href="javascript:void(0)"><span><i class="fe fe-edit"></i> Edit</span></a>
-                <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> Delete</span></a>
+            <div class="equalbox">
+                <a onclick="parseEditorId('#fcbody${comment_id}', '${comment_id}', 'edit comment', ${replying_to});" title="edit comment" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><span><i class="fe fe-edit"></i> </span></a>
+                <a onclick="deleteComment(${comment_id}, ${replying_to})" title="delete comment" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><span><i class="fe fe-trash-2"></i> </span></a>
             </div>
           `;
         } else {
           toggleActionsView = `
-          <div class="col-sm-4" id="load-cmt${comment_id}">
+          <div class="equalbox" id="load-cmt${comment_id}">
             ${repliesView}
           </div>
-          <div class="col-sm-4">
+          <div class="equalbox">
           <a class="a-override a-alt"><i class="fe fe-thumbs-up"></i> <span id="comment${comment_id}-votes">${votes} </span></a>
           </div>
-          <div class="col-sm-4 pull-right">
+          <div class="equalbox">
             ${replyAction}
-            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-success" href="javascript:void(0)"><i class="fa fa-thumbs-up"></i></a>
-            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-danger" href="javascript:void(0)"><i class="fa fa-thumbs-down"></i></a>
+            <a onclick="upvoteComment(${comment_id})" id = "upvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-like"></i></a>
+            <a onclick="downvoteComment(${comment_id})" id = "downvote-comment-${comment_id}" class="font-weight-bold btn-sm btn-outline-dark" href="javascript:void(0)"><i class="icon-dislike"></i></a>
           </div>
           `;
         }
 
         row += `<div class="comment_box inner-box">
           <div class="row">
-            <div class="col-sm-1"><div class="hicon">${hicon}</div></div>
-            <div class="col-sm-11">
+            <div class="col-sm-1 icon_"><div class="hicon ${hicon.toLowerCase()}">${hicon}</div></div>
+            <div class="col-sm-11 bod_">
                 <div class="row chead">
                     <div class="col-sm-9 cwho">
                         ${author_name}  <span class="ctime text-muted font-12"><span class="status-icon bg-gray"></span> ${posted_date}</span>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 lab_">
                         <label class="font-12 font-weight-bold ${tag_color}"><i class="${tag_icon}"></i> ${tag_name}</label>
                     </div>
                 </div>
