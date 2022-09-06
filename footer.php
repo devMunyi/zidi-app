@@ -1,19 +1,23 @@
 <footer class="footer">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 text-md-left">
+            <div class="col-md-5 text-md-left">
                 <ul class="list-inline mb-0">
                     <li clasassetss="list-inline-item">
                         All Rights Reserved &copy; <span id="footer-date"></span> Zidi
                     </li>
                 </ul>
             </div> 
-            <div class="col-md-6 text-md-right">
+            <div class="col-md-7 text-md-right">
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><a href=""><i class="fa fa-facebook"></i></a> <a href=""><i class="fa fa-twitter"></i></a>  <a href=""><i class="fa fa-telegram"></i></a></li>
-                    <li class="list-inline-item"><a href="http://zidiapp.com/help">Help</a></li>
-                    <li class="list-inline-item"><a href="http://zidiapp.com/community">Community</a></li>
-                    <li class="list-inline-item"><a href="http://zidiapp.com/privacy" class="btn btn-outline-primary btn-sm">Privacy Policy</a></li>
+                    <li class="list-inline-item">
+                        <a href="https://fb.me/zidiapp" target="_BLANK" class="btn btn-outline-primary btn-sm"><i class="fa fa-facebook"></i></a>
+                         <a href="https://twitter.com/zidiplatform" target="_BLANK" class="btn  btn btn-outline-primary btn-sm"><i class="fa fa-twitter"></i></a>  
+                         <a href="https://t.me/zidiapp" target="_BLANK" class="btn  btn btn-outline-primary btn-sm"><i class="fa fa-telegram"></i></a></li>
+                    <li class="list-inline-item"><a href="help">Help</a></li>
+                    <li class="list-inline-item"><a href="community">Community</a></li>
+                    <li class="list-inline-item"><a href="code-snippets">All Code</a></li>
+                    <li class="list-inline-item"><a href="privacy" class="btn btn-outline-primary btn-sm">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>

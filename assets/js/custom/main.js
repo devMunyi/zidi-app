@@ -996,7 +996,7 @@ function contributeCodeNav() {
 function search_codeSnippet() {
   setTimeout(function(){
     localStorage.searching = 0;
-  }, 5000);
+  }, 2000);
   let code_search = $("#search_box").val().trim();
   let status = 1;
   let offset = 0;

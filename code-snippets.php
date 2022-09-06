@@ -8,8 +8,8 @@ include_once("configs/conn.inc");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Crush it Able The most popular Admin Dashboard template and ui kit">
-    <meta name="author" content="PuffinTheme the theme designer">
+    <meta name="description" content="List of code snippets to do backend tasks in over 30 languages. Zidi Platform">
+    
 
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="assets/plugins/highlightjs/styles/monokai-sublime.min.css">
@@ -71,16 +71,14 @@ include_once("configs/conn.inc");
 
                     <div class="row clearfix row-deck" style="min-height: 600px;">
                         <div class="col-lg-2 col-md-2">
-
+                          List of Languages
                         </div>
                         <div class="col-lg-10">
                             <div class="container card container-fluid">
                                <div class="card-body">
-                                <h4>About this Platform</h4>
+                                <h4>Backend Code for Everything</h4>
                                 <p>
-                                    Zidi is a code sharing platform that aims to be every developers go-to site. We strive 
-                                    to provide clean, universally acceptable code for all backend processes in all major languages. In the future we 
-                                    will develop productivity tools for backend developers to make their work easier
+                                   List of all code snippets
                                 </p>
                                </div>
 

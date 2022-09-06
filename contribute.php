@@ -1,3 +1,7 @@
+<?php
+include_once("php_functions/functions.php");
+include_once("configs/conn.inc");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -72,7 +76,10 @@
                         <div class="col-lg-10">
                             <div class="container card container-fluid">
                                <div class="card-body">
-                                <h4>Contribute</h4>
+                                <h4>Contribute Code</h4>
+                                <p>Our site is driven by contributions made by our community members, we appreciate every members contribution 
+                                    and are always welcoming clean, readable and well explained code. <a href="code-add-edit">Click here</a> to contribute
+                                </p>
                                </div>
 
 

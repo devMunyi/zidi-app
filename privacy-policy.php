@@ -27,7 +27,7 @@ include_once("configs/conn.inc");
 
     <!--Header section -->
     <?php
-    include_once 'header.php';
+    include_once 'index-header.php';
     ?>
 
     <!-- start main body part-->
