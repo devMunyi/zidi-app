@@ -1,3 +1,7 @@
+<?php
+include_once("php_functions/functions.php");
+include_once("configs/conn.inc");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -73,6 +77,11 @@
                             <div class="container card container-fluid">
                                <div class="card-body">
                                 <h4>Community</h4>
+                                <p>In the near future, we will create a section where developers with similar interests
+                                     can interact with each other in an easy way. You will be able to ask questions, share solutions or interact 
+                                     with other members
+
+                                </p>
                                </div>
 
 
