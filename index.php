@@ -321,7 +321,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("index"); //check for logged in user so as to update the header accordingly
+            updateHeader("unsecured"); //check for logged in user so as to update the header accordingly
             $('#search_box').css('display', 'block');
         })
     </script>

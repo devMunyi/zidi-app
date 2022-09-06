@@ -95,7 +95,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader('login-page'); //check for logged in user so as to update the header accordingly
+            updateHeader('unsecured'); //check for logged in user so as to update the header accordingly
             //authCheck('login-page', 'login') //check for avilable session, if so redirect to home page
             footer_date(); //load footer
 

@@ -78,7 +78,7 @@ include_once("configs/conn.inc");
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("reset-pass-page"); //check for logged in user so as to update the header accordingly
+            updateHeader("unsecured"); //check for logged in user so as to update the header accordingly
             validatePwdResetLink() //ensure token and user id is available before rendering this page
             footer_date(); //load footer
 

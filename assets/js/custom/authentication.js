@@ -591,34 +591,29 @@ function updateHeader(pageId) {
 //used with login, register and profile pages to check if user is logged in
 //for both login and register page, if user is logged in redirect to index page
 //for profile page redirect user to login page
-function isAuthorized(pageId, authorized) {
-  $(`#${pageId}`).hide();
+function isAuthorized(pageType, authorized) {
+  $(`#${pageType}`).hide();
   if (authorized) {
     let current_loc = currentLoc();
     if (current_loc && current_loc.user) {
-      if (
-        pageId !== "profile-page" &&
-        pageId !== "addeditcode-page" &&
-        pageId !== "index"
-      ) {
-        gotourl("index");
+      if (pageType == "secured") {
       } else {
-        $(`#${pageId}`).show();
+        $(`#${pageType}`).show();
       }
     } else {
-      if (pageId === "profile-page" || pageId === "addeditcode-page") {
-        $(`#${pageId}`).hide();
+      if (pageType == "secured") {
+        $(`#${pageType}`).hide();
         gotourl("login");
       } else {
-        $(`#${pageId}`).show();
+        $(`#${pageType}`).show();
       }
     }
   } else {
-    if (pageId === "profile-page" || pageId === "addeditcode-page") {
-      $(`#${pageId}`).hide();
+    if (pageType == "secured") {
+      $(`#${pageType}`).hide();
       gotourl("login");
     } else {
-      $(`#${pageId}`).show();
+      $(`#${pageType}`).show();
     }
   }
 }

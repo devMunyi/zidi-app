@@ -259,7 +259,7 @@ if ($code_id > 0) {
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("addeditcode-page"); //check for logged in user so as to update the header accordingly
+            updateHeader("secured"); //check for logged in user so as to update the header accordingly
             $("#add-edit-code-page").hide(); //hide this page by default
 
             //call submitBtn() and parse saveCodeSnippet() as a parameter and on hover hint title
