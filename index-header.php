@@ -29,16 +29,16 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index">Home</a>
+                            <a class="nav-link" href="<?php echo $home_url; ?>/index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about">About</a>
+                            <a class="nav-link" href="<?php echo $home_url; ?>/about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="community">Community</a>
+                            <a class="nav-link" href="<?php echo $home_url; ?>/community">Community</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contribute">Contribute</a>
+                            <a class="nav-link" href="<?php echo $home_url; ?>/contribute">Contribute</a>
                         </li>
                         <li class="nav-item dropdown" id="account-0">
                             <div class="nav-link dropdown-toggle bg-white btn text-black" style="text-shadow: none; color: black;" data-toggle="dropdown" aria-expanded="false"><i class="fe fe-user"></i>&nbsp; Account</div>
