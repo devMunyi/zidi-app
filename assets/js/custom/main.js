@@ -201,19 +201,17 @@ function subfun() {}
 function scrollElementIntoView2(dbId) {
   submenu(`#fun${dbId}`);
   setTimeout(() => {
-    const element = document.getElementById(`func-item-${dbId}`);
-    element.scrollIntoView({
-      block: 'nearest',
-    });
-  }, 500);
+    document
+      .getElementById(`func-item-${dbId}`)
+      .scrollIntoView({ block: 'nearest' });
+  }, 50);
 }
 
 //function and subfunction menu toggler
 function submenu(id) {
   $(id).toggle();
-
-  lastChar = id.charAt(id.length - 1);
-  $(`.subfunc-${lastChar}`).show();
+  const idNum = id.match(/\d/g).join('');
+  $(`.subfunc-${idNum}`).show();
 }
 
 function highlightSubfun(funId) {
