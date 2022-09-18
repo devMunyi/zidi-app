@@ -334,7 +334,7 @@ function load_languages() {
 
   //check if languages already exist in the localstorage and use as the resource
   if (current_loc && current_loc.allLangs) {
-    let = { data } = current_loc.allLangs;
+    let { data } = current_loc.allLangs;
     let langs_arr_size = data.length;
 
     if (langs_arr_size > 0) {
