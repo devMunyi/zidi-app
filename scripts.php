@@ -18,7 +18,7 @@
 <script src="<?php echo $assets; ?>js/core.js"></script>
 <script src="<?php echo $assets; ?>js/custom/common.js?v8"></script>
 <script src="<?php echo $assets; ?>js/custom/authentication.js?v3"></script>
-<script src="<?php echo $assets; ?>js/custom/main.js?v20"></script>
+<script src="<?php echo $assets; ?>js/custom/main.js?v21"></script>
 <script src="<?php echo $assets; ?>js/page/index.js"></script>
 
 <!-- SweetAlert2 -->
