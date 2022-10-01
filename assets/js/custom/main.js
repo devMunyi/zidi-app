@@ -203,7 +203,7 @@ function scrollElementIntoView2(dbId) {
   setTimeout(() => {
     document
       .getElementById(`func-item-${dbId}`)
-      .scrollIntoView({ block: 'nearest' });
+      ?.scrollIntoView({ block: 'nearest' });
   }, 50);
 }
 
@@ -1103,6 +1103,7 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
+// load all solutions
 function loadCodesnippetsLink(action = '') {
   $('.all-solns').show();
   //show a loader
@@ -1120,15 +1121,16 @@ function loadCodesnippetsLink(action = '') {
       let total_ = current_loc.all_solns.length;
       if (total_ > 0) {
         let data = current_loc.all_solns;
-        let language_implementation_type;
-        let firstChar;
+        // let language_implementation_type;
+        let user_implementation_type;
+        // let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
         let solns = '';
         for (let i = 0; i < data.length; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1141,13 +1143,13 @@ function loadCodesnippetsLink(action = '') {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == 'D') {
-            language_implementation_type = '';
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
           let activeClass = '';
           let curSoln =
@@ -1158,10 +1160,10 @@ function loadCodesnippetsLink(action = '') {
             ? (activeClass = 'active-two')
             : (activeClass = '');
 
-          solns += `<a href="javascript:void(0)"  
+          solns += `<a href="javascript:void(0)"
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
         $('#available-solns').html(solns);
@@ -1217,15 +1219,15 @@ function loadCodesnippetsLink(action = '') {
         if (total_ > 0) {
           let data = feed['data'];
 
-          let language_implementation_type;
-          let firstChar;
+          let user_implementation_type;
+          // let firstChar;
           let language_name;
           let framework;
           let codesnippet_id;
 
           let solns = '';
           for (let i = 0; i < data.length; i++) {
-            language_implementation_type = data[i].language_implementation_type;
+            user_implementation_type = data[i].user_implementation_type;
             language_name = data[i].language_name;
             framework = data[i].framework;
             language_id = data[i].language_id;
@@ -1238,18 +1240,18 @@ function loadCodesnippetsLink(action = '') {
               framework = ` with ${framework} framework`;
             }
 
-            firstChar = language_implementation_type[0];
+            // firstChar = language_implementation_type[0];
 
-            if (firstChar == 'D') {
-              language_implementation_type = '';
-            } else {
-              language_implementation_type = ` ${language_implementation_type}`;
-            }
+            // if (firstChar == 'D') {
+            //   language_implementation_type = '';
+            // } else {
+            //   language_implementation_type = ` ${language_implementation_type}`;
+            // }
 
-            solns += `<a href="javascript:void(0)"  
+            solns += `<a href="javascript:void(0)"
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
           }
 
           $('#available-solns').html(solns);
@@ -1313,15 +1315,15 @@ function loadCodesnippetsLink(action = '') {
       if (total_ > 0) {
         let data = feed['data'];
 
-        let language_implementation_type;
-        let firstChar;
+        let user_implementation_type;
+        // let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
         let solns = '';
         for (let i = 0; i < data.length; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1334,18 +1336,18 @@ function loadCodesnippetsLink(action = '') {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == 'D') {
-            language_implementation_type = '';
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
-          solns += `<a href="javascript:void(0)"  
+          solns += `<a href="javascript:void(0)"
       onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-      ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+      ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
         $('#available-solns').html(solns);
@@ -1363,6 +1365,7 @@ function loadCodesnippetsLink(action = '') {
   }
 }
 
+// get related solutions
 function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
   $('.all-solns').hide();
   $('.related-soln-container').show(); //show the related solutions container
@@ -1391,7 +1394,7 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 
       if (solns_arr_size > 0) {
         for (let i = 0; i < solns_arr_size; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1404,18 +1407,18 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == 'D') {
-            language_implementation_type = '';
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
           solns += `<a href="javascript:void(0)"  
           onclick="appendCodeUrl('${codesnippet_id}', 'related-solns'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
   <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-          ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+          ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
         $('#related-solns').html(solns);
