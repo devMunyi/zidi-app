@@ -203,7 +203,7 @@ function scrollElementIntoView2(dbId) {
   setTimeout(() => {
     document
       .getElementById(`func-item-${dbId}`)
-      ?.scrollIntoView({ block: 'nearest' });
+      ?.scrollIntoView({ block: 'nearest' }); //handle undefined error by adding ? character
   }, 50);
 }
 
