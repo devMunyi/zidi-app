@@ -8,7 +8,7 @@
 - Bootstrap
 - PHP
 
-## Backend [source code](https://github.com/devMunyi/backgen-backend) Built With 
+## Backend [source code](https://github.com/devMunyi/backgen-backend), Built With 
 - NodeJs
 - Express
 - MySQL
