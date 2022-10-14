@@ -59,7 +59,7 @@ if ($code_id > 0) {
                 </div>
                 <div class="row">
                     <div class="col-sm-7">
-                        <form class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
+                        <form id="addEditCode-form" class="form_ pl-5 pr-3" onsubmit="return false;" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-sm-12">
                                     <label for="func_sel">*Function:</label>
@@ -215,7 +215,7 @@ if ($code_id > 0) {
                             </div>
                             <div class="form-group">
                                 <label for="file_extension">*Code File Extension:</label>
-                                <input type="text" class="form-control biginput" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" required>
+                                <input type="text" class="form-control biginput" id="file_extension" value="<?php echo $code_arr['file_extension']; ?>" placeholder="e.g .js for Nodejs, .java for Java, .py for Python, .php for Php, .rb for Ruby and so on" minlength="2" maxlength="10" required>
                                 <div class="error" id="fileExtErr"></div>
                             </div>
                             <div class="form-group">

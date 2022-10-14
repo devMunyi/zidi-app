@@ -868,6 +868,8 @@ function codesnippetValidate() {
   // Validate file extension
   if (file_extension == '') {
     printError('fileExtErr', 'File extension used with code added is required');
+  } else if (file_extension?.length > 10) {
+    printError('fileExtErr', 'File extension should not exceed 10 characters');
   } else {
     printError('fileExtErr', '');
     fileExtErr = false;
@@ -947,6 +949,20 @@ function saveCodeSnippet(data) {
     } else if (feed['success'] === true) {
       let message = feed['message'];
       successToast(message);
+
+      //reset form fields on code submission
+      document.getElementById('func_sel').selectedIndex = 0;
+      document.getElementById('subfunc_sel').selectedIndex = 0;
+      document.getElementById('language_sel').selectedIndex = 0;
+      document.getElementById('framework_sel').selectedIndex = 0;
+      document.getElementById('sel_lang_impl').selectedIndex = 0;
+      document.getElementById('sel_user_impl').selectedIndex = 0;
+      $('#codeimpl_title').val('');
+      $('#code_input').val('');
+      $('#file_extension').val('');
+      myeditors2 && myeditors2['instructions_input']
+        ? myeditors2['instructions_input']?.setData('')?.trim()
+        : $('#instructions_input')?.val('');
 
       //redirect user to edited codesnippet on successful update
       if (method == 'PUT') {
