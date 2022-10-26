@@ -1113,6 +1113,12 @@ function sanitize_url($unsafeurl)
     return $new_url;
 }
 
+function sanitize_title($str){
+    $s = $str;
+    $r = preg_replace('/\W+/', '-', strtolower(trim($s)));
+    return $r;
+}
+
 
 
 function safehtml($html)
@@ -1793,6 +1799,17 @@ function logupdate($table, $query){
     
     //////Save the log in the o_logs_update table 
     $fds = array('','','','');
+}
+function table_to_obj($tbl, $where, $limit, $key, $value){
+    $obj = array();
+    $o_t = fetchtable($tbl,$where, $key, "asc", "0,$limit", "$key ,$value");
+    while($l = mysqli_fetch_array($o_t))
+    {
+        $k = $l[$key];
+        $v = $l[$value];
+        $obj[$k] = $v;
+    }
+    return $obj;
 }
 
 ?>

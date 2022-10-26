@@ -35,7 +35,7 @@ function functions_load() {
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -141,7 +141,7 @@ function functions_load() {
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
+            onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -344,11 +344,12 @@ function load_languages() {
 
   //check if languages already exist in the localstorage and use as the resource
   if (current_loc && current_loc.allLangs) {
-    let = { data } = current_loc.allLangs;
+    let { data } = current_loc.allLangs;
     let langs_arr_size = data.length;
 
     if (langs_arr_size > 0) {
       let lang = "";
+      let lang_sel = "";
       let active_language = "";
       let language_sel;
       let langs_arr_size = data.length;
@@ -367,10 +368,16 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+
+        lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
+            server + "/" + icon + '" height="20px"> ' +
+            title +
+            "</a>";
       }
       $("#language_").html(lang);
+      $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
 
       if (language_sel) {
         scrollElementIntoView(`lang-item-${language_sel}`);
@@ -378,6 +385,7 @@ function load_languages() {
     } else {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
+      $("#language_select_modal").html('Unable to load languages');
     }
   } else {
     ///----Load resource from the server
@@ -408,6 +416,7 @@ function load_languages() {
 
         let data = result["data"];
         let lang = "";
+        let lang_sel = "";
         let active_language = "";
         let language_sel;
         let langs_arr_size = data.length;
@@ -426,10 +435,17 @@ function load_languages() {
           }
           lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+
+          lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
+              server + "/" + icon + '" height="20px"> ' +
+              title +
+              "</a>";
         }
         $("#language_").html(lang);
+        $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
+
 
         if (language_sel) {
           scrollElementIntoView(`lang-item-${language_sel}`);
@@ -437,12 +453,21 @@ function load_languages() {
       } else {
         //////-------No Languages found
         $("#language_").html("<li>No Languages</li>");
+        $("#language_select_modal").html('Unable to load languages');
       }
     });
   }
 }
+function default_lang(uid, name){
+  persistence('language', uid);
+  highlightLang();
+  successToast("We will show you more of "+name);
+  hidewelcome();
+}
 
 function highlightLang() {
+ // $('#sel_framework').val("-1");
+ // $('#sel_codestyle').val("0");
   $(".lang_").on("click", ".lang-item", function () {
     $(".lang_ .lang-item").removeClass("active-two");
     $(this).addClass("active-two");
@@ -516,7 +541,7 @@ function getAllFrams() {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
     if (frams_arr_size > 0) {
       let active_fram;
@@ -540,7 +565,7 @@ function getAllFrams() {
     } else {
       row = `
       <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -567,7 +592,7 @@ function getAllFrams() {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -596,7 +621,7 @@ function getAllFrams() {
           language_id: 0,
           name: "All Frameworks",
           status: 1,
-          uid: "",
+          uid: "-1",
         });
         let active_fram;
 
@@ -621,8 +646,8 @@ function getAllFrams() {
         persistence("allFrams", data);
       } else {
         row = `
-        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-          <option value = "">All Frameworks</option>
+        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+          <option value = "-1">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
       `;
@@ -639,7 +664,7 @@ function getFramsByLang(lang_id) {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
     if (frams_arr_size > 0) {
@@ -662,8 +687,8 @@ function getFramsByLang(lang_id) {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -693,7 +718,7 @@ function getFramsByLang(lang_id) {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -722,7 +747,7 @@ function getFramsByLang(lang_id) {
           language_id: 0,
           name: "All Frameworks",
           status: 1,
-          uid: "",
+          uid: "-1",
         });
 
         let active_fram;
@@ -744,8 +769,8 @@ function getFramsByLang(lang_id) {
         $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -996,7 +1021,7 @@ function contributeCodeNav() {
 function search_codeSnippet() {
   setTimeout(function(){
     localStorage.searching = 0;
-  }, 2000);
+  }, 1000);
   let code_search = $("#search_box").val().trim();
   let status = 1;
   let offset = 0;
@@ -1072,10 +1097,7 @@ function select_code(code_id, title, language) {
 
 function codeStyles() {
   let data = [
-    {
-      uid: "",
-      name: "All Code Styles",
-    },
+
     { uid: 1, name: "Plain Code" },
     { uid: 2, name: "Function Based" },
     { uid: 3, name: "Class Based" },
@@ -1089,11 +1111,11 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'>`;
+  let row = "<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'><option value = \"0\" > All Code Styles</option>";
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
-    if (codestyle_id == active_codestyle) {
+    if (codestyle_id === active_codestyle) {
       row += `<option SELECTED value="${codestyle_id}">${codestyle_title}</option>`;
     } else {
       row += `<option value="${codestyle_id}">${codestyle_title}</option>`;
@@ -1607,6 +1629,20 @@ function shareCodesnippet() {
   } else {
     errorToast("No valid code to share");
   }
+}
+
+function clear_code_screen(){
+
+  $("#codeimp-title").html("<h4 class='text-left'>Select an Implementation from the right column</h4>");
+  $("#imptype-and-contributor").html("");
+  $("#edit-code").html("");
+
+  //$('#editor').html('');
+  $("#code-instructions").html("");
+  $("#add-comment").html("");
+  let codeEditor = ace.edit("editor");
+  //--reset code editor to empty string
+  codeEditor.setValue("");
 }
 
 function load_codesnippetById(codeId) {
@@ -3034,3 +3070,10 @@ function createEditor2(elementId) {
 }
 
 ///////--------------------------End ckeditor
+function hidewelcome(){
+  $('#overin').fadeOut('fast');
+  $('#layleft').fadeOut('fast');
+}
+function showelcome(){
+  $('#layleft').fadeIn('slow');
+}

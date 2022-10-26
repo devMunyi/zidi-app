@@ -217,6 +217,7 @@ function gotourl(url) {
 
 //persist fetched data in browser local storage for later user
 function persistence(k, val) {
+
   if (localStorage.getItem("persist")) {
     let current_loc = currentLoc();
     current_loc[k] = val;
@@ -236,6 +237,13 @@ function persistence_remove(k) {
     let current_loc = currentLoc();
     delete current_loc[k];
     localStorage.setItem("persist", JSON.stringify(current_loc));
+  }
+}
+function persistence_read(k) {
+  if (localStorage.getItem("persist")) {
+    let current_loc = currentLoc();
+    return  current_loc[k];
+
   }
 }
 
