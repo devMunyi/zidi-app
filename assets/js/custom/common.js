@@ -46,6 +46,11 @@ function index() {
   gotourl("index");
 }
 
+// a function to display inline error message
+function printError(elemId, hintMsg) {
+  $(`#${elemId}`).html(hintMsg);
+}
+
 function modal_view(title = "Details") {
   $("#mainModal").modal("toggle");
   let feedback = "feedback";
