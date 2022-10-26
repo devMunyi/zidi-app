@@ -184,7 +184,7 @@ if ($user_id > 0) {
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader('profile-page'); //check for logged in user so as to update the header accordingly
+            updateHeader('secured'); //check for logged in user so as to update the header accordingly
             //signedUserMenu("profile-page") //populate dropdown menu as per current page
             //authCheck('profile-page', 'profile') //check for avilable session, if so redirect to home page
             footer_date(); //load footer

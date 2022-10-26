@@ -100,7 +100,7 @@
     ?>
     <script>
         $(document).ready(function() {
-            updateHeader("register-page"); //check for logged in user so as to update the header accordingly
+            updateHeader("unsecured"); //check for logged in user so as to update the header accordingly
             //authCheck('register-page', 'register') //check for avilable session, if so redirect to home page
             footer_date(); //load footer
             //call submitBtn() and parse register() as a parameter and on hover hint title

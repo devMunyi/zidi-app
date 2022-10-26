@@ -41,9 +41,8 @@ alt="Web Analytics"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
-<input type="hidden" id="server_" value="https://www.backgen.net/back">
+<input type="hidden" id="server_" value="https://backgen.net/back">
 <!-- <input type="hidden" id="server_" value="http://localhost:5000/back"> -->
-<input type="hidden" id="auth_" value="Basic dGVzdDp0ZXN0">
 
 
 <input type="hidden" id="sel_func_" value="0">

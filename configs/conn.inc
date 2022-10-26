@@ -27,5 +27,5 @@ $thisdayname=date('D');
   $assets = "assets/";
   $home_url = "https://zidiapp.com";
 
-
 ?>
+
