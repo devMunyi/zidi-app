@@ -1140,32 +1140,34 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-function loadCodesnippetsLink(action = "") {
-  $(".all-solns").show();
+// default load for all solutions
+function loadCodesnippetsLink(action = '') {
+  $('.all-solns').show();
   //show a loader
   spinner(
-    "#available-solns",
-    "spinner-border-sm",
-    "d-flex justify-content-center"
+    '#available-solns',
+    'spinner-border-sm',
+    'd-flex justify-content-center'
   );
-  $(".related-soln-container").hide(); //hide related solutions container
-  $("#links-title").html("All Solutions");
+  $('.related-soln-container').hide(); //hide related solutions container
+  $('#links-title').html('All Solutions');
 
   let current_loc = currentLoc();
-  if (action == "all_back") {
+  if (action == 'all_back') {
     if (current_loc && current_loc.all_solns && current_loc.all_solns.length) {
       let total_ = current_loc.all_solns.length;
       if (total_ > 0) {
         let data = current_loc.all_solns;
-        let language_implementation_type;
-        let firstChar;
+        // let language_implementation_type;
+        let user_implementation_type;
+        // let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
-        let solns = "";
+        let solns = '';
         for (let i = 0; i < data.length; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1173,96 +1175,96 @@ function loadCodesnippetsLink(action = "") {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = "";
+            framework = '';
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == "D") {
-            language_implementation_type = "";
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
-          let activeClass = "";
+          let activeClass = '';
           let curSoln =
             current_loc && current_loc.code_sel && current_loc.code_sel.uid
               ? current_loc.code_sel.uid
-              : "";
+              : '';
           curSoln == codesnippet_id
-            ? (activeClass = "active-two")
-            : (activeClass = "");
+            ? (activeClass = 'active-two')
+            : (activeClass = '');
 
-          solns += `<a href="javascript:void(0)"  
+          solns += `<a href="javascript:void(0)"
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $("#available-solns").html(solns);
+        $('#available-solns').html(solns);
       } else {
         //add code version drop down
-        $("#available-solns").html(
+        $('#available-solns').html(
           `<p class="list-group-item list-group-item-action">No record found</p>`
         );
-        persistence_remove("all_solns");
+        persistence_remove('all_solns');
       }
     } else {
       //get resource from the server
       let rpp = 25;
       let offset = 0;
-      let sel_func = "";
-      let sel_subfunc = "";
-      let sel_language = "";
-      let sel_framework = "";
-      let sel_codestyle = "";
+      let sel_func = '';
+      let sel_subfunc = '';
+      let sel_language = '';
+      let sel_framework = '';
+      let sel_codestyle = '';
 
       //persist user selections before sending the request to server, so that they will remain intact even on page refresh
       let status = 1;
-      let orderby = "uid";
-      let dir = "DESC";
+      let orderby = 'uid';
+      let dir = 'DESC';
 
       let jso = {};
 
       let query =
-        "?status=" +
+        '?status=' +
         status +
-        "&orderby=" +
+        '&orderby=' +
         orderby +
-        "&dir=" +
+        '&dir=' +
         dir +
-        "&func_id=" +
+        '&func_id=' +
         sel_func +
-        "&subfunc_id=" +
+        '&subfunc_id=' +
         sel_subfunc +
-        "&language_id=" +
+        '&language_id=' +
         sel_language +
-        "&framework_id=" +
+        '&framework_id=' +
         sel_framework +
-        "&user_impl_type_id=" +
+        '&user_impl_type_id=' +
         sel_codestyle +
-        "&offset=" +
+        '&offset=' +
         offset +
-        "&rpp=" +
+        '&rpp=' +
         rpp;
 
-      crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+      crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
         //console.log(feed);
         let total_ = feed.all_totals;
         if (total_ > 0) {
-          let data = feed["data"];
+          let data = feed['data'];
 
-          let language_implementation_type;
-          let firstChar;
+          let user_implementation_type;
+          // let firstChar;
           let language_name;
           let framework;
           let codesnippet_id;
 
-          let solns = "";
+          let solns = '';
           for (let i = 0; i < data.length; i++) {
-            language_implementation_type = data[i].language_implementation_type;
+            user_implementation_type = data[i].user_implementation_type;
             language_name = data[i].language_name;
             framework = data[i].framework;
             language_id = data[i].language_id;
@@ -1270,34 +1272,34 @@ function loadCodesnippetsLink(action = "") {
             let title = data[i].title;
 
             if (data[i].framework_id == 0) {
-              framework = "";
+              framework = '';
             } else {
               framework = ` with ${framework} framework`;
             }
 
-            firstChar = language_implementation_type[0];
+            // firstChar = language_implementation_type[0];
 
-            if (firstChar == "D") {
-              language_implementation_type = "";
-            } else {
-              language_implementation_type = ` ${language_implementation_type}`;
-            }
+            // if (firstChar == 'D') {
+            //   language_implementation_type = '';
+            // } else {
+            //   language_implementation_type = ` ${language_implementation_type}`;
+            // }
 
-            solns += `<a href="javascript:void(0)"  
+            solns += `<a href="javascript:void(0)"
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
           }
 
-          $("#available-solns").html(solns);
+          $('#available-solns').html(solns);
 
-          persistence("all_solns", feed.data);
+          persistence('all_solns', feed.data);
         } else {
           //add code version drop down
-          $("#available-solns").html(
+          $('#available-solns').html(
             `<p class="list-group-item list-group-item-action">No record found</p>`
           );
-          persistence_remove("all_solns");
+          persistence_remove('all_solns');
         }
       });
     }
@@ -1305,60 +1307,60 @@ function loadCodesnippetsLink(action = "") {
     //------get reource from server
     let rpp = 25;
     let offset = 0;
-    let sel_func = current_loc && current_loc.func ? current_loc.func : "";
+    let sel_func = current_loc && current_loc.func ? current_loc.func : '';
     let sel_subfunc =
-      current_loc && current_loc.subfunc ? current_loc.subfunc : "";
+      current_loc && current_loc.subfunc ? current_loc.subfunc : '';
     let sel_language =
-      current_loc && current_loc.language ? current_loc.language : "";
+      current_loc && current_loc.language ? current_loc.language : '';
     let sel_codestyle =
-      current_loc && current_loc.codestyle ? current_loc.codestyle : "";
+      current_loc && current_loc.codestyle ? current_loc.codestyle : '';
 
     let sel_framework = current_loc.framework;
-    sel_framework = Number.isFinite(sel_framework) ? sel_framework : "";
+    sel_framework = Number.isFinite(sel_framework) ? sel_framework : '';
 
     let status = 1;
-    let orderby = "uid";
-    let dir = "DESC";
+    let orderby = 'uid';
+    let dir = 'DESC';
 
     let jso = {};
 
     let query =
-      "?status=" +
+      '?status=' +
       status +
-      "&orderby=" +
+      '&orderby=' +
       orderby +
-      "&dir=" +
+      '&dir=' +
       dir +
-      "&func_id=" +
+      '&func_id=' +
       sel_func +
-      "&subfunc_id=" +
+      '&subfunc_id=' +
       sel_subfunc +
-      "&language_id=" +
+      '&language_id=' +
       sel_language +
-      "&framework_id=" +
+      '&framework_id=' +
       sel_framework +
-      "&user_impl_type_id=" +
+      '&user_impl_type_id=' +
       sel_codestyle +
-      "&offset=" +
+      '&offset=' +
       offset +
-      "&rpp=" +
+      '&rpp=' +
       rpp;
 
-    crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
+    crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
       //console.log(feed);
       let total_ = feed.all_totals;
       if (total_ > 0) {
-        let data = feed["data"];
+        let data = feed['data'];
 
-        let language_implementation_type;
-        let firstChar;
+        let user_implementation_type;
+        // let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
-        let solns = "";
+        let solns = '';
         for (let i = 0; i < data.length; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1366,61 +1368,61 @@ function loadCodesnippetsLink(action = "") {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = "";
+            framework = '';
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == "D") {
-            language_implementation_type = "";
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
-          solns += `<a href="javascript:void(0)"  
+          solns += `<a href="javascript:void(0)"
       onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-      ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+      ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $("#available-solns").html(solns);
+        $('#available-solns').html(solns);
 
-        persistence("all_solns", feed.data);
+        persistence('all_solns', feed.data);
       } else {
         //add code version drop down
-        $("#available-solns").html(
+        $('#available-solns').html(
           `<p class="list-group-item list-group-item-action">No record found</p>`
         );
 
-        persistence_remove("all_solns");
+        persistence_remove('all_solns');
       }
     });
   }
 }
-
+// get related solutions
 function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
-  $(".all-solns").hide();
-  $(".related-soln-container").show(); //show the related solutions container
+  $('.all-solns').hide();
+  $('.related-soln-container').show(); //show the related solutions container
   spinner(
-    "#related-solns",
-    "spinner-border-sm",
-    "d-flex justify-content-center"
+    '#related-solns',
+    'spinner-border-sm',
+    'd-flex justify-content-center'
   );
 
   let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}&status=1&language_id=${language_id}`;
-  crudaction({}, "/related-solns" + query, "GET", (feed) => {
+  crudaction({}, '/related-solns' + query, 'GET', (feed) => {
     if (feed && feed.data) {
       //display related solutions
       let { data } = feed;
       let solns_arr_size = data.length;
-      let solns = "";
+      let solns = '';
       solns_arr_size == 1
-        ? $("#related-soln-title").html("Related Solution")
-        : $("#related-soln-title").html("Related Solutions");
+        ? $('#related-soln-title').html('Related Solution')
+        : $('#related-soln-title').html('Related Solutions');
 
-      $("#all-solns-nav").html(
+      $('#all-solns-nav').html(
         `
         <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All" class="text-blue font-weight-bold text-center"><span class="badge badge-secondary">All <i class="fe fe-corner-up-left"></i></span></a>
         `
@@ -1428,7 +1430,7 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 
       if (solns_arr_size > 0) {
         for (let i = 0; i < solns_arr_size; i++) {
-          language_implementation_type = data[i].language_implementation_type;
+          user_implementation_type = data[i].user_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1436,30 +1438,30 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = "";
+            framework = '';
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          firstChar = language_implementation_type[0];
+          // firstChar = language_implementation_type[0];
 
-          if (firstChar == "D") {
-            language_implementation_type = "";
-          } else {
-            language_implementation_type = ` ${language_implementation_type}`;
-          }
+          // if (firstChar == 'D') {
+          //   language_implementation_type = '';
+          // } else {
+          //   language_implementation_type = ` ${language_implementation_type}`;
+          // }
 
           solns += `<a href="javascript:void(0)"  
           onclick="appendCodeUrl('${codesnippet_id}', 'related-solns'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
   <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-          ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
+          ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $("#related-solns").html(solns);
-        persistence("related_solns", data);
+        $('#related-solns').html(solns);
+        persistence('related_solns', data);
       } else {
         //add code version drop down
-        $("#related-solns").html(
+        $('#related-solns').html(
           `<p class="list-group-item list-group-item-action">No related solution(s)</p>`
         );
       }
