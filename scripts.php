@@ -16,9 +16,9 @@
 
 <!-- Start core js and page js -->
 <script src="<?php echo $assets; ?>js/core.js"></script>
-<script src="<?php echo $assets; ?>js/custom/common.js?v9"></script>
-<script src="<?php echo $assets; ?>js/custom/authentication.js?v4"></script>
-<script src="<?php echo $assets; ?>js/custom/main.js?v22"></script>
+<script src="<?php echo $assets; ?>js/custom/common.js?v10"></script>
+<script src="<?php echo $assets; ?>js/custom/authentication.js?v5"></script>
+<script src="<?php echo $assets; ?>js/custom/main.js?v23"></script>
 <script src="<?php echo $assets; ?>js/page/index.js"></script>
 
 <!-- SweetAlert2 -->
