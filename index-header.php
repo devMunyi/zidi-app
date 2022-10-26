@@ -68,3 +68,6 @@
     </div>
     <!-- </div> -->
 </header>
+<div id="notif_top" class="errorbox successbox">
+  No internet
+</div>

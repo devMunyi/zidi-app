@@ -51,6 +51,12 @@
     height: 100%;
     border-right: 2px dashed gray;
 }
+    .overlayin{
+
+        width: 90% !important;
+        height: 90% !important;
+        border-bottom-right-radius: 20% !important;
+    }
 
 }
 
@@ -535,6 +541,9 @@ div#title-bar {
     background-color: #0096FF;
     cursor: pointer;
 }
+.pointer:hover {
+    cursor: pointer;
+}
 
 .dropdown:hover .dropdown-menu {
     display: block;
@@ -834,6 +843,12 @@ div#body-wrapper {
     font-size: 13.5px;
     line-height: 1.7;
 }
+.color-orangered{
+    color: orangered !important;
+}
+.color-orange{
+    color: orange !important;
+}
 
 .btn-round {
     padding: 10px;
@@ -867,3 +882,63 @@ div#body-wrapper {
    .i, .s, .y{
      background-color: #333333 !important; 
    }
+   .overlaymask{
+       position: fixed;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       z-index: 10000;
+       background: #ffffff0f;
+   }
+   .overlayin{
+       background: #004f8a;
+       width: 600px;
+       height: 600px;
+       border-bottom-right-radius: 100%;
+       padding: 1% 7% 1% 1%;
+       color: white !important;
+   }
+   #layleft{
+       display: none;
+   }
+.over-footer {
+    margin-top: 25px;
+    background: #002845 !important;
+    height: 55px;
+    padding: 10px 30px;
+    left: 0;
+    position: absolute;
+    margin-right: 10px;
+}
+a#closeover {
+    margin-top: 80px;
+    left: 44px;
+    position: absolute;
+    color: #ff5722;
+}
+div#notif_top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 230px;
+    height: 60px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+    z-index: 1000000;
+    color: white;
+    padding: 20px;
+}
+.errorbox{
+    background: #db0b0be6 ;
+    background: linear-gradient(45deg, #ff0000, #db0b0be6);
+}
+.successbox{
+    background: #2fcd2c;
+}
+.everything a, .everything .btn-link {
+    color: #1976d2 !important;
+}

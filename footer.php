@@ -23,6 +23,23 @@
         </div>
     </div>
 </footer>
+<!-- Default Statcounter code for Zidiapp.com
+https://zidiapp.com -->
+<script type="text/javascript">
+var sc_project=12333273; 
+var sc_invisible=1; 
+var sc_security="3f3f59e9"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12333273/0/3f3f59e9/1/"
+alt="Web Analytics"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
 
 <input type="hidden" id="server_" value="https://backgen.net/back">
 <!-- <input type="hidden" id="server_" value="http://localhost:5000/back"> -->

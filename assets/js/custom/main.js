@@ -1,10 +1,10 @@
 ///////////-------Begin Functionalities
 function functions_load() {
   //display a spinner
-  spinner('#functions_');
+  spinner("#functions_");
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
-  let server = $('#server_').val(); //get the server url for the image retrieval
+  let server = $("#server_").val(); //get the server url for the image retrieval
 
   //---check if functions already exist in the localstorage and use as the resource
   if (current_loc && current_loc.allFuns && current_loc.allFuns.data) {
@@ -14,9 +14,9 @@ function functions_load() {
       //////////--------Lets Pull All sub functions at the same time
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
-        let fun = '';
+        let fun = "";
         let func_sel = 0;
-        let active_func = '';
+        let active_func = "";
         let subfunc_sel = 0;
 
         for (let i = 0; i < funs_arr_size; i++) {
@@ -27,24 +27,24 @@ function functions_load() {
           if (current_loc && current_loc.func > 0) {
             func_sel = current_loc.func;
             if (function_id == func_sel) {
-              active_func = 'active-two';
+              active_func = "active-two";
             } else {
-              active_func = '';
+              active_func = "";
             }
           }
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
           /////------Loop through sub functions
-          let sub_data = sub_result['data'];
+          let sub_data = sub_result["data"];
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
-            let active_subfunc = '';
+            let active_subfunc = "";
 
             fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
 
@@ -59,9 +59,9 @@ function functions_load() {
                   subfunc_sel = current_loc.subfunc;
                   if (subfunction_id == subfunc_sel) {
                     //console.log("FOUND AN ACTIVE SUBFUNCTION");
-                    active_subfunc = 'active-two';
+                    active_subfunc = "active-two";
                   } else {
-                    active_subfunc = '';
+                    active_subfunc = "";
                   }
                 }
                 fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
@@ -72,55 +72,58 @@ function functions_load() {
               </li>`;
               }
             }
-            fun += '</ul>';
+            fun += "</ul>";
           }
-          fun += '</li>';
+          fun += "</li>";
         }
-        $('#functions_').html(fun);
+        $("#functions_").html(fun);
 
         //call the auto scroller
-        scrollElementIntoView2(func_sel);
+        scrollElementIntoView2(
+          `func-item-${func_sel}`,
+          `subfunc-item-${subfunc_sel}`
+        );
       });
     } else {
-      $('#functions_').html('No record found');
+      $("#functions_").html("No record found");
     }
   } else {
     /////----------------load data from the server
     let status = 1;
-    let orderby = 'name';
-    let dir = 'ASC';
+    let orderby = "name";
+    let dir = "ASC";
     let jso = {};
-    let search_ = '';
+    let search_ = "";
 
     let query =
-      '?status=' +
+      "?status=" +
       status +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&offset=' +
+      "&offset=" +
       0 +
-      '&rpp=' +
+      "&rpp=" +
       500 +
-      '&search=' +
+      "&search=" +
       search_;
 
-    crudaction(jso, '/functionalities' + query, 'GET', function (result) {
+    crudaction(jso, "/functionalities" + query, "GET", function (result) {
       if (result && result.data && result.data.length > 0) {
         //persist the data for later use
-        persistence('allFuns', result);
+        persistence("allFuns", result);
 
-        let data = result['data'];
+        let data = result["data"];
         let data_length = data.length;
 
         //////////--------Lets Pull All sub functions at the same time
         apiSubfunLoad(function (sub_result) {
           //////////-----Loop functions while injecting subfunctions
-          let fun = '';
+          let fun = "";
           let func_sel = 0;
           let subfunc_sel = 0;
-          let active_func = '';
+          let active_func = "";
 
           for (let i = 0; i < data_length; i++) {
             let function_id = data[i].uid;
@@ -130,24 +133,24 @@ function functions_load() {
             if (current_loc && current_loc.func > 0) {
               func_sel = current_loc.func;
               if (function_id == func_sel) {
-                active_func = 'active-two';
+                active_func = "active-two";
               } else {
-                active_func = '';
+                active_func = "";
               }
             }
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
+            onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
             /////------Loop through sub functions
-            let sub_data = sub_result['data'];
+            let sub_data = sub_result["data"];
             let sub_data_length = sub_data.length;
 
             if (sub_data_length > 0) {
-              let active_subfunc = '';
+              let active_subfunc = "";
 
               fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
 
@@ -162,9 +165,9 @@ function functions_load() {
                     subfunc_sel = current_loc.subfunc;
                     if (subfunction_id == subfunc_sel) {
                       //console.log("FOUND AN ACTIVE SUBFUNCTION");
-                      active_subfunc = 'active-two';
+                      active_subfunc = "active-two";
                     } else {
-                      active_subfunc = '';
+                      active_subfunc = "";
                     }
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
@@ -175,76 +178,85 @@ function functions_load() {
                 </li>`;
                 }
               }
-              fun += '</ul>';
+              fun += "</ul>";
             }
-            fun += '</li>';
+            fun += "</li>";
           }
-          $('#functions_').html(fun);
+          $("#functions_").html(fun);
 
           //call the auto scroller
-          scrollElementIntoView2(func_sel);
+          scrollElementIntoView2(
+            `func-item-${func_sel}`,
+            `subfunc-item-${subfunc_sel}`
+          );
         });
       } else {
-        $('#functions_').html('No record found');
+        $("#functions_").html("No record found");
       }
     });
   }
 }
 
 function parseInnerListId(id) {
-  $('#inner-list-dom-id').val(`#fun${id}`);
-  $('#inner-list-dom-class').val(`.subfunc${id}`);
+  $("#inner-list-dom-id").val(`#fun${id}`);
+  $("#inner-list-dom-class").val(`.subfunc${id}`);
 }
 
 function subfun() {}
 
-function scrollElementIntoView2(dbId) {
-  submenu(`#fun${dbId}`);
+function scrollElementIntoView2(fId, sfId) {
+  let fnLastChar = "0";
+  fnLastChar = fId.charAt(fId.length - 1);
+  submenu(`#fun${fnLastChar}`);
   setTimeout(() => {
-    document
-      .getElementById(`func-item-${dbId}`)
-      ?.scrollIntoView({ block: 'nearest' }); //handle undefined error by adding ? character
-  }, 50);
+    const element = document.getElementById(fId);
+    if (fnLastChar != "0") {
+      element.scrollIntoView({
+        block: "nearest",
+      });
+    }
+  }, 500);
 }
 
 //function and subfunction menu toggler
 function submenu(id) {
   $(id).toggle();
-  const idNum = id.match(/\d/g).join('');
-  $(`.subfunc-${idNum}`).show();
+
+  lastChar = id.charAt(id.length - 1);
+  $(`.subfunc-${lastChar}`).show();
 }
 
 function highlightSubfun(funId) {
-  $(`.func-item`).removeClass('active-two'); //ensures all functions in the list are not highlighted
+  $(`.func-item`).removeClass("active-two"); //ensures all functions in the list are not highlighted
 
-  $(`.subfunc-item`).removeClass('active-two'); ////ensures all subfunctions in the list are not highlighted
+  $(`.subfunc-item`).removeClass("active-two"); ////ensures all subfunctions in the list are not highlighted
 
-  $(`#funcitem${funId}`).addClass('active-two'); //allow function highlighting onclicking subfunction after searching
+  $(`#funcitem${funId}`).addClass("active-two"); //allow function highlighting onclicking subfunction after searching
 
-  $('#inner-list-dom-id').val(`#fun${funId}`);
-  $('#inner-list-dom-class').val(`.subfunc${funId}`);
+  $("#inner-list-dom-id").val(`#fun${funId}`);
+  $("#inner-list-dom-class").val(`.subfunc${funId}`);
 
-  let inner_list_id = $('#inner-list-dom-id').val();
-  let inner_list_class = $('#inner-list-dom-class').val();
+  let inner_list_id = $("#inner-list-dom-id").val();
+  let inner_list_class = $("#inner-list-dom-class").val();
 
   //highlights the clicked subfunction
-  $(`.func_ ${inner_list_id}`).on('click', inner_list_class, function () {
+  $(`.func_ ${inner_list_id}`).on("click", inner_list_class, function () {
     // $(`${inner_list_class}`).removeClass("active-two");
-    $(this).addClass('active-two');
+    $(this).addClass("active-two");
   });
 }
 
 function highlightFun() {
-  $('.func_').on('click', '.func-item', function () {
-    $('.func_ .func-item').removeClass('active-two'); //ensures no other function in the list is highlighted
-    $(this).addClass('active-two');
+  $(".func_").on("click", ".func-item", function () {
+    $(".func_ .func-item").removeClass("active-two"); //ensures no other function in the list is highlighted
+    $(this).addClass("active-two");
 
-    let cur_inner_list = $('#inner-list-dom-id').val();
+    let cur_inner_list = $("#inner-list-dom-id").val();
     if (cur_inner_list) {
       lastChar = cur_inner_list.charAt(cur_inner_list.length - 1);
-      $('.inner_list:not(' + cur_inner_list + ')').fadeOut('fast');
+      $(".inner_list:not(" + cur_inner_list + ")").fadeOut("fast");
     } else {
-      $('.inner_list').fadeOut('fast');
+      $(".inner_list").fadeOut("fast");
     }
   });
 }
@@ -262,25 +274,25 @@ function apiSubfunLoad(callback) {
     ////------------load resource from the server
     let jso = {};
     let status = 1;
-    let orderby = 'name';
+    let orderby = "name";
     let offset = 0;
     let rpp = 500;
-    let dir = 'ASC';
+    let dir = "ASC";
     let query =
-      '?status=' +
+      "?status=" +
       status +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&offset=' +
+      "&offset=" +
       offset +
-      '&rpp=' +
+      "&rpp=" +
       rpp;
 
-    crudaction(jso, '/subfunctionalities' + query, 'GET', function (result) {
+    crudaction(jso, "/subfunctionalities" + query, "GET", function (result) {
       callback(result);
-      persistence('allSubfuns', result);
+      persistence("allSubfuns", result);
     });
   }
 }
@@ -290,7 +302,7 @@ function filterSubFuncByFunc() {
   if (current_loc && current_loc.allSubfuns) {
     let subfuns = current_loc.allSubfuns.data;
 
-    let sel_fun = parseInt($('#func_sel').val().trim());
+    let sel_fun = parseInt($("#func_sel").val().trim());
     let subfun = `<option value="">--Select One</option><option value="0">No subfunction</option>`;
 
     if (sel_fun >= 0) {
@@ -307,15 +319,15 @@ function filterSubFuncByFunc() {
         for (let sf = 0; sf < subfunsByFunc.length; sf++) {
           subfun += ` <option value="${subfunsByFunc[sf].uid}">${subfunsByFunc[sf].name}</option>`;
         }
-        $('#subfunc_sel').html(subfun);
+        $("#subfunc_sel").html(subfun);
       } else {
-        $('#subfunc_sel').html(subfun);
+        $("#subfunc_sel").html(subfun);
       }
     } else {
       for (let ii = 0; ii < subfuns.length; ii++) {
         subfun += `<option value="${subfuns[ii].uid}">${subfuns[ii].name}</option>`;
       }
-      $('#subfunc_sel').html(subfun);
+      $("#subfunc_sel").html(subfun);
     }
   }
 }
@@ -325,10 +337,10 @@ function filterSubFuncByFunc() {
 //////------Begin Languages
 function load_languages() {
   //display a loader
-  spinner('#language_');
+  spinner("#language_");
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
-  let server = $('#server_').val(); //get the server url for the image retrieval
+  let server = $("#server_").val(); //get the server url for the image retrieval
 
   //check if languages already exist in the localstorage and use as the resource
   if (current_loc && current_loc.allLangs) {
@@ -336,8 +348,9 @@ function load_languages() {
     let langs_arr_size = data.length;
 
     if (langs_arr_size > 0) {
-      let lang = '';
-      let active_language = '';
+      let lang = "";
+      let lang_sel = "";
+      let active_language = "";
       let language_sel;
       let langs_arr_size = data.length;
       for (let i = 0; i < langs_arr_size; i++) {
@@ -348,55 +361,63 @@ function load_languages() {
         if (current_loc && current_loc.language > 0) {
           language_sel = current_loc.language;
           if (uid == language_sel) {
-            active_language = 'active-two';
+            active_language = "active-two";
           } else {
-            active_language = '';
+            active_language = "";
           }
         }
         lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); ; loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+
+        lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
+            server + "/" + icon + '" height="20px"> ' +
+            title +
+            "</a>";
       }
-      $('#language_').html(lang);
+      $("#language_").html(lang);
+      $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
 
       if (language_sel) {
         scrollElementIntoView(`lang-item-${language_sel}`);
       }
     } else {
       //////-------No Languages found
-      $('#language_').html('<li>No Languages</li>');
+      $("#language_").html("<li>No Languages</li>");
+      $("#language_select_modal").html('Unable to load languages');
     }
   } else {
     ///----Load resource from the server
-    let where_ = 'status = 1';
-    let dir = 'ASC';
-    let orderby = 'name';
+    let where_ = "status = 1";
+    let dir = "ASC";
+    let orderby = "name";
     let offset = 0;
     let rpp = 100;
 
     let jso = {};
 
     let query =
-      '?where_=' +
+      "?where_=" +
       where_ +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&offset=' +
+      "&offset=" +
       offset +
-      '&rpp=' +
+      "&rpp=" +
       rpp;
 
-    crudaction(jso, '/languages' + query, 'GET', function (result) {
+    crudaction(jso, "/languages" + query, "GET", function (result) {
       if (result && result.data && result.data.length > 0) {
         //pesist the data in localstorage for later reference
-        persistence('allLangs', result);
+        persistence("allLangs", result);
 
-        let data = result['data'];
-        let lang = '';
-        let active_language = '';
+        let data = result["data"];
+        let lang = "";
+        let lang_sel = "";
+        let active_language = "";
         let language_sel;
         let langs_arr_size = data.length;
         for (let i = 0; i < langs_arr_size; i++) {
@@ -407,33 +428,49 @@ function load_languages() {
           if (current_loc && current_loc.language > 0) {
             language_sel = current_loc.language;
             if (uid == language_sel) {
-              active_language = 'active-two';
+              active_language = "active-two";
             } else {
-              active_language = '';
+              active_language = "";
             }
           }
           lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+
+          lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
+              server + "/" + icon + '" height="20px"> ' +
+              title +
+              "</a>";
         }
-        $('#language_').html(lang);
+        $("#language_").html(lang);
+        $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
+
 
         if (language_sel) {
           scrollElementIntoView(`lang-item-${language_sel}`);
         }
       } else {
         //////-------No Languages found
-        $('#language_').html('<li>No Languages</li>');
+        $("#language_").html("<li>No Languages</li>");
+        $("#language_select_modal").html('Unable to load languages');
       }
     });
   }
 }
+function default_lang(uid, name){
+  persistence('language', uid);
+  highlightLang();
+  successToast("We will show you more of "+name);
+  hidewelcome();
+}
 
 function highlightLang() {
-  $('.lang_').on('click', '.lang-item', function () {
-    $('.lang_ .lang-item').removeClass('active-two');
-    $(this).addClass('active-two');
+ // $('#sel_framework').val("-1");
+ // $('#sel_codestyle').val("0");
+  $(".lang_").on("click", ".lang-item", function () {
+    $(".lang_ .lang-item").removeClass("active-two");
+    $(this).addClass("active-two");
   });
 }
 
@@ -442,9 +479,9 @@ function scrollElementIntoView(listId) {
   setTimeout(() => {
     const lastChar = listId.charAt(listId.length - 1);
     const element = document.getElementById(listId);
-    if (lastChar != '0') {
+    if (lastChar != "0") {
       element.scrollIntoView({
-        block: 'nearest',
+        block: "nearest",
       });
     }
   }, 100);
@@ -459,7 +496,7 @@ function filterFramsByLang() {
   if (current_loc && current_loc.allFrams) {
     let frams = current_loc.allFrams;
 
-    let sel_lang = parseInt($('#language_sel').val().trim());
+    let sel_lang = parseInt($("#language_sel").val().trim());
     let fram = `<option value="">--Select One</option><option value="0">No Framework</option>`;
 
     if (sel_lang >= 0) {
@@ -476,25 +513,25 @@ function filterFramsByLang() {
         for (let frm = 0; frm < framsByLang.length; frm++) {
           fram += `<option value="${framsByLang[frm].uid}">${framsByLang[frm].name}</option>`;
         }
-        $('#framework_sel').html(fram);
+        $("#framework_sel").html(fram);
       } else {
-        $('#framework_sel').html(fram);
+        $("#framework_sel").html(fram);
       }
     } else {
       for (let ii = 0; ii < frams.length; ii++) {
         fram += `<option value="${frams[ii].uid}">${frams[ii].name}</option>`;
       }
-      $('#framework_sel').html(fram);
+      $("#framework_sel").html(fram);
     }
   }
 }
 
 function persistFram() {
-  persistence('framework', parseInt($('#sel_framework').val()));
+  persistence("framework", parseInt($("#sel_framework").val()));
 }
 
 function persistCodestyle() {
-  persistence('codestyle', parseInt($('#sel_codestyle').val()));
+  persistence("codestyle", parseInt($("#sel_codestyle").val()));
 }
 
 function getAllFrams() {
@@ -504,7 +541,7 @@ function getAllFrams() {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
     if (frams_arr_size > 0) {
       let active_fram;
@@ -524,38 +561,38 @@ function getAllFrams() {
         }
       }
       //display framework select box
-      $('#framework-dropdown').html(row + '</select>');
+      $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
       <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
-      $('#framework-dropdown').html(row); ////no framework
+      $("#framework-dropdown").html(row); ////no framework
     }
   } else {
     ///---Load resource from the server
     let offset = 0;
     let rpp = 500;
-    let where_ = 'f.status = 1';
-    let orderby = 'f.name';
-    let dir = 'ASC';
+    let where_ = "f.status = 1";
+    let orderby = "f.name";
+    let dir = "ASC";
 
     let query =
-      '?where_=' +
+      "?where_=" +
       where_ +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&offset=' +
+      "&offset=" +
       offset +
-      '&rpp=' +
+      "&rpp=" +
       rpp;
 
-    crudaction({}, '/frameworks' + query, 'GET', function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    crudaction({}, "/frameworks" + query, "GET", function (feed) {
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -568,23 +605,23 @@ function getAllFrams() {
 
         //append the framework data with uid as the first object within the array
         data.unshift({
-          description: '',
-          icon: '',
-          language: '',
+          description: "",
+          icon: "",
+          language: "",
           language_id: 0,
-          name: 'No Framework',
+          name: "No Framework",
           status: 1,
           uid: 0,
         });
 
         data.unshift({
-          description: '',
-          icon: '',
-          language: '',
+          description: "",
+          icon: "",
+          language: "",
           language_id: 0,
-          name: 'All Frameworks',
+          name: "All Frameworks",
           status: 1,
-          uid: '',
+          uid: "-1",
         });
         let active_fram;
 
@@ -603,18 +640,18 @@ function getAllFrams() {
           }
         }
         //display framework select box
-        $('#framework-dropdown').html(row + '</select>');
+        $("#framework-dropdown").html(row + "</select>");
 
         //persist the data for later use
-        persistence('allFrams', data);
+        persistence("allFrams", data);
       } else {
         row = `
-        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-          <option value = "">All Frameworks</option>
+        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+          <option value = "-1">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
       `;
-        $('#framework-dropdown').html(row); ////no framework
+        $("#framework-dropdown").html(row); ////no framework
       }
     });
   }
@@ -627,7 +664,7 @@ function getFramsByLang(lang_id) {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
     if (frams_arr_size > 0) {
@@ -647,41 +684,41 @@ function getFramsByLang(lang_id) {
         }
       }
       //display framework select box
-      $('#framework-dropdown').html(row + '</select>');
+      $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
 
-      $('#framework-dropdown').html(row); ////no framework
+      $("#framework-dropdown").html(row); ////no framework
     }
   } else {
     ///----Load resource from the server
     let offset = 0;
     let rpp = 100;
-    let where_ = 'f.status = 1';
-    let orderby = 'f.name';
-    let dir = 'ASC';
+    let where_ = "f.status = 1";
+    let orderby = "f.name";
+    let dir = "ASC";
 
     let query =
-      '?language_id=' +
+      "?language_id=" +
       lang_id +
-      '&where_=' +
+      "&where_=" +
       where_ +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&offset=' +
+      "&offset=" +
       offset +
-      '&rpp=' +
+      "&rpp=" +
       rpp;
 
-    crudaction({}, '/frameworks' + query, 'GET', function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+    crudaction({}, "/frameworks" + query, "GET", function (feed) {
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -694,23 +731,23 @@ function getFramsByLang(lang_id) {
 
         //append the framework data with uid as the first object within the array
         data.unshift({
-          description: '',
-          icon: '',
-          language: '',
+          description: "",
+          icon: "",
+          language: "",
           language_id: 0,
-          name: 'No Framework',
+          name: "No Framework",
           status: 1,
           uid: 0,
         });
 
         data.unshift({
-          description: '',
-          icon: '',
-          language: '',
+          description: "",
+          icon: "",
+          language: "",
           language_id: 0,
-          name: 'All Frameworks',
+          name: "All Frameworks",
           status: 1,
-          uid: '',
+          uid: "-1",
         });
 
         let active_fram;
@@ -729,16 +766,16 @@ function getFramsByLang(lang_id) {
           }
         }
         //display framework select box
-        $('#framework-dropdown').html(row + '</select>');
+        $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
-        <option value = "">All Frameworks</option>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+        <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
 
-        $('#framework-dropdown').html(row); ////no framework
+        $("#framework-dropdown").html(row); ////no framework
       }
     });
   }
@@ -750,16 +787,16 @@ function getFramsByLang(lang_id) {
 function codesnippetValidate() {
   // Retrieving the values of form elements
   //let codesnippet_id = $("#code_edit_id").val();
-  let func_id = $('#func_sel').val();
-  let subfunc_id = $('#subfunc_sel').val();
-  let language_id = $('#language_sel').val();
-  let framework_id = $('#framework_sel').val();
-  let lang_impl_type_id = $('#sel_lang_impl').val();
-  let user_impl_type_id = $('#sel_user_impl').val();
-  let title = $('#codeimpl_title').val().trim();
-  let row_code = $('#code_input').val().trim();
-  let file_extension = $('#file_extension').val().trim();
-  let editorKey = 'instructions_input';
+  let func_id = $("#func_sel").val();
+  let subfunc_id = $("#subfunc_sel").val();
+  let language_id = $("#language_sel").val();
+  let framework_id = $("#framework_sel").val();
+  let lang_impl_type_id = $("#sel_lang_impl").val();
+  let user_impl_type_id = $("#sel_user_impl").val();
+  let title = $("#codeimpl_title").val().trim();
+  let row_code = $("#code_input").val().trim();
+  let file_extension = $("#file_extension").val().trim();
+  let editorKey = "instructions_input";
   let instructions =
     myeditors2 && myeditors2[editorKey]
       ? myeditors2[editorKey].getData().trim()
@@ -772,7 +809,7 @@ function codesnippetValidate() {
     let { user } = current_loc;
     added_by = user.uid;
   } else {
-    gotourl('login');
+    gotourl("login");
     return;
   }
 
@@ -790,56 +827,56 @@ function codesnippetValidate() {
       true);
 
   // Validate function
-  if (func_id == '') {
-    printError('funErr', 'Please select function');
+  if (func_id == "") {
+    printError("funErr", "Please select function");
   } else {
-    printError('funErr', '');
+    printError("funErr", "");
     funErr = false;
   }
 
   // Validate subfunction
-  if (subfunc_id == '') {
-    printError('subfunErr', 'Please select subfunction');
+  if (subfunc_id == "") {
+    printError("subfunErr", "Please select subfunction");
   } else {
-    printError('subfunErr', '');
+    printError("subfunErr", "");
     subfunErr = false;
   }
 
   // Validate language
-  if (language_id == '') {
-    printError('langErr', 'Please select language');
+  if (language_id == "") {
+    printError("langErr", "Please select language");
   } else {
-    printError('langErr', '');
+    printError("langErr", "");
     langErr = false;
   }
 
   // Validate framework
-  if (framework_id == '') {
-    printError('framErr', 'Please select framework');
+  if (framework_id == "") {
+    printError("framErr", "Please select framework");
   } else {
-    printError('framErr', '');
+    printError("framErr", "");
     framErr = false;
   }
 
   // Validate language implementation
-  if (lang_impl_type_id == '') {
-    printError('langImplErr', 'Please select language implementation type');
+  if (lang_impl_type_id == "") {
+    printError("langImplErr", "Please select language implementation type");
   } else {
-    printError('langImplErr', '');
+    printError("langImplErr", "");
     langImplErr = false;
   }
 
   // Validate language implementation
-  if (user_impl_type_id == '') {
-    printError('userImplErr', 'Please select your implementation type');
+  if (user_impl_type_id == "") {
+    printError("userImplErr", "Please select your implementation type");
   } else {
-    printError('userImplErr', '');
+    printError("userImplErr", "");
     userImplErr = false;
   }
 
   // Validate title
-  if (title == '') {
-    printError('titleErr', 'Please add a user friendly code title');
+  if (title == "") {
+    printError("titleErr", "Please add a user friendly code title");
   } else {
     // printError("titleErr", "");
     // titleErr = false;
@@ -848,30 +885,28 @@ function codesnippetValidate() {
     let regex = /^[a-zA-Z0-9.',?@&#\s]+$/;
     if (regex.test(title) === false) {
       printError(
-        'titleErr',
-        'Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title.'
+        "titleErr",
+        "Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title."
       );
     } else {
-      printError('titleErr', '');
+      printError("titleErr", "");
       titleErr = false;
     }
   }
 
   // Validate code
-  if (row_code == '') {
-    printError('codeErr', 'Please enter your code');
+  if (row_code == "") {
+    printError("codeErr", "Please enter your code");
   } else {
-    printError('codeErr', '');
+    printError("codeErr", "");
     codeErr = false;
   }
 
   // Validate file extension
-  if (file_extension == '') {
-    printError('fileExtErr', 'File extension used with code added is required');
-  } else if (file_extension?.length > 10) {
-    printError('fileExtErr', 'File extension should not exceed 10 characters');
+  if (file_extension == "") {
+    printError("fileExtErr", "File extension used with code added is required");
   } else {
-    printError('fileExtErr', '');
+    printError("fileExtErr", "");
     fileExtErr = false;
   }
 
@@ -923,15 +958,15 @@ function codesnippetValidate() {
 
 function saveCodeSnippet(data) {
   //show disabled/processing button
-  disabledBtn('#addEditCodeBtn');
-  let codesnippet_id = $('#code_edit_id').val();
-  let method = 'POST';
-  let url = '/add-codesnippet';
+  disabledBtn("#addEditCodeBtn");
+  let codesnippet_id = $("#code_edit_id").val();
+  let method = "POST";
+  let url = "/add-codesnippet";
   let jso = data;
 
   if (codesnippet_id > 0) {
-    method = 'PUT';
-    url = '/edit-codesnippet';
+    method = "PUT";
+    url = "/edit-codesnippet";
     data.codesnippet_id = codesnippet_id;
     jso = data;
   }
@@ -940,36 +975,22 @@ function saveCodeSnippet(data) {
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn('#addEditCodeBtn', 'codesnippetValidate();', 'Click to submit');
+      submitBtn("#addEditCodeBtn", "codesnippetValidate();", "Click to submit");
     }
 
-    if (feed['success'] === false) {
-      let message = feed['message'];
+    if (feed["success"] === false) {
+      let message = feed["message"];
       errorToast(message);
-    } else if (feed['success'] === true) {
-      let message = feed['message'];
+    } else if (feed["success"] === true) {
+      let message = feed["message"];
       successToast(message);
 
-      //reset form fields on code submission
-      document.getElementById('func_sel').selectedIndex = 0;
-      document.getElementById('subfunc_sel').selectedIndex = 0;
-      document.getElementById('language_sel').selectedIndex = 0;
-      document.getElementById('framework_sel').selectedIndex = 0;
-      document.getElementById('sel_lang_impl').selectedIndex = 0;
-      document.getElementById('sel_user_impl').selectedIndex = 0;
-      $('#codeimpl_title').val('');
-      $('#code_input').val('');
-      $('#file_extension').val('');
-      myeditors2 && myeditors2['instructions_input']
-        ? myeditors2['instructions_input']?.setData('')?.trim()
-        : $('#instructions_input')?.val('');
-
       //redirect user to edited codesnippet on successful update
-      if (method == 'PUT') {
+      if (method == "PUT") {
         //access the next nav url
         let current_loc = currentLoc();
         let nextNav =
-          current_loc && current_loc.gotourl ? current_loc.gotourl : 'index';
+          current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
         setTimeout(() => {
           gotourl(nextNav);
         }, 2500);
@@ -978,109 +999,109 @@ function saveCodeSnippet(data) {
   });
 }
 
-function getNavLink(page, query = 'qs=') {
+function getNavLink(page, query = "qs=") {
   let host = getCurrentHost();
-  let navLink = '';
+  let navLink = "";
   let origin = getCurrentUrl().origin;
-  host == 'localhost'
+  host == "localhost"
     ? (navLink = `${origin}/zidi-app/${page}?${query}`)
     : (navLink = `${origin}/${page}?${query}`);
 
-  $('#nav_link').val(navLink);
+  $("#nav_link").val(navLink);
   return navLink;
 }
 
 function contributeCodeNav() {
-  let navLink = getNavLink('code-add-edit', 'cid=');
-  $('#contribute-code').html(`
+  let navLink = getNavLink("code-add-edit", "cid=");
+  $("#contribute-code").html(`
   <a class="a-override" onclick='persistence("gotourl", "${navLink}");' href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
   `);
 }
 
 function search_codeSnippet() {
-  setTimeout(function () {
+  setTimeout(function(){
     localStorage.searching = 0;
-  }, 2000);
-  let code_search = $('#search_box').val().trim();
+  }, 1000);
+  let code_search = $("#search_box").val().trim();
   let status = 1;
   let offset = 0;
   let rpp = 7;
-  let orderby = 'uid';
-  let dir = 'DESC';
+  let orderby = "uid";
+  let dir = "DESC";
   let searching = 0;
-  if (localStorage.searching) {
-    searching = localStorage.searching;
-  } else {
-    localStorage.searching = 1;
+  if((localStorage.searching)){
+     searching = localStorage.searching;
+  }
+  else{
+   localStorage.searching = 1;
   }
 
   if (code_search) {
     let query = `?search_=${code_search}&status=${status}&offset=${offset}&rpp=${rpp}&orderby=${orderby}&dir=${dir}`;
-    if (searching === '0') {
+    if(searching === '0'){
       localStorage.searching = 1;
-      crudaction({}, '/search-codesnippet' + query, 'GET', function (result) {
-        console.log(result);
-        persistence('searched_solns', result.data);
-        if (result.success) {
-          let totalSearches = result.search_totals;
-          let data = result['data'];
-          if (totalSearches > 0) {
-            let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white table-condensed'>`;
-            for (let i = 0; i < data.length; i++) {
-              tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
+    crudaction({}, "/search-codesnippet" + query, "GET", function (result) {
+      console.log(result);
+      persistence("searched_solns", result.data);
+      if (result.success) {
+        let totalSearches = result.search_totals;
+        let data = result["data"];
+        if (totalSearches > 0) {
+          let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white table-condensed'>`;
+          for (let i = 0; i < data.length; i++) {
+            tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
             onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
             <span class="font-16 text-bold">${data[i].title} in ${data[i].language_name} </span> <br/>
             Contributed By: <i> ${data[i].fullname} </i> on <i> ${data[i].added_date} </i></a></td></tr>`;
-            }
-
-            tableSearch += `</table>`;
-            $('#code_results').slideDown('fast');
-            $('#code_results').html(tableSearch);
-          } else {
-            $('#code_results').slideDown('fast');
-            $('#code_results').html(
-              `<div class="childClass stack-top card">
-            <span class="text-center search-dropdown-noresults">No results</span>
-          </div>`
-            );
           }
+
+          tableSearch += `</table>`;
+          $("#code_results").slideDown("fast");
+          $("#code_results").html(tableSearch);
         } else {
-          $('#code_results').slideDown('fast');
-          $('#code_results').html(
+          $("#code_results").slideDown("fast");
+          $("#code_results").html(
             `<div class="childClass stack-top card">
-          <span class="text-center search-dropdown-noresults">No results</span>
+            <span class="text-center search-dropdown-noresults">No results</span>
           </div>`
           );
         }
-        localStorage.searching = 0;
-      });
-    } else {
-    }
+      } else {
+        $("#code_results").slideDown("fast");
+        $("#code_results").html(
+          `<div class="childClass stack-top card">
+          <span class="text-center search-dropdown-noresults">No results</span>
+          </div>`
+        );
+      }
+      localStorage.searching = 0;
+    });
+  }
+  else{
+
+  }
   } else {
-    $('#code_results').fadeOut('fast');
+    $("#code_results").fadeOut("fast");
   }
 }
 
 function select_code(code_id, title, language) {
-  $('#search_box').val(title);
+  $("#search_box").val(title);
 
   //load the selected code using the code uid
-  appendCodeUrl(code_id, 'search');
+  appendCodeUrl(code_id, "search");
   load_codesnippetById(code_id);
   // $("#code_id_").val(uid);
-  $('#code_results').fadeOut('fast');
+  $("#code_results").fadeOut("fast");
 }
 
 function codeStyles() {
   let data = [
-    {
-      uid: '',
-      name: 'All Code Styles',
-    },
-    { uid: 1, name: 'Plain Code' },
-    { uid: 2, name: 'Function Based' },
-    { uid: 3, name: 'Class Based' },
-    { uid: 4, name: 'API Based' },
+
+    { uid: 1, name: "Plain Code" },
+    { uid: 2, name: "Function Based" },
+    { uid: 3, name: "Class Based" },
+    { uid: 4, name: "API Based" },
   ]; //static code style data
 
   let current_loc = currentLoc(); //access persisted localstorage key values
@@ -1090,11 +1111,11 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = `<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'>`;
+  let row = "<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'><option value = \"0\" > All Code Styles</option>";
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
-    if (codestyle_id == active_codestyle) {
+    if (codestyle_id === active_codestyle) {
       row += `<option SELECTED value="${codestyle_id}">${codestyle_title}</option>`;
     } else {
       row += `<option value="${codestyle_id}">${codestyle_title}</option>`;
@@ -1102,13 +1123,13 @@ function codeStyles() {
   }
 
   //display framework select box with frameworks for the selected language
-  $('#codestyle-dropdown').html(row + '<select');
+  $("#codestyle-dropdown").html(row + "<select");
 }
 
 const tagsToReplace = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
 };
 
 function replaceTag(tag) {
@@ -1119,34 +1140,32 @@ function safe_tags_replace(str) {
   return str.replace(/[&<>]/g, replaceTag);
 }
 
-// load all solutions
-function loadCodesnippetsLink(action = '') {
-  $('.all-solns').show();
+function loadCodesnippetsLink(action = "") {
+  $(".all-solns").show();
   //show a loader
   spinner(
-    '#available-solns',
-    'spinner-border-sm',
-    'd-flex justify-content-center'
+    "#available-solns",
+    "spinner-border-sm",
+    "d-flex justify-content-center"
   );
-  $('.related-soln-container').hide(); //hide related solutions container
-  $('#links-title').html('All Solutions');
+  $(".related-soln-container").hide(); //hide related solutions container
+  $("#links-title").html("All Solutions");
 
   let current_loc = currentLoc();
-  if (action == 'all_back') {
+  if (action == "all_back") {
     if (current_loc && current_loc.all_solns && current_loc.all_solns.length) {
       let total_ = current_loc.all_solns.length;
       if (total_ > 0) {
         let data = current_loc.all_solns;
-        // let language_implementation_type;
-        let user_implementation_type;
-        // let firstChar;
+        let language_implementation_type;
+        let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
-        let solns = '';
+        let solns = "";
         for (let i = 0; i < data.length; i++) {
-          user_implementation_type = data[i].user_implementation_type;
+          language_implementation_type = data[i].language_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1154,96 +1173,96 @@ function loadCodesnippetsLink(action = '') {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = '';
+            framework = "";
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
+          firstChar = language_implementation_type[0];
 
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
 
-          let activeClass = '';
+          let activeClass = "";
           let curSoln =
             current_loc && current_loc.code_sel && current_loc.code_sel.uid
               ? current_loc.code_sel.uid
-              : '';
+              : "";
           curSoln == codesnippet_id
-            ? (activeClass = 'active-two')
-            : (activeClass = '');
+            ? (activeClass = "active-two")
+            : (activeClass = "");
 
-          solns += `<a href="javascript:void(0)"
+          solns += `<a href="javascript:void(0)"  
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item ${activeClass} list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $('#available-solns').html(solns);
+        $("#available-solns").html(solns);
       } else {
         //add code version drop down
-        $('#available-solns').html(
+        $("#available-solns").html(
           `<p class="list-group-item list-group-item-action">No record found</p>`
         );
-        persistence_remove('all_solns');
+        persistence_remove("all_solns");
       }
     } else {
       //get resource from the server
       let rpp = 25;
       let offset = 0;
-      let sel_func = '';
-      let sel_subfunc = '';
-      let sel_language = '';
-      let sel_framework = '';
-      let sel_codestyle = '';
+      let sel_func = "";
+      let sel_subfunc = "";
+      let sel_language = "";
+      let sel_framework = "";
+      let sel_codestyle = "";
 
       //persist user selections before sending the request to server, so that they will remain intact even on page refresh
       let status = 1;
-      let orderby = 'uid';
-      let dir = 'DESC';
+      let orderby = "uid";
+      let dir = "DESC";
 
       let jso = {};
 
       let query =
-        '?status=' +
+        "?status=" +
         status +
-        '&orderby=' +
+        "&orderby=" +
         orderby +
-        '&dir=' +
+        "&dir=" +
         dir +
-        '&func_id=' +
+        "&func_id=" +
         sel_func +
-        '&subfunc_id=' +
+        "&subfunc_id=" +
         sel_subfunc +
-        '&language_id=' +
+        "&language_id=" +
         sel_language +
-        '&framework_id=' +
+        "&framework_id=" +
         sel_framework +
-        '&user_impl_type_id=' +
+        "&user_impl_type_id=" +
         sel_codestyle +
-        '&offset=' +
+        "&offset=" +
         offset +
-        '&rpp=' +
+        "&rpp=" +
         rpp;
 
-      crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
+      crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
         //console.log(feed);
         let total_ = feed.all_totals;
         if (total_ > 0) {
-          let data = feed['data'];
+          let data = feed["data"];
 
-          let user_implementation_type;
-          // let firstChar;
+          let language_implementation_type;
+          let firstChar;
           let language_name;
           let framework;
           let codesnippet_id;
 
-          let solns = '';
+          let solns = "";
           for (let i = 0; i < data.length; i++) {
-            user_implementation_type = data[i].user_implementation_type;
+            language_implementation_type = data[i].language_implementation_type;
             language_name = data[i].language_name;
             framework = data[i].framework;
             language_id = data[i].language_id;
@@ -1251,34 +1270,34 @@ function loadCodesnippetsLink(action = '') {
             let title = data[i].title;
 
             if (data[i].framework_id == 0) {
-              framework = '';
+              framework = "";
             } else {
               framework = ` with ${framework} framework`;
             }
 
-            // firstChar = language_implementation_type[0];
+            firstChar = language_implementation_type[0];
 
-            // if (firstChar == 'D') {
-            //   language_implementation_type = '';
-            // } else {
-            //   language_implementation_type = ` ${language_implementation_type}`;
-            // }
+            if (firstChar == "D") {
+              language_implementation_type = "";
+            } else {
+              language_implementation_type = ` ${language_implementation_type}`;
+            }
 
-            solns += `<a href="javascript:void(0)"
+            solns += `<a href="javascript:void(0)"  
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-            ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
+            ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
           }
 
-          $('#available-solns').html(solns);
+          $("#available-solns").html(solns);
 
-          persistence('all_solns', feed.data);
+          persistence("all_solns", feed.data);
         } else {
           //add code version drop down
-          $('#available-solns').html(
+          $("#available-solns").html(
             `<p class="list-group-item list-group-item-action">No record found</p>`
           );
-          persistence_remove('all_solns');
+          persistence_remove("all_solns");
         }
       });
     }
@@ -1286,60 +1305,60 @@ function loadCodesnippetsLink(action = '') {
     //------get reource from server
     let rpp = 25;
     let offset = 0;
-    let sel_func = current_loc && current_loc.func ? current_loc.func : '';
+    let sel_func = current_loc && current_loc.func ? current_loc.func : "";
     let sel_subfunc =
-      current_loc && current_loc.subfunc ? current_loc.subfunc : '';
+      current_loc && current_loc.subfunc ? current_loc.subfunc : "";
     let sel_language =
-      current_loc && current_loc.language ? current_loc.language : '';
+      current_loc && current_loc.language ? current_loc.language : "";
     let sel_codestyle =
-      current_loc && current_loc.codestyle ? current_loc.codestyle : '';
+      current_loc && current_loc.codestyle ? current_loc.codestyle : "";
 
     let sel_framework = current_loc.framework;
-    sel_framework = Number.isFinite(sel_framework) ? sel_framework : '';
+    sel_framework = Number.isFinite(sel_framework) ? sel_framework : "";
 
     let status = 1;
-    let orderby = 'uid';
-    let dir = 'DESC';
+    let orderby = "uid";
+    let dir = "DESC";
 
     let jso = {};
 
     let query =
-      '?status=' +
+      "?status=" +
       status +
-      '&orderby=' +
+      "&orderby=" +
       orderby +
-      '&dir=' +
+      "&dir=" +
       dir +
-      '&func_id=' +
+      "&func_id=" +
       sel_func +
-      '&subfunc_id=' +
+      "&subfunc_id=" +
       sel_subfunc +
-      '&language_id=' +
+      "&language_id=" +
       sel_language +
-      '&framework_id=' +
+      "&framework_id=" +
       sel_framework +
-      '&user_impl_type_id=' +
+      "&user_impl_type_id=" +
       sel_codestyle +
-      '&offset=' +
+      "&offset=" +
       offset +
-      '&rpp=' +
+      "&rpp=" +
       rpp;
 
-    crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
+    crudaction(jso, "/codesnippets" + query, "GET", function (feed) {
       //console.log(feed);
       let total_ = feed.all_totals;
       if (total_ > 0) {
-        let data = feed['data'];
+        let data = feed["data"];
 
-        let user_implementation_type;
-        // let firstChar;
+        let language_implementation_type;
+        let firstChar;
         let language_name;
         let framework;
         let codesnippet_id;
 
-        let solns = '';
+        let solns = "";
         for (let i = 0; i < data.length; i++) {
-          user_implementation_type = data[i].user_implementation_type;
+          language_implementation_type = data[i].language_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1347,62 +1366,61 @@ function loadCodesnippetsLink(action = '') {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = '';
+            framework = "";
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
+          firstChar = language_implementation_type[0];
 
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
 
-          solns += `<a href="javascript:void(0)"
+          solns += `<a href="javascript:void(0)"  
       onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-      ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
+      ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $('#available-solns').html(solns);
+        $("#available-solns").html(solns);
 
-        persistence('all_solns', feed.data);
+        persistence("all_solns", feed.data);
       } else {
         //add code version drop down
-        $('#available-solns').html(
+        $("#available-solns").html(
           `<p class="list-group-item list-group-item-action">No record found</p>`
         );
 
-        persistence_remove('all_solns');
+        persistence_remove("all_solns");
       }
     });
   }
 }
 
-// get related solutions
 function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
-  $('.all-solns').hide();
-  $('.related-soln-container').show(); //show the related solutions container
+  $(".all-solns").hide();
+  $(".related-soln-container").show(); //show the related solutions container
   spinner(
-    '#related-solns',
-    'spinner-border-sm',
-    'd-flex justify-content-center'
+    "#related-solns",
+    "spinner-border-sm",
+    "d-flex justify-content-center"
   );
 
   let query = `?func_id=${func_id}&subfunc_id=${subfunc_id}&codesnippet_id=${codesnippet_id}&status=1&language_id=${language_id}`;
-  crudaction({}, '/related-solns' + query, 'GET', (feed) => {
+  crudaction({}, "/related-solns" + query, "GET", (feed) => {
     if (feed && feed.data) {
       //display related solutions
       let { data } = feed;
       let solns_arr_size = data.length;
-      let solns = '';
+      let solns = "";
       solns_arr_size == 1
-        ? $('#related-soln-title').html('Related Solution')
-        : $('#related-soln-title').html('Related Solutions');
+        ? $("#related-soln-title").html("Related Solution")
+        : $("#related-soln-title").html("Related Solutions");
 
-      $('#all-solns-nav').html(
+      $("#all-solns-nav").html(
         `
         <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All" class="text-blue font-weight-bold text-center"><span class="badge badge-secondary">All <i class="fe fe-corner-up-left"></i></span></a>
         `
@@ -1410,7 +1428,7 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 
       if (solns_arr_size > 0) {
         for (let i = 0; i < solns_arr_size; i++) {
-          user_implementation_type = data[i].user_implementation_type;
+          language_implementation_type = data[i].language_implementation_type;
           language_name = data[i].language_name;
           framework = data[i].framework;
           language_id = data[i].language_id;
@@ -1418,30 +1436,30 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
           let title = data[i].title;
 
           if (data[i].framework_id == 0) {
-            framework = '';
+            framework = "";
           } else {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
+          firstChar = language_implementation_type[0];
 
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
+          if (firstChar == "D") {
+            language_implementation_type = "";
+          } else {
+            language_implementation_type = ` ${language_implementation_type}`;
+          }
 
           solns += `<a href="javascript:void(0)"  
           onclick="appendCodeUrl('${codesnippet_id}', 'related-solns'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
   <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
-          ${title} - (<i>${language_name} ${user_implementation_type} ${framework}</i>) </a>`;
+          ${title} - (<i>${language_name} ${language_implementation_type} ${framework}</i>) </a>`;
         }
 
-        $('#related-solns').html(solns);
-        persistence('related_solns', data);
+        $("#related-solns").html(solns);
+        persistence("related_solns", data);
       } else {
         //add code version drop down
-        $('#related-solns').html(
+        $("#related-solns").html(
           `<p class="list-group-item list-group-item-action">No related solution(s)</p>`
         );
       }
@@ -1454,7 +1472,7 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 
 function codeDetails() {
   let current_loc = currentLoc();
-  $('#code-composition').html(`
+  $("#code-composition").html(`
   <input type="hidden" id="copy-status" value="yes"/>
   <li class="dropdown" id="account-0">
     <div
@@ -1470,46 +1488,46 @@ function codeDetails() {
     Function<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.fun_name
         ? current_loc.code_sel.fun_name
-        : ''
+        : ""
     }</span><br>
     Subfunction<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.subfun_name
         ? current_loc.code_sel.subfun_name
-        : ''
+        : ""
     }</span><br>
     Language<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.language_name
         ? current_loc.code_sel.language_name
-        : ''
+        : ""
     }</span><br>
     Framework<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.framework_name
         ? current_loc.code_sel.framework_name
-        : ''
+        : ""
     }</span><br>
     Codestyle<i class="fe fe-arrow-down"></i><span class="text-bold">${
       current_loc && current_loc.code_sel && current_loc.code_sel.codestyle_name
         ? current_loc.code_sel.codestyle_name
-        : ''
+        : ""
     }</span>
     </div>
     </div>
   </li>`);
 }
 
-function appendCodeUrl(code_id, action = '') {
+function appendCodeUrl(code_id, action = "") {
   const current_loc = currentLoc();
   const url = getCurrentUrl();
   const host = url.host;
   const domsection =
-    current_loc && current_loc.dom_sect ? `#${current_loc.dom_sect}` : '';
-  let origin = 'https://zidiapp.com';
-  if (host == 'localhost') {
-    origin = 'http://localhost/zidi-app';
+    current_loc && current_loc.dom_sect ? `#${current_loc.dom_sect}` : "";
+  let origin = "https://zidiapp.com";
+  if (host == "localhost") {
+    origin = "http://localhost/zidi-app";
   }
-  let c_snippet_title = '';
-  let c_snippet_lang_name = '';
-  if (action == 'search') {
+  let c_snippet_title = "";
+  let c_snippet_lang_name = "";
+  if (action == "search") {
     if (
       current_loc &&
       current_loc.searched_solns &&
@@ -1525,7 +1543,7 @@ function appendCodeUrl(code_id, action = '') {
         }
       }
     }
-  } else if (action == 'related-solns') {
+  } else if (action == "related-solns") {
     if (
       current_loc &&
       current_loc.related_solns &&
@@ -1563,19 +1581,19 @@ function appendCodeUrl(code_id, action = '') {
   let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}${domsection}`;
   goTo(myUrl);
 
-  persistence('gotourl', myUrl);
+  persistence("gotourl", myUrl);
 }
 
 function persistUrl() {
   const url =
-    getCurrentUrl() && getCurrentUrl().href ? getCurrentUrl().href : '';
-  persistence('gotourl', url);
+    getCurrentUrl() && getCurrentUrl().href ? getCurrentUrl().href : "";
+  persistence("gotourl", url);
 }
 
 function copyCodesnippet() {
-  let copy_status = $('#copy-status').val();
-  if (copy_status == 'yes') {
-    let codeEditor = ace.edit('editor');
+  let copy_status = $("#copy-status").val();
+  if (copy_status == "yes") {
+    let codeEditor = ace.edit("editor");
     let codesnippet = codeEditor.getValue();
     let codeLen = codesnippet.match(/[a-zA-Z0-9}{]/g)
       ? codesnippet.match(/[a-zA-Z0-9}{]/g).length
@@ -1583,18 +1601,18 @@ function copyCodesnippet() {
 
     if (codeLen > 0) {
       navigator.clipboard.writeText(codesnippet); //copy code to clipboard
-      successToast('Code copied to clipboard'); //toast a success message
+      successToast("Code copied to clipboard"); //toast a success message
     } else {
     }
   } else {
-    errorToast('No valid code to copy');
+    errorToast("No valid code to copy");
   }
 }
 
 function shareCodesnippet() {
-  let copy_status = $('#copy-status').val();
-  if (copy_status == 'yes') {
-    let codeEditor = ace.edit('editor');
+  let copy_status = $("#copy-status").val();
+  if (copy_status == "yes") {
+    let codeEditor = ace.edit("editor");
     let codesnippet = codeEditor.getValue();
     let url = getCurrentUrl();
     let solnLink = url.href;
@@ -1605,34 +1623,48 @@ function shareCodesnippet() {
 
     if (codeLen > 0) {
       navigator.clipboard.writeText(solnLink); //copy code to clipboard
-      successToast('Share link copied to clipboard'); //toast a success message
+      successToast("Share link copied to clipboard"); //toast a success message
     } else {
     }
   } else {
-    errorToast('No valid code to share');
+    errorToast("No valid code to share");
   }
+}
+
+function clear_code_screen(){
+
+  $("#codeimp-title").html("<h4 class='text-left'>Select an Implementation from the right column</h4>");
+  $("#imptype-and-contributor").html("");
+  $("#edit-code").html("");
+
+  //$('#editor').html('');
+  $("#code-instructions").html("");
+  $("#add-comment").html("");
+  let codeEditor = ace.edit("editor");
+  //--reset code editor to empty string
+  codeEditor.setValue("");
 }
 
 function load_codesnippetById(codeId) {
   //spinner("#codeimp-title");
-
-  spinner('#imptype-and-contributor', 'spinner-border-sm');
+  
+  spinner("#imptype-and-contributor", "spinner-border-sm");
 
   //show a loader
-  spinner('#availables-solns', 'spinner-border-sm');
+  spinner("#availables-solns", "spinner-border-sm");
 
   let jso = {};
   query = `?codesnippet_id=${codeId}&status=1`;
 
-  crudaction(jso, '/codesnippet' + query, 'GET', function (feed) {
-    let codeImpTitle = ''; //intial default value
-    let imptypeAndContributor = ''; //initial default value
+  crudaction(jso, "/codesnippet" + query, "GET", function (feed) {
+    let codeImpTitle = ""; //intial default value
+    let imptypeAndContributor = ""; //initial default value
     let current_loc = currentLoc();
 
     //let codeVersions = "";
     if (feed && feed.data && feed.data.uid && feed.data.uid == codeId) {
       //clear load framework dropdown
-      let data = feed['data'];
+      let data = feed["data"];
       //distructuring variables
       let {
         uid,
@@ -1654,22 +1686,18 @@ function load_codesnippetById(codeId) {
 
       //update code implementation title
       codeImpTitle = title;
-      $('#codeimp-title').html(
-        "<h4 class='text-left'>" +
-          codeImpTitle +
-          ' in ' +
-          language_name +
-          '</h4>'
+      $("#codeimp-title").html(
+        "<h4 class='text-left'>" + codeImpTitle + ' in ' + language_name + "</h4>"
       );
 
-      let displayName = '';
-      if (provider === 'Local' || provider === 'Google') {
+      let displayName = "";
+      if (provider === "Local" || provider === "Google") {
         displayName = fullname;
-      } else if (provider == 'Github') {
+      } else if (provider == "Github") {
         displayName = username;
-      } else if (provider == 'Facebook') {
+      } else if (provider == "Facebook") {
         displayName += displayName;
-      } else if (provider == 'Twitter') {
+      } else if (provider == "Twitter") {
         displayName = fullname;
       }
 
@@ -1677,68 +1705,68 @@ function load_codesnippetById(codeId) {
         "<i class='fe fe-globe'></i> Contributed by: " +
         '<a class="a-override a-alt bold" title="View contributor\'s profile" href="javascript:void(0)">' +
         safe_tags_replace(displayName) +
-        '</a>';
+        "</a>";
 
-      $('#imptype-and-contributor').html(imptypeAndContributor);
+      $("#imptype-and-contributor").html(imptypeAndContributor);
 
       //toggle edit code button based on whether the logged in user is the same as the author of the displayed code
       if (current_loc && current_loc.user && current_loc.user.uid) {
         let user_id = current_loc.user.uid;
         let isAdmin = current_loc.user.isAdmin;
 
-        if (user_id === added_by || isAdmin === 'true') {
-          let navLink = getNavLink('code-add-edit', `cid=${uid}`);
+        if (user_id === added_by || isAdmin === "true") {
+          let navLink = getNavLink("code-add-edit", `cid=${uid}`);
 
-          $('#edit-code').html(
+          $("#edit-code").html(
             `|<a class="a-override" onclick="persistUrl()" href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Edit</a>`
           );
         } else {
-          $('#edit-code').html('');
+          $("#edit-code").html("");
         }
       } else {
-        $('#edit-code').html('');
+        $("#edit-code").html("");
       }
 
       ///---------call ace configuration function
-      $('#codesnippet_').val(row_code); //parse codesnippet via hidden instead as a parameter to avoid js problems incase the contains special characters
+      $("#codesnippet_").val(row_code); //parse codesnippet via hidden instead as a parameter to avoid js problems incase the contains special characters
       configureAceEditor(language_name); //populate codesnippet to the ace editor
 
       //store inner list id to hidden field
-      $('#inner-list-dom-id').val(`#fun${func_id}`);
-      $('#inner-list-dom-class').val(`.subfunc${func_id}`);
+      $("#inner-list-dom-id").val(`#fun${func_id}`);
+      $("#inner-list-dom-class").val(`.subfunc${func_id}`);
 
       //diplay instructions if any
       if (instructions) {
-        $('#code-instructions').html(instructions);
+        $("#code-instructions").html(instructions);
       } else {
-        $('#code-instructions').html('No Instructions');
+        $("#code-instructions").html("No Instructions");
       }
 
       //add comment button
       if (current_loc && current_loc.user && current_loc.user.uid) {
-        $('#add-comment').html(
+        $("#add-comment").html(
           `<button class="btn pointer  font-weight-bold text-center" onclick="parseEditorId('#fcbody0', 0, 'add comment');" ><i class="fa fa-comment-o"></i> Leave a Comment</button>`
         );
       } else {
-        $('#add-comment').html(
+        $("#add-comment").html(
           `<button class="btn pointer cpointer font-weight-bold text-center" onclick="showModal('#loginOrRegisterModal'); persistence('dom_sect','add comment');"  ><i class="fa fa-comment-o"></i> Leave a Comment</button>`
         );
 
-        let loginLink = getNavLink('login');
-        let signupLink = getNavLink('register');
-        $('#modal-title').html(
+        let loginLink = getNavLink("login");
+        let signupLink = getNavLink("register");
+        $("#modal-title").html(
           `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to add a comment`
         );
       }
 
       //persist code Id to be referenced later
-      persistence('code_sel', data);
-      persistence('func', func_id);
-      persistence('subfunc', subfunc_id);
-      persistence('language', language_id);
-      persistence('language_name', language_name);
-      persistence('framework', framework_id);
-      persistence('codestyle', codestyle_id);
+      persistence("code_sel", data);
+      persistence("func", func_id);
+      persistence("subfunc", subfunc_id);
+      persistence("language", language_id);
+      persistence("language_name", language_name);
+      persistence("framework", framework_id);
+      persistence("codestyle", codestyle_id);
 
       getFramsByLang(language_id); //render frameworks and highlight displayed codesnippet framework
       codeStyles(); ////render codestyles and highlight displayed codesnippet codestyle
@@ -1756,7 +1784,7 @@ function load_codesnippetById(codeId) {
           ? `${total_comments} comment`
           : `${total_comments} comments`;
       $(`#total-comments`).html(commentCountView);
-      persistence('total_comments', total_comments);
+      persistence("total_comments", total_comments);
 
       getCommentsByCodesnippetId();
       // let dom_sect =
@@ -1770,48 +1798,46 @@ function load_codesnippetById(codeId) {
       load_languages(); //render languages
 
       //set code implementation title to initialized default value
-      $('#codeimp-title').html(codeImpTitle);
+      $("#codeimp-title").html(codeImpTitle);
 
       //set implementation type and contributor name to intialized default value
-      $('#imptype-and-contributor').html(imptypeAndContributor);
+      $("#imptype-and-contributor").html(imptypeAndContributor);
 
       //empty the code edit link
-      $('#edit-code').html('');
+      $("#edit-code").html("");
 
       /////-------Display that no codesnippet found
       configureAceEditor();
     }
   });
-
-  document
-    .getElementById('codeimp-title')
-    .scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  
+  document.getElementById('codeimp-title').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 }
 
 function scrollCommentSection(fId) {
   const element = document.getElementById(fId);
   element.scrollIntoView({
-    block: 'center',
+    block: "center",
   });
 }
 
 function toggleEditorTheme() {
-  let copy_status = $('#copy-status').val();
+  let copy_status = $("#copy-status").val();
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
-  if (editorTheme == 'monokai') {
-    persistence('editorTheme', 'eclipse');
+  if (editorTheme == "monokai") {
+    persistence("editorTheme", "eclipse");
   } else {
-    persistence('editorTheme', 'monokai');
+    persistence("editorTheme", "monokai");
   }
 
   let lang =
     current_loc && current_loc.code_sel && current_loc.code_sel.language_name
       ? current_loc.code_sel.language_name
-      : '';
+      : "";
   //lang ? configureAceEditor(lang) : configureAceEditor();
 
-  copy_status == 'yes' ? configureAceEditor(lang) : change_theme();
+  copy_status == "yes" ? configureAceEditor(lang) : change_theme();
   // if (copy_status == "yes") {
   // }
 }
@@ -1820,58 +1846,58 @@ function change_theme() {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
 
-  if (editorTheme == 'monokai') {
-    $('#editor').removeClass('light-screen');
-    $('#editor').addClass('dark-screen');
+  if (editorTheme == "monokai") {
+    $("#editor").removeClass("light-screen");
+    $("#editor").addClass("dark-screen");
   } else {
-    $('#editor').removeClass('dark-screen');
-    $('#editor').addClass('light-screen');
+    $("#editor").removeClass("dark-screen");
+    $("#editor").addClass("light-screen");
   }
 }
 
-function configureAceEditor(lang = '') {
+function configureAceEditor(lang = "") {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
   let language = lang;
 
-  if (editorTheme == 'monokai') {
-    $('#editor').removeClass('light-screen');
-    $('#editor').addClass('dark-screen');
+  if (editorTheme == "monokai") {
+    $("#editor").removeClass("light-screen");
+    $("#editor").addClass("dark-screen");
   } else {
-    $('#editor').removeClass('dark-screen');
-    $('#editor').addClass('light-screen');
+    $("#editor").removeClass("dark-screen");
+    $("#editor").addClass("light-screen");
   }
 
-  let codeEditor = ace.edit('editor');
+  let codeEditor = ace.edit("editor");
   //--reset code editor to empty string
-  codeEditor.setValue('Code Loading....');
-  let codesnippet = $('#codesnippet_').val();
+  codeEditor.setValue("Code Loading....");
+  let codesnippet = $("#codesnippet_").val();
   let numOfLines = (codesnippet.match(/\n/g) || []).length; //get the number of lines contained in the codesnippet
   let editorLib = {
     init() {
-      codeEditor.setTheme('ace/theme/' + editorTheme);
+      codeEditor.setTheme("ace/theme/" + editorTheme);
 
       //Set Languages
       if (lang) {
         language = lang.toLowerCase();
-        if (language == 'nodejs') {
-          language = 'javascript';
+        if (language == "nodejs") {
+          language = "javascript";
         }
-        if (language == 'c#') {
-          language = 'csharp';
+        if (language == "c#") {
+          language = "csharp";
         }
 
-        if (language == 'c' || language == 'c++') {
-          language = 'c_cpp';
+        if (language == "c" || language == "c++") {
+          language = "c_cpp";
         }
       }
 
-      codeEditor.session.setMode('ace/mode/' + language);
+      codeEditor.session.setMode("ace/mode/" + language);
 
       //Set Options
       codeEditor.setOptions({
         // fontFamily: "tahoma",
-        fontSize: '11pt',
+        fontSize: "11pt",
         enableBasicAutocompletion: true,
         autoScrollEditorIntoView: true,
         copyWithEmptySelection: true,
@@ -1883,7 +1909,7 @@ function configureAceEditor(lang = '') {
       codeEditor.setValue(codesnippet);
       codeEditor.clearSelection(); //will ensure editor does not keep the code selected making it greyish
 
-      if (language === 'java') {
+      if (language === "java") {
         setTimeout(() => {
           formatCode(language);
         }, 50);
@@ -1897,18 +1923,18 @@ function formatCode(language) {
   let current_loc = currentLoc();
   let editorTheme = current_loc.editorTheme;
 
-  let codeEditor = ace.edit('editor');
+  let codeEditor = ace.edit("editor");
   let editorLib = {
     init() {
       //let modelist = ace.require("ace/ext/modelist");
       //Configure Ace
       //ace.config.set("basePath", "assets/plugins/ace/ace-editor/src-min");
-      codeEditor.setTheme('ace/theme/' + editorTheme);
-      codeEditor.session.setMode('ace/mode/' + language);
+      codeEditor.setTheme("ace/theme/" + editorTheme);
+      codeEditor.session.setMode("ace/mode/" + language);
       //Set Options
       let setOptions = {
         //fontFamily: "Inconsolata",
-        fontSize: '12pt',
+        fontSize: "12pt",
         enableBasicAutocompletion: true,
         autoScrollEditorIntoView: true,
         copyWithEmptySelection: true,
@@ -1921,9 +1947,9 @@ function formatCode(language) {
 }
 
 function langAddEdit() {
-  let sel_lang = $('#language_sel').val();
+  let sel_lang = $("#language_sel").val();
   //console.log("selected language => ", sel_lang);
-  persistence('langAddEdit', sel_lang);
+  persistence("langAddEdit", sel_lang);
 }
 
 function highlightSelCodeParams(
@@ -1934,12 +1960,12 @@ function highlightSelCodeParams(
   codestyle_id
 ) {
   //highlight the function for the code loaded
-  let targetFuncId = '#func-item' + func_id;
+  let targetFuncId = "#func-item" + func_id;
   let targetFuncElem = $(`${targetFuncId}`);
   //alert($(`#func-item${func_id}`).hasClass("has-arrow"));
   if (targetFuncElem) {
     //("#func-item-" + func_id).addClass("active-two");
-    targetFuncElem.toggleClass('active');
+    targetFuncElem.toggleClass("active");
   }
 }
 
@@ -1950,36 +1976,36 @@ function populateProfile() {
   let current_loc = currentLoc();
   if (current_loc && current_loc.user) {
     let user = current_loc.user;
-    let displayPhoto = '';
-    if (user.provider === 'Local' && user.photo) {
+    let displayPhoto = "";
+    if (user.provider === "Local" && user.photo) {
       displayPhoto = `<img src='${server_}/user/${user.photo}' style='width: 100px; height: 100px; border-radius: 50%;' />`;
-    } else if (user.provider === 'Local' && !user.photo) {
+    } else if (user.provider === "Local" && !user.photo) {
       displayPhoto = `<span class="d-flex justify-content-center align-items-center font-24" style='width: 100px; height: 100px; font-weight: bold; border-radius: 50%; background-color: purple; color: white;'>${user.fullname[0]}</span>`;
     } else {
       displayPhoto = `<img src='${user.photo}' referrerpolicy="no-referrer" style='width: 100px; height: 100px; border-radius: 50%;' />`;
     }
 
-    $('.profile-photo-view').html(displayPhoto);
+    $(".profile-photo-view").html(displayPhoto);
 
-    $('#profile-info').html(
+    $("#profile-info").html(
       `<table class="table table-bordered">
         <tr>
           <td><b>Username</b></td>
-          <td>${!user.username ? '----------' : user.username}</td>
+          <td>${!user.username ? "----------" : user.username}</td>
         </tr>
         <tr>
           <td><b>Email</b></td>
-          <td>${!user.email ? '------------' : user.email}</td>
+          <td>${!user.email ? "------------" : user.email}</td>
         </tr>
         <tr>
           <td><b>Fullname</b></td>
           <td>${
-            !user.fullname ? '---------' : safe_tags_replace(user.fullname)
+            !user.fullname ? "---------" : safe_tags_replace(user.fullname)
           }</td>
         </tr>
         <tr>
           <td><b>Country</b></td>
-          <td>${!user.country ? '----------' : user.country}</td>
+          <td>${!user.country ? "----------" : user.country}</td>
         </tr>
         <tr>
           <td><b>Contribution Rate</b></td>
@@ -1993,12 +2019,12 @@ function populateProfile() {
 /////-----------------------------------End of profile
 ///----Update title and URL
 function title_update(title) {
-  $('#codeimp-title').html('<h4>' + title + '</h4>');
+  $("#codeimp-title").html("<h4>" + title + "</h4>");
 }
 
 //////----------------------------------Begin comments
 function setTargetPage(current_page) {
-  persistence('cur_page', parseInt(current_page));
+  persistence("cur_page", parseInt(current_page));
   getCommentsByCodesnippetId();
 }
 
@@ -2027,30 +2053,30 @@ function getCommentsByCodesnippetId() {
   let cur_page_ = cur_page - 1; //decrement by one to align with db offsets multiples
   let rpp = 5;
   let where_ = `cmt.code_snippet_id = ${code_id} AND cmt.replying_to = 0 AND cmt.status = 1`;
-  let orderby = 'cmt.uid'; //cmt denote an alias for pr_comments table
-  let dir = 'DESC';
+  let orderby = "cmt.uid"; //cmt denote an alias for pr_comments table
+  let dir = "DESC";
   let offset = cur_page_;
   if (cur_page_ > 0) {
     offset = cur_page_ * rpp;
   }
 
   let query =
-    '?where_=' +
+    "?where_=" +
     where_ +
-    '&orderby=' +
+    "&orderby=" +
     orderby +
-    '&dir=' +
+    "&dir=" +
     dir +
-    '&offset=' +
+    "&offset=" +
     offset +
-    '&rpp=' +
+    "&rpp=" +
     rpp;
 
-  crudaction({}, '/comments-by-codeid' + query, 'GET', function (result) {
+  crudaction({}, "/comments-by-codeid" + query, "GET", function (result) {
     //comment loading indicator
-    $('#outer-c').html('<i>Loading...</i>');
+    $("#outer-c").html("<i>Loading...</i>");
 
-    let row = '';
+    let row = "";
     let total_records =
       result && result.total_records ? result.total_records : 0;
     if (result && result.data && result.data.length > 0) {
@@ -2090,11 +2116,11 @@ function getCommentsByCodesnippetId() {
         }
 
         //dynamic reply action
-        let replyAction = '';
+        let replyAction = "";
         let user_id =
           current_loc && current_loc.user && current_loc.user.uid
             ? current_loc.user.uid
-            : '';
+            : "";
         if (user_id) {
           replyAction = `<a
               title="reply"
@@ -2114,14 +2140,14 @@ function getCommentsByCodesnippetId() {
             <i class="fe fe-message-square"></i> 
           </a>`;
 
-          let loginLink = getNavLink('login');
-          let signupLink = getNavLink('register');
-          $('#modal-title').html(
+          let loginLink = getNavLink("login");
+          let signupLink = getNavLink("register");
+          $("#modal-title").html(
             `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to reply a comment`
           );
         }
 
-        let toggleActionsView = '';
+        let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
             <div class="col-sm-3" id="load-cmt${comment_id}">
@@ -2203,12 +2229,12 @@ function getCommentsByCodesnippetId() {
     `;
       }
 
-      $('#outer-c').html(row);
+      $("#outer-c").html(row);
 
       //perisist comments with replying_to = 0 to local storage for reference
-      persistence('comments', data);
+      persistence("comments", data);
     } else {
-      $('#outer-c').html(row);
+      $("#outer-c").html(row);
     }
 
     //update comment counter view
@@ -2226,16 +2252,16 @@ function getCommentsByCodesnippetId() {
       cur_page,
       rpp,
       total_records,
-      'myClass',
-      'myDisableClass'
+      "myClass",
+      "myDisableClass"
     );
-    $('#pagingDiv').html(paginationResult);
+    $("#pagingDiv").html(paginationResult);
   });
 }
 
 function getCommentReplies(commentReplyId) {
   //content loading indicator
-  $(`#load-cmt${commentReplyId}`).html('<i>Loading...</i>');
+  $(`#load-cmt${commentReplyId}`).html("<i>Loading...</i>");
   let current_loc = currentLoc();
 
   //check for logged in user to hide actions that needs authorization
@@ -2252,16 +2278,16 @@ function getCommentReplies(commentReplyId) {
     query = `?where_=${where_}&offset=${offset}&rpp=${rpp}`;
     //console.log(query);
   } else {
-    alert('Oops! No code selected');
+    alert("Oops! No code selected");
     return;
   }
 
-  crudaction({}, `/comments-by-codeid${query}`, 'GET', (feed) => {
-    let row = '';
+  crudaction({}, `/comments-by-codeid${query}`, "GET", (feed) => {
+    let row = "";
     let repliesView = `<a class="a-alt"><i class="fe fe-corner-up-left"></i> 0 Replies </a>`;
     if (feed && feed.data && feed.data.length > 0) {
       //clear loading text
-      $(`#load-cmt${commentReplyId}`).html('');
+      $(`#load-cmt${commentReplyId}`).html("");
       //console.log("Comments available", feed);
       let { data } = feed;
       let count = data.length;
@@ -2292,11 +2318,11 @@ function getCommentReplies(commentReplyId) {
         }
 
         //dynamic reply action
-        let replyAction = '';
+        let replyAction = "";
         let user_id =
           current_loc && current_loc.user && current_loc.user.uid
             ? current_loc.user.uid
-            : '';
+            : "";
         if (user_id) {
           replyAction = `<a
               title="reply"
@@ -2316,14 +2342,14 @@ function getCommentReplies(commentReplyId) {
             <i class="fe fe-message-square"></i> 
           </a>`;
 
-          let loginLink = getNavLink('login');
-          let signupLink = getNavLink('register');
-          $('#modal-title').html(
+          let loginLink = getNavLink("login");
+          let signupLink = getNavLink("register");
+          $("#modal-title").html(
             `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to reply a comment`
           );
         }
 
-        let toggleActionsView = '';
+        let toggleActionsView = "";
         if (author_id === comment_author) {
           toggleActionsView = `
             <div class="equalbox" id="load-cmt${comment_id}">
@@ -2412,9 +2438,9 @@ function getCommentReplies(commentReplyId) {
           comments.push(data[j]);
         }
         //perisist comment replies with updated content
-        persistence('comments', comments);
+        persistence("comments", comments);
       } else {
-        persistence('comments', data);
+        persistence("comments", data);
       }
     } else {
       //means no replies for this comment, hence clear replies list
@@ -2426,14 +2452,14 @@ function getCommentReplies(commentReplyId) {
 }
 
 function init_ckeditor(cId) {
-  let ckeditor_id = $('#ckeditor_id').val().trim(); //will be used to intilize first and only ckeditor to the current comment
+  let ckeditor_id = $("#ckeditor_id").val().trim(); //will be used to intilize first and only ckeditor to the current comment
   let cke_init_id = $(`#cke-init-${cId}`).val().trim(); //will prevent intializing multiple ckeditors for the same comment
 
   if (cke_init_id) {
     let ckeditorInstance = document.querySelector(ckeditor_id).ckeditorInstance;
-    ckeditorInstance ? ckeditorInstance.destroy() : ''; //destroy the previous instance before creating a new one
+    ckeditorInstance ? ckeditorInstance.destroy() : ""; //destroy the previous instance before creating a new one
   }
-  window.myClassicEditor = '';
+  window.myClassicEditor = "";
   // console.log("cke init id => ", cke_init_id);
   // if (!cke_init_id) {
   ClassicEditor.create(document.querySelector(ckeditor_id))
@@ -2452,7 +2478,7 @@ function init_ckeditor(cId) {
 }
 
 function validateComment(domId) {
-  $(domId).html('');
+  $(domId).html("");
 }
 
 function closeForm(domId) {
@@ -2460,21 +2486,21 @@ function closeForm(domId) {
 }
 
 function parseEditorId(domId, commentId, action, replying_to = 0) {
-  $('#ckeditor_id').val(domId);
-  $('#comment_id_').val(commentId);
-  $('#reply_to_id').val(replying_to);
+  $("#ckeditor_id").val(domId);
+  $("#comment_id_").val(commentId);
+  $("#reply_to_id").val(replying_to);
   $(`#comment-edit-id${commentId}`).val(action);
   toggleCommentForm(commentId, action, replying_to);
 }
 
 function toggleCommentForm(
   comment_id,
-  action = 'add comment',
+  action = "add comment",
   replying_to = 0
 ) {
   let editorKey = `fcbody${comment_id}`;
   let formId = `#cform${comment_id}`;
-  $('.comment_area').hide();
+  $(".comment_area").hide();
   $(formId).show();
 
   // if (editorKey != "fcbody0" && editorKey != "instructions_input") {
@@ -2507,9 +2533,9 @@ function toggleCommentForm(
   }
 
   //handle case if the form is requested for comment edit purpose and the comment not a reply to another comment
-  printError(`comment${comment_id}Err`, '');
-  if (action == 'edit comment') {
-    console.log('toggle form action is edit comment');
+  printError(`comment${comment_id}Err`, "");
+  if (action == "edit comment") {
+    console.log("toggle form action is edit comment");
     //retrieve the comments from local storage from the key comments
     let comments = [];
     let comment_to_edit = {};
@@ -2528,18 +2554,18 @@ function toggleCommentForm(
     }
   } else {
     //clear the form incase it was loaded with content by edit action
-    if (editorKey != 'fcbody0' && editorKey != 'instructions_input') {
+    if (editorKey != "fcbody0" && editorKey != "instructions_input") {
       myeditors && myeditors[editorKey]
-        ? myeditors[editorKey].setData('')
-        : $(`#${editorKey}`).val('');
+        ? myeditors[editorKey].setData("")
+        : $(`#${editorKey}`).val("");
     } else {
       myeditors2 && myeditors2[editorKey]
-        ? myeditors2[editorKey].setData('')
-        : $(`#${editorKey}`).val('');
+        ? myeditors2[editorKey].setData("")
+        : $(`#${editorKey}`).val("");
     }
   }
   //exclude instructions input and add new comment form since their editors are created on page load.
-  if (editorKey != 'fcbody0' && editorKey != 'instructions_input') {
+  if (editorKey != "fcbody0" && editorKey != "instructions_input") {
     createEditor(editorKey);
   }
 }
@@ -2549,16 +2575,16 @@ function saveComment(fcbodyId, comment_id) {
   let added_by;
   let current_loc = currentLoc();
   //let comment_id = parseInt($("#comment_id_").val());
-  let replying_to = parseInt($('#reply_to_id').val());
+  let replying_to = parseInt($("#reply_to_id").val());
   let action = $(`#comment-edit-id${comment_id}`).val();
 
-  if (action == 'reply') {
+  if (action == "reply") {
     replying_to = comment_id;
   }
   if (current_loc && current_loc.user && current_loc.user.uid) {
     added_by = current_loc.user.uid;
   } else {
-    let navLink = getNavLink('login');
+    let navLink = getNavLink("login");
     gotourl(navLink);
   }
 
@@ -2566,7 +2592,7 @@ function saveComment(fcbodyId, comment_id) {
   let tag = 1; //Author
   let editorKey = fcbodyId;
   let comment_body;
-  if (editorKey != 'fcbody0' && editorKey != 'instructions_input') {
+  if (editorKey != "fcbody0" && editorKey != "instructions_input") {
     comment_body =
       myeditors && myeditors[editorKey]
         ? myeditors[editorKey].getData().trim()
@@ -2582,11 +2608,11 @@ function saveComment(fcbodyId, comment_id) {
   //Defining error variables with a default value
   let commentErr = true;
   // Validate username
-  if (comment_body == '') {
-    printError(`comment${comment_id}Err`, 'Comment content required');
+  if (comment_body == "") {
+    printError(`comment${comment_id}Err`, "Comment content required");
     //printError(`comment${comment_id}Err`, "Comment content required");
   } else {
-    printError(`comment${comment_id}Err`, '');
+    printError(`comment${comment_id}Err`, "");
     //printError(`comment${comment_id}Err`, "");
     commentErr = false;
   }
@@ -2596,8 +2622,8 @@ function saveComment(fcbodyId, comment_id) {
   }
   ////------End of checking if there is content in the comment body;
 
-  let url = '/add-comment';
-  let method = 'POST';
+  let url = "/add-comment";
+  let method = "POST";
   let jso = {
     code_snippet_id,
     comment_body,
@@ -2606,9 +2632,9 @@ function saveComment(fcbodyId, comment_id) {
     added_by,
   };
   //grab edit-comment-id from the hidden input
-  if (action == 'edit comment' && comment_id > 0) {
-    url = '/edit-comment';
-    method = 'PUT';
+  if (action == "edit comment" && comment_id > 0) {
+    url = "/edit-comment";
+    method = "PUT";
     jso = {
       comment_body,
       comment_id,
@@ -2623,24 +2649,24 @@ function saveComment(fcbodyId, comment_id) {
       clearCkeditorData(editorKey); //clear ckeditor content after successful submission
       closeForm(`#cform${comment_id}`);
 
-      if (action == 'add comment' && replying_to == 0) {
-        persistence('cur_page', 1); //will ensure the user sees newly posted comment as it appears on the first page
+      if (action == "add comment" && replying_to == 0) {
+        persistence("cur_page", 1); //will ensure the user sees newly posted comment as it appears on the first page
         getCommentsByCodesnippetId();
-      } else if (action == 'reply' && replying_to > 0) {
+      } else if (action == "reply" && replying_to > 0) {
         getCommentReplies(replying_to); //re-render comment replies list;
       } else {
         reRenderEditedCommentBody(comment_id); //re-render the comment body
       }
-      successToast(feed.message, 'toast-top-right');
+      successToast(feed.message, "toast-top-right");
     } else {
-      errorToast(feed.message, 'toast-top-right');
+      errorToast(feed.message, "toast-top-right");
     }
   });
 }
 
 function deleteComment(comment_id = 0, replying_to) {
   const answer = window.confirm(
-    'Are you sure you want to delete your comment?'
+    "Are you sure you want to delete your comment?"
   );
   if (!answer) return;
 
@@ -2651,9 +2677,9 @@ function deleteComment(comment_id = 0, replying_to) {
     code_snippet_id = current_loc.code_sel.uid;
   }
   let query =
-    '?replying_to=' + replying_to + '&code_snippet_id=' + code_snippet_id;
+    "?replying_to=" + replying_to + "&code_snippet_id=" + code_snippet_id;
 
-  crudaction({ comment_id }, '/del-comment' + query, 'DELETE', (feed) => {
+  crudaction({ comment_id }, "/del-comment" + query, "DELETE", (feed) => {
     //console.log("comment delete feedback =>", feed);
     if (feed.success) {
       if (replying_to == 0) {
@@ -2662,25 +2688,25 @@ function deleteComment(comment_id = 0, replying_to) {
       if (replying_to > 0) {
         getCommentReplies(replying_to);
       }
-      successToast(feed.message, 'toast-top-right');
+      successToast(feed.message, "toast-top-right");
     } else {
-      errorToast(feed.message, 'toast-top-right');
+      errorToast(feed.message, "toast-top-right");
     }
   });
 }
 
 function focussedInput(input, error_domId) {
-  let hasFocus = $(input).is(':focus');
+  let hasFocus = $(input).is(":focus");
   if (hasFocus) {
-    $(error_domId).html('');
+    $(error_domId).html("");
   }
 }
 
 function reRenderEditedCommentBody(comment_id) {
   let current_loc = currentLoc();
-  let query = '?comment_id=' + comment_id;
+  let query = "?comment_id=" + comment_id;
 
-  crudaction({}, '/comment' + query, 'GET', (feed) => {
+  crudaction({}, "/comment" + query, "GET", (feed) => {
     //console.log(feed.success, feed.data);
     if (feed && feed.success && feed.data && feed.data.comment_body) {
       let comment_body = feed.data.comment_body;
@@ -2696,23 +2722,23 @@ function reRenderEditedCommentBody(comment_id) {
             break; //exit the loop
           }
         }
-        persistence('comments', comments);
+        persistence("comments", comments);
       }
     }
   });
 }
 
-function upvoteComment(comment_id, action = 'upvote comment') {
+function upvoteComment(comment_id, action = "upvote comment") {
   //check if a user is logged in before allowing voting
   let current_loc = currentLoc();
   let user_id = 0;
   if (current_loc && current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    showModal('#loginOrRegisterModal');
-    let loginLink = getNavLink('login');
-    let signupLink = getNavLink('register');
-    $('#modal-title').html(
+    showModal("#loginOrRegisterModal");
+    let loginLink = getNavLink("login");
+    let signupLink = getNavLink("register");
+    $("#modal-title").html(
       `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to ${action}`
     );
     return; // alert(`Please sign in to ${action}`);
@@ -2721,37 +2747,37 @@ function upvoteComment(comment_id, action = 'upvote comment') {
   let jso = {
     post_id: comment_id,
     user_id,
-    table: 'pr_comments',
+    table: "pr_comments",
     upvote: 1,
     downvote: 0,
   };
 
-  crudaction(jso, '/upvote-comment', 'PUT', (feed) => {
+  crudaction(jso, "/upvote-comment", "PUT", (feed) => {
     if (!feed) {
-      return errorToast('Server error');
+      return errorToast("Server error");
     }
     if (feed && feed.success == true) {
       $(`#comment${comment_id}-votes`).html(feed.votes);
-      return successToast(feed.message, 'toast-top-right');
+      return successToast(feed.message, "toast-top-right");
     }
 
     if (feed && feed.success == false) {
-      return errorToast(feed.message, 'toast-top-right');
+      return errorToast(feed.message, "toast-top-right");
     }
   });
 }
 
-function downvoteComment(comment_id, action = 'downvote comment') {
+function downvoteComment(comment_id, action = "downvote comment") {
   //check if a user is logged in before allowing voting
   let current_loc = currentLoc();
   let user_id = 0;
   if (current_loc.user && current_loc.user.uid) {
     user_id = current_loc.user.uid;
   } else {
-    showModal('#loginOrRegisterModal');
-    let loginLink = getNavLink('login');
-    let signupLink = getNavLink('register');
-    $('#modal-title').html(
+    showModal("#loginOrRegisterModal");
+    let loginLink = getNavLink("login");
+    let signupLink = getNavLink("register");
+    $("#modal-title").html(
       `Please <a class="cpointer modal-nav" href="${loginLink}">Login</a> or <a class="cpointer modal-nav" href="${signupLink}">Sign up</a> to ${action}`
     );
     return;
@@ -2761,22 +2787,22 @@ function downvoteComment(comment_id, action = 'downvote comment') {
   let jso = {
     post_id: comment_id,
     user_id,
-    table: 'pr_comments',
+    table: "pr_comments",
     upvote: 0,
     downvote: -1,
   };
 
-  crudaction(jso, '/downvote-comment', 'PUT', (feed) => {
+  crudaction(jso, "/downvote-comment", "PUT", (feed) => {
     if (!feed) {
-      return errorToast('Server error');
+      return errorToast("Server error");
     }
     if (feed && feed.success == true) {
       $(`#comment${comment_id}-votes`).html(feed.votes);
-      return successToast(feed.message, 'toast-top-right');
+      return successToast(feed.message, "toast-top-right");
     }
 
     if (feed && feed.success == false) {
-      return errorToast(feed.message, 'toast-top-right');
+      return errorToast(feed.message, "toast-top-right");
     }
   });
 }
@@ -2784,7 +2810,7 @@ function downvoteComment(comment_id, action = 'downvote comment') {
 function reformatDate(date_) {
   let d = new Date(date_);
   let date =
-    d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0];
+    d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0];
   return date;
 }
 
@@ -2797,39 +2823,39 @@ function momentDatetime(targetdt) {
 
 ///////////////------------------------begin modal js
 // Get the modal
-let modal = document.getElementById('myModal');
+let modal = document.getElementById("myModal");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (e) {
   if (e.target == modal) {
     // $("#myModal").hide();
-    $('.modal').removeClass('fade');
-    $('.modal-backdrop').remove();
-    $('body').removeClass('modal-open');
+    $(".modal").removeClass("fade");
+    $(".modal-backdrop").remove();
+    $("body").removeClass("modal-open");
   }
 };
 
 function showModal(domId) {
   $(domId).show();
-  $('body').addClass('fade_');
+  $("body").addClass("fade_");
   //$("#myModal").show();
   //modal.style.display = "block";
 }
 
 function dismissModal(domId) {
-  $('body').removeClass('fade_');
+  $("body").removeClass("fade_");
   $(domId).hide();
   //modal.style.display = "none";
 }
 
 function dismissModal2(domId) {
-  $(domId).removeClass('fade');
-  $('.modal-backdrop').remove();
-  $('body').removeClass('modal-open');
+  $(domId).removeClass("fade");
+  $(".modal-backdrop").remove();
+  $("body").removeClass("modal-open");
 }
 
 function modalView(action, title) {
   let actionCapitalized = action ? action.toUpperCase() : action;
-  $('#mainModal').html(
+  $("#mainModal").html(
     `
     <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -2888,10 +2914,10 @@ class MyUploadAdapter {
     // integration to choose the right communication channel. This example uses
     // a POST request with JSON as a data structure but your configuration
     // could be different.
-    let server_ = $('#server_').val();
+    let server_ = $("#server_").val();
     let url = `${server_}/upload-img`;
-    xhr.open('POST', url, true);
-    xhr.responseType = 'json';
+    xhr.open("POST", url, true);
+    xhr.responseType = "json";
   }
 
   // Initializes XMLHttpRequest listeners.
@@ -2900,9 +2926,9 @@ class MyUploadAdapter {
     const loader = this.loader;
     const genericErrorText = `Couldn't upload file: ${file.name}.`;
 
-    xhr.addEventListener('error', () => reject(genericErrorText));
-    xhr.addEventListener('abort', () => reject());
-    xhr.addEventListener('load', () => {
+    xhr.addEventListener("error", () => reject(genericErrorText));
+    xhr.addEventListener("abort", () => reject());
+    xhr.addEventListener("load", () => {
       const response = xhr.response;
 
       // This example assumes the XHR server's "response" object will come with
@@ -2930,7 +2956,7 @@ class MyUploadAdapter {
     // properties which are used e.g. to display the upload progress bar in the editor
     // user interface.
     if (xhr.upload) {
-      xhr.upload.addEventListener('progress', (evt) => {
+      xhr.upload.addEventListener("progress", (evt) => {
         if (evt.lengthComputable) {
           loader.uploadTotal = evt.total;
           loader.uploaded = evt.loaded;
@@ -2944,7 +2970,7 @@ class MyUploadAdapter {
     // Prepare the form data.
     const data = new FormData();
 
-    data.append('upload', file);
+    data.append("upload", file);
 
     // Important note: This is the right place to implement security mechanisms
     // like authentication and CSRF protection. For instance, you can use
@@ -2959,14 +2985,14 @@ class MyUploadAdapter {
 // ...
 
 function MyCustomUploadAdapterPlugin(editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
     // Configure the URL to the upload script in your back-end here!
     return new MyUploadAdapter(loader);
   };
 }
 
 //get the content from the editor
-function getckeditorData(domId, editorKey = 'fcbody0') {
+function getckeditorData(domId, editorKey = "fcbody0") {
   let data =
     myeditors && myeditors[editorKey]
       ? myeditors[editorKey].getData().trim()
@@ -2978,8 +3004,8 @@ function getckeditorData(domId, editorKey = 'fcbody0') {
 //clear editor content after form submission
 function clearCkeditorData(editorKey) {
   myeditors && myeditors[editorKey]
-    ? myeditors[editorKey].setData('')
-    : $(`#${editorKey}`).val('');
+    ? myeditors[editorKey].setData("")
+    : $(`#${editorKey}`).val("");
 }
 
 // function initCkeditor(page) {
@@ -3044,3 +3070,10 @@ function createEditor2(elementId) {
 }
 
 ///////--------------------------End ckeditor
+function hidewelcome(){
+  $('#overin').fadeOut('fast');
+  $('#layleft').fadeOut('fast');
+}
+function showelcome(){
+  $('#layleft').fadeIn('slow');
+}

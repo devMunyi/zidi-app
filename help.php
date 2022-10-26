@@ -77,6 +77,7 @@ include_once("configs/conn.inc");
                             <div class="container card container-fluid">
                                <div class="card-body">
                                 <h4>Help</h4>
+                                   <p>For any assistance please email us at truweb@icthub.co.ke or DM us via our social media platforms</p>
                                </div>
 
 

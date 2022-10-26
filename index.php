@@ -306,12 +306,42 @@ include_once("configs/conn.inc");
             </div>
         </div>
 
+
         <!-- Start page footer -->
         <div class="section-body">
             <?php
             include_once 'footer.php';
             ?>
         </div>
+        <div class="overlaymask" id="layleft" >
+            <div class="overlayin blue" id="overin">
+                <div class="overlaycont">
+
+                    <div class="over-header">
+                        <h4 class="modal-title color-orange" id="exampleModalLabel"><img src="assets/images/hi.png" height="30px"> Welcome to our Platform</h4> <hr/>
+
+                    </div>
+                    <div class="over-body">
+                        <p class="font-16 font-weight-light">We will help you find code snippets for all your backend tasks in over 30 programming languages </p>
+
+                        <p class="font-16 text-capitalize">What's your favourite language?</p>
+                        <div id="language_select_modal">
+                            Loading...
+                        </div>
+                    </div>
+                    <div class="over-footer">
+                        <p class="pull-left font-15  font-weight-bolder text-azure"> Join our communities <a href="https://fb.me/zidiapp" target="_BLANK" class="btn btn-outline-light"><i class="fa fa-facebook"></i></a>
+                            <a href="https://twitter.com/zidiplatform" target="_BLANK" class="btn  btn btn-outline-light btn-sm"><i class="fa fa-twitter"></i></a>
+                            <a href="https://t.me/zidiapp" target="_BLANK" class="btn  btn btn-outline-light btn-sm"><i class="fa fa-telegram"></i></a>
+                        </p>
+                        <a onclick="hidewelcome()" class="font-28 pointer" id="closeover"><i class="fe fe-x"></i> Close</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
     </div>
 
 
@@ -320,8 +350,37 @@ include_once("configs/conn.inc");
     include_once('scripts.php');
     ?>
     <script>
+       ////////------Overlay message
+
+        window.addEventListener('mousedown', function(event) {
+            var inner = document.getElementById('overin');
+            var outer = document.getElementById('layleft');
+            var search_box = document.getElementById('search_box');
+            var code_results = document.getElementById('code_results');
+
+            if (event.target === inner) {
+                inner.style.display = "block";
+            } else if (event.target === outer) {
+                $('#overin').fadeOut('fast');
+                $('#layleft').fadeOut('fast');
+            }
+
+            if(event.target !== code_results && event.target !== search_box){
+               code_results.style.display = "none";
+            }
+        });
+
         $(document).ready(function() {
-            updateHeader("unsecured"); //check for logged in user so as to update the header accordingly
+
+            let language = persistence_read('language');
+            if(!language){
+                setTimeout(function (){
+                showelcome();
+                },2000);
+            }
+
+
+            updateHeader("index"); //check for logged in user so as to update the header accordingly
             $('#search_box').css('display', 'block');
         })
     </script>
@@ -390,7 +449,7 @@ include_once("configs/conn.inc");
             } else {
                 persistence_remove("func");
                 persistence_remove("subfunc");
-                persistence_remove("language");
+               // persistence_remove("language");
                 persistence_remove("framework");
                 persistence_remove("codestyle");
                 persistence_remove("allFrams");

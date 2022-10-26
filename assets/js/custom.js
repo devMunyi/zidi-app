@@ -136,6 +136,7 @@ function load_languages() {
     let total_ = data.length;
     //console.log(total_);
     let lang = "";
+    let lang_sel = "";
 
     if (total_ > 0) {
       for (var i = 0; i < data.length; i++) {
@@ -155,8 +156,14 @@ function load_languages() {
           '" height="20px">   ' +
           title +
           "</a></li>";
+        lang_sel +=  '<a class=""><a href="#"><img src="' +
+            server + "/" + icon + '" height="20px">   ' +
+            title +
+            "</a>";
       }
+
       $("#language_").html(lang);
+      $("#language_select_modal").html(lang_sel);
     } else {
       //////-------No Languages found
       $("#language_").html("<li>No Languages</li>");
