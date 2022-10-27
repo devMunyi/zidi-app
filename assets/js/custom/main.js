@@ -213,13 +213,13 @@ function scrollElementIntoView2(dbId) {
   }, 50);
 }
 
-//function and subfunction menu toggler
+// subfunction menu toggler
 function submenu(id) {
   $(id).toggle();
-
-  lastChar = id.charAt(id.length - 1);
-  $(`.subfunc-${lastChar}`).show();
+  const idNum = id.match(/\d/g).join('');
+  $(`.subfunc-${idNum}`).show();
 }
+
 
 function highlightSubfun(funId) {
   $(`.func-item`).removeClass("active-two"); //ensures all functions in the list are not highlighted
