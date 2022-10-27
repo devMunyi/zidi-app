@@ -204,18 +204,13 @@ function parseInnerListId(id) {
 
 function subfun() {}
 
-function scrollElementIntoView2(fId, sfId) {
-  let fnLastChar = "0";
-  fnLastChar = fId.charAt(fId.length - 1);
-  submenu(`#fun${fnLastChar}`);
+function scrollElementIntoView2(dbId) {
+  submenu(`#fun${dbId}`);
   setTimeout(() => {
-    const element = document.getElementById(fId);
-    if (fnLastChar != "0") {
-      element.scrollIntoView({
-        block: "nearest",
-      });
-    }
-  }, 500);
+    document
+      .getElementById(`func-item-${dbId}`)
+      ?.scrollIntoView({ block: 'nearest' }); //handle undefined error by adding ? character
+  }, 50);
 }
 
 //function and subfunction menu toggler
