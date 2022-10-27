@@ -1,10 +1,10 @@
 ///////////-------Begin Functionalities
 function functions_load() {
   //display a spinner
-  spinner("#functions_");
+  spinner('#functions_');
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
-  let server = $("#server_").val(); //get the server url for the image retrieval
+  let server = $('#server_').val(); //get the server url for the image retrieval
 
   //---check if functions already exist in the localstorage and use as the resource
   if (current_loc && current_loc.allFuns && current_loc.allFuns.data) {
@@ -14,9 +14,9 @@ function functions_load() {
       //////////--------Lets Pull All sub functions at the same time
       apiSubfunLoad(function (sub_result) {
         //////////-----Loop functions while injecting subfunctions
-        let fun = "";
+        let fun = '';
         let func_sel = 0;
-        let active_func = "";
+        let active_func = '';
         let subfunc_sel = 0;
 
         for (let i = 0; i < funs_arr_size; i++) {
@@ -27,24 +27,24 @@ function functions_load() {
           if (current_loc && current_loc.func > 0) {
             func_sel = current_loc.func;
             if (function_id == func_sel) {
-              active_func = "active-two";
+              active_func = 'active-two';
             } else {
-              active_func = "";
+              active_func = '';
             }
           }
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
+          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
           /////------Loop through sub functions
-          let sub_data = sub_result["data"];
+          let sub_data = sub_result['data'];
           let sub_data_length = sub_data.length;
 
           if (sub_data_length > 0) {
-            let active_subfunc = "";
+            let active_subfunc = '';
 
             fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
 
@@ -59,9 +59,9 @@ function functions_load() {
                   subfunc_sel = current_loc.subfunc;
                   if (subfunction_id == subfunc_sel) {
                     //console.log("FOUND AN ACTIVE SUBFUNCTION");
-                    active_subfunc = "active-two";
+                    active_subfunc = 'active-two';
                   } else {
-                    active_subfunc = "";
+                    active_subfunc = '';
                   }
                 }
                 fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
@@ -72,58 +72,55 @@ function functions_load() {
               </li>`;
               }
             }
-            fun += "</ul>";
+            fun += '</ul>';
           }
-          fun += "</li>";
+          fun += '</li>';
         }
-        $("#functions_").html(fun);
+        $('#functions_').html(fun);
 
         //call the auto scroller
-        scrollElementIntoView2(
-          `func-item-${func_sel}`,
-          `subfunc-item-${subfunc_sel}`
-        );
+        scrollElementIntoView2(func_sel);
       });
     } else {
-      $("#functions_").html("No record found");
+      $('#functions_').html('No record found');
     }
   } else {
     /////----------------load data from the server
     let status = 1;
-    let orderby = "name";
-    let dir = "ASC";
+    let orderby = 'name';
+    let dir = 'ASC';
     let jso = {};
-    let search_ = "";
+    let search_ = '';
 
     let query =
-      "?status=" +
+      '?status=' +
       status +
-      "&orderby=" +
+      '&orderby=' +
       orderby +
-      "&dir=" +
+      '&dir=' +
       dir +
-      "&offset=" +
+      '&offset=' +
       0 +
-      "&rpp=" +
+      '&rpp=' +
       500 +
-      "&search=" +
+      '&search=' +
       search_;
 
-    crudaction(jso, "/functionalities" + query, "GET", function (result) {
+    crudaction(jso, '/functionalities' + query, 'GET', function (result) {
       if (result && result.data && result.data.length > 0) {
         //persist the data for later use
-        persistence("allFuns", result);
+        persistence('allFuns', result);
 
-        let data = result["data"];
+        let data = result['data'];
         let data_length = data.length;
 
         //////////--------Lets Pull All sub functions at the same time
         apiSubfunLoad(function (sub_result) {
           //////////-----Loop functions while injecting subfunctions
-          let fun = "";
+          let fun = '';
           let func_sel = 0;
           let subfunc_sel = 0;
-          let active_func = "";
+          let active_func = '';
 
           for (let i = 0; i < data_length; i++) {
             let function_id = data[i].uid;
@@ -133,24 +130,24 @@ function functions_load() {
             if (current_loc && current_loc.func > 0) {
               func_sel = current_loc.func;
               if (function_id == func_sel) {
-                active_func = "active-two";
+                active_func = 'active-two';
               } else {
-                active_func = "";
+                active_func = '';
               }
             }
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="highlightFun();  parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink(); clear_code_screen();">
+            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
             /////------Loop through sub functions
-            let sub_data = sub_result["data"];
+            let sub_data = sub_result['data'];
             let sub_data_length = sub_data.length;
 
             if (sub_data_length > 0) {
-              let active_subfunc = "";
+              let active_subfunc = '';
 
               fun += `<ul class="inner_list" style="display: none;" id="fun${function_id}">`;
 
@@ -165,9 +162,9 @@ function functions_load() {
                     subfunc_sel = current_loc.subfunc;
                     if (subfunction_id == subfunc_sel) {
                       //console.log("FOUND AN ACTIVE SUBFUNCTION");
-                      active_subfunc = "active-two";
+                      active_subfunc = 'active-two';
                     } else {
-                      active_subfunc = "";
+                      active_subfunc = '';
                     }
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
@@ -178,20 +175,17 @@ function functions_load() {
                 </li>`;
                 }
               }
-              fun += "</ul>";
+              fun += '</ul>';
             }
-            fun += "</li>";
+            fun += '</li>';
           }
-          $("#functions_").html(fun);
+          $('#functions_').html(fun);
 
           //call the auto scroller
-          scrollElementIntoView2(
-            `func-item-${func_sel}`,
-            `subfunc-item-${subfunc_sel}`
-          );
+          scrollElementIntoView2(func_sel);
         });
       } else {
-        $("#functions_").html("No record found");
+        $('#functions_').html('No record found');
       }
     });
   }
