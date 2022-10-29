@@ -947,15 +947,15 @@ function codesnippetValidate() {
 
 function saveCodeSnippet(data) {
   //show disabled/processing button
-  disabledBtn("#addEditCodeBtn");
-  let codesnippet_id = $("#code_edit_id").val();
-  let method = "POST";
-  let url = "/add-codesnippet";
+  disabledBtn('#addEditCodeBtn');
+  let codesnippet_id = $('#code_edit_id').val();
+  let method = 'POST';
+  let url = '/add-codesnippet';
   let jso = data;
 
   if (codesnippet_id > 0) {
-    method = "PUT";
-    url = "/edit-codesnippet";
+    method = 'PUT';
+    url = '/edit-codesnippet';
     data.codesnippet_id = codesnippet_id;
     jso = data;
   }
@@ -964,47 +964,42 @@ function saveCodeSnippet(data) {
   crudaction(jso, url, method, function (feed) {
     if (feed) {
       //return the normal button
-      submitBtn("#addEditCodeBtn", "codesnippetValidate();", "Click to submit");
+      submitBtn('#addEditCodeBtn', 'codesnippetValidate();', 'Click to submit');
     }
 
-    if (feed["success"] === false) {
-      let message = feed["message"];
+    if (feed['success'] === false) {
+      let message = feed['message'];
       errorToast(message);
-    } else if (feed["success"] === true) {
-      let message = feed["message"];
+    } else if (feed['success'] === true) {
+      let message = feed['message'];
       successToast(message);
 
+      //reset form fields on code submission
+      document.getElementById('func_sel').selectedIndex = 0;
+      document.getElementById('subfunc_sel').selectedIndex = 0;
+      document.getElementById('language_sel').selectedIndex = 0;
+      document.getElementById('framework_sel').selectedIndex = 0;
+      document.getElementById('sel_lang_impl').selectedIndex = 0;
+      document.getElementById('sel_user_impl').selectedIndex = 0;
+      $('#codeimpl_title').val('');
+      $('#code_input').val('');
+      $('#file_extension').val('');
+      myeditors2 && myeditors2['instructions_input']
+        ? myeditors2['instructions_input']?.setData('')?.trim()
+        : $('#instructions_input')?.val('');
+
       //redirect user to edited codesnippet on successful update
-      if (method == "PUT") {
+      if (method == 'PUT') {
         //access the next nav url
         let current_loc = currentLoc();
         let nextNav =
-          current_loc && current_loc.gotourl ? current_loc.gotourl : "index";
+          current_loc && current_loc.gotourl ? current_loc.gotourl : 'index';
         setTimeout(() => {
           gotourl(nextNav);
         }, 2500);
       }
     }
   });
-}
-
-function getNavLink(page, query = "qs=") {
-  let host = getCurrentHost();
-  let navLink = "";
-  let origin = getCurrentUrl().origin;
-  host == "localhost"
-    ? (navLink = `${origin}/zidi-app/${page}?${query}`)
-    : (navLink = `${origin}/${page}?${query}`);
-
-  $("#nav_link").val(navLink);
-  return navLink;
-}
-
-function contributeCodeNav() {
-  let navLink = getNavLink("code-add-edit", "cid=");
-  $("#contribute-code").html(`
-  <a class="a-override" onclick='persistence("gotourl", "${navLink}");' href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
-  `);
 }
 
 function search_codeSnippet() {
