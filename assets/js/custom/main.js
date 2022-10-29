@@ -945,6 +945,7 @@ function codesnippetValidate() {
   }
 }
 
+
 function saveCodeSnippet(data) {
   //show disabled/processing button
   disabledBtn('#addEditCodeBtn');
@@ -1001,6 +1002,27 @@ function saveCodeSnippet(data) {
     }
   });
 }
+
+
+function getNavLink(page, query = "qs=") {
+  let host = getCurrentHost();
+  let navLink = "";
+  let origin = getCurrentUrl().origin;
+  host == "localhost"
+    ? (navLink = `${origin}/zidi-app/${page}?${query}`)
+    : (navLink = `${origin}/${page}?${query}`);
+
+  $("#nav_link").val(navLink);
+  return navLink;
+}
+
+function contributeCodeNav() {
+  let navLink = getNavLink("code-add-edit", "cid=");
+  $("#contribute-code").html(`
+  <a class="a-override" onclick='persistence("gotourl", "${navLink}");' href="${navLink}" class="text-blue font-weight-bold text-center"><i class="fe fe-edit"></i>&nbsp;Contribute New Code</a>
+  `);
+}
+
 
 function search_codeSnippet() {
   setTimeout(function(){
