@@ -25,7 +25,7 @@ $thismonthname=date('M');
 $thisday=date('d');
 $thisdayname=date('D');
   $assets = "assets/";
-  $home_url = "https://zidiapp.com";
+  $home_url = "http://localhost/zidi-app";
 
 ?>
 

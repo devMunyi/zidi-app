@@ -247,8 +247,16 @@ function persistence_remove(k) {
 function persistence_read(k) {
   if (localStorage.getItem("persist")) {
     let current_loc = currentLoc();
-    return  current_loc[k];
-
+    let res =  current_loc[k];
+    if(res){
+      return res;
+    }
+    else {
+      return "";
+    }
+  }
+  else {
+    return "";
   }
 }
 

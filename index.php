@@ -110,7 +110,7 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-md-7 pl-0 pr-0 codearea" id="codeareaid">
+                    <div class="col-lg-7 col-md-7 pl-0 pr-0 codearea" style="display: none;"  id="codeareaid">
                         <div class="card transcard ">
                             <div class="card-header pb-2 pt-2">
                                 <table style="width: 60%">
@@ -139,7 +139,7 @@ include_once("configs/conn.inc");
                                 </div>
                             </div>
 
-                            <div id="editor" class="card-body dark-screen">
+                            <div id="editor"  class="card-body dark-screen">
                                 <div id="nocode" class="text-muted-dark text-center">
                                     <div class="font-24 text-bold  align-middle"><i class="fa fa-info-circle"></i> Get Started</div>
 
@@ -150,6 +150,7 @@ include_once("configs/conn.inc");
                                 </div>
 
                             </div>
+
 
 
                             <div class="card-footer">
@@ -270,10 +271,20 @@ include_once("configs/conn.inc");
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-7 pl-0 pr-o" id="search_results_all" style="border-right: 3px solid #dfdfdf;">
+                        <div class="card" style="min-height: 500px;">
+                        <div  class="card-body" id="all_solutions">
+
+                         <span class="font-weight-bold text-indigo font-16">Loading solutions ...</span>
+
+                        </div>
+                        </div>
+                    </div>
 
                     <div class="col-lg-3 col-md-3" style="margin-left: 0; padding-left: 0; min-height: 500px;">
-                        <div id="solns-box" class="card scrollh transcard mb-0 pb-0 all-solns hidden">
-                            <div class="card-header pt-3">
+                        <div id="solns-box" class="card scrollh transcard mb-0 pb-0 all-solns">
+                           <div style="display: none;">
+                               <div class="card-header pt-3">
                                 <h3 class="card-title text-center"><i class="fe fe-eye"></i> <span id="links-title">All Solutions</span></h3>
                             </div>
                             <div class="card-body pt-0" style="padding: 10px 0px;">
@@ -282,6 +293,12 @@ include_once("configs/conn.inc");
                             </div>
                             <div class="card-footer">
                                 <div class="d-flex justify-content-between">
+                                </div>
+                            </div>
+                           </div>
+                            <div>
+                                <div class="card-header pt-3">
+                                    <a href="#" target="_blank"><img src="assets/images/kickstarter_badge.png" width="100%"></a>
                                 </div>
                             </div>
                         </div>
@@ -355,8 +372,7 @@ include_once("configs/conn.inc");
         window.addEventListener('mousedown', function(event) {
             var inner = document.getElementById('overin');
             var outer = document.getElementById('layleft');
-            var search_box = document.getElementById('search_box');
-            var code_results = document.getElementById('code_results');
+
 
             if (event.target === inner) {
                 inner.style.display = "block";
@@ -365,10 +381,16 @@ include_once("configs/conn.inc");
                 $('#layleft').fadeOut('fast');
             }
 
-            if(event.target !== code_results && event.target !== search_box){
-               code_results.style.display = "none";
-            }
         });
+
+       $(document).mouseup(function (e) {
+           var search_box = document.getElementById('search_box');
+           var code_results = document.getElementById('code_results');
+
+           if ($(e.target).closest("#code_results").length === 0 && $(e.target).closest("#search_box").length === 0) {
+               $("#code_results").hide();
+           }
+       });
 
         $(document).ready(function() {
 
@@ -454,7 +476,9 @@ include_once("configs/conn.inc");
                 persistence_remove("codestyle");
                 persistence_remove("allFrams");
 
-                loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
+                //loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
+
+                getAllSolns('','','','','');
                 getAllFrams();
                 functions_load() //load all functions and subfunctions
                 load_languages(); //Load all the languages
