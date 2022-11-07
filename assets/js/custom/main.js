@@ -35,9 +35,10 @@ function functions_load() {
 
           fun += `<li class="outer_list" id="func-item-${function_id}"> 
           <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink();">
+          onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); getAllSolns('${function_id}','','','','');">
           <img class="icon" src="${server}/${function_icon}"/>
           <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
+
 
           /////------Loop through sub functions
           let sub_data = sub_result['data'];
@@ -66,7 +67,7 @@ function functions_load() {
                 }
                 fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
               <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); loadCodesnippetsLink();">
+              onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); getAllSolns('','${subfunction_id}','','','');">
                <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
               </a>
               </li>`;
@@ -138,7 +139,7 @@ function functions_load() {
 
             fun += `<li class="outer_list" id="func-item-${function_id}"> 
             <a id="funcitem${function_id}" class="${active_func} func-item has-arrow arrow-b" href="javascript:void(0)" 
-            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); loadCodesnippetsLink()">
+            onclick="highlightFun(); parseInnerListId('${function_id}'); submenu('#fun${function_id}'); title_update('${function_name}'); persistence('func',${function_id}); persistence_remove('subfunc'); getAllSolns('${function_id}','','','','');">
             <img class="icon" src="${server}/${function_icon}"/>
             <span data-hover="${function_name}">&nbsp;${function_name}</span></a>`;
 
@@ -169,7 +170,7 @@ function functions_load() {
                   }
                   fun += `<li class="subfunc_" id="subfunc-item-${subfunction_id}">
                 <a class="subfunc${function_id} subfunc-item ${active_subfunc}" href="javascript:void(0)" 
-                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); loadCodesnippetsLink()">
+                onclick="subfun('#fun${function_id}'); title_update('${function_name} / ${subfunction_name}'); persistence('func', ${function_id}); persistence('subfunc', ${subfunction_id}); highlightSubfun('${function_id}'); getAllSolns('','${subfunction_id}','','','');">
                  <span class="subfun_" data-hover="${subfunction_name}"><i class="fe fe-chevrons-right" data-toggle="tooltip" title="" data-original-title="fe fe-arrow-up-right"></i>${subfunction_name}</span>
                 </a>
                 </li>`;
@@ -327,6 +328,7 @@ function filterSubFuncByFunc() {
 function load_languages() {
   //display a loader
   spinner("#language_");
+  let language = persistence_read('language');
 
   let current_loc = currentLoc(); //get access the data available in the localstorage
   let server = $("#server_").val(); //get the server url for the image retrieval
@@ -357,16 +359,20 @@ function load_languages() {
         }
         lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid});  clear_code_screen(); getAllSolns('','','${uid}','','');">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
 
-        lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
-            server + "/" + icon + '" height="20px"> ' +
-            title +
-            "</a>";
+
+        if(!language) {
+          lang_sel += '<a onclick="default_lang(' + uid + ',\'' + title + '\');" class="btn btn-outline-secondary">' +
+              title +
+              "</a>";
+        }
       }
       $("#language_").html(lang);
-      $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
+      if(!language) {
+        $("#language_select_modal").html("<div class=\"btn-list\">" + lang_sel + "</div>");
+      }
 
       if (language_sel) {
         scrollElementIntoView(`lang-item-${language_sel}`);
@@ -383,6 +389,7 @@ function load_languages() {
     let orderby = "name";
     let offset = 0;
     let rpp = 100;
+    let language = persistence_read('language');
 
     let jso = {};
 
@@ -424,16 +431,19 @@ function load_languages() {
           }
           lang += `<li class="hover-lang" id="lang-item-${uid}" style="margin: 0px; padding: 0px;">
           <a class="lang-item ${active_language}" href="javascript:void(0)"
-          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); loadCodesnippetsLink(); clear_code_screen();">
+          onclick="highlightLang(); persistence_remove('allFrams'); persistence_remove('codestyle'); persistence_remove('framework'); persistence('language', ${uid}); getFramsByLang(${uid}); getAllSolns('','','${uid}','',''); clear_code_screen();">
           <img src="${server}/${icon}" height="20px">&nbsp;${title}</a></li>`;
+          if(!language) {
 
-          lang_sel +=  '<a onclick="default_lang('+uid+',\''+title+'\');" class="btn btn-outline-secondary"><img src="' +
-              server + "/" + icon + '" height="20px"> ' +
-              title +
-              "</a>";
+            lang_sel += '<a onclick="default_lang(' + uid + ',\'' + title + '\');" class="btn btn-outline-secondary"> ' +
+                title +
+                "</a>";
+          }
         }
         $("#language_").html(lang);
+        if(!language) {
         $("#language_select_modal").html("<div class=\"btn-list\">"+lang_sel+"</div>");
+          }
 
 
         if (language_sel) {
@@ -452,6 +462,7 @@ function default_lang(uid, name){
   highlightLang();
   successToast("We will show you more of "+name);
   hidewelcome();
+  getAllSolns('','','','','');
 }
 
 function highlightLang() {
@@ -530,7 +541,7 @@ function getAllFrams() {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram();  clear_code_screen();'>
     `;
     if (frams_arr_size > 0) {
       let active_fram;
@@ -553,7 +564,7 @@ function getAllFrams() {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','','');">
         <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -581,7 +592,7 @@ function getAllFrams() {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -635,7 +646,7 @@ function getAllFrams() {
         persistence("allFrams", data);
       } else {
         row = `
-        <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+        <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
           <option value = "-1">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
@@ -653,7 +664,7 @@ function getFramsByLang(lang_id) {
   if (current_loc && current_loc.allFrams) {
     let data = current_loc.allFrams;
     let frams_arr_size = data.length;
-    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+    let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
     `;
 
     if (frams_arr_size > 0) {
@@ -676,7 +687,7 @@ function getFramsByLang(lang_id) {
       $("#framework-dropdown").html(row + "</select>");
     } else {
       row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
         <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -707,7 +718,7 @@ function getFramsByLang(lang_id) {
       rpp;
 
     crudaction({}, "/frameworks" + query, "GET", function (feed) {
-      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+      let row = `<select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
     `;
 
       if (feed && feed.data && feed.data.length > 0) {
@@ -758,7 +769,7 @@ function getFramsByLang(lang_id) {
         $("#framework-dropdown").html(row + "</select>");
       } else {
         row = `
-      <select class='fancy-select form-control' id = 'sel_framework' onchange='persistFram(); loadCodesnippetsLink(); clear_code_screen();'>
+      <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
         <option value = "-1">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
@@ -1100,7 +1111,7 @@ function codeStyles() {
     active_codestyle = current_loc.codestyle;
   }
 
-  let row = "<select class='fancy-select form-control' id = 'sel_codestyle' onchange='persistCodestyle(); loadCodesnippetsLink()'><option value = \"0\" > All Code Styles</option>";
+  let row = "<select class='fancy-select form-control' id = 'sel_codestyle' onchange=\"persistCodestyle(); getAllSolns('','','','','');\"><option value = \"0\" > All Code Styles</option>";
   for (let i = 0; i < data.length > 0; i++) {
     let codestyle_id = data[i].uid;
     let codestyle_title = data[i].name;
@@ -1413,7 +1424,7 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 
       $('#all-solns-nav').html(
         `
-        <a href="javascript:void(0)" onclick="loadCodesnippetsLink('all_back')" title="Back to All" class="text-blue font-weight-bold text-center"><span class="badge badge-secondary">All <i class="fe fe-corner-up-left"></i></span></a>
+        <a href="javascript:void(0)" onclick="back_to_all();" title="Back to All" class="text-blue font-weight-bold text-center"><span class="badge badge-secondary">All <i class="fe fe-corner-up-left"></i></span></a>
         `
       );
 
@@ -1459,6 +1470,127 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
       //persistence_remove("all_solns");
     }
   });
+}
+function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_codestyle) {
+  if(!sel_language){
+     sel_language = persistence_read('language');
+  }
+  if(!sel_func){
+    sel_func = persistence_read('func');
+  }
+  if(!sel_subfunc){
+    sel_subfunc = persistence_read('subfunc');
+  }
+  if(!sel_framework){
+   sel_framework = persistence_read('framework');
+  }
+  if(!sel_codestyle){
+   sel_codestyle = persistence_read('codestyle');
+  }
+
+  //alert(sel_func);
+
+
+  $('#codeareaid').css("display","none");
+  $('#search_results_all').css('display','block');
+
+  //get resource from the server
+  let rpp = 25;
+  let offset = 0;
+
+  let status = 1;
+  let orderby = 'uid';
+  let dir = 'DESC';
+
+  let jso = {};
+
+  let query =
+      '?status=' +
+      status +
+      '&orderby=' +
+      orderby +
+      '&dir=' +
+      dir +
+      '&func_id=' +
+      sel_func +
+      '&subfunc_id=' +
+      sel_subfunc +
+      '&language_id=' +
+      sel_language +
+      '&framework_id=' +
+      sel_framework +
+      '&user_impl_type_id=' +
+      sel_codestyle +
+      '&offset=' +
+      offset +
+      '&rpp=' +
+      rpp;
+
+  crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
+    console.log(feed);
+    let total_ = feed.all_totals;
+    if (total_ > 0) {
+      let data = feed['data'];
+
+      let user_implementation_type;
+      // let firstChar;
+      let language_name;
+      let framework;
+      let codesnippet_id;
+
+      let solns = '';
+      for (let i = 0; i < data.length; i++) {
+        user_implementation_type = data[i].user_implementation_type;
+        language_name = data[i].language_name;
+        framework = data[i].framework;
+        language_id = data[i].language_id;
+        codesnippet_id = data[i].uid;
+        let title = data[i].title;
+        let function_name = data[i].fun_name;
+        let sub_name = data[i].subfun_name;
+
+        if (data[i].framework_id == 0) {
+          framework = '';
+        } else {
+          framework = ` with ${framework} framework`;
+        }
+        solns += `<a href="javascript:void(0);" onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">`+"<table class=\"w-100 font-12\"><tr><td colspan=\"2\"><span class=\"a-override font-16 font-weight-bold\"><i class=\"fa fa-angle-double-right a-override\"></i> "+title+"  in  "+language_name+" "+framework+"</span></td></tr><tr><td>"+function_name+" › "+sub_name+" </td><td>"+user_implementation_type+"<i> implementation</i></td></tr></table> </a>" +
+            "                            ";
+      }
+
+      $('#search_results_all').html(solns);
+
+    } else {
+      //add code version drop down
+      $('#search_results_all').html(
+          `<p class="list-group-item list-group-item-action"><i class="fe fe-slash"></i> <span class="font-15  text-black-50 text-gray">No solutions found in the selected language</span></p>`
+      );
+
+    }
+  });
+}
+
+function back_to_all() {
+  $('#codeareaid').css("display","none");
+  $('#search_results_all').fadeIn('fast');
+  reset_code_view('Select a solution below or click a functionality');
+  scrollCommentSection('codeimp-title');
+}
+
+function reset_code_view(title='', subtitle='' ) {
+  //set code implementation title to initialized default value
+  $("#codeimp-title").html("<h4 class=\"text-left\">"+title+"</h4>");
+  $('#framework-dropdown').html("");
+  $('#sel_codestyle').fadeOut("fast");
+  //set implementation type and contributor name to intialized default value
+  $("#imptype-and-contributor").html(subtitle);
+
+  //empty the code edit link
+  $("#edit-code").html("");
+
+  /////-------Display that no codesnippet found
+  configureAceEditor();
+
 }
 
 function codeDetails() {
@@ -1638,6 +1770,8 @@ function clear_code_screen(){
 
 function load_codesnippetById(codeId) {
   //spinner("#codeimp-title");
+  $('#search_results_all').css('display','none');
+  $('#codeareaid').fadeIn('fast');
   
   spinner("#imptype-and-contributor", "spinner-border-sm");
 
@@ -1802,7 +1936,8 @@ function load_codesnippetById(codeId) {
     }
   });
   
-  document.getElementById('codeimp-title').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  document.getElementById('main_content').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+
 }
 
 function scrollCommentSection(fId) {
@@ -3059,6 +3194,7 @@ function createEditor2(elementId) {
     // console.log("Editor instance already exist");
   }
 }
+
 
 ///////--------------------------End ckeditor
 function hidewelcome(){

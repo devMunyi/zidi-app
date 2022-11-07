@@ -942,3 +942,10 @@ div#notif_top {
 .everything a, .everything .btn-link {
     color: #1976d2 !important;
 }
+.mobile_button {
+    background: #006ebd !important;
+    font-size: 18px;
+    font-weight: bold;
+    color: white !important;
+    padding: 10px 0 !important;
+}
