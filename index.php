@@ -54,6 +54,11 @@ include_once("configs/conn.inc");
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="all-tab">
                             <nav class="sidebar-nav">
+                                <div id="mobi_scrollto">
+                                    <a onclick="scrolltoview('search_results_all')">
+                                            <img src="assets/images/scroll.png" width="70px">
+                                    </a>
+                                </div>
                                 <div class="card-body scrolli" style="padding: 10px 10px;">
                                     <ul class="metismenu func_" id="functions_">
                                         <!-- <i class="fe fe-list"></i> Language List -->
