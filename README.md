@@ -1,6 +1,6 @@
 # ZIDI
 
- Zidi is a code sharing platform that aims to provide clean, universally acceptable code for all backend processes in all major languages. Anticipating to develop productivity tools for backend developers to make their work easier. 
+ > Zidi is a code sharing platform that aims to provide clean, universally acceptable code for all backend processes in all major languages. Anticipating  to develop productivity tools for backend developers to make their work easier. 
 
 ## Frontend Built With
 
