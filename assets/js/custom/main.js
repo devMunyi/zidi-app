@@ -1580,7 +1580,7 @@ function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_cod
     } else {
       //add code version drop down
       $('#search_results_all').html(
-          `<p class="list-group-item list-group-item-action"><i class="fe fe-slash"></i> <span class="font-15  text-black-50 text-gray">No solutions found in the selected language</span></p>`
+          `<p class="list-group-item font-22  text-black-50 font-italic list-group-item-action"><i class="fe fe-slash"></i> <span>No solutions found in the selected language</span></p>`
       );
 
     }
@@ -1961,6 +1961,12 @@ function scrollCommentSection(fId) {
   const element = document.getElementById(fId);
   element.scrollIntoView({
     block: "center",
+  });
+}
+function scrolltoview(vid){
+  const element = document.getElementById(vid);
+  element.scrollIntoView({
+    behavior: "smooth", block: "start", inline: "nearest"
   });
 }
 
