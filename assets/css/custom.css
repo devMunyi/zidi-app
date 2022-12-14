@@ -28,11 +28,12 @@
         display: block !important;
     }
     #mobi_scrollto{
-        right: 0px;
+        right: 0;
         margin-top: 100px;
         position: sticky;
         top: 30px;
         float: right;
+        width: 45px;
     }
 
     #about_list {
