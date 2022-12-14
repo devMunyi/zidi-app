@@ -565,7 +565,7 @@ function getAllFrams() {
     } else {
       row = `
       <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','','');">
-        <option value = "-1">All Frameworks</option>
+        <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -647,7 +647,7 @@ function getAllFrams() {
       } else {
         row = `
         <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
-          <option value = "-1">All Frameworks</option>
+          <option value = "">All Frameworks</option>
           <option value = "0">No Framework</option>
         </select>
       `;
@@ -688,7 +688,7 @@ function getFramsByLang(lang_id) {
     } else {
       row = `
       <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
-        <option value = "-1">All Frameworks</option>
+        <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
@@ -770,7 +770,7 @@ function getFramsByLang(lang_id) {
       } else {
         row = `
       <select class='fancy-select form-control' id = 'sel_framework' onchange="persistFram(); getAllSolns('','','','',''); clear_code_screen();">
-        <option value = "-1">All Frameworks</option>
+        <option value = "">All Frameworks</option>
         <option value = "0">No Framework</option>
       </select>
       `;
