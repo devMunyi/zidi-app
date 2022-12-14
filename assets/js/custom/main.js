@@ -621,7 +621,7 @@ function getAllFrams() {
           language_id: 0,
           name: "All Frameworks",
           status: 1,
-          uid: "-1",
+          uid: "",
         });
         let active_fram;
 
@@ -747,7 +747,7 @@ function getFramsByLang(lang_id) {
           language_id: 0,
           name: "All Frameworks",
           status: 1,
-          uid: "-1",
+          uid: "",
         });
 
         let active_fram;
