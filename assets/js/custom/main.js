@@ -1577,6 +1577,8 @@ function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_cod
 
       $('#search_results_all').html(solns);
 
+      // persist load solutions
+      persistence("all_solns", data);
     } else {
       //add code version drop down
       $('#search_results_all').html(
@@ -1597,8 +1599,8 @@ function back_to_all() {
 function reset_code_view(title='', subtitle='' ) {
   //set code implementation title to initialized default value
   $("#codeimp-title").html("<h4 class=\"text-left\">"+title+"</h4>");
-  $('#framework-dropdown').html("");
-  $('#sel_codestyle').fadeOut("fast");
+  // $('#framework-dropdown').html("");
+  // $('#sel_codestyle').fadeOut("fast");
   //set implementation type and contributor name to intialized default value
   $("#imptype-and-contributor").html(subtitle);
 
