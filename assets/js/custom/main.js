@@ -1067,8 +1067,8 @@ function search_codeSnippet() {
           let tableSearch = `<table class='table table-light childClass stack-top shadow-lg p-3 mb-5 bg-white table-condensed'>`;
           for (let i = 0; i < data.length; i++) {
             tableSearch += `<tr><td><a href="javascript:void(0)"  class='pointer a-override a-alt' 
-            onclick=\"select_code(${data[i].uid}, '${data[i].title}', '${data[i].language_name}')">
-            <span class="font-16 text-bold">${data[i].title} in ${data[i].language_name} </span> <br/>
+            onclick=\"select_code(${data[i].uid}, '${data[i].title}')">
+            <span class="font-16 text-bold">${data[i].title} </span> <br/>
             Contributed By: <i> ${data[i].fullname} </i> on <i> ${data[i].added_date} </i></a></td></tr>`;
           }
 
@@ -1102,7 +1102,7 @@ function search_codeSnippet() {
   }
 }
 
-function select_code(code_id, title, language) {
+function select_code(code_id, title) {
   $("#search_box").val(title);
 
   //load the selected code using the code uid
@@ -1197,14 +1197,6 @@ function loadCodesnippetsLink(action = '') {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
-
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
-
           let activeClass = '';
           let curSoln =
             current_loc && current_loc.code_sel && current_loc.code_sel.uid
@@ -1294,14 +1286,6 @@ function loadCodesnippetsLink(action = '') {
               framework = ` with ${framework} framework`;
             }
 
-            // firstChar = language_implementation_type[0];
-
-            // if (firstChar == 'D') {
-            //   language_implementation_type = '';
-            // } else {
-            //   language_implementation_type = ` ${language_implementation_type}`;
-            // }
-
             solns += `<a href="javascript:void(0)"
                 onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
             <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
@@ -1390,14 +1374,6 @@ function loadCodesnippetsLink(action = '') {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
-
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
-
           solns += `<a href="javascript:void(0)"
       onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
 <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
@@ -1460,14 +1436,6 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
             framework = ` with ${framework} framework`;
           }
 
-          // firstChar = language_implementation_type[0];
-
-          // if (firstChar == 'D') {
-          //   language_implementation_type = '';
-          // } else {
-          //   language_implementation_type = ` ${language_implementation_type}`;
-          // }
-
           solns += `<a href="javascript:void(0)"  
           onclick="appendCodeUrl('${codesnippet_id}', 'related-solns'); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">
   <span class="badge badge-secondary"><i class="fe fe-arrow-up-left"></i></span>
@@ -1488,25 +1456,33 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
     }
   });
 }
-function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_codestyle) {
-  if(!sel_language){
-     sel_language = persistence_read('language');
-  }
-  if(!sel_func){
-    sel_func = persistence_read('func');
-  }
-  if(!sel_subfunc){
-    sel_subfunc = persistence_read('subfunc');
-  }
-  if(!sel_framework){
-   sel_framework = persistence_read('framework');
-  }
-  if(!sel_codestyle){
-   sel_codestyle = persistence_read('codestyle');
-  }
 
-  //alert(sel_func);
+function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_codestyle, search_ = '') {
+  console.log('Search Tearm => ', search_)
 
+  if(search_){
+    persistence_remove('language');
+    persistence_remove('func');
+    persistence_remove('subfunc');
+    persistence_remove('framework');
+    persistence_remove('codestyle');
+  }else {
+    if (!sel_language) {
+      sel_language = persistence_read('language');
+    }
+    if (!sel_func) {
+      sel_func = persistence_read('func');
+    }
+    if (!sel_subfunc) {
+      sel_subfunc = persistence_read('subfunc');
+    }
+    if (!sel_framework) {
+      sel_framework = persistence_read('framework');
+    }
+    if (!sel_codestyle) {
+      sel_codestyle = persistence_read('codestyle');
+    }
+  }
 
   $('#codeareaid').css("display","none");
   $('#search_results_all').css('display','block');
@@ -1541,10 +1517,11 @@ function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_cod
       '&offset=' +
       offset +
       '&rpp=' +
-      rpp;
+      rpp +
+      '&search_=' +
+      search_;
 
   crudaction(jso, '/codesnippets' + query, 'GET', function (feed) {
-    console.log(feed);
     let total_ = feed.all_totals;
     if (total_ > 0) {
       let data = feed['data'];
@@ -1571,7 +1548,7 @@ function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_cod
         } else {
           framework = ` with ${framework} framework`;
         }
-        solns += `<a href="javascript:void(0);" onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">`+"<table class=\"w-100 font-12\"><tr><td colspan=\"2\"><span class=\"a-override font-16 font-weight-bold\"><i class=\"fa fa-angle-double-right a-override\"></i> "+title+"  in  "+language_name+" "+framework+"</span></td></tr><tr><td>"+function_name+" › "+sub_name+" </td><td>"+user_implementation_type+"<i> implementation</i></td></tr></table> </a>" +
+        solns += `<a href="javascript:void(0);" onclick="appendCodeUrl('${codesnippet_id}', ''); load_codesnippetById('${codesnippet_id}');" class="list-group-item list-group-item-action">`+"<table class=\"w-100 font-12\"><tr><td colspan=\"2\"><span class=\"a-override font-16 font-weight-bold\"><i class=\"fa fa-angle-double-right a-override\"></i> "+title+ " "+framework+"</span></td></tr><tr><td>"+function_name+" › "+sub_name+" </td><td>"+user_implementation_type+"<i> implementation</i></td></tr></table> </a>" +
             "                            ";
       }
 
@@ -1668,7 +1645,6 @@ function appendCodeUrl(code_id, action = "") {
     origin = "http://localhost/zidi-app";
   }
   let c_snippet_title = "";
-  let c_snippet_lang_name = "";
   if (action == "search") {
     if (
       current_loc &&
@@ -1681,7 +1657,6 @@ function appendCodeUrl(code_id, action = "") {
       for (let i = 0; i < searched_solns_arr_size; i++) {
         if (searched_solns[i].uid == code_id) {
           c_snippet_title = searched_solns[i].title;
-          c_snippet_lang_name = searched_solns[i].language_name;
         }
       }
     }
@@ -1697,7 +1672,6 @@ function appendCodeUrl(code_id, action = "") {
       for (let i = 0; i < related_solns_arr_size; i++) {
         if (related_solns[i].uid == code_id) {
           c_snippet_title = related_solns[i].title;
-          c_snippet_lang_name = related_solns[i].language_name;
         }
       }
     }
@@ -1713,14 +1687,13 @@ function appendCodeUrl(code_id, action = "") {
       for (let i = 0; i < all_solns_arr_size; i++) {
         if (all_solns[i].uid == code_id) {
           c_snippet_title = all_solns[i].title;
-          c_snippet_lang_name = all_solns[i].language_name;
         }
       }
     }
   }
 
   let hyphenatedTitle = hyphenateTitle(c_snippet_title);
-  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-in-${c_snippet_lang_name}${domsection}`;
+  let myUrl = `${origin}/solutions/${code_id}/${hyphenatedTitle}-${domsection}`;
   goTo(myUrl);
 
   persistence("gotourl", myUrl);
