@@ -1802,7 +1802,7 @@ function load_codesnippetById(codeId) {
       //update code implementation title
       codeImpTitle = title;
       $("#codeimp-title").html(
-        "<h4 class='text-left'>" + codeImpTitle + ' in ' + language_name + "</h4>"
+        "<h4 class='text-left'>" + codeImpTitle + "</h4>"
       );
 
       let displayName = "";
