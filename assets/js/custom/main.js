@@ -1458,8 +1458,6 @@ function getRelatedSolns(codesnippet_id, func_id, subfunc_id, language_id) {
 }
 
 function getAllSolns(sel_func, sel_subfunc, sel_language, sel_framework, sel_codestyle, search_ = '') {
-  console.log('Search Tearm => ', search_)
-
   if(search_){
     persistence_remove('language');
     persistence_remove('func');
