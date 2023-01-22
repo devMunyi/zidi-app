@@ -457,6 +457,7 @@ include_once("configs/conn.inc");
 
 
             let codeId = 0;
+            const search_ = "<?php echo $_GET['search_']; ?>"?.trim();
             const url = getCurrentUrl(); //grab the current to determine whether the site is live or local
             const host = url.host;
             if (host == "localhost") {
@@ -484,7 +485,13 @@ include_once("configs/conn.inc");
 
                 //loadCodesnippetsLink(); //load code links with any available params needed to to load the solutions
 
-                getAllSolns('','','','','');
+                 // handle url with a search term and without in loading solutions
+                 if (search_) {
+                    getAllSolns('','','','','', search_);
+                }else{
+                    getAllSolns('','','','','');
+                }
+                
                 getAllFrams();
                 functions_load() //load all functions and subfunctions
                 load_languages(); //Load all the languages
