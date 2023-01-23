@@ -790,6 +790,7 @@ function codesnippetValidate() {
   let func_id = $("#func_sel").val();
   let subfunc_id = $("#subfunc_sel").val();
   let language_id = $("#language_sel").val();
+  const selectedLang = $("#language_sel option:selected").text()
   let framework_id = $("#framework_sel").val();
   let lang_impl_type_id = $("#sel_lang_impl").val();
   let user_impl_type_id = $("#sel_user_impl").val();
@@ -882,13 +883,16 @@ function codesnippetValidate() {
     // titleErr = false;
     // let unsafeChar = "";
 
-    let regex = /^[a-zA-Z0-9.',?@&#\s]+$/;
+    let regex = /^[a-zA-Z0-9.',?@&#-\s]+$/;
     if (regex.test(title) === false) {
       printError(
         "titleErr",
         "Title should not contain some special characters like /, <, and >. We recommend using aplhabets for the title."
       );
+
     } else {
+      title += ` in ${selectedLang}`;
+      alert(title)
       printError("titleErr", "");
       titleErr = false;
     }
