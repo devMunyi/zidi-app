@@ -892,7 +892,6 @@ function codesnippetValidate() {
 
     } else {
       title += ` in ${selectedLang}`;
-      alert(title)
       printError("titleErr", "");
       titleErr = false;
     }
