@@ -303,8 +303,7 @@ include_once("configs/conn.inc");
                            </div>
                             <div>
                                 <div class="card-header pt-3">
-
-                                    <a href="#" onclick="alert('Coming soon to kickstarter')"><img src="assets/images/kickstarter_badge.png" width="100%"></a>
+                                    <a href="https://www.kickstarter.com/projects/colinstephens/zidi-a-platform-for-all-your-backend-code"><img src="assets/images/kickstarter_badge.png" width="100%"></a>
                                 </div>
                             </div>
                         </div>
