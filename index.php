@@ -303,7 +303,7 @@ include_once("configs/conn.inc");
                            </div>
                             <div>
                                 <div class="card-header pt-3">
-                                    <a href="https://marketplace.visualstudio.com/items?itemName=Samuel-Munyi.zidi-code-search&ssr=false#review-details"><img src="assets/images/zidi-vscode-ext.jpg" width="100%"></a>
+                                    <a href="https://marketplace.visualstudio.com/items?itemName=Samuel-Munyi.zidi-code-search&ssr=false#review-details"><img src="assets/images/zidi-vscode-ext.jpeg" width="100%"></a>
                                 </div>
                             </div>
                         </div>
