@@ -10,7 +10,7 @@
 <!-- Core css -->
 <link rel="stylesheet" href="<?php echo $assets; ?>css/main.css"/>
 <link rel="stylesheet" href="<?php echo $assets; ?>css/theme1.css" id="stylesheet"/>
-<link rel="stylesheet" href="<?php echo $assets; ?>css/custom.css?v6" />
+<link rel="stylesheet" href="<?php echo $assets; ?>css/custom.min.css?v6" />
 <link rel="stylesheet" href="<?php echo $assets; ?>css/dark.css" />
 
 <!-- SweetAlert2 -->
