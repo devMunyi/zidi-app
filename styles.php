@@ -2,7 +2,7 @@
 
 <!-- Plugins css -->
 <link rel="stylesheet" href="<?php echo $assets; ?>plugins/charts-c3/c3.min.css"/>
-<link rel="stylesheet" href="<?php echo $assets; ?>plugins/jvectormap/jvectormap-2.0.3.css" />
+<link rel="stylesheet" href="<?php echo $assets; ?>plugins/jvectormap/jvectormap-2.0.3.min.css" />
 
 <!-- Select2 CSS --> 
 <script src="<?php echo $assets; ?>plugins/select2/css/select2.min.css"></script>
@@ -23,7 +23,7 @@
 
 
 <!--Cusom scroll css --> 
-<link rel="stylesheet" href="<?php echo $assets; ?>css/jquery.mCustomScrollbar.css" />
+<link rel="stylesheet" href="<?php echo $assets; ?>css/jquery.mCustomScrollbar.min.css" />
 
 
 <!--Core Google auth button styling --->

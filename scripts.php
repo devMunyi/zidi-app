@@ -15,11 +15,11 @@
 <script src="<?php echo $assets; ?>bundles/jvectormap1.bundle.js"></script>
 
 <!-- Start core js and page js -->
-<script src="<?php echo $assets; ?>js/core.js"></script>
+<script src="<?php echo $assets; ?>js/core.min.js"></script>
 <script src="<?php echo $assets; ?>js/custom/common.min.js?v12"></script>
 <script src="<?php echo $assets; ?>js/custom/authentication.min.js?v6"></script>
 <script src="<?php echo $assets; ?>js/custom/main.min.js?v37"></script>
-<script src="<?php echo $assets; ?>js/page/index.js"></script>
+<script src="<?php echo $assets; ?>js/page/index.min.js"></script>
 
 <!-- SweetAlert2 -->
 <script src="<?php echo $assets; ?>plugins/sweetalert2/sweetalert2.min.js"></script>
@@ -40,18 +40,16 @@
 <script>hljs.initLineNumbersOnLoad();</script> -->
 
 <!--Custom script for the editor-->
-<script src="<?php echo $assets; ?>plugins/ace/editor.js"></script>
-<script src="<?php echo $assets; ?>plugins/ace/editor-console.js"></script>
 <script src="<?php echo $assets; ?>js/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Moment plugin script -->
 <script src="<?php echo $assets; ?>plugins/moment/moment.min.js"></script>
 
-<script src="<?php echo $assets; ?>plugins/beautify.js"></script>
+<script src="<?php echo $assets; ?>plugins/beautify.min.js"></script>
 
 <!-- Select2 JS --> 
 <script src="<?php echo $assets; ?>js/select2.min.js"></script>
 
 <!--cke editor js -->
-<script src="<?php echo $assets; ?>plugins/ckeditor5/ckeditor.js"></script>
+<script src="<?php echo $assets; ?>plugins/ckeditor5/ckeditor.min.js"></script>
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> -->
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script> -->
