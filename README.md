@@ -79,7 +79,7 @@ After that navigate to the newly created folder:
 
 ### Usage
 
-To run the project, execute the following command:
+To run the project, enter the following url on your favorite browser:
 
 `http://localhost/zidi-app`
 
@@ -132,8 +132,9 @@ Give a ⭐️ if you like this project!
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 I would like to thank:
-- Code Reviewers for their valuable feedback and guidance throughout my learning journey.
+- Code Reviewers and codesnippets contributors
 - Everyone whose code was used
+- Inspiration: [ngarama](https://github.com/ngarama)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
