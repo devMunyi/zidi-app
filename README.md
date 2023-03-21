@@ -107,6 +107,7 @@ To run the project, enter the following url on your favorite browser:
 ## 🔭 Future Features <a name="future-features"></a>
 - [ ] **[Add productivity tools]**
 - [ ] **[Allow Profile Update]**
+- [ ] **[Real time chat]**
 - [ ] **[Optimization]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
