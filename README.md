@@ -135,7 +135,8 @@ Give a ⭐️ if you like this project!
 I would like to thank:
 - Code Reviewers and codesnippets contributors
 - Everyone whose code was used
-- Inspiration: [ngarama](https://github.com/ngarama)
+- Inspiration
+   - [ngarama](https://github.com/ngarama)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
